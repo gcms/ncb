@@ -1,0 +1,5 @@
+<Macro>
+  <script>import static cvm.ucm.manager.UCM_M_Facade; ncb.resetNCB(); se.resetSE(); UCM_M_Facade facade = UCM_M_Facade.Instance(se, ncb); facade.executeScript(&quot;sendSchema(\&quot;c1\&quot;,\&quot;a\&quot;,\&quot;b,c\&quot;,\&quot;control_xcml\&quot;,\&quot;data_xcml\&quot;)\n&quot;);</script>
+  <returnType>void</returnType>
+  <name>UCM_T_06</name>
+</Macro>

@@ -1,0 +1,714 @@
+2010-09-24 17:30:55,482 SENT to 131.94.133.47/5060 [main]
+
+REGISTER sip:asterisk.cs.fiu.edu SIP/2.0
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKF6s2eShoj
+Route: <sip:asterisk.cs.fiu.edu>
+Max-Forwards: 70
+To: <sip:demo5@asterisk.cs.fiu.edu>
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=FYmq1pm9
+Call-ID: gVHeZ8wb-1285363855451@taffy.ad.cs.fiu.edu
+CSeq: 0 REGISTER
+Contact: <sip:demo5@131.94.129.40:5060;transport=UDP>
+
+
+2010-09-24 17:30:55,482 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+SIP/2.0 100 Trying
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKF6s2eShoj;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=FYmq1pm9
+To: <sip:demo5@asterisk.cs.fiu.edu>
+Call-ID: gVHeZ8wb-1285363855451@taffy.ad.cs.fiu.edu
+CSeq: 0 REGISTER
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Contact: <sip:demo5@131.94.133.47>
+Content-Length: 0
+
+
+2010-09-24 17:30:55,482 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+SIP/2.0 401 Unauthorized
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKF6s2eShoj;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=FYmq1pm9
+To: <sip:demo5@asterisk.cs.fiu.edu>;tag=as45c5a3e7
+Call-ID: gVHeZ8wb-1285363855451@taffy.ad.cs.fiu.edu
+CSeq: 0 REGISTER
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+WWW-Authenticate: Digest algorithm=MD5, realm="asterisk", nonce="3b635efd"
+Content-Length: 0
+
+
+2010-09-24 17:30:55,513 SENT to 131.94.133.47/5060 [Thread-7]
+
+REGISTER sip:asterisk.cs.fiu.edu SIP/2.0
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKvPTMgqtdu
+Route: <sip:asterisk.cs.fiu.edu>
+Max-Forwards: 70
+To: <sip:demo5@asterisk.cs.fiu.edu>
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=WmLLKC6D
+Call-ID: gVHeZ8wb-1285363855451@taffy.ad.cs.fiu.edu
+CSeq: 1 REGISTER
+Contact: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Authorization: Digest username="demo5", realm="asterisk", nonce="3b635efd", uri="sip:asterisk.cs.fiu.edu", response="90a09aff66669e1121aee910b5915f5e"
+
+
+2010-09-24 17:30:55,513 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+SIP/2.0 100 Trying
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKvPTMgqtdu;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=WmLLKC6D
+To: <sip:demo5@asterisk.cs.fiu.edu>
+Call-ID: gVHeZ8wb-1285363855451@taffy.ad.cs.fiu.edu
+CSeq: 1 REGISTER
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Contact: <sip:demo5@131.94.133.47>
+Content-Length: 0
+
+
+2010-09-24 17:30:55,529 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKvPTMgqtdu;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=WmLLKC6D
+To: <sip:demo5@asterisk.cs.fiu.edu>;tag=as45c5a3e7
+Call-ID: gVHeZ8wb-1285363855451@taffy.ad.cs.fiu.edu
+CSeq: 1 REGISTER
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Expires: 120
+Contact: <sip:demo5@131.94.129.40:5060;transport=UDP>;expires=120
+Date: Fri, 24 Sep 2010 21:30:55 GMT
+Content-Length: 0
+
+
+2010-09-24 17:30:56,091 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK7d438fe4;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as1392dfce
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 26c157c557e7d0f55b5ebb6a44860bc7@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:30:56 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:30:56,466 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+BYE sip:demo5@131.94.129.40:5060 SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK7b8d6e9d;rport
+From: <sip:999101>;tag=as4b34eee8
+To: <sip:demo5@asterisk.cs.fiu.edu>;tag=0xYrxnd5
+Call-ID: Bc3cAyNB-1285363803183@taffy.ad.cs.fiu.edu
+CSeq: 102 BYE
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Content-Length: 0
+
+
+2010-09-24 17:30:57,091 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK7d438fe4;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as1392dfce
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 26c157c557e7d0f55b5ebb6a44860bc7@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:30:56 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:30:57,670 SENT to 131.94.133.47/5060 [Thread-11]
+
+INVITE sip:999101 SIP/2.0
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKB6ho0Swv7
+Route: <sip:asterisk.cs.fiu.edu>
+Max-Forwards: 70
+To: <sip:999101>
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=6F37RVkM
+Call-ID: k9kZq5Fy-1285363857654@taffy.ad.cs.fiu.edu
+CSeq: 2 INVITE
+Content-Length: 137
+Content-Type: application/sdp
+Contact: <sip:demo5@131.94.129.40:5060;transport=UDP>
+
+v=0
+o=user1 53655765 2353687637 IN IP4 131.94.129.40
+s=-
+c=IN IP4 131.94.129.40
+t=0 0
+m=audio 8000 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+
+2010-09-24 17:30:57,670 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+SIP/2.0 407 Proxy Authentication Required
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKB6ho0Swv7;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=6F37RVkM
+To: <sip:999101>;tag=as519eefc4
+Call-ID: k9kZq5Fy-1285363857654@taffy.ad.cs.fiu.edu
+CSeq: 2 INVITE
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Proxy-Authenticate: Digest algorithm=MD5, realm="asterisk", nonce="00631ab5"
+Content-Length: 0
+
+
+2010-09-24 17:30:57,670 SENT to 131.94.133.47/5060 [Thread-7]
+
+ACK sip:999101 SIP/2.0
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKB6ho0Swv7
+Call-ID: k9kZq5Fy-1285363857654@taffy.ad.cs.fiu.edu
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=6F37RVkM
+To: <sip:999101>;tag=as519eefc4
+CSeq: 2 ACK
+Route: <sip:asterisk.cs.fiu.edu>
+
+
+2010-09-24 17:30:58,091 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK7d438fe4;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as1392dfce
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 26c157c557e7d0f55b5ebb6a44860bc7@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:30:56 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:30:59,092 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK7d438fe4;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as1392dfce
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 26c157c557e7d0f55b5ebb6a44860bc7@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:30:56 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:30:59,170 SENT to 131.94.133.47/5060 [Timer-4]
+
+INVITE sip:999101 SIP/2.0
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bK86jb1FTtn
+Route: <sip:asterisk.cs.fiu.edu>
+Max-Forwards: 70
+To: <sip:999101>
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=qg0AjARh
+Call-ID: k9kZq5Fy-1285363857654@taffy.ad.cs.fiu.edu
+CSeq: 3 INVITE
+Content-Length: 137
+Content-Type: application/sdp
+Contact: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Proxy-Authorization: Digest username="demo5", realm="asterisk", nonce="00631ab5", uri="sip:999101", response="d042f73f12d96e2ade38fd8befd46e7b"
+
+v=0
+o=user1 53655765 2353687637 IN IP4 131.94.129.40
+s=-
+c=IN IP4 131.94.129.40
+t=0 0
+m=audio 8000 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+
+2010-09-24 17:30:59,185 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+SIP/2.0 100 Trying
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bK86jb1FTtn;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=qg0AjARh
+To: <sip:999101>
+Call-ID: k9kZq5Fy-1285363857654@taffy.ad.cs.fiu.edu
+CSeq: 3 INVITE
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Contact: <sip:s@131.94.133.47>
+Content-Length: 0
+
+
+2010-09-24 17:30:59,185 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bK86jb1FTtn;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=qg0AjARh
+To: <sip:999101>;tag=as05b8bba2
+Call-ID: k9kZq5Fy-1285363857654@taffy.ad.cs.fiu.edu
+CSeq: 3 INVITE
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Contact: <sip:s@131.94.133.47>
+Content-Type: application/sdp
+Content-Length: 162
+
+v=0
+o=root 27363 27363 IN IP4 131.94.133.47
+s=session
+c=IN IP4 131.94.133.47
+t=0 0
+m=audio 16696 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+a=silenceSupp:off - - - -
+
+2010-09-24 17:30:59,420 SENT to 131.94.133.47/5060 [Thread-7]
+
+ACK sip:s@131.94.133.47 SIP/2.0
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bK86jb1FTtn
+To: <sip:999101>;tag=as05b8bba2
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=qg0AjARh
+Call-ID: k9kZq5Fy-1285363857654@taffy.ad.cs.fiu.edu
+CSeq: 3 ACK
+Max-Forwards: 70
+
+
+2010-09-24 17:31:00,092 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK7d438fe4;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as1392dfce
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 26c157c557e7d0f55b5ebb6a44860bc7@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:30:56 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:31:00,467 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+BYE sip:demo5@131.94.129.40:5060 SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK7b8d6e9d;rport
+From: <sip:999101>;tag=as4b34eee8
+To: <sip:demo5@asterisk.cs.fiu.edu>;tag=0xYrxnd5
+Call-ID: Bc3cAyNB-1285363803183@taffy.ad.cs.fiu.edu
+CSeq: 102 BYE
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Content-Length: 0
+
+
+2010-09-24 17:31:10,092 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK112d9386;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as3aa67c3a
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 3ef2fca47b0e1e437cbd3bb7237e937c@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:31:10 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:31:11,092 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK112d9386;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as3aa67c3a
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 3ef2fca47b0e1e437cbd3bb7237e937c@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:31:10 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:31:12,108 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK112d9386;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as3aa67c3a
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 3ef2fca47b0e1e437cbd3bb7237e937c@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:31:10 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:31:13,092 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK112d9386;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as3aa67c3a
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 3ef2fca47b0e1e437cbd3bb7237e937c@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:31:10 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:31:14,092 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK112d9386;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as3aa67c3a
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 3ef2fca47b0e1e437cbd3bb7237e937c@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:31:10 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:31:17,717 SENT to 131.94.133.47/5060 [Thread-11]
+
+INVITE sip:999101 SIP/2.0
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bK02oF08L5O
+Route: <sip:asterisk.cs.fiu.edu>
+Max-Forwards: 70
+To: <sip:999101>
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=tnyWkn2R
+Call-ID: UMEOTaiy-1285363877717@taffy.ad.cs.fiu.edu
+CSeq: 4 INVITE
+Content-Length: 137
+Content-Type: application/sdp
+Contact: <sip:demo5@131.94.129.40:5060;transport=UDP>
+
+v=0
+o=user1 53655765 2353687637 IN IP4 131.94.129.40
+s=-
+c=IN IP4 131.94.129.40
+t=0 0
+m=audio 8000 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+
+2010-09-24 17:31:17,717 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+SIP/2.0 407 Proxy Authentication Required
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bK02oF08L5O;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=tnyWkn2R
+To: <sip:999101>;tag=as2e9f2584
+Call-ID: UMEOTaiy-1285363877717@taffy.ad.cs.fiu.edu
+CSeq: 4 INVITE
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Proxy-Authenticate: Digest algorithm=MD5, realm="asterisk", nonce="0549b9f9"
+Content-Length: 0
+
+
+2010-09-24 17:31:17,717 SENT to 131.94.133.47/5060 [Thread-7]
+
+ACK sip:999101 SIP/2.0
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bK02oF08L5O
+Call-ID: UMEOTaiy-1285363877717@taffy.ad.cs.fiu.edu
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=tnyWkn2R
+To: <sip:999101>;tag=as2e9f2584
+CSeq: 4 ACK
+Route: <sip:asterisk.cs.fiu.edu>
+
+
+2010-09-24 17:31:19,233 SENT to 131.94.133.47/5060 [Timer-5]
+
+INVITE sip:999101 SIP/2.0
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKlGKYVjWB7
+Route: <sip:asterisk.cs.fiu.edu>
+Max-Forwards: 70
+To: <sip:999101>
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=OopKsPd2
+Call-ID: UMEOTaiy-1285363877717@taffy.ad.cs.fiu.edu
+CSeq: 5 INVITE
+Content-Length: 137
+Content-Type: application/sdp
+Contact: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Proxy-Authorization: Digest username="demo5", realm="asterisk", nonce="0549b9f9", uri="sip:999101", response="ddd92f6bf6bdeacb83f3466c0c85e878"
+
+v=0
+o=user1 53655765 2353687637 IN IP4 131.94.129.40
+s=-
+c=IN IP4 131.94.129.40
+t=0 0
+m=audio 8000 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+
+2010-09-24 17:31:19,233 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+SIP/2.0 100 Trying
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKlGKYVjWB7;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=OopKsPd2
+To: <sip:999101>
+Call-ID: UMEOTaiy-1285363877717@taffy.ad.cs.fiu.edu
+CSeq: 5 INVITE
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Contact: <sip:s@131.94.133.47>
+Content-Length: 0
+
+
+2010-09-24 17:31:19,233 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKlGKYVjWB7;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=OopKsPd2
+To: <sip:999101>;tag=as087b80a9
+Call-ID: UMEOTaiy-1285363877717@taffy.ad.cs.fiu.edu
+CSeq: 5 INVITE
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Contact: <sip:s@131.94.133.47>
+Content-Type: application/sdp
+Content-Length: 162
+
+v=0
+o=root 27363 27363 IN IP4 131.94.133.47
+s=session
+c=IN IP4 131.94.133.47
+t=0 0
+m=audio 10584 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+a=silenceSupp:off - - - -
+
+2010-09-24 17:31:20,233 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKlGKYVjWB7;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=OopKsPd2
+To: <sip:999101>;tag=as087b80a9
+Call-ID: UMEOTaiy-1285363877717@taffy.ad.cs.fiu.edu
+CSeq: 5 INVITE
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Contact: <sip:s@131.94.133.47>
+Content-Type: application/sdp
+Content-Length: 162
+
+v=0
+o=root 27363 27363 IN IP4 131.94.133.47
+s=session
+c=IN IP4 131.94.133.47
+t=0 0
+m=audio 10584 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+a=silenceSupp:off - - - -
+
+2010-09-24 17:31:21,233 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKlGKYVjWB7;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=OopKsPd2
+To: <sip:999101>;tag=as087b80a9
+Call-ID: UMEOTaiy-1285363877717@taffy.ad.cs.fiu.edu
+CSeq: 5 INVITE
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Contact: <sip:s@131.94.133.47>
+Content-Type: application/sdp
+Content-Length: 162
+
+v=0
+o=root 27363 27363 IN IP4 131.94.133.47
+s=session
+c=IN IP4 131.94.133.47
+t=0 0
+m=audio 10584 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+a=silenceSupp:off - - - -
+
+2010-09-24 17:31:23,233 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKlGKYVjWB7;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=OopKsPd2
+To: <sip:999101>;tag=as087b80a9
+Call-ID: UMEOTaiy-1285363877717@taffy.ad.cs.fiu.edu
+CSeq: 5 INVITE
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Contact: <sip:s@131.94.133.47>
+Content-Type: application/sdp
+Content-Length: 162
+
+v=0
+o=root 27363 27363 IN IP4 131.94.133.47
+s=session
+c=IN IP4 131.94.133.47
+t=0 0
+m=audio 10584 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+a=silenceSupp:off - - - -
+
+2010-09-24 17:31:24,093 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK431620e5;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as0c973d65
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 0395310b7efb957d55c0b559710be0fd@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:31:24 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:31:25,108 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK431620e5;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as0c973d65
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 0395310b7efb957d55c0b559710be0fd@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:31:24 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:31:26,108 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK431620e5;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as0c973d65
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 0395310b7efb957d55c0b559710be0fd@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:31:24 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:31:27,108 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK431620e5;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as0c973d65
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 0395310b7efb957d55c0b559710be0fd@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:31:24 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:31:27,233 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKlGKYVjWB7;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=OopKsPd2
+To: <sip:999101>;tag=as087b80a9
+Call-ID: UMEOTaiy-1285363877717@taffy.ad.cs.fiu.edu
+CSeq: 5 INVITE
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Contact: <sip:s@131.94.133.47>
+Content-Type: application/sdp
+Content-Length: 162
+
+v=0
+o=root 27363 27363 IN IP4 131.94.133.47
+s=session
+c=IN IP4 131.94.133.47
+t=0 0
+m=audio 10584 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+a=silenceSupp:off - - - -
+
+2010-09-24 17:31:28,093 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+OPTIONS sip:demo5@131.94.129.40:5060;transport=UDP SIP/2.0
+Via: SIP/2.0/UDP 131.94.133.47:5060;branch=z9hG4bK431620e5;rport
+From: "asterisk" <sip:asterisk@131.94.133.47>;tag=as0c973d65
+To: <sip:demo5@131.94.129.40:5060;transport=UDP>
+Contact: <sip:asterisk@131.94.133.47>
+Call-ID: 0395310b7efb957d55c0b559710be0fd@131.94.133.47
+CSeq: 102 OPTIONS
+User-Agent: Asterisk PBX
+Max-Forwards: 70
+Date: Fri, 24 Sep 2010 21:31:24 GMT
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Content-Length: 0
+
+
+2010-09-24 17:31:31,234 RECEIVED from 131.94.133.47/5060 [Thread-8]
+
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKlGKYVjWB7;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=OopKsPd2
+To: <sip:999101>;tag=as087b80a9
+Call-ID: UMEOTaiy-1285363877717@taffy.ad.cs.fiu.edu
+CSeq: 5 INVITE
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Contact: <sip:s@131.94.133.47>
+Content-Type: application/sdp
+Content-Length: 162
+
+v=0
+o=root 27363 27363 IN IP4 131.94.133.47
+s=session
+c=IN IP4 131.94.133.47
+t=0 0
+m=audio 10584 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+a=silenceSupp:off - - - -
+
+2010-09-24 17:31:35,234 RECEIVED from 131.94.133.47/5060 [Thread-7]
+
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP 131.94.129.40:5060;branch=z9hG4bKlGKYVjWB7;received=131.94.129.40
+From: <sip:demo5@asterisk.cs.fiu.edu>;tag=OopKsPd2
+To: <sip:999101>;tag=as087b80a9
+Call-ID: UMEOTaiy-1285363877717@taffy.ad.cs.fiu.edu
+CSeq: 5 INVITE
+User-Agent: Asterisk PBX
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY
+Contact: <sip:s@131.94.133.47>
+Content-Type: application/sdp
+Content-Length: 162
+
+v=0
+o=root 27363 27363 IN IP4 131.94.133.47
+s=session
+c=IN IP4 131.94.133.47
+t=0 0
+m=audio 10584 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+a=silenceSupp:off - - - -
+

@@ -1,0 +1,16 @@
+<Macro>
+  <paramNameList>
+    <string>connectionID</string>
+    <string>mediumName</string>
+  </paramNameList>
+  <paramTypeList>
+    <string>java.lang.String</string>
+    <string>java.lang.String</string>
+  </paramTypeList>
+  <thrownExceptions>
+    <string>cvm.ucm.handlers.exception.NoSessionException</string>
+  </thrownExceptions>
+  <script>import static java.lang.String; import static cvm.ucm.handlers.exception.NoSessionException; String sID = ncb.getSessionID(connectionID); NoSessionException exception = null; try{ if(sID == null){ exception = new NoSessionException(sID); throw exception;} if(!ncb.sendMedia(sID, mediumName,null))ucmNotifier.notifyUnavailableMedia_Event();}catch(NoSessionException e){return e;} ucmNotifier.notifyMediaInitiatorEnableReply_Event(true); return exception;</script>
+  <returnType>cvm.ucm.handlers.exception.NoSessionException</returnType>
+  <name>enableMediaInitiator</name>
+</Macro>

@@ -1,0 +1,5 @@
+<Macro>
+  <script>import static cvm.ucm.manager.UCM_M_Facade; ncb.resetNCB(); se.resetSE(); UCM_M_Facade facade = UCM_M_Facade.Instance(se, ncb); facade.executeScript(&quot;login (\&quot;a\&quot;,\&quot;password123\&quot;)\n&quot;); facade.executeScript(&quot;createConnections (\&quot;c1\&quot;)\n&quot;); facade.executeScript(&quot;addParticipants(\&quot;c1\&quot;,\&quot;b,c\&quot;)\n&quot;); facade.executeScript(&quot;sendSchema(\&quot;c1\&quot;,\&quot;a\&quot;,\&quot;b,c\&quot;,\&quot;control_xcml\&quot;,\&quot;data_xcml\&quot;)\n&quot;); facade.executeScript(&quot;enableMediaInitiator(\&quot;c1\&quot;,\&quot;audio\&quot;)&quot;); facade.executeScript(&quot;removeParticipants(\&quot;c1\&quot;,\&quot;d\&quot;)\n&quot;); facade.executeScript(&quot;declineConnection(\&quot;c1\&quot;,\&quot;b\&quot;,\&quot;a\&quot;)\n&quot;);</script>
+  <returnType>void</returnType>
+  <name>UCM_T_12</name>
+</Macro>

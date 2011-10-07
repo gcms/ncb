@@ -1,0 +1,16 @@
+<Macro>
+  <paramNameList>
+    <string>userName</string>
+    <string>password</string>
+  </paramNameList>
+  <paramTypeList>
+    <string>java.lang.String</string>
+    <string>java.lang.String</string>
+  </paramTypeList>
+  <thrownExceptions>
+    <string>cvm.ucm.handlers.exception.LoginException</string>
+  </thrownExceptions>
+  <script>import static cvm.ucm.handlers.exception.LoginException;import static cvm.ncb.UserObject;import static cvm.ncb.UserSchema;import static cvm.ncb.UserProfile;LoginException e = null; try{UserObject user = ncb.login(userName,password);if(user==null){e = new LoginException(); throw e;}UserSchema schemas= ncb.retrieveSchemas(userName,password);UserProfile userProfile= ncb.createUserProfile(user, schemas);ucmNotifier.notifyUserProfileCreatedEvent(userProfile);}catch(LoginException e){ return e;} return e;</script>
+  <returnType>cvm.ucm.handlers.exception.LoginException</returnType>
+  <name>login</name>
+</Macro>

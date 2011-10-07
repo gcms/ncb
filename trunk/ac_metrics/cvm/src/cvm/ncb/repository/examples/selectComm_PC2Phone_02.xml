@@ -1,0 +1,19 @@
+<csmPolicy policyType="goalPolicy" policyName="selectComm_PC2Phone_02">
+	<scope>
+		<service>Communication Object</service>
+		<operation>selection</operation>
+		<active>true</active></scope>
+	<condition>
+		<feature>PC2Phone</feature>
+		<operation>request</operation>
+		<literal></literal></condition>
+	<businessValue>
+		<businessGroup>general</businessGroup>
+		<value>25</value></businessValue>
+	<decision>
+		<param>Payment</param>
+		<!--representing the feature of the communication framework-->
+		<operation>greaterThanOrEqualTo</operation>
+		<value>conID.Payment</value><!--representing the request from the user-->
+		</decision>
+	</csmPolicy>

@@ -1,0 +1,59 @@
+2010-09-24 17:30:55,419 INFO  [main] starting user agent [myAddress: 131.94.129.40, sipPort: 5060, userpart: demo5, domain: asterisk.cs.fiu.edu]
+2010-09-24 17:30:55,451 INFO  [main] added datagram socket 131.94.129.40:5060/UDP
+2010-09-24 17:30:55,451 INFO  [main] added 131.94.129.40:5060/UDP: net.sourceforge.peers.sip.transport.UdpMessageReceiver@76e369 to message receivers
+2010-09-24 17:30:55,482 DEBUG [main] SM z9hG4bKF6s2eShoj|REGISTER [NonInviteClientTransactionStateInit -> NonInviteClientTransactionStateTrying] start
+2010-09-24 17:30:55,482 DEBUG [Thread-7] ClientTransaction = net.sourceforge.peers.sip.transaction.NonInviteClientTransaction@1a52fdf
+2010-09-24 17:30:55,482 DEBUG [Thread-7] SM z9hG4bKF6s2eShoj|REGISTER [NonInviteClientTransactionStateTrying -> NonInviteClientTransactionStateProceeding] received1xx
+2010-09-24 17:30:55,482 DEBUG [Thread-7] ClientTransaction = net.sourceforge.peers.sip.transaction.NonInviteClientTransaction@1a52fdf
+2010-09-24 17:30:55,482 DEBUG [Thread-7] SM z9hG4bKF6s2eShoj|REGISTER [NonInviteClientTransactionStateProceeding -> NonInviteClientTransactionStateCompleted] received200To699
+2010-09-24 17:30:55,513 DEBUG [Thread-7] SM z9hG4bKvPTMgqtdu|REGISTER [NonInviteClientTransactionStateInit -> NonInviteClientTransactionStateTrying] start
+2010-09-24 17:30:55,513 DEBUG [Thread-8] ClientTransaction = net.sourceforge.peers.sip.transaction.NonInviteClientTransaction@1bc82e7
+2010-09-24 17:30:55,513 DEBUG [Thread-8] SM z9hG4bKvPTMgqtdu|REGISTER [NonInviteClientTransactionStateTrying -> NonInviteClientTransactionStateProceeding] received1xx
+2010-09-24 17:30:55,529 DEBUG [Thread-8] ClientTransaction = net.sourceforge.peers.sip.transaction.NonInviteClientTransaction@1bc82e7
+2010-09-24 17:30:55,529 DEBUG [Thread-8] SM z9hG4bKvPTMgqtdu|REGISTER [NonInviteClientTransactionStateProceeding -> NonInviteClientTransactionStateCompleted] received200To699
+2010-09-24 17:30:57,670 DEBUG [Thread-11] SM z9hG4bKB6ho0Swv7|INVITE [InviteClientTransactionStateInit -> InviteClientTransactionStateCalling] start
+2010-09-24 17:30:57,670 DEBUG [Thread-7] ClientTransaction = net.sourceforge.peers.sip.transaction.InviteClientTransaction@14384c2
+2010-09-24 17:30:57,670 DEBUG [Thread-7] SM z9hG4bKB6ho0Swv7|INVITE [InviteClientTransactionStateCalling -> InviteClientTransactionStateCompleted] received300To699
+2010-09-24 17:30:59,170 DEBUG [Timer-4] SM z9hG4bK86jb1FTtn|INVITE [InviteClientTransactionStateInit -> InviteClientTransactionStateCalling] start
+2010-09-24 17:30:59,185 DEBUG [Thread-8] ClientTransaction = net.sourceforge.peers.sip.transaction.InviteClientTransaction@cdb06e
+2010-09-24 17:30:59,185 DEBUG [Thread-8] SM z9hG4bK86jb1FTtn|INVITE [InviteClientTransactionStateCalling -> InviteClientTransactionStateProceeding] received1xx
+2010-09-24 17:30:59,185 DEBUG [Thread-7] ClientTransaction = net.sourceforge.peers.sip.transaction.InviteClientTransaction@cdb06e
+2010-09-24 17:30:59,185 DEBUG [Thread-7] SM z9hG4bK86jb1FTtn|INVITE [InviteClientTransactionStateProceeding -> InviteClientTransactionStateTerminated] received2xx
+2010-09-24 17:30:59,185 DEBUG [Thread-7] Contact: <sip:s@131.94.133.47>
+2010-09-24 17:30:59,420 DEBUG [Thread-7] SM k9kZq5Fy-1285363857654@taffy.ad.cs.fiu.edu|qg0AjARh|as05b8bba2 [DialogStateInit -> DialogStateConfirmed] receivedOrSent2xx
+2010-09-24 17:31:00,482 DEBUG [Transaction timer] SM z9hG4bKF6s2eShoj|REGISTER [NonInviteClientTransactionStateCompleted -> NonInviteClientTransactionStateTerminated] timerKFires
+2010-09-24 17:31:00,513 DEBUG [Transaction timer] SM z9hG4bKvPTMgqtdu|REGISTER [NonInviteClientTransactionStateCompleted -> NonInviteClientTransactionStateTerminated] timerKFires
+2010-09-24 17:31:17,717 DEBUG [Thread-11] SM z9hG4bK02oF08L5O|INVITE [InviteClientTransactionStateInit -> InviteClientTransactionStateCalling] start
+2010-09-24 17:31:17,717 DEBUG [Thread-7] ClientTransaction = net.sourceforge.peers.sip.transaction.InviteClientTransaction@e1899b
+2010-09-24 17:31:17,717 DEBUG [Thread-7] SM z9hG4bK02oF08L5O|INVITE [InviteClientTransactionStateCalling -> InviteClientTransactionStateCompleted] received300To699
+2010-09-24 17:31:19,233 DEBUG [Timer-5] SM z9hG4bKlGKYVjWB7|INVITE [InviteClientTransactionStateInit -> InviteClientTransactionStateCalling] start
+2010-09-24 17:31:19,233 DEBUG [Thread-8] ClientTransaction = net.sourceforge.peers.sip.transaction.InviteClientTransaction@88e2dd
+2010-09-24 17:31:19,233 DEBUG [Thread-8] SM z9hG4bKlGKYVjWB7|INVITE [InviteClientTransactionStateCalling -> InviteClientTransactionStateProceeding] received1xx
+2010-09-24 17:31:19,233 DEBUG [Thread-7] ClientTransaction = net.sourceforge.peers.sip.transaction.InviteClientTransaction@88e2dd
+2010-09-24 17:31:19,233 DEBUG [Thread-7] SM z9hG4bKlGKYVjWB7|INVITE [InviteClientTransactionStateProceeding -> InviteClientTransactionStateTerminated] received2xx
+2010-09-24 17:31:19,233 DEBUG [Thread-7] Contact: <sip:s@131.94.133.47>
+2010-09-24 17:31:19,233 ERROR [Thread-7] input/output error
+java.net.BindException: Address already in use: Cannot bind
+	at java.net.PlainDatagramSocketImpl.bind0(Native Method)
+	at java.net.PlainDatagramSocketImpl.bind(Unknown Source)
+	at java.net.DatagramSocket.bind(Unknown Source)
+	at java.net.DatagramSocket.<init>(Unknown Source)
+	at java.net.DatagramSocket.<init>(Unknown Source)
+	at java.net.DatagramSocket.<init>(Unknown Source)
+	at gov.nist.jrtp.RtpSession.<init>(RtpSession.java:124)
+	at gov.nist.jrtp.RtpManager.createRtpSession(RtpManager.java:84)
+	at net.sourceforge.peers.media.CaptureRtpSender.<init>(CaptureRtpSender.java:48)
+	at net.sourceforge.peers.sip.core.useragent.handlers.InviteHandler.successResponseReceived(InviteHandler.java:452)
+	at net.sourceforge.peers.sip.transaction.InviteClientTransactionStateProceeding.received2xx(InviteClientTransactionStateProceeding.java:44)
+	at net.sourceforge.peers.sip.transaction.InviteClientTransaction.receivedResponse(InviteClientTransaction.java:143)
+	at net.sourceforge.peers.sip.transport.MessageReceiver.processMessage(MessageReceiver.java:135)
+	at net.sourceforge.peers.sip.transport.UdpMessageReceiver.listen(UdpMessageReceiver.java:57)
+	at net.sourceforge.peers.sip.transport.MessageReceiver.run(MessageReceiver.java:62)
+	at java.lang.Thread.run(Unknown Source)
+2010-09-24 17:31:20,233 DEBUG [Thread-8] ClientTransaction = net.sourceforge.peers.sip.transaction.InviteClientTransaction@88e2dd
+2010-09-24 17:31:21,233 DEBUG [Thread-7] ClientTransaction = net.sourceforge.peers.sip.transaction.InviteClientTransaction@88e2dd
+2010-09-24 17:31:23,233 DEBUG [Thread-8] ClientTransaction = net.sourceforge.peers.sip.transaction.InviteClientTransaction@88e2dd
+2010-09-24 17:31:27,233 DEBUG [Thread-8] ClientTransaction = net.sourceforge.peers.sip.transaction.InviteClientTransaction@88e2dd
+2010-09-24 17:31:29,671 DEBUG [Transaction timer] SM z9hG4bKB6ho0Swv7|INVITE [InviteClientTransactionStateCompleted -> InviteClientTransactionStateTerminated] timerDFires
+2010-09-24 17:31:31,234 DEBUG [Thread-8] ClientTransaction = net.sourceforge.peers.sip.transaction.InviteClientTransaction@88e2dd
+2010-09-24 17:31:35,234 DEBUG [Thread-7] ClientTransaction = net.sourceforge.peers.sip.transaction.InviteClientTransaction@88e2dd

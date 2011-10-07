@@ -1,0 +1,9 @@
+<CommFeatureRoot>
+	<Video numberOfUsers="" onlineStatus=""></Video>
+	<Audio numberOfUsers="" onlineStatus="">
+		<PC2Phone payment=""></PC2Phone>
+		<Phone2PC payment=""></Phone2PC></Audio>
+	<FileTransfer numberOfUsers=""></FileTransfer>
+	<Chat msgArchive="" numberOfUsers="" onlineStatus="" emoticon="" imForward="" avatar=""></Chat>
+	<ContactList contactImport="" contactGroup=""></ContactList>
+	<Other radio="" plugins=""></Other></CommFeatureRoot>

@@ -1,0 +1,14 @@
+<Macro>
+  <paramNameList>
+    <string>userID</string>
+  </paramNameList>
+  <paramTypeList>
+    <string>java.lang.String</string>
+  </paramTypeList>
+  <thrownExceptions>
+    <string>cvm.ucm.handlers.exception.SchemaNotSavedException</string>
+  </thrownExceptions>
+  <script>import static cvm.ucm.handlers.exception.SchemaNotSavedException; SchemaNotSavedException exception = null; if(!ncb.saveSchema(null)){ exception = new SchemaNotSavedException(); throw exception; }ncb.logout(userID); ucmNotifier.notifyLogoffReply(true); return exception;</script>
+  <returnType>cvm.ucm.handlers.exception.SchemaNotSavedException</returnType>
+  <name>logout</name>
+</Macro>

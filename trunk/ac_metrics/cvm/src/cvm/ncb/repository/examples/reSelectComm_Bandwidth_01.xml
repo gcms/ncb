@@ -1,0 +1,16 @@
+<csmPolicy policyType="actionPolicy" policyName="reSelectComm_Bandwidth_01">
+	<scope>
+		<service>Communication Object</service>
+		<operation>reselection</operation>
+		<active>true</active></scope>
+	<condition>
+		<feature>Bandwidth</feature>
+		<operation>lowerThan</operation>
+		<literal>40%</literal></condition>
+	<businessValue>
+		<businessGroup>specific</businessGroup>
+		<value>100</value></businessValue>
+	<decision>
+		<param>candidateSet</param>
+		<operation>useNext</operation>
+		<value></value></decision></csmPolicy>

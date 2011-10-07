@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="cvm/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/AutonomicFramework"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/peers/jrtp.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/peers/peers.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/shared/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/shared/jaxen-1.1.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/smack/jspeex-0.9.7-jfcom.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/smack/smack.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/smack/smackx.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/smack/smackx-jingle.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/smack/smackx-debug.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/smack/smackx-jingle-video.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/native/manta.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/shared/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/shared/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/shared/commons-logging-adapters-1.1.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/shared/commons-logging-api-1.1.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/shared/jmf.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/skype/swt.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/skype/org.eclipse.swt_3.2.2.v3236b.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/skype/skypeMod.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/ncb/skype/skype_win32.jar"/>
+	<classpathentry kind="output" path="cvm/bin"/>
+</classpath>

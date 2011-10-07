@@ -1,0 +1,19 @@
+<csmPolicy policyType="goalPolicy" policyName="selectComm_Payment_01">
+	<scope>
+		<service>Communication Object</service>
+		<operation>selection</operation>
+		<active>true</active></scope>
+	<condition>
+		<feature>Payment</feature>
+		<operation>request</operation>
+		<literal></literal></condition>
+	<businessValue>
+		<businessGroup>general</businessGroup>
+		<value>50</value></businessValue>
+	<decision>
+		<param>Enabled</param>
+		<!--representing the feature of the communication framework-->
+		<operation>equalTo</operation>
+		<value>conID.Payment</value><!--representing the request from the user-->
+		</decision>
+	</csmPolicy>

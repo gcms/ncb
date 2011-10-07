@@ -1,0 +1,19 @@
+<csmPolicy policyType="goalPolicy" policyName="selectComm_Audio_02">
+	<scope>
+		<service>Communication Object</service>
+		<operation>selection</operation>
+		<active>true</active></scope>
+	<condition>
+		<feature>Audio</feature>
+		<operation>request</operation>
+		<literal></literal></condition>
+	<businessValue>
+		<businessGroup>general</businessGroup>
+		<value>96</value></businessValue>
+	<decision>
+		<param>NumberOfUsers</param>
+		<!--representing the feature of the communication framework-->
+		<operation>lessThanOrEqualTo</operation>
+		<value>conID.users</value><!--representing the request from the user-->
+		</decision>
+	</csmPolicy>

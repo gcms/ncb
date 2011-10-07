@@ -1,0 +1,18 @@
+<Macro>
+  <paramNameList>
+    <string>connectionID</string>
+    <string>senderID</string>
+    <string>receiverID</string>
+  </paramNameList>
+  <paramTypeList>
+    <string>java.lang.String</string>
+    <string>java.lang.String</string>
+    <string>java.lang.String</string>
+  </paramTypeList>
+  <thrownExceptions>
+    <string>cvm.ucm.handlers.exception.NoSessionException</string>
+  </thrownExceptions>
+  <script>import static java.lang.String; import static cvm.ucm.handlers.exception.NoSessionException; NoSessionException exception = null; String sID = ncb.getSessionID(connectionID); try{ if(sID == null) { exception = new NoSessionException(sID); throw exception; } ncb.sendSchema(sID, senderID, receiverID, null); }catch(NoSessionException e){return e;} ucmNotifier.notifyConnectionDeclinedReply_Event(true); return exception;</script>
+  <returnType>cvm.ucm.handlers.exception.NoSessionException</returnType>
+  <name>declineConnection</name>
+</Macro>

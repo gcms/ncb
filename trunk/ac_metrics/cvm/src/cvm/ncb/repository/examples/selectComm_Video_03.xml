@@ -1,0 +1,19 @@
+<csmPolicy policyType="goalPolicy" policyName="selectComm_Video_03">
+	<scope>
+		<service>Communication Object</service>
+		<operation>selection</operation>
+		<active>true</active></scope>
+	<condition>
+		<feature>Video</feature>
+		<operation>request</operation>
+		<literal></literal></condition>
+	<businessValue>
+		<businessGroup>general</businessGroup>
+		<value>50</value></businessValue>
+	<decision>
+		<param>onlineStatus.Enabled</param>
+		<!--representing the feature of the communication framework-->
+		<operation>equalTo</operation>
+		<value>conID.emoticon</value><!--representing the request from the user-->
+		</decision>
+	</csmPolicy>

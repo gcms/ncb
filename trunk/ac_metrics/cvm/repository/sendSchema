@@ -1,0 +1,24 @@
+<Macro>
+  <paramNameList>
+    <string>connectionID</string>
+    <string>senderID</string>
+    <string>receiverID</string>
+    <string>control_xcml</string>
+    <string>data_xcml</string>
+  </paramNameList>
+  <paramTypeList>
+    <string>java.lang.String</string>
+    <string>java.lang.String</string>
+    <string>java.lang.String</string>
+    <string>java.lang.String</string>
+    <string>java.lang.String</string>
+  </paramTypeList>
+  <thrownExceptions>
+    <string>cvm.ucm.handlers.exception.NoSessionException</string>
+    <string>cvm.ucm.handlers.exception.ControlSchemaNotSentException</string>
+    <string>cvm.ucm.handlers.exception.DataSchemaNotSentException</string>
+  </thrownExceptions>
+  <script>import static java.lang.String; import java.lang.Exception; import static cvm.ucm.handlers.exception.NoSessionException; import static cvm.ucm.handlers.exception.ControlSchemaNotSentException; import static cvm.ucm.handlers.exception.DataSchemaNotSentException; Exception exception = null; String sID = ncb.getSessionID(connectionID); try{ if(sID == null){ exception = new NoSessionException(sID); throw exception;}if(control_xcml !=null){ if(!ncb.sendSchema(sID, senderID, receiverID, control_xcml)){ exception = new ControlSchemaNotSentException(); throw exception;}} if(data_xcml != null){if(!ncb.sendSchema(sID, senderID, receiverID, data_xcml)){ exception = new DataSchemaNotSentException(); throw exception;}}}catch(Exception e){return e;} ucmNotifier.notifySendSchemaReply_Event(true); return exception;</script>
+  <returnType>java.lang.Exception</returnType>
+  <name>sendSchema</name>
+</Macro>

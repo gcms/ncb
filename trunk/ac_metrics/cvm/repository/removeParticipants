@@ -1,0 +1,17 @@
+<Macro>
+  <paramNameList>
+    <string>connectionID</string>
+    <string>userID</string>
+  </paramNameList>
+  <paramTypeList>
+    <string>java.lang.String</string>
+    <string>java.lang.String</string>
+  </paramTypeList>
+  <thrownExceptions>
+    <string>cvm.ucm.handlers.exception.NoSessionException</string>
+    <string>cvm.ucm.handlers.exception.PartyNotFoundException</string>
+  </thrownExceptions>
+  <script>import static java.lang.String; import static cvm.ucm.handlers.exception.NoSessionException; import static cvm.ucm.handlers.exception.PartyNotFoundException; Exception exception = null; String sID = ncb.getSessionID(connectionID); try{if(sID == null){ exception = new NoSessionException(sID);throw exception;} String notAdded = ncb.removeParty(sID, userID); if(notAdded != null){ exception = new PartyNotFoundException(notAdded); throw exception;}}catch(Exception e){return e;}ucmNotifier.notifyPartyRemovedReply_Event(true);return exception;</script>
+  <returnType>java.lang.Exception</returnType>
+  <name>removeParticipants</name>
+</Macro>

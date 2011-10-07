@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="cvm/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/AutonomicFramework"/>
+	<classpathentry kind="lib" path="cvm/lib/xercesImpl.jar/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/xml-apis.jar/xml-apis.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/cglib-nodep-2.1_3.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/janino.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/jdom-1.0.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/jettison-1.0-RC1.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/jms.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/joda-time-1.2.1.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/jmf.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/manta.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/mysql-connector-java-5.1.5-bin.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/org.eclipse.swt_3.2.2.v3236b.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/skype_win32.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/smack.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/smackx.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/smackx-jingle.jar" sourcepath="/SmackVideo/jingle/extension/source"/>
+	<classpathentry kind="lib" path="cvm/lib/stax-1.2.0.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/stax-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/swt.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/wstx-asl-3.2.0.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/xml-writer-0.2.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/xom-1.1.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/xpp3_min-1.1.3.4.O.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/xstream-1.2.2.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/xstream-benchmark-1.2.2.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/smackx-debug.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/commons-logging-adapters-1.1.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/commons-logging-api-1.1.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/jspeex-0.9.7-jfcom.jar"/>
+	<classpathentry kind="lib" path="cvm/lib/Speex.jar"/>
+	<classpathentry kind="output" path="cvm/bin"/>
+</classpath>
