@@ -10,10 +10,9 @@ import cvm.ncb.handlers.exception.NoSessionException;
 import cvm.ncb.handlers.exception.PartyNotAddedException;
 import cvm.ncb.handlers.exception.PartyNotFoundException;
 
-public class JMMLAdapter extends NCBBridge 
+public class JMMLAdapter extends NCBBridgeBase
 {
 
-	@Override
 	public void addParticipant(String sID, String participantID)
 			throws PartyNotAddedException 
 	{
@@ -21,28 +20,24 @@ public class JMMLAdapter extends NCBBridge
 
 	}
 
-	@Override
-	public void createSession(String sessionID) 
+	public void createSession(String sessionID)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public String getCapability()
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public boolean isLoggedIn(String userName) 
+	public boolean isLoggedIn(String userName)
 	{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public UserObject login(String userName, String password)
 			throws LoginException 
 	{
@@ -50,14 +45,12 @@ public class JMMLAdapter extends NCBBridge
 		return null;
 	}
 
-	@Override
-	public void logout(String userName) 
+	public void logout(String userName)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public void removeParticipant(String sID, String participant)
 			throws PartyNotFoundException 
 	{
@@ -65,50 +58,42 @@ public class JMMLAdapter extends NCBBridge
 
 	}
 
-	@Override
-	public void restartService() 
+	public void restartService()
 	{
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public boolean isSessionCreated(String sID) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public void sendSchema(String schema, String participantID) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void disableMedium(String connectionID, String mediumName) throws PartyNotFoundException, NoSessionException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void enableMedium(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public boolean hasMediumFailed(String sessID, String medium_type) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public void destroySession(String sessionID) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void enableMediumReceiver(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
 		// TODO Auto-generated method stub
 		

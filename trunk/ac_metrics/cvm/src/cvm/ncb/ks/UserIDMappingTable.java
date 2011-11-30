@@ -17,6 +17,20 @@ public class UserIDMappingTable {
 	}
 	public String lookupContact(String fwName, String ncbName){
 		CVM_Debug.getInstance().printDebugMessage("User lookup for "+ncbName+" on fw "+fwName);
+        if(ncbName.equals("Andrew") && fwName.equals("Skype"))
+			return "geapis1";
+        if(ncbName.equals("Yali") && fwName.equals("Skype"))
+			return "geapis2";
+        if(ncbName.equals("Tariq") && fwName.equals("Skype"))
+			return "geapis3";
+
+        if(ncbName.equals("Andrew") && fwName.equals("Smack"))
+			return "geapis1@gustavosousa-pc";
+        if(ncbName.equals("Yali") && fwName.equals("Smack"))
+			return "geapis2@gustavosousa-pc";
+        if(ncbName.equals("Tariq") && fwName.equals("Smack"))
+			return "geapis3@gustavosousa-pc";
+
 		if(ncbName.equals("Andrew") && fwName.equals("Skype"))
 			return "andrew.a.allen";
 		if(ncbName.equals("Andrew") && fwName.equals("Smack"))

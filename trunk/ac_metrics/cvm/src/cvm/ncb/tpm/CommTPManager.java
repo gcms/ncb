@@ -1,5 +1,7 @@
 package cvm.ncb.tpm;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.Set;
 
 import cvm.ncb.ks.ConIDMappingTable;
@@ -12,7 +14,7 @@ public class CommTPManager<Touchpoint> extends GenericManager {
 	private ConIDMappingTable m_conToFwTable = null;
 
 	
-	public CommTPManager(String name, String policyFileName, AbstractResource aResource) {
+	public CommTPManager(String name, URI policyFileName, AbstractResource aResource) {
 		super(name, policyFileName, aResource);
 		m_conToFwTable = ConIDMappingTable.getInstance();
 	}

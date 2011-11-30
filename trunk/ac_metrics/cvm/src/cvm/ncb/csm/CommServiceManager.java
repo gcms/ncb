@@ -1,29 +1,24 @@
 package cvm.ncb.csm;
 
+import cvm.model.CVM_Debug;
+import cvm.ncb.adapters.NCBBridge;
+import cvm.ncb.handlers.NCBExceptionHandler;
+import cvm.ncb.handlers.exception.LoginException;
+import cvm.ncb.ks.ConIDMappingTable;
+import cvm.ncb.ks.UserIDMappingTable;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-
-import cvm.ncb.handlers.NCBExceptionHandler;
-import cvm.ncb.handlers.exception.LoginException;
-
-import cvm.ncb.ks.ConIDMappingTable;
-import cvm.ncb.ks.UserIDMappingTable;
-import cvm.ncb.tpm.CommFWResource;
-import cvm.ncb.adapters.NCBBridge;
-
-import edu.fiu.strg.ACSTF.touchpoint.AbstractTouchPoint;
-import cvm.model.*;
 
 /**
  * Manages the communication objects of NCB.
  * @author Frank Hernandez
  *
  */
-public class CommServiceManager 
+public class CommServiceManager
 {
 	private HashMap<String, CommObject> m_hmSessionMap;
 	private CommObject m_coCurrCommObj;
@@ -33,7 +28,7 @@ public class CommServiceManager
 	private ConIDMappingTable m_conToFwTable = null;
 	private Method[] m_bridgeMethods = null;
 	private Method[] m_ncbMethods = null;
-	
+
 	private CommServiceManager()
 	{
 		m_xhXHandler = NCBExceptionHandler.Instance();
@@ -42,9 +37,9 @@ public class CommServiceManager
 		m_bridgeMethods = NCBBridge.class.getMethods();
 		m_ncbMethods = CommServiceManager.class.getMethods();
 		this.intitializeCommObjects();
-		
+
 	}
-	
+
 	/**
 	 * Implementation of the Singleton design pattern.
 	 * @return
@@ -53,10 +48,10 @@ public class CommServiceManager
 	{
 		if(instance == null)
 			instance = new CommServiceManager();
-		
+
 		return instance;
 	}
-	
+
 	/**
 	 * This function returns the capabilities of
 	 * all the communication objects.
@@ -64,25 +59,25 @@ public class CommServiceManager
 	 */
 	public String getCapabilities()
 	{
-		ArrayList <CommObject> tempList =m_comCMan.getCommObjectList(); 
+		ArrayList <CommObject> tempList =m_comCMan.getCommObjectList();
 		String tempCaps = "";
-		
+
 		for(int i=0; i< tempList.size(); i++)
 		{
-			tempCaps += ((CommObject)tempList.get(i)).getNCBBridge().getCapability()+" @ ";		
+			tempCaps += ((CommObject)tempList.get(i)).getNCBBridge().getCapability()+" @ ";
 		}
 		return tempCaps;
 	}
-	
+
 	/**
 	 * This function returns the currently selected communication object.
 	 * @return
 	 */
 	public CommObject getCommunicationObject()
 	{
-		return this.m_coCurrCommObj; 
+		return this.m_coCurrCommObj;
 	}
-	
+
 	/**
 	 * This function returns the currently selected communication object.
 	 * @return
@@ -91,7 +86,7 @@ public class CommServiceManager
 	{
 		for(CommObject comObj: m_comCMan.getCommObjectList()){
 			if(comObj.getName().equals(fwname)){
-				return comObj; 
+				return comObj;
 			}
 		}
 		return null;
@@ -103,16 +98,16 @@ public class CommServiceManager
 	 */
 	public ArrayList<CommObject> getCommObjectList()
 	{
-		return this.m_comCMan.getCommObjectList(); 
+		return this.m_comCMan.getCommObjectList();
 	}
 
 	/**
 	 * This function sets the current communication object.
-	 * 
+	 *
 	 */
 	public void setCommunicationObject(int index)
 	{
-		m_coCurrCommObj = m_comCMan.getCommObjectList().get(index); 
+		m_coCurrCommObj = m_comCMan.getCommObjectList().get(index);
 		CVM_Debug.getInstance().printDebugMessage("Reset coCurrCommObj");
 	}
 
@@ -123,14 +118,14 @@ public class CommServiceManager
 	 */
 	public void loginAll()
 	{
-		ArrayList <CommObject> tempList =m_comCMan.getCommObjectList(); 
+		ArrayList <CommObject> tempList =m_comCMan.getCommObjectList();
 		CommObject tempComm = null;
 		String userName = null, password;
 		for(int i=0; i< tempList.size(); i++)
 		{
 			tempComm = ((CommObject)tempList.get(i));
-			userName = tempComm.getNCBBridge().username;
-			password = tempComm.getNCBBridge().password;
+			userName = tempComm.getNCBBridge().getUsername();
+			password = tempComm.getNCBBridge().getPassword();
 			try
 			{
 				tempComm.getNCBBridge().login(userName, password);
@@ -148,17 +143,17 @@ public class CommServiceManager
 	 */
 	public void logoutAll()
 	{
-		ArrayList <CommObject> tempList =m_comCMan.getCommObjectList(); 
+		ArrayList <CommObject> tempList =m_comCMan.getCommObjectList();
 		CommObject tempComm = null;
 		String userName = null, password;
 		for(int i=0; i< tempList.size(); i++)
 		{
 			tempComm = ((CommObject)tempList.get(i));
-			userName = tempComm.getNCBBridge().username;
+			userName = tempComm.getNCBBridge().getUsername();
 			tempComm.getNCBBridge().logout(userName);
 		}
 	}
-	
+
 	/**
 	 * This function is used by for the autonomic computing
 	 * side of the CMS.
@@ -166,11 +161,11 @@ public class CommServiceManager
 	 */
 	public void applyPolicies()
 	{
-		
+
 	}
-	
+
 	/**
-	 * This function initializes all the 
+	 * This function initializes all the
 	 * communication objects.
 	 *
 	 */
@@ -178,10 +173,10 @@ public class CommServiceManager
 	{
 		m_comCMan = CommObjectManager.getInstance();
 		m_coCurrCommObj = (CommObject)m_comCMan.getCommObjectList().get(0);
-		
+
 	}
 	/**
-	 * Maps the communicaiotn and the session. 
+	 * Maps the communicaiotn and the session.
 	 * Currently it Maps the connection to the current communication object
 	 * then it creates a session in this object.
 	 * @param connectionID
@@ -195,19 +190,19 @@ public class CommServiceManager
 		//If the session is not created already then create it.
 		if(!m_coCurrCommObj.getNCBBridge().isSessionCreated(sessionID))
 			m_coCurrCommObj.getNCBBridge().createSession(sessionID);
-		
+
 	}
-	
+
 	private String getCommObjName(String conID, String medium){
 		while(m_conToFwTable.isTableLocked()){
-			
+
 		}
 		return m_conToFwTable.getMapping(conID, medium);
 	}
-	
+
 	private String getOldCommObjName(String conID, String medium){
 		while(m_conToFwTable.isTableLocked()){
-			
+
 		}
 		return m_conToFwTable.getConnection(conID).getPreviousComObj(medium);
 	}
@@ -263,30 +258,38 @@ public class CommServiceManager
 	{
 		for(CommObject tempComm: m_comCMan.getCommObjectList())
 		{
-			CVM_Debug.getInstance().printDebugMessage("NCBManager : NCB sendSchema called with sID:\""+sID+"\" and senderID:\""+senderID+"\" and receiverID:\""+listReceiver+"\" and Control_XCML:\""+control_xcml+"\" and Data_XCML:\""+data_xcml+"\".");
-			//Currently there is not list of receivers implemented, all happens one at a time.
-			if(control_xcml != null && !control_xcml.equals("") && !control_xcml.equals("null"))
-			{
-				Scanner tmp = new Scanner(listReceiver);
-				while (tmp.hasNext()){
-					tempComm.getNCBBridge().sendSchema(control_xcml, 
-							UserIDMappingTable.getInstance().lookupContact(
-									tempComm.getName(), tmp.next()));
-				}
-			}
-			
-			if(data_xcml !=null && !data_xcml.equals("") && !data_xcml.equals("null"))
-			{
-				Scanner tmp = new Scanner(listReceiver);
-				while (tmp.hasNext()){
-					tempComm.getNCBBridge().sendSchema(data_xcml, 
-							UserIDMappingTable.getInstance().lookupContact(
-							tempComm.getName(), tmp.next()));
-				}
-			}
-			CVM_Debug.getInstance().printDebugMessage("NCBManager : NCB sendSchema OVER");
+            try {
+                sendSchemaToCommObj(sID, senderID, listReceiver, control_xcml, data_xcml, tempComm);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 		}
 	}
+
+    private void sendSchemaToCommObj(String sID, String senderID, String listReceiver, String control_xcml, String data_xcml, CommObject tempComm) {
+        CVM_Debug.getInstance().printDebugMessage("NCBManager : NCB sendSchema called with sID:\""+sID+"\" and senderID:\""+senderID+"\" and receiverID:\""+listReceiver+"\" and Control_XCML:\""+control_xcml+"\" and Data_XCML:\""+data_xcml+"\".");
+        //Currently there is not list of receivers implemented, all happens one at a time.
+        if(control_xcml != null && !control_xcml.equals("") && !control_xcml.equals("null"))
+        {
+            Scanner tmp = new Scanner(listReceiver);
+            while (tmp.hasNext()){
+                tempComm.getNCBBridge().sendSchema(control_xcml,
+                        UserIDMappingTable.getInstance().lookupContact(
+                                tempComm.getName(), tmp.next()));
+            }
+        }
+
+        if(data_xcml !=null && !data_xcml.equals("") && !data_xcml.equals("null"))
+        {
+            Scanner tmp = new Scanner(listReceiver);
+            while (tmp.hasNext()){
+                tempComm.getNCBBridge().sendSchema(data_xcml,
+                        UserIDMappingTable.getInstance().lookupContact(
+                        tempComm.getName(), tmp.next()));
+            }
+        }
+        CVM_Debug.getInstance().printDebugMessage("NCBManager : NCB sendSchema OVER");
+    }
 
 }
 		

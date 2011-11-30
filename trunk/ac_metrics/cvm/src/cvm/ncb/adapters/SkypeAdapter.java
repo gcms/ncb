@@ -2,7 +2,6 @@ package cvm.ncb.adapters;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
@@ -25,13 +24,9 @@ import com.skype.Chat;
 import com.skype.ChatMessage;
 import com.skype.ChatMessageListener;
 import com.skype.Skype;
-import com.skype.SkypeClient;
 import com.skype.SkypeException;
-import com.skype.Friend;
 import com.skype.Stream;
 import com.skype.StreamListener;
-import com.skype.User;
-import com.skype.Call.Status;
 import com.skype.connector.Connector;
 import com.skype.connector.ConnectorException;
 import com.skype.connector.ConnectorListener;
@@ -55,7 +50,7 @@ import com.skype.connector.TimeOutException;
  * @author Frank Hernandez
  *
  */
-public class SkypeAdapter extends NCBBridge 
+public class SkypeAdapter extends NCBBridgeBase
 {
 
 	//OLD Approach
@@ -221,7 +216,7 @@ public class SkypeAdapter extends NCBBridge
 	/**
 	 * This function creates a session in the Networks Bridge
 	 * for the specified session ID.
-	 * @param sessionID Id of the session to create.
+	 * @param sID Id of the session to create.
 	 */
 	public void createSession(String sID)
 	{
@@ -857,8 +852,8 @@ public class SkypeAdapter extends NCBBridge
 	 * This function excecutes the Skype command to add a member to 
 	 * an existing call session. This function behaves exactly like
 	 * the ALTER CALL command on Skype.
-	 * @param sChatID Skype ID of the chat to add the members to.
-	 * @param participantID
+	 * @param sCallID Skype ID of the chat to add the members to.
+	 * @param conferenceID
 	 * @return
 	 */
 	private String skypeAddParticipantCall(String sCallID, String conferenceID)
@@ -1105,7 +1100,7 @@ public class SkypeAdapter extends NCBBridge
 	
 	/**
 	 * Helper function that adds a call to the conference list.
-	 * @param callAdd Call to add.
+	 * @param sCallID Call to add.
 	 * @param sID Session to which to add the call.
 	 */
 	private void addCallToCallList(String sCallID, String sID)
@@ -2119,7 +2114,7 @@ public class SkypeAdapter extends NCBBridge
 	 * that a call has been removed in skype by a user outside of
 	 * their environment.
 	 * @param sID Session in which the call was added.
-	 * @param sCallId Id of the call removed.
+	 * @param sCallID Id of the call removed.
 	 */
 	private String notifyUsersOfCallRemoved(String sID, String sCallID)
 	{
@@ -2158,13 +2153,13 @@ public class SkypeAdapter extends NCBBridge
 	private static class AdapterSkypeCallListener implements CallListener
 	{
 
-		@Override
+
 		public void callMaked(Call arg0) throws SkypeException {
 			// TODO Auto-generated method stub
 			
 		}
 
-		@Override
+
 		public void callReceived(Call call) throws SkypeException {
 			call.answer(); 
 			CVM_Debug.getInstance().printDebugMessage("SkypeAdapter - Callid "+call.getId()+" status "+call.getReceiveVideoStatus());
@@ -2425,7 +2420,6 @@ public class SkypeAdapter extends NCBBridge
 		return result;
 */	}
 
-	@Override
 	public void destroySession(String sID) {
 		ArrayList<SkypeAdapter.MEDIUM> temp = new ArrayList<SkypeAdapter.MEDIUM>();
 		if((m_hmCallSessionMap.containsKey(sID) 
@@ -2466,7 +2460,6 @@ public class SkypeAdapter extends NCBBridge
 		}
 	}
 
-	@Override
 	public void enableMediumReceiver(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
 		// TODO Auto-generated method stub
 	}

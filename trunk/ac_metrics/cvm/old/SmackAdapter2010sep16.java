@@ -2,12 +2,10 @@ package cvm.ncb.adapters;
 
 import cvm.model.CVM_Debug;
 import cvm.ncb.UserObject;
-import cvm.ncb.handlers.NCBEventObjectManager;
 import cvm.ncb.handlers.exception.LoginException;
 import cvm.ncb.handlers.exception.NoSessionException;
 import cvm.ncb.handlers.exception.PartyNotAddedException;
 import cvm.ncb.handlers.exception.PartyNotFoundException;
-import cvm.model.*;
 
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.Connection;
@@ -37,7 +35,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.Iterator;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 /**
@@ -46,7 +43,7 @@ import java.util.concurrent.BlockingQueue;
  * Parameters: Server User Pass.
  */
 
-public class SmackAdapter extends NCBBridge 
+public class SmackAdapter extends NCBBridgeBase
 {
 	private enum EventType {WAITFORCALLBACK, WAITFORRECEIVERS};
 	public String fwName = "Smack";

@@ -9,25 +9,19 @@
 
 package cvm.ncb.repository.loader;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import cvm.ncb.oem.policy.*;
+import cvm.ncb.oem.policy.Attribute;
+import cvm.ncb.oem.policy.Feature;
 import cvm.ncb.repository.policy.*;
-
 import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import java.io.*;
+import java.net.URI;
+import java.util.ArrayList;
 
 public class FilePolicyLoader implements LoaderInterface{
 	
@@ -69,10 +63,10 @@ public class FilePolicyLoader implements LoaderInterface{
 			dir.mkdir();
 	}
 	
-	public static FilePolicyLoader getInstance(String path) 
+	public static FilePolicyLoader getInstance(URI path)
 	{
 		if (instance == null)
-			instance = new FilePolicyLoader(path);
+			instance = new FilePolicyLoader(new File(path).getPath());
 		
 		return instance;
 	}

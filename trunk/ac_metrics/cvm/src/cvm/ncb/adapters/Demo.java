@@ -20,18 +20,18 @@
 package cvm.ncb.adapters;
 
 
-import org.jivesoftware.smack.Connection;
-import org.jivesoftware.smack.XMPPConnection;
-import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smackx.jingle.JingleManager;
-import org.jivesoftware.smackx.jingle.JingleSession;
-import org.jivesoftware.smackx.jingle.JingleSessionRequest;
-import org.jivesoftware.smackx.jingle.listeners.JingleSessionRequestListener;
-import org.jivesoftware.smackx.jingle.media.JingleMediaManager;
-import org.jivesoftware.smackx.jingle.mediaimpl.jmf.JmfMediaManager;
-import org.jivesoftware.smackx.jingle.mediaimpl.sshare.ScreenShareMediaManager;
-import org.jivesoftware.smackx.jingle.nat.ICETransportManager;
-import org.jivesoftware.smackx.jingle.nat.JingleTransportManager;
+//import org.jivesoftware.smack.Connection;
+//import org.jivesoftware.smack.XMPPConnection;
+//import org.jivesoftware.smack.XMPPException;
+//import org.jivesoftware.smackx.jingle.JingleManager;
+//import org.jivesoftware.smackx.jingle.JingleSession;
+//import org.jivesoftware.smackx.jingle.JingleSessionRequest;
+//import org.jivesoftware.smackx.jingle.listeners.JingleSessionRequestListener;
+//import org.jivesoftware.smackx.jingle.media.JingleMediaManager;
+//import org.jivesoftware.smackx.jingle.mediaimpl.jmf.JmfMediaManager;
+//import org.jivesoftware.smackx.jingle.mediaimpl.sshare.ScreenShareMediaManager;
+//import org.jivesoftware.smackx.jingle.nat.ICETransportManager;
+//import org.jivesoftware.smackx.jingle.nat.JingleTransportManager;
 
 import javax.swing.*;
 
@@ -45,136 +45,136 @@ import java.util.List;
  */
 public class Demo extends JFrame {
 
-    private JingleTransportManager transportManager = null;
-    private Connection xmppConnection = null;
-
-    private String server = null;
-    private String user = null;
-    private String pass = null;
-
-    private JingleManager jm = null;
-    private JingleSession incoming = null;
-    private JingleSession outgoing = null;
-
-    private JTextField jid;
-
-    public Demo(String server, String user, String pass) {
-
-        this.server = server;
-        this.user = user;
-        this.pass = pass;
-        jid = new JTextField(user + "/Smack");
-        
-        System.out.println(user+" "+pass+" "+server);
-        
-        if (user.equals("test")) {
-            jid = new JTextField("test1" + "@" + server + "/Smack");
-        } else {
-            jid = new JTextField("test" + "@" + server + "/Smack");
-        }
-
-        xmppConnection = new XMPPConnection(server);
-        try {
-            xmppConnection.connect();
-            xmppConnection.login(user, pass);
-            initialize();
-        }
-        catch (XMPPException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void initialize() {
-        ICETransportManager icetm0 = new ICETransportManager(xmppConnection, "stun.xten.com", 3478);
-        List<JingleMediaManager> mediaManagers = new ArrayList<JingleMediaManager>();
-        //mediaManagers.add(new JmfMediaManager(icetm0));
-        mediaManagers.add(new JmfMediaManager("video_manager",icetm0)); //SpeexMediaManager(icetm0));
-       // mediaManagers.add(new ScreenShareMediaManager(icetm0));
-        jm = new JingleManager(xmppConnection, mediaManagers);
-        jm.addCreationListener(icetm0);
-
-        jm.addJingleSessionRequestListener(new JingleSessionRequestListener() {
-            public void sessionRequested(JingleSessionRequest request) {
-
+//    private JingleTransportManager transportManager = null;
+//    private Connection xmppConnection = null;
+//
+//    private String server = null;
+//    private String user = null;
+//    private String pass = null;
+//
+//    private JingleManager jm = null;
+//    private JingleSession incoming = null;
+//    private JingleSession outgoing = null;
+//
+//    private JTextField jid;
+//
+//    public Demo(String server, String user, String pass) {
+//
+//        this.server = server;
+//        this.user = user;
+//        this.pass = pass;
+//        jid = new JTextField(user + "/Smack");
+//
+//        System.out.println(user+" "+pass+" "+server);
+//
+//        if (user.equals("test")) {
+//            jid = new JTextField("test1" + "@" + server + "/Smack");
+//        } else {
+//            jid = new JTextField("test" + "@" + server + "/Smack");
+//        }
+//
+//        xmppConnection = new XMPPConnection(server);
+//        try {
+//            xmppConnection.connect();
+//            xmppConnection.login(user, pass);
+//            initialize();
+//        }
+//        catch (XMPPException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void initialize() {
+//        ICETransportManager icetm0 = new ICETransportManager(xmppConnection, "stun.xten.com", 3478);
+//        List<JingleMediaManager> mediaManagers = new ArrayList<JingleMediaManager>();
+//        //mediaManagers.add(new JmfMediaManager(icetm0));
+//        mediaManagers.add(new JmfMediaManager("video_manager",icetm0)); //SpeexMediaManager(icetm0));
+//       // mediaManagers.add(new ScreenShareMediaManager(icetm0));
+//        jm = new JingleManager(xmppConnection, mediaManagers);
+//        jm.addCreationListener(icetm0);
+//
+//        jm.addJingleSessionRequestListener(new JingleSessionRequestListener() {
+//            public void sessionRequested(JingleSessionRequest request) {
+//
+////                if (incoming != null)
+////                    return;
+//
+//                try {
+//                    // Accept the call
+//                    incoming = request.accept();
+//
+//                    // Start the call
+//                    incoming.startIncoming();
+//                }
+//                catch (XMPPException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        });
+//        createGUI();
+//    }
+//
+//    public void createGUI() {
+//
+//        JPanel jPanel = new JPanel();
+//
+//        jPanel.add(jid);
+//
+//        jPanel.add(new JButton(new AbstractAction("Call") {
+//            public void actionPerformed(ActionEvent e) {
+//                if (outgoing != null) return;
+//                try {
+//                    System.out.println("in Call");
+//                    outgoing = jm.createOutgoingJingleSession(jid.getText());
+//                    outgoing.startOutgoing();
+//                }
+//                catch (XMPPException e1) {
+//                    e1.printStackTrace();
+//                }
+//            }
+//        }));
+//
+//        jPanel.add(new JButton(new AbstractAction("Hangup") {
+//            public void actionPerformed(ActionEvent e) {
+//                if (outgoing != null)
+//                    try {
+//                        outgoing.terminate();
+//                    }
+//                    catch (XMPPException e1) {
+//                        e1.printStackTrace();
+//                    }
+//                    finally {
+//                        outgoing = null;
+//                    }
 //                if (incoming != null)
-//                    return;
-
-                try {
-                    // Accept the call
-                    incoming = request.accept();
-
-                    // Start the call
-                    incoming.startIncoming();
-                }
-                catch (XMPPException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-        createGUI();
-    }
-
-    public void createGUI() {
-
-        JPanel jPanel = new JPanel();
-
-        jPanel.add(jid);
-
-        jPanel.add(new JButton(new AbstractAction("Call") {
-            public void actionPerformed(ActionEvent e) {
-                if (outgoing != null) return;
-                try {
-                    System.out.println("in Call");
-                    outgoing = jm.createOutgoingJingleSession(jid.getText());
-                    outgoing.startOutgoing();
-                }
-                catch (XMPPException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        }));
-
-        jPanel.add(new JButton(new AbstractAction("Hangup") {
-            public void actionPerformed(ActionEvent e) {
-                if (outgoing != null)
-                    try {
-                        outgoing.terminate();
-                    }
-                    catch (XMPPException e1) {
-                        e1.printStackTrace();
-                    }
-                    finally {
-                        outgoing = null;
-                    }
-                if (incoming != null)
-                    try {
-                        incoming.terminate();
-                    }
-                    catch (XMPPException e1) {
-                        e1.printStackTrace();
-                    }
-                    finally {
-                        incoming = null;
-                    }
-            }
-        }));
-
-        this.add(jPanel);
-
-    }
-
-    public static void main(String args[]) {
-
-        Demo demo = null;
-
-        if (args.length > 2) {
-            demo = new Demo(args[0], args[1], args[2]);
-            demo.pack();
-            demo.setVisible(true);
-            demo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        }
-
-    }
+//                    try {
+//                        incoming.terminate();
+//                    }
+//                    catch (XMPPException e1) {
+//                        e1.printStackTrace();
+//                    }
+//                    finally {
+//                        incoming = null;
+//                    }
+//            }
+//        }));
+//
+//        this.add(jPanel);
+//
+//    }
+//
+//    public static void main(String args[]) {
+//
+//        Demo demo = null;
+//
+//        if (args.length > 2) {
+//            demo = new Demo(args[0], args[1], args[2]);
+//            demo.pack();
+//            demo.setVisible(true);
+//            demo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        }
+//
+//    }
 
 }

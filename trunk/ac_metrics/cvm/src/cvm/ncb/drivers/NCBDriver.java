@@ -1,21 +1,15 @@
 package cvm.ncb.drivers;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Scanner;
-
 import cvm.model.CVM_Debug;
 import cvm.model.Handles_Event;
 import cvm.model.Uses_Listener;
 import cvm.ncb.handlers.NCBEventObjectManager;
 import cvm.ncb.handlers.event.SchemaReceived_Event;
-import cvm.ncb.handlers.exception.PartyNotAddedException;
 import cvm.ncb.manager.NCB_M_Facade;
-import cvm.ncb.tpm.CommFWTouch;
+
+import java.util.Scanner;
 
 public class NCBDriver implements Uses_Listener{
-
 	private String cvmUname = "Andrew";
 	private int DELAY = 20000;
 	NCBEventObjectManager eomgr = null;
@@ -30,10 +24,10 @@ public class NCBDriver implements Uses_Listener{
 	    NCB_M_Facade m_facade = NCB_M_Facade.getInstance();
 		NCBDriver driver = new NCBDriver();
 		
-		m_facade.login("userName", "password");
+		m_facade.login("Andrew", "password");
 		m_facade.createSession("101");
 
-		driver.twoToThreeWay(m_facade, "AUDIO");
+		driver.twoWay(m_facade, "AUDIO");
 	}
 	
 	public void twoWay(NCB_M_Facade m_facade, String medium){
@@ -117,7 +111,7 @@ public class NCBDriver implements Uses_Listener{
 		}
 		System.out.println("Done Sleeping ==============================");
 	}
-	@Override
+
 	public void use(Handles_Event event) {
 		if (event instanceof SchemaReceived_Event) 
 			dealWithSchema(((SchemaReceived_Event)event).getSchema());

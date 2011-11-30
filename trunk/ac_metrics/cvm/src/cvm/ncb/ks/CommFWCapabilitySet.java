@@ -1,15 +1,14 @@
 package cvm.ncb.ks;
 
-import java.util.TreeSet;
-
+import cvm.model.CVM_Debug;
 import cvm.ncb.oem.policy.Attribute;
 import cvm.ncb.oem.policy.Feature;
 import cvm.ncb.oem.policy.Framework;
+
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArraySet;
-
-import cvm.model.*;
 
 public class CommFWCapabilitySet {
 	
@@ -101,7 +100,7 @@ public class CommFWCapabilitySet {
 		Framework fw1 = new Framework("Skype");
 		Feature fw1feat1 = new Feature("Audio");
 		fw1feat1.addAttribute(new Attribute("Enabled", "true"));
-		fw1feat1.addAttribute(new Attribute("NumberOfUsers","2")); 
+		fw1feat1.addAttribute(new Attribute("NumberOfUsers","2"));
 		
 		Feature fw1feat2 = new Feature("Video");
 		fw1feat2.addAttribute(new Attribute("Enabled", "true"));
@@ -123,14 +122,14 @@ public class CommFWCapabilitySet {
 		fw2feat2.addAttribute(new Attribute("onlineStatus.Enabled", "true"));
 		fw2.addFeature(fw2feat2);
 
-		Framework fw3 = new Framework("Asterisk");
-		Feature fw3feat1 = new Feature("Audio");
-		fw3feat1.addAttribute(new Attribute("Enabled", "true"));
-		fw3feat1.addAttribute(new Attribute("NumberOfUsers","8"));
-		fw3.addFeature(fw3feat1);
+//		Framework fw3 = new Framework("Asterisk");
+//		Feature fw3feat1 = new Feature("Audio");
+//		fw3feat1.addAttribute(new Attribute("Enabled", "true"));
+//		fw3feat1.addAttribute(new Attribute("NumberOfUsers","8"));
+//		fw3.addFeature(fw3feat1);
 
 		// Available for NCB
-		addFramework(fw3);
+//		addFramework(fw3);
 		addFramework(fw2);
 		addFramework(fw1);
 

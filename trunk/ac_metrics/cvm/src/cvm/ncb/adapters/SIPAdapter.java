@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Observable;
 import java.util.Scanner;
 import java.util.TreeMap;
-import java.util.UUID;
 import java.util.Observer;
 
 import javax.swing.SwingWorker;
@@ -60,7 +59,7 @@ import java.net.UnknownHostException;
  * @author Andrew A Allen
  *
  */
-public class SIPAdapter extends NCBBridge implements Observer
+public class SIPAdapter extends NCBBridgeBase implements Observer
 {
 
 	public String fwName = "Asterisk";
@@ -104,7 +103,6 @@ public class SIPAdapter extends NCBBridge implements Observer
 		
 	}
 
-	@Override
 	public void addParticipant(String sID, String participantID)
 			throws PartyNotAddedException 
 	{
@@ -117,8 +115,7 @@ public class SIPAdapter extends NCBBridge implements Observer
 		//throw new PartyNotAddedException("Already added or invalid session");
 	}
 
-	@Override
-	public void createSession(String sessionID) 
+	public void createSession(String sessionID)
 	{
 		if(!sessMap.containsKey(sessionID)){
 			// assuming we will be getting a UUID string
@@ -128,19 +125,16 @@ public class SIPAdapter extends NCBBridge implements Observer
 
 	}
 
-	@Override
-	public String getCapability() 
+	public String getCapability()
 	{
 		return null;
 	}
 
-	@Override
-	public boolean isLoggedIn(String userName) 
+	public boolean isLoggedIn(String userName)
 	{
 		return true;
 	}
 
-	@Override
 	public UserObject login(String userName, String password)
 			throws LoginException 
 	{
@@ -159,13 +153,11 @@ public class SIPAdapter extends NCBBridge implements Observer
 		return null;
 	}
 
-	@Override
-	public void logout(String userName) 
+	public void logout(String userName)
 	{
 		
 	}
 
-	@Override
 	public void removeParticipant(String sID, String participantID)
 			throws PartyNotFoundException 
 	{
@@ -179,14 +171,12 @@ public class SIPAdapter extends NCBBridge implements Observer
 
 	}
 
-	@Override
-	public void restartService() 
+	public void restartService()
 	{
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public boolean isSessionCreated(String sID) {
 		if(sessMap.containsKey(sID)){
 			return true;
@@ -194,12 +184,10 @@ public class SIPAdapter extends NCBBridge implements Observer
 		return false;
 	}
 
-	@Override
 	public void sendSchema(String schema, String participantID) {
 		// TODO Auto-generated method stub
 	}
 
-	@Override
 	public void disableMedium(String connectionID, String mediumName) throws PartyNotFoundException, NoSessionException {
 		if(mediumName.equalsIgnoreCase("AUDIO")){
 			Dialog dialog = userAgent.getDialogManager().getDialog(
@@ -209,7 +197,6 @@ public class SIPAdapter extends NCBBridge implements Observer
 		}
 	}
 
-	@Override
 	public void enableMedium(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
 /*		if(mediumName.equalsIgnoreCase("AUDIO") && 
 				partyMap.get(connectionID).size()== 1){
@@ -276,13 +263,11 @@ public class SIPAdapter extends NCBBridge implements Observer
 		return myURL;
 	}
 
-	@Override
 	public boolean hasMediumFailed(String sessID, String medium_type) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public void destroySession(String sessionID) {
 		if(sessMap.containsKey(sessionID)){
 			sessMap.remove(sessionID);
@@ -369,8 +354,7 @@ public class SIPAdapter extends NCBBridge implements Observer
                 userAgent.getUac().terminate(dialog);
     }
 
-    @Override
-	public void enableMediumReceiver(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
+    public void enableMediumReceiver(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
 		if(mediumName.equalsIgnoreCase("AUDIO")) {
 
 		}

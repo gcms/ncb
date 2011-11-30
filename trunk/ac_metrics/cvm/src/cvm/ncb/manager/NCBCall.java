@@ -1,5 +1,7 @@
 package cvm.ncb.manager;
 
+import util.StringUtils;
+
 public class NCBCall implements Comparable<NCBCall>{
 
 	private String sessID =  null;
@@ -69,4 +71,8 @@ public class NCBCall implements Comparable<NCBCall>{
 		else return false;
 
 	}
+
+    public String toString() {
+        return StringUtils.methodToString(getCallName(), getParams());
+    }
 }

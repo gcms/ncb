@@ -1,14 +1,8 @@
 package cvm.ncb.csm;
 
-import java.util.ArrayList;
+import cvm.ncb.adapters.*;
 
-import cvm.ncb.adapters.SIPAdapter;
-import cvm.ncb.adapters.SmackAdapter;
-import cvm.ncb.adapters.JMMLAdapter;
-import cvm.ncb.adapters.NCBBridge;
-import cvm.ncb.adapters.NCBNativeAdapter;
-import cvm.ncb.adapters.SkypeAdapter;
-import cvm.model.*;
+import java.util.ArrayList;
 
 /**
  * Handles the creation of communication objects
@@ -82,7 +76,7 @@ public class CommObjectManager
 			//try
 			//{
 				tempProp = new CSM_PropBridgeSpecifics(CSM_NBTypes.SKYPECONFIG);
-				tempBridge = new SkypeAdapter();
+				tempBridge = NCBBridgeProxy.wrap(new SkypeAdapter());
 				tempUserName = tempProp.getProperty(tempProp.SB_USERNAME);
 				tempPassword = tempProp.getProperty(tempProp.SB_PASWORD);
 				/*
@@ -91,8 +85,8 @@ public class CommObjectManager
 				 */
 				//tempBridge.login(tempUserName, tempPassword);
 			
-				tempBridge.password = tempPassword;
-				tempBridge.username = tempUserName;
+				tempBridge.setPassword(tempPassword);
+				tempBridge.setUsername(tempUserName);
 				
 				tempComm = new CommObject(tempBridge);
 				//If the communication object is not in the list already.
@@ -123,14 +117,14 @@ public class CommObjectManager
 		{
 			tempProp = new CSM_PropBridgeSpecifics(CSM_NBTypes.SMACKCONFIG);
 			//Create adapter instance.
-			tempBridge = new SmackAdapter();
+			tempBridge = NCBBridgeProxy.wrap(new SmackAdapter());
 			tempUserName = tempProp.getProperty(tempProp.SB_USERNAME);
 			tempPassword = tempProp.getProperty(tempProp.SB_PASWORD);
 	
 			//tempBridge.login(tempUserName, tempPassword);
 			
-			tempBridge.password = tempPassword;
-			tempBridge.username = tempUserName;
+			tempBridge.setPassword(tempPassword);
+			tempBridge.setUsername(tempUserName);
 		
 			tempComm = new CommObject(tempBridge);
 			//If the communication object is not in the list already.
@@ -156,14 +150,14 @@ public class CommObjectManager
 		{
 			tempProp = new CSM_PropBridgeSpecifics(CSM_NBTypes.ASTERISKCONFIG);
 			//Create adapter instance.
-			tempBridge = new SIPAdapter();
+			tempBridge = NCBBridgeProxy.wrap(new SIPAdapter());
 			tempUserName = tempProp.getProperty(tempProp.SB_USERNAME);
 			tempPassword = tempProp.getProperty(tempProp.SB_PASWORD);
 	
 			//tempBridge.login(tempUserName, tempPassword);
 			
-			tempBridge.password = tempPassword;
-			tempBridge.username = tempUserName;
+			tempBridge.setPassword(tempPassword);
+			tempBridge.setUsername(tempUserName);
 		
 			tempComm = new CommObject(tempBridge);
 			//If the communication object is not in the list already.
@@ -190,14 +184,14 @@ public class CommObjectManager
 			//try
 			//{
 				tempProp = new CSM_PropBridgeSpecifics(CSM_NBTypes.JMMLCONFIG);
-				tempBridge = new JMMLAdapter();
+				tempBridge = NCBBridgeProxy.wrap(new JMMLAdapter());
 				tempUserName = tempProp.getProperty(tempProp.SB_USERNAME);
 				tempPassword = tempProp.getProperty(tempProp.SB_PASWORD);
 				
 				//tempBridge.login(tempUserName, tempPassword);
 				
-				tempBridge.password = tempPassword;
-				tempBridge.username = tempUserName;
+				tempBridge.setPassword(tempPassword);
+				tempBridge.setUsername(tempUserName);
 			
 				tempComm = new CommObject(tempBridge);
 				//If the communication object is not in the list already.
@@ -230,14 +224,14 @@ public class CommObjectManager
 			//try
 			//{
 				tempProp = new CSM_PropBridgeSpecifics(CSM_NBTypes.NCBNATIVECONFIG);
-				tempBridge = new NCBNativeAdapter();
+				tempBridge = NCBBridgeProxy.wrap(new NCBNativeAdapter());
 				tempUserName = tempProp.getProperty(tempProp.SB_USERNAME);
 				tempPassword = tempProp.getProperty(tempProp.SB_PASWORD);
 				
 				// tempBridge.login(tempUserName, tempPassword);
 				
-				tempBridge.password = tempPassword;
-				tempBridge.username = tempUserName;
+				tempBridge.setPassword(tempPassword);
+				tempBridge.setUsername(tempUserName);
 			
 				tempComm = new CommObject(tempBridge);
 				//If the communication object is not in the list already.

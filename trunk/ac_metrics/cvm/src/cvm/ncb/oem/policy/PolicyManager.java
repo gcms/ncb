@@ -1,18 +1,13 @@
 package cvm.ncb.oem.policy;
 
-import java.util.Set;
-import java.util.Collection;
-import java.util.TreeSet;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
-
-import cvm.ncb.repository.*;
+import cvm.model.CVM_Debug;
+import cvm.ncb.repository.NCB_R_Facade;
 import cvm.ncb.repository.loader.FilePolicyLoader;
 import cvm.ncb.repository.loader.GlobalConstant;
 import cvm.ncb.repository.policy.NCBPolicy;
-import cvm.model.*;
+
+import java.net.URISyntaxException;
+import java.util.*;
 
 public class PolicyManager {
 	static Feature featTree=null;
@@ -407,9 +402,14 @@ public class PolicyManager {
 	{
 		DesiredFeaturesList req = new DesiredFeaturesList();
 		DesiredFeaturesList opt = new DesiredFeaturesList();
-		
-		NCB_R_Facade ncb_facade = NCB_R_Facade.getInstance(FilePolicyLoader.getInstance(
-				this.getClass().getResource("../../repository/examples").getPath()));
+
+        FilePolicyLoader loader = null;
+        try {
+            loader = FilePolicyLoader.getInstance(this.getClass().getResource("../../repository/examples").toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        NCB_R_Facade ncb_facade = NCB_R_Facade.getInstance(loader);
 		featTree =ncb_facade.loadFeatures("/featureTree.xml");
 		
 		ArrayList<NCBPolicy> arr = ncb_facade.load(request, operation);

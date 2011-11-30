@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +52,7 @@ public class GenericManager<Touchpoint>{
 	private final static String actionLabel = "action";
 	private final static String effectorLabel = "effector";
     
-	public GenericManager (String name, String policyFileName, AbstractResource aResource) {
+	public GenericManager (String name, URI policyFileName, AbstractResource aResource) {
 
 		File policyFile = new File(policyFileName);
 		FileInputStream pFileIn = null;

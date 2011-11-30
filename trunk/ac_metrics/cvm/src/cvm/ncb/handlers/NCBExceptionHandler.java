@@ -12,6 +12,8 @@ import cvm.ncb.handlers.exception.SchemaNotSavedException;
 //import cvm.ucm.handlers.exception.InvalidScriptException;
 //import cvm.ucm.handlers.exception.MacroNotFoundException;
 import cvm.model.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * This class defines all the exceptions that could be handled 
@@ -22,6 +24,8 @@ import cvm.model.*;
  */
 public class NCBExceptionHandler 
 {
+    private static Log log = LogFactory.getLog(NCBExceptionHandler.class);
+
 	//Used for singleton.
 	private static NCBExceptionHandler instance = null;
 	//Used for turning exceptions into events.
@@ -51,6 +55,7 @@ public class NCBExceptionHandler
 	 */
 	public void handleException(Exception e)
 	{
+        log.debug("Handling exception: " + e);
 		
 		/**
 		 * This handle the PartyNotFoundException,

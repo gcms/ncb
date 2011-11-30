@@ -17,7 +17,7 @@ public class CommObject
 	public CommObject(NCBBridge bridge)
 	{
 		setBridge(bridge);
-		this.name = bridge.fwName;
+		this.name = bridge.getFWName();
 	}
 	/**
 	 * Sets the bride instance.

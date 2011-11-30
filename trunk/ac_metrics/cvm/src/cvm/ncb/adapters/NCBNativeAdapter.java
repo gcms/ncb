@@ -14,8 +14,6 @@ import cvm.ncb.adapters.ncblite.p2p.P2PChannel;
 import cvm.ncb.adapters.ncblite.p2p.P2PHandler;
 import cvm.ncb.adapters.ncblite.rg.common.RGClient;
 
-import cvm.model.*;
-
 /*import edu.fiu.scis.cvm.util.event_listener.Handles_Event;
 import edu.fiu.scis.cvm.util.event_listener.Uses_Listener;
 import edu.fiu.scis.cvm.util.event_listener.CVMAdapter.NotifyLoginReply_Event;
@@ -43,7 +41,7 @@ import org.eclipse.swt.widgets.Composite;
  * @author Frank Hernandez
  *
  */
-public class NCBNativeAdapter extends NCBBridge 
+public class NCBNativeAdapter extends NCBBridgeBase
 {
 	
 	private static String userName;
@@ -439,7 +437,6 @@ import cvm.ncb.handlers.exception.PartyNotFoundException;
 public class NCBNativeAdapter extends NCBBridge 
 {
 */
-	@Override
 	public void addParticipant(String sID, String participantID)
 			throws PartyNotAddedException 
 	{
@@ -447,21 +444,18 @@ public class NCBNativeAdapter extends NCBBridge
 
 	}
 
-	@Override
-	public String getCapability() 
+	public String getCapability()
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public boolean isLoggedIn(String userName) 
+	public boolean isLoggedIn(String userName)
 	{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public UserObject login(String userName, String password)
 			throws LoginException 
 	{
@@ -469,14 +463,12 @@ public class NCBNativeAdapter extends NCBBridge
 		return null;
 	}
 
-	@Override
-	public void logout(String userName) 
+	public void logout(String userName)
 	{
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public void removeParticipant(String sID, String participant)
 			throws PartyNotFoundException 
 	{
@@ -484,38 +476,32 @@ public class NCBNativeAdapter extends NCBBridge
 
 	}
 
-	@Override
 	public void restartService()
 	{
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public boolean isSessionCreated(String sID) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public void disableMedium(String connectionID, String mediumName) throws PartyNotFoundException, NoSessionException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void enableMedium(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public boolean hasMediumFailed(String sessID, String medium_type) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public void enableMediumReceiver(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
 		// TODO Auto-generated method stub
 		
