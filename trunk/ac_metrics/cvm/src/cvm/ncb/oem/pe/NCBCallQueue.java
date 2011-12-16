@@ -1,28 +1,17 @@
-package cvm.ncb.manager;
+package cvm.ncb.oem.pe;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.util.LinkedList;
+import java.util.Queue;
+
 public class NCBCallQueue{
     private static Log log = LogFactory.getLog(NCBCallQueue.class);
 
+	private Queue<NCBCall> m_callList = null;
 
-	private static NCBCallQueue instance = null;
-	private LinkedList<NCBCall> m_callList = null;
-	/**
-	 * Singleton implementation.
-	 * @return instance of NCBCallQueue
-	 */
-	public static NCBCallQueue getInstance()
-	{
-		if(instance==null)
-			instance = new NCBCallQueue();
-		
-		return instance;
-	}
-
-	private NCBCallQueue() {
+	NCBCallQueue() {
 		m_callList = new LinkedList<NCBCall>();
 	}
 	
@@ -38,7 +27,7 @@ public class NCBCallQueue{
 	}
 
 	public NCBCall next(){
-		return m_callList.removeFirst();
+		return m_callList.poll();
 	}
 	
 	public boolean hasNext(){

@@ -1,8 +1,11 @@
 package cvm.ncb.adapters;
 
+import cvm.ncb.handlers.NCBEventObjectManager;
 import cvm.ncb.handlers.exception.LoginException;
 
 public interface ManagementInterface {
+
+    public void setEventObjectManager(NCBEventObjectManager eventObjectManager);
 	
 	/**
 	 * This functions returns a comma separated list with the device capabilities.

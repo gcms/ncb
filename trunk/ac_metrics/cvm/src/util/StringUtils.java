@@ -13,7 +13,7 @@ public class StringUtils {
         sb.append(name);
         sb.append("(");
 
-        if (args != null) {
+        if (args != null && args.length > 0) {
             for (Object arg : args) {
                 sb.append(arg != null ? arg.toString() : "null");
                 sb.append(", ");

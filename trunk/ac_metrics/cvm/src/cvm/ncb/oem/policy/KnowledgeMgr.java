@@ -11,7 +11,7 @@ public class KnowledgeMgr {
 	}
 	
 	public boolean updateKnowledge(Framework fw){
-		fwmap.put(fw.getFrameworkName(), fw);
+		fwmap.put(fw.getName(), fw);
 		return true;
 	}
 
@@ -25,7 +25,7 @@ public class KnowledgeMgr {
 	
 	private Feature getFeature(Framework fw, String feat){
 		if (fw== null) return null;
-		return fw.getFeatureList().get(feat);
+		return fw.getFeatures().get(feat);
 	}
 
 	private Attribute getAttribute(Feature feat, String attr){

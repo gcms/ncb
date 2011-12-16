@@ -1,9 +1,9 @@
 package cvm.ncb.adapters;
 
-import java.util.ArrayList;
-
 import cvm.model.CVM_Debug;
-import cvm.ncb.handlers.NCBEventObjectManager;
+import cvm.ncb.handlers.event.SchemaReceived_Event;
+
+import java.util.ArrayList;
 /**
  * This class contains all the schemas that have been 
  * received and prepares them to be sent up to NCB
@@ -13,7 +13,6 @@ import cvm.ncb.handlers.NCBEventObjectManager;
  */
 public class SkypeAdapterDataContainer 
 {
-	private static SkypeAdapterDataContainer instnace= null;
 	private ArrayList<String> m_SchemasRecevied = new ArrayList<String>();
 	private SkypeAdapterThread schemaThread = null;
 	public static int sentCount = 0;
@@ -25,19 +24,13 @@ public class SkypeAdapterDataContainer
 	private final String CallRemTagClose = "</CALLR>";
 	private final String ChatAddTagOpen = "<CHAT>";
 	private final String ChatAddTagClose = "</CHAT>";
-	
-	private SkypeAdapterDataContainer()
+    SkypeAdapter adapter;
+
+    SkypeAdapterDataContainer(SkypeAdapter adapter)
 	{
+        this.adapter = adapter;
 		schemaThread = new SkypeAdapterThread(this);
 		schemaThread.start();
-	}
-	
-	public static SkypeAdapterDataContainer getInstance()
-	{
-		if(instnace==null)
-			instnace= new SkypeAdapterDataContainer();
-		
-		return instnace;
 	}
 	
 	/**
@@ -110,7 +103,8 @@ public class SkypeAdapterDataContainer
 	private void dealWithSchema(String schema)
 	{
 		CVM_Debug.getInstance().printDebugMessage("SkypeAdapterData: dealWithSchema Called.");
-		NCBEventObjectManager.Instance().notifiySchemaReceivedEvent(schema);
+        SchemaReceived_Event event = new SchemaReceived_Event(this, schema);
+		adapter.notifyEvent(event);
 		//Remove Tags.
 		//Code HERE.
 		

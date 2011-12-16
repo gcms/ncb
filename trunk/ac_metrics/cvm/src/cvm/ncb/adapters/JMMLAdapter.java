@@ -1,14 +1,13 @@
 package cvm.ncb.adapters;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.UUID;
-
-import cvm.ncb.UserObject;
 import cvm.ncb.handlers.exception.LoginException;
 import cvm.ncb.handlers.exception.NoSessionException;
 import cvm.ncb.handlers.exception.PartyNotAddedException;
 import cvm.ncb.handlers.exception.PartyNotFoundException;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.UUID;
 
 public class JMMLAdapter extends NCBBridgeBase
 {
@@ -38,14 +37,13 @@ public class JMMLAdapter extends NCBBridgeBase
 		return false;
 	}
 
-	public UserObject login(String userName, String password)
+	public void login()
 			throws LoginException 
 	{
 		// TODO Auto-generated method stub
-		return null;
 	}
 
-	public void logout(String userName)
+	public void logout()
 	{
 		// TODO Auto-generated method stub
 
@@ -89,7 +87,11 @@ public class JMMLAdapter extends NCBBridgeBase
 		return false;
 	}
 
-	public void destroySession(String sessionID) {
+    public String getFWName() {
+        return "JMML";
+    }
+
+    public void destroySession(String sessionID) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -111,7 +113,7 @@ public class JMMLAdapter extends NCBBridgeBase
             try {
 
             	// simulate request to login
-            	sAdpt.login(args[0],args[1]); 
+            	sAdpt.login();
 			} catch (LoginException e) {
 				e.printStackTrace();
 			}
@@ -134,7 +136,7 @@ public class JMMLAdapter extends NCBBridgeBase
 		else if (args.length == 4){
         	SmackAdapter sAdpt = new SmackAdapter();
             try {
-				sAdpt.login(args[0],args[1]); 
+				sAdpt.login();
 				String medium = args[2]; 
 				UUID conID = UUID.randomUUID();
 				// simulates the request to create a new connection

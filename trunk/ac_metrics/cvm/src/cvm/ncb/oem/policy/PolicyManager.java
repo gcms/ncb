@@ -21,14 +21,14 @@ public class PolicyManager {
 		
 		//See if policy is satisfied by each framework 
 		for(Feature feat: inSet) {
-			CVM_Debug.getInstance().printDebugMessage("Current feature is: "+feat.getFeatureName()+
+			CVM_Debug.getInstance().printDebugMessage("Current feature is: "+feat.getName()+
 					"\nLooking for Feature name is: "+feature+" Super feature: "+superFeatures);
 
 			// This is not a subfeature, so do checks at this level
 			if(superFeatures==null || superFeatures.equals("CommFeatureRoot ")){
 
 				// Is this the feature we want?
-				if(feat.getFeatureName().equals(feature)) { // does this feature exist
+				if(feat.getName().equals(feature)) { // does this feature exist
 
 					// found the feature, evaluate desired value vs framwork's reported value
 					if(feat.hasAttributeValue(attr, value, opcode)) // 
@@ -40,7 +40,7 @@ public class PolicyManager {
 				scan  = new Scanner(superFeatures);
 				while (scan.hasNext())
 				{
-					if(feat.getFeatureName().equals(scan.next())) { // does this feature exist
+					if(feat.getName().equals(scan.next())) { // does this feature exist
 						CVM_Debug.getInstance().printDebugMessage("Found superfeature of the requested feature");
 						return hasSubFeature(feat,feature,attr,value,opcode,scan); 
 					}
@@ -56,10 +56,10 @@ public class PolicyManager {
 		if(feature == null|| feature.equals("")) return true;
 		Scanner scan;
 		for(Feature feat: inSet) {
-			CVM_Debug.getInstance().printDebugMessage("Current feature is: "+feat.getFeatureName()+
+			CVM_Debug.getInstance().printDebugMessage("Current feature is: "+feat.getName()+
 					"\nLooking for Feature name is: "+feature+" Super feature: "+superFeatures);
 			if(superFeatures==null || superFeatures.equals("CommFeatureRoot ")){
-				if(feat.getFeatureName().equals(feature)) { // does this feature exist
+				if(feat.getName().equals(feature)) { // does this feature exist
 					if(feat.hasAttributeValue(attr, value, opcode)) // 
 						return true;
 				}
@@ -68,7 +68,7 @@ public class PolicyManager {
 				scan = new Scanner(superFeatures);
 				while (scan.hasNext())
 				{
-					if(feat.getFeatureName().equals(scan.next())) { // does this feature exist
+					if(feat.getName().equals(scan.next())) { // does this feature exist
 						CVM_Debug.getInstance().printDebugMessage("Found superfeature of the requested feature");
 						return hasSubFeature(feat,feature,attr,value,opcode,scan); 
 					}
@@ -84,10 +84,10 @@ public class PolicyManager {
 		Scanner scan;
 		if(feature == null|| feature.equals("")) return true;
 		for(Feature feat: inSet) {
-			CVM_Debug.getInstance().printDebugMessage("Current feature is: "+feat.getFeatureName()+
+			CVM_Debug.getInstance().printDebugMessage("Current feature is: "+feat.getName()+
 					"\nLooking for Feature name is: "+feature+" Super feature: "+superFeatures);
 			if(superFeatures==null || superFeatures.equals("CommFeatureRoot ")){
-				if(feat.getFeatureName().equals(feature)) { // does this feature exist
+				if(feat.getName().equals(feature)) { // does this feature exist
 					if(feat.hasAttributeValue(attr, value, opcode)) // 
 						return true;
 				}
@@ -96,7 +96,7 @@ public class PolicyManager {
 				scan  = new Scanner(superFeatures);
 				while (scan.hasNext())
 				{
-					if(feat.getFeatureName().equals(scan.next())) { // does this feature exist
+					if(feat.getName().equals(scan.next())) { // does this feature exist
 						CVM_Debug.getInstance().printDebugMessage("Found superfeature of the requested feature");
 						return hasSubFeature(feat,feature,attr,value,opcode,scan); 
 					}
@@ -121,7 +121,7 @@ public class PolicyManager {
 	private boolean hasSubFeature(Feature feat, String feature, String attr, boolean value,
 			int opcode, Scanner superFeature) {
 		if(feat == null) return false;
-		CVM_Debug.getInstance().printDebugMessage("Current feature is: "+feat.getFeatureName()+
+		CVM_Debug.getInstance().printDebugMessage("Current feature is: "+feat.getName()+
 				"\nLooking for Feature name is: "+feature);
 		if(superFeature.hasNext()){
 			return hasSubFeature(feat.getSubFeature(superFeature.next()), feature, attr, 
@@ -165,19 +165,19 @@ public class PolicyManager {
 		Object o_val=null; if(param.hasNext()) o_val = param.next();
 		int opcode=0; if(param.hasNext()) opcode = ((Integer)(param.next())).intValue();
 		for(Framework fw: inSet) {
-			CVM_Debug.getInstance().printDebugMessage("Framework name is "+fw.getFrameworkName());
+			CVM_Debug.getInstance().printDebugMessage("Framework name is "+fw.getName());
 			if(o_val.getClass().getName().equals(java.lang.String.class.getName())){
-				if(hasFeature(fw.getFeatureList().values(),reqFeat,attr,(String)o_val,
+				if(hasFeature(fw.getFeatures().values(),reqFeat,attr,(String)o_val,
 						opcode))
 					outSet.add(fw);
 			}
 			else if(o_val.getClass().getName().equals(java.lang.Boolean.class.getName())){
-				if(hasFeature(fw.getFeatureList().values(),reqFeat,attr,((Boolean)o_val).booleanValue(),
+				if(hasFeature(fw.getFeatures().values(),reqFeat,attr,((Boolean)o_val).booleanValue(),
 					opcode))
 				outSet.add(fw);
 			}
 			else if(o_val.getClass().getName().equals(java.lang.Integer.class.getName())){
-				if(hasFeature(fw.getFeatureList().values(),reqFeat,attr,((Integer)o_val).intValue(),
+				if(hasFeature(fw.getFeatures().values(),reqFeat,attr,((Integer)o_val).intValue(),
 					opcode))
 				outSet.add(fw);
 			}
@@ -200,19 +200,19 @@ public class PolicyManager {
 		Object o_val=null; if(param.hasNext()) o_val = param.next();
 		int opcode=0; if(param.hasNext()) opcode = ((Integer)(param.next())).intValue();
 		for(Framework fw: inList) {
-			CVM_Debug.getInstance().printDebugMessage("Framework name is "+fw.getFrameworkName());
+			CVM_Debug.getInstance().printDebugMessage("Framework name is "+fw.getName());
 			if(o_val.getClass().getName().equals(java.lang.String.class.getName())){
-				if(hasFeature(fw.getFeatureList().values(),reqFeat,attr,(String)o_val,
+				if(hasFeature(fw.getFeatures().values(),reqFeat,attr,(String)o_val,
 					opcode))
 					outList.add(fw);
 			}
 			else if(o_val.getClass().getName().equals(java.lang.Boolean.class.getName())){
-				if(hasFeature(fw.getFeatureList().values(),reqFeat,attr,((Boolean)o_val).booleanValue(),
+				if(hasFeature(fw.getFeatures().values(),reqFeat,attr,((Boolean)o_val).booleanValue(),
 					opcode))
 					outList.add(fw);
 			}
 			else if(o_val.getClass().getName().equals(java.lang.Integer.class.getName())){
-				if(hasFeature(fw.getFeatureList().values(),reqFeat,attr,((Integer)o_val).intValue(),
+				if(hasFeature(fw.getFeatures().values(),reqFeat,attr,((Integer)o_val).intValue(),
 					opcode))
 					outList.add(fw);
 			}
@@ -472,7 +472,7 @@ public class PolicyManager {
     	//foundFeature = depthFirstSearchWithReturn(featTree, feature);
     	while (foundFeature.getParentFeature()!=null)
     	{
-    		parentFeature = foundFeature.getParentFeature().getFeatureName()+" "+parentFeature;
+    		parentFeature = foundFeature.getParentFeature().getName()+" "+parentFeature;
     		foundFeature = foundFeature.getParentFeature();
     	}
     	return parentFeature;
@@ -480,11 +480,11 @@ public class PolicyManager {
 	
 	private  void depthFirstSearchWithoutReturn(Feature treeNode, String feature)
 	{	
-		if (treeNode.getFeatureName().compareTo(feature)==0)
+		if (treeNode.getName().compareTo(feature)==0)
 			foundFeature = treeNode;
-		if(treeNode.getSubFeatureList().size()>0)
+		if(treeNode.getSubFeatures().size()>0)
 		{
-			Iterator<Feature> iterator= treeNode.getSubFeatureList().iterator();
+			Iterator<Feature> iterator= treeNode.getSubFeatures().iterator();
 			while (iterator.hasNext())
 			{
 				Feature feat = iterator.next();
@@ -496,10 +496,10 @@ public class PolicyManager {
 	private Feature depthFirstSearchWithReturn(Feature treeNode, String feature)
 	{
 		
-		if (treeNode.getFeatureName().equals(feature))
+		if (treeNode.getName().equals(feature))
 			return treeNode;
 		Feature foundFeature = null;
-		Iterator<Feature> it = treeNode.getSubFeatureList().iterator();
+		Iterator<Feature> it = treeNode.getSubFeatures().iterator();
 
 		while(it.hasNext())
 		{

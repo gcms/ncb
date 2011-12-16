@@ -1,38 +1,16 @@
 package cvm.ncb.adapters;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.UUID;
-
-
+import com.skype.*;
+import com.skype.connector.*;
+import com.skype.connector.TimeOutException;
 import cvm.model.CVM_Debug;
-import cvm.ncb.UserObject;
-import cvm.ncb.handlers.NCBEventObjectManager;
+import cvm.ncb.handlers.event.SchemaReceived_Event;
 import cvm.ncb.handlers.exception.LoginException;
 import cvm.ncb.handlers.exception.NoSessionException;
 import cvm.ncb.handlers.exception.PartyNotAddedException;
 import cvm.ncb.handlers.exception.PartyNotFoundException;
 
-import com.skype.Application;
-import com.skype.ApplicationListener;
-import com.skype.Call;
-import com.skype.CallListener;
-import com.skype.Chat;
-import com.skype.ChatMessage;
-import com.skype.ChatMessageListener;
-import com.skype.Skype;
-import com.skype.SkypeException;
-import com.skype.Stream;
-import com.skype.StreamListener;
-import com.skype.connector.Connector;
-import com.skype.connector.ConnectorException;
-import com.skype.connector.ConnectorListener;
-import com.skype.connector.ConnectorMessageEvent;
-import com.skype.connector.ConnectorStatusEvent;
-import com.skype.connector.TimeOutException;
+import java.util.*;
 
 /**
  * 
@@ -69,7 +47,9 @@ public class SkypeAdapter extends NCBBridgeBase
 	private boolean m_bAppConnected = false;
 	public boolean m_bConnectorLocked = false;
 	private int nConnectorDelay = 2000;
-	private enum MEDIUM {TEXT, AUDIO, VIDEO};
+    private SkypeAdapterDataContainer dataContainer;
+
+    private enum MEDIUM {TEXT, AUDIO, VIDEO};
 	private ArrayList<MEDIUM>m_MediumsEnabled = new ArrayList<MEDIUM>();
 	
 	private final String SchemaTagOpen = "<NEGOTIATION";
@@ -110,7 +90,6 @@ public class SkypeAdapter extends NCBBridgeBase
 	}
 	
 	private void init(){
-		super.fwName = "Skype";
 		//OLD
 		m_hmCallSessionMap = new HashMap<String,Call>();
 		m_hmChatSessionMap = new HashMap<String,Chat>();
@@ -127,7 +106,7 @@ public class SkypeAdapter extends NCBBridgeBase
 		m_hmChatUpdateMapRem = new HashMap<String, ArrayList<String>>();
 		
 		m_hmSessionIdMap = new HashMap<String, ArrayList<String>>();
-		SkypeAdapterDataContainer.getInstance();
+		dataContainer = new SkypeAdapterDataContainer(this);
 		//Add Listener
 		addMessageListener();
 		//schemaThread = new SkypeAdapterThread(this);
@@ -193,14 +172,13 @@ public class SkypeAdapter extends NCBBridgeBase
 	/**
 	 * Returns a user object after login
 	 */
-	public UserObject login(String userName, String password) throws LoginException
+	public void login() throws LoginException
 	{
-		return null;
 	}
 	/**
 	 * Logs the user out.
 	 */
-	public void logout(String userName)
+	public void logout()
 	{
 	
 	}
@@ -1839,7 +1817,8 @@ public class SkypeAdapter extends NCBBridgeBase
 	private void dealWithSchema(String schema)
 	{
 		CVM_Debug.getInstance().printDebugMessage("SkypeAdapter: dealWithSchema Called.");
-		NCBEventObjectManager.Instance().notifiySchemaReceivedEvent(schema);
+        SchemaReceived_Event event = new SchemaReceived_Event(this, schema);
+        notifyEvent(event);
 		//Remove Tags.
 		//Code HERE.
 		
@@ -2043,7 +2022,7 @@ public class SkypeAdapter extends NCBBridgeBase
 			 * of the next schema the program hanngs, need to find out y
 			 */
 			if(schema.contains("controlSchema"))
-				SkypeAdapterDataContainer.getInstance().sentCount++;
+				dataContainer.sentCount++;
 			
 			
 			//else
@@ -2328,23 +2307,23 @@ public class SkypeAdapter extends NCBBridgeBase
 			// TODO Auto-generated method stub
 			//while(b_SendLock);
 			CVM_Debug.getInstance().printDebugMessage("SkypeAdapter - StreamListener - TextReceived: "+ arg0);
-			if(SkypeAdapterDataContainer.getInstance().isSchema(arg0))
+			if(dataContainer.isSchema(arg0))
 			{
 				//TRY COMMENTING TO TEST SCHEMA RECEIVE WITH OUT BLOCKING
-				SkypeAdapterDataContainer.getInstance().enqueueSchemaForProcessing(arg0);
-				if(SkypeAdapterDataContainer.getInstance().sentCount >0)
-					SkypeAdapterDataContainer.getInstance().sentCount--;
+				dataContainer.enqueueSchemaForProcessing(arg0);
+				if(dataContainer.sentCount >0)
+					dataContainer.sentCount--;
 				
-				if(SkypeAdapterDataContainer.getInstance().sentCount==0)
+				if(dataContainer.sentCount==0)
 				{
-					SkypeAdapterDataContainer.getInstance().signalSchemaReceived();
-					SkypeAdapterDataContainer.getInstance().sentCount =0;
+					dataContainer.signalSchemaReceived();
+					dataContainer.sentCount =0;
 				}
 				CVM_Debug.getInstance().printDebugMessage("Schema Handled");
 			}
 			else
 			{
-				//SkypeAdapterDataContainer.getInstance()
+				//dataContainer
 			}
 		/*	if(adapt.isSchema(arg0))
        	  	{
@@ -2420,7 +2399,11 @@ public class SkypeAdapter extends NCBBridgeBase
 		return result;
 */	}
 
-	public void destroySession(String sID) {
+    public String getFWName() {
+        return "Skype";
+    }
+
+    public void destroySession(String sID) {
 		ArrayList<SkypeAdapter.MEDIUM> temp = new ArrayList<SkypeAdapter.MEDIUM>();
 		if((m_hmCallSessionMap.containsKey(sID) 
 				|| m_hmChatSessionMap.containsKey(sID)))
@@ -2477,7 +2460,7 @@ public class SkypeAdapter extends NCBBridgeBase
 		if (args.length == 2){
         	SkypeAdapter sAdpt = new SkypeAdapter();
             try {
-				sAdpt.login(args[0],args[1]); //"test@squire.cs.fiu.edu", "test");
+				sAdpt.login(); //"test@squire.cs.fiu.edu", "test");
 			} catch (LoginException e) {
 				e.printStackTrace();
 			}
@@ -2489,7 +2472,7 @@ public class SkypeAdapter extends NCBBridgeBase
        }else if (args.length == 4){
         	SkypeAdapter sAdpt = new SkypeAdapter();
             try {
-				sAdpt.login(args[0],args[1]); //"test@squire.cs.fiu.edu", "test");
+				sAdpt.login(); //"test@squire.cs.fiu.edu", "test");
 				String medium = args[2]; //"AUDIO";
 				UUID conID = UUID.randomUUID();
 				//String conID = "101";

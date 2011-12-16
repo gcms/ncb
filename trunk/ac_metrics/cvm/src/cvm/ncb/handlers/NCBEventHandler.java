@@ -21,22 +21,9 @@ public class NCBEventHandler implements Uses_Listener
 	 * The NCBEventhandler constructor register itself with the event source, 
 	 * which will fire the events. 
 	 */
-	private NCBEventHandler()
+	private NCBEventHandler(NCBEventObjectManager notifier)
 	{
-		//m_ucmNotifier = UCMEventObjectManager.Istance();
-		//Listen From NCB
-		NCBEventObjectManager NCBEventSource = NCBEventObjectManager.Instance();//new NCBEventObjectManager();
-		NCBEventSource.addUpListener(this);
-	}
-	
-	/**
-	 * Singleton implemetnatnion
-	 */
-	public static NCBEventHandler Instance()
-	{
-		if(instance ==null)
-			instance = new NCBEventHandler();
-		return instance;
+		notifier.addUpListener(this);
 	}
 	
 	/**

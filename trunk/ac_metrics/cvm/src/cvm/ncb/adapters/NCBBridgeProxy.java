@@ -26,7 +26,8 @@ public class NCBBridgeProxy implements InvocationHandler {
     }
 
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        log.debug(internalBridge.toString() + "." + getToString(method, args));
+        if (!Thread.currentThread().getName().startsWith("CVM_SC_MGR"))
+            log.debug(internalBridge.toString() + "." + getToString(method, args));
 
         method = internalBridge.getClass().getMethod(method.getName(), method.getParameterTypes());
 

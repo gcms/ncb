@@ -1,28 +1,12 @@
 package cvm.ncb.handlers;
 
-import java.util.EventListener;
-import java.util.Vector;
-
 import cvm.model.Handles_Event;
 import cvm.model.Uses_Listener;
 import cvm.ncb.UserProfile;
-import cvm.ncb.handlers.event.ConnectionCreatedReply_Event;
-import cvm.ncb.handlers.event.ConnectionDeclinedReply_Event;
-import cvm.ncb.handlers.event.ControlSchemaNotSentException_Event;
-import cvm.ncb.handlers.event.DataSchemaNotSentException_Event;
-import cvm.ncb.handlers.event.LoginExcetption_Event;
-import cvm.ncb.handlers.event.MediaInitiatorEnableReply_Event;
-import cvm.ncb.handlers.event.NoSessionException_Event;
-import cvm.ncb.handlers.event.NotifyLoginReply_Event;
-import cvm.ncb.handlers.event.NotifyLogoffReply_Event;
-import cvm.ncb.handlers.event.PartyAddedReply_Event;
-import cvm.ncb.handlers.event.PartyNotAddedException_Event;
-import cvm.ncb.handlers.event.PartyRemovedReply_Event;
-import cvm.ncb.handlers.event.SchemaNotSavedException_Event;
-import cvm.ncb.handlers.event.SchemaReceived_Event;
-import cvm.ncb.handlers.event.SendSchemaReply_Event;
-import cvm.ncb.handlers.event.UnavailableMedia_Event;
-import cvm.ncb.handlers.event.UserProfileCreatedEvent;
+import cvm.ncb.handlers.event.*;
+
+import java.util.EventListener;
+import java.util.Vector;
 
 /**
  * This class handles the notification of events to the 
@@ -34,10 +18,8 @@ import cvm.ncb.handlers.event.UserProfileCreatedEvent;
 public class NCBEventObjectManager 
 {
 	private static Vector listeners;
-	private static NCBEventObjectManager instance;
-	private static Object syncObject_ = new Object();
 		
-	private NCBEventObjectManager()
+	public NCBEventObjectManager()
 	{
 		
 	}
@@ -47,17 +29,17 @@ public class NCBEventObjectManager
 	 * singleton design pattern.
 	 * @return
 	 */
-	public static NCBEventObjectManager Instance()
-	{
-		if(instance==null)
-		{	synchronized(syncObject_)
-			{
-				if(instance ==null)
-					instance = new NCBEventObjectManager();
-			}
-		}
-		return instance;
-	}
+//	public static NCBEventObjectManager Instance()
+//	{
+//		if(instance==null)
+//		{	synchronized(syncObject_)
+//			{
+//				if(instance ==null)
+//					instance = new NCBEventObjectManager();
+//			}
+//		}
+//		return instance;
+//	}
 	public synchronized void addUpListener(Uses_Listener listener)
 	{
 		if(listeners == null)
@@ -251,7 +233,7 @@ public class NCBEventObjectManager
 	 * General Event Trigger. This method will fire the given event.
 	 * @param event
 	 */
-	private void fireUpEvent(Handles_Event event)
+	public void fireUpEvent(Handles_Event event)
 	{
 		//No listeners do nothing
 		if (listeners != null && !listeners.isEmpty())

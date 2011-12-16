@@ -2,11 +2,11 @@ package cvm.ncb.oem.policy;
 
 public class Attribute {
 
-	public String attributeName;
+	public String name;
 	public String attributeValue;
 	
 	public Attribute(String an, String val){
-		attributeName = an;
+		name = an;
 		attributeValue = val;
 	}
 }

@@ -1,21 +1,15 @@
 package cvm.ncb.adapters;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Observable;
-import java.util.Scanner;
-import java.util.TreeMap;
-import java.util.Observer;
-
-import javax.swing.SwingWorker;
-
-
+import cvm.model.CVM_Debug;
+import cvm.ncb.handlers.exception.LoginException;
+import cvm.ncb.handlers.exception.NoSessionException;
+import cvm.ncb.handlers.exception.PartyNotAddedException;
+import cvm.ncb.handlers.exception.PartyNotFoundException;
 import net.sourceforge.peers.Logger;
 import net.sourceforge.peers.sip.Utils;
 import net.sourceforge.peers.sip.core.useragent.SipEvent;
-import net.sourceforge.peers.sip.core.useragent.UserAgent;
 import net.sourceforge.peers.sip.core.useragent.SipEvent.EventType;
+import net.sourceforge.peers.sip.core.useragent.UserAgent;
 import net.sourceforge.peers.sip.core.useragent.handlers.InviteHandler;
 import net.sourceforge.peers.sip.syntaxencoding.SipUriSyntaxException;
 import net.sourceforge.peers.sip.transactionuser.Dialog;
@@ -23,24 +17,17 @@ import net.sourceforge.peers.sip.transport.SipMessage;
 import net.sourceforge.peers.sip.transport.SipRequest;
 import net.sourceforge.peers.sip.transport.SipResponse;
 
-import cvm.model.CVM_Debug;
-import cvm.ncb.UserObject;
-import cvm.ncb.handlers.exception.LoginException;
-import cvm.ncb.handlers.exception.NoSessionException;
-import cvm.ncb.handlers.exception.PartyNotAddedException;
-import cvm.ncb.handlers.exception.PartyNotFoundException;
-
-// for Socket classes
+import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.ClassNotFoundException;
-import java.lang.Runnable;
-import java.lang.Thread;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.*;
+
+// for Socket classes
 
 
 /**
@@ -76,7 +63,6 @@ public class SIPAdapter extends NCBBridgeBase implements Observer
     private CtlMsgServer ctlMsgSrv = null;
     
     public SIPAdapter(){
-		super.fwName = "Asterisk";
         userAgent = new UserAgent();
         thread = new Thread(new Runnable() {
             public void run() {
@@ -135,9 +121,11 @@ public class SIPAdapter extends NCBBridgeBase implements Observer
 		return true;
 	}
 
-	public UserObject login(String userName, String password)
+	public void login()
 			throws LoginException 
 	{
+        String userName = getUserInfoStore().getFwUserName(getFWName());
+        String password = getUserInfoStore().getFwPassword(getFWName());
 		//provider = userName.substring(userName.indexOf("@")+1);
 		myURL = "sip:"+userName;
 		pass = password;
@@ -150,10 +138,9 @@ public class SIPAdapter extends NCBBridgeBase implements Observer
         	inviteHandler.addObserver(this);
         }
 */      CVM_Debug.getInstance().printDebugMessage("Done Asterisk login");
-		return null;
 	}
 
-	public void logout(String userName)
+	public void logout()
 	{
 		
 	}
@@ -268,7 +255,11 @@ public class SIPAdapter extends NCBBridgeBase implements Observer
 		return false;
 	}
 
-	public void destroySession(String sessionID) {
+    public String getFWName() {
+        return "Asterisk";
+    }
+
+    public void destroySession(String sessionID) {
 		if(sessMap.containsKey(sessionID)){
 			sessMap.remove(sessionID);
 		}
@@ -364,7 +355,7 @@ public class SIPAdapter extends NCBBridgeBase implements Observer
 		if (args.length == 2){
         	SIPAdapter sAdpt = new SIPAdapter();
             try {
-				sAdpt.login(args[0],args[1]); //"test@squire.cs.fiu.edu", "test");
+				sAdpt.login(); //"test@squire.cs.fiu.edu", "test");
 			} catch (LoginException e) {
 				e.printStackTrace();
 			}
@@ -376,7 +367,7 @@ public class SIPAdapter extends NCBBridgeBase implements Observer
        }else if (args.length == 4){
         	SIPAdapter sAdpt = new SIPAdapter();
             try {
-				sAdpt.login(args[0],args[1]); //"test@squire.cs.fiu.edu", "test");
+				sAdpt.login(); //"test@squire.cs.fiu.edu", "test");
 				String medium = args[2]; //"AUDIO";
 				//UUID conID = UUID.randomUUID();
 				String conID = "101";

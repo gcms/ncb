@@ -1,14 +1,9 @@
 package cvm.ncb.manager;
 
-import java.util.HashMap;
-import java.util.Scanner;
-
 import cvm.model.CVM_Debug;
-import cvm.ncb.NetworkCommunicationBroker;
 import cvm.ncb.UserObject;
 import cvm.ncb.UserProfile;
 import cvm.ncb.UserSchema;
-import cvm.ncb.handlers.NCBEventObjectManager;
 
 /**
  * Facade into the NCB_Manager package.
@@ -22,7 +17,7 @@ public class NCB_M_Facade
 	private NCBManager m_ncbManager = null;
 	private NCB_M_Facade()
 	{
-		m_ncbManager = NCBManager.getInstance();
+		m_ncbManager = new NCBManager();
 	}
 	
 	/**
@@ -62,11 +57,11 @@ public class NCB_M_Facade
 	 * @param connectionID Id of the participants to add. i.g crinsomkairos, crinsomkairos1
 	 * @see NCBExceptionHandler, NoSessionException
 	 */
-	public void mapConnToSession(String connectionID, String sessionID)
-	{
-		CVM_Debug.getInstance().printDebugMessage("NCB_M_Facade : NCB mapConnToSession called.");
-		m_ncbManager.mapConnToSession(connectionID, sessionID);
-	}
+//	public void mapConnToSession(String connectionID, String sessionID)
+//	{
+//		CVM_Debug.getInstance().printDebugMessage("NCB_M_Facade : NCB mapConnToSession called.");
+//		m_ncbManager.mapConnToSession(connectionID, sessionID);
+//	}
 	/**
 	 * This function creates a session with the specific session ID
 	 * @param sessionID ID of the session to create.
@@ -274,4 +269,7 @@ public class NCB_M_Facade
 		m_ncbManager.resetNCB();
 	}
 
+    public NCBManager getManager() {
+        return m_ncbManager;
+    }
 }

@@ -918,7 +918,7 @@ public class SmackAdapter extends NCBBridgeBase
 		if (args.length == 2){
         	SmackAdapter sAdpt = new SmackAdapter();
             try {
-				sAdpt.login(args[0],args[1]); //"test@squire.cs.fiu.edu", "test");
+				sAdpt.login(); //"test@squire.cs.fiu.edu", "test");
 			} catch (LoginException e) {
 				e.printStackTrace();
 			}
@@ -930,7 +930,7 @@ public class SmackAdapter extends NCBBridgeBase
        }else if (args.length == 4){
         	SmackAdapter sAdpt = new SmackAdapter();
             try {
-				sAdpt.login(args[0],args[1]); //"test@squire.cs.fiu.edu", "test");
+				sAdpt.login(); //"test@squire.cs.fiu.edu", "test");
 				String medium = args[2]; //"AUDIO";
 				UUID conID = UUID.randomUUID();
 				//String conID = "101";

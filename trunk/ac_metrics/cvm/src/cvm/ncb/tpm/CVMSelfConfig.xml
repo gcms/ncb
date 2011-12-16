@@ -1,32 +1,31 @@
-<policy name="TAM CVM Self-Config"  version ="1.0">	
-	
+<policy name="TAM CVM Self-Config" version="1.0">
+
   <monitor touchpackage="cvm.ncb.tpm."
-	       touchpoint="CommFWTouch"
-           sensor="getState"   />
-  
+           touchpoint="CommFWTouch"
+           sensor="getState"/>
+
   <analyzer>
     <symptom sid="TAM_SC_001">
-      <mapping var = "hasFailed"
-               op  = "eq"
-               val = "true"
-                />
-    
+      <mapping var="hasFailed" op="eq" val="true"/>
     </symptom>
     <symptom sid="TAM_SC_002">
-    	<mapping var="hasFailedReset" op="ne" val="false"></mapping></symptom>
-    <symptom sid="TAM_SC_003">
-    	<mapping var="checkFrameworkForFailure" op="ne" val="true"></mapping>
+      <mapping var="hasFailedReset" op="ne" val="false"/>
     </symptom>
+    <!--<symptom sid="TAM_SC_003">-->
+      <!--<mapping var="checkFrameworkForFailure" op="ne" val="true"/>-->
+    <!--</symptom>-->
   </analyzer>
 
   <planner>
     <plan pid="TAM_SC_001">
-      <action effector="notifyFailedFramework" />
+      <action effector="notifyFailedFramework"/>
     </plan>
     <plan pid="TAM_SC_002">
-    	<action effector="reInstantiate"></action></plan>
-    <plan pid="TAM_SC_003">
-    	<action effector="reInstantiate"></action></plan>
+      <action effector="reInstantiate"/>
+    </plan>
+    <!--<plan pid="TAM_SC_003">-->
+      <!--<action effector="reInstantiate"/>-->
+    <!--</plan>-->
   </planner>
 
 </policy>

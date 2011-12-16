@@ -7,14 +7,13 @@ import java.util.Properties;
 
 /**
  * Used for loading data when no property file is found.
- * @author Frank Hernandez
  *
+ * @author Frank Hernandez
  */
-public class CSM_Default_Property  extends Properties{
+public class CSM_Default_Property extends Properties {
 
-	public CSM_Default_Property() 
-	{
-		this.setProperty(CSM_Properties.SB_BRIDGES,CSM_NBTypes.SKYPE);
-	}
+    public CSM_Default_Property() {
+        this.setProperty(CSM_Properties.SB_BRIDGES, CSM_NBTypes.SKYPE.getFwName());
+    }
 
 }

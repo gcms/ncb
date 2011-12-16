@@ -24,7 +24,7 @@ public class Test {
 		
 		for (int i=0;i< dataArray.length;i++)
 		{
-			if  (feat.getFeatureName().equals(dataArray[i]))
+			if  (feat.getName().equals(dataArray[i]))
 			{
 				CVM_Debug.getInstance().printDebugMessage("Found superfeature");
 				return hasSubFeature(feat,feature,attr,value,opcode,scan);

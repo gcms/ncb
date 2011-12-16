@@ -12,7 +12,7 @@ public class FeatureTreeTraversal {
     	foundFeature = depthFirstSearchWithReturn(featTree, feature);
     	while (foundFeature.getParentFeature()!=null)
     	{
-    		parentFeature = foundFeature.getParentFeature().getFeatureName()+" "+parentFeature;
+    		parentFeature = foundFeature.getParentFeature().getName()+" "+parentFeature;
     		foundFeature = foundFeature.getParentFeature();
     	}
     	return parentFeature;
@@ -20,11 +20,11 @@ public class FeatureTreeTraversal {
 	
 	private  void depthFirstSearchWithoutReturn(Feature treeNode, String feature)
 	{	
-		if (treeNode.getFeatureName().compareTo(feature)==0)
+		if (treeNode.getName().compareTo(feature)==0)
 			foundFeature = treeNode;
-		if(treeNode.getSubFeatureList().size()>0)
+		if(treeNode.getSubFeatures().size()>0)
 		{
-			Iterator<Feature> iterator= treeNode.getSubFeatureList().iterator();
+			Iterator<Feature> iterator= treeNode.getSubFeatures().iterator();
 			while (iterator.hasNext())
 			{
 				Feature feat = iterator.next();
@@ -36,10 +36,10 @@ public class FeatureTreeTraversal {
 	private Feature depthFirstSearchWithReturn(Feature treeNode, String feature)
 	{
 		
-		if (treeNode.getFeatureName().equals(feature))
+		if (treeNode.getName().equals(feature))
 			return treeNode;
 		Feature foundFeature = null;
-		Iterator<Feature> it = treeNode.getSubFeatureList().iterator();
+		Iterator<Feature> it = treeNode.getSubFeatures().iterator();
 
 		while(it.hasNext())
 		{

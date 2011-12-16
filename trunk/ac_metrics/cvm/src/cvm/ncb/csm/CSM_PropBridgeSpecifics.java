@@ -1,11 +1,11 @@
 package cvm.ncb.csm;
 
+import cvm.model.CVM_Debug;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
-
-import cvm.model.*;
 
 /**
  * Bridge specific property file.
@@ -20,7 +20,7 @@ public class CSM_PropBridgeSpecifics
 	private Properties p;
 	private File configFile;
 	
-	CSM_PropBridgeSpecifics(String configFilename)
+	public CSM_PropBridgeSpecifics(String configFilename)
 	{
 		p = new CSM_PBSDefault();		
 		try {
@@ -51,4 +51,12 @@ public class CSM_PropBridgeSpecifics
 	{
 		return p.toString();
 	}
+
+    public String getUserName() {
+        return getProperty(SB_USERNAME);
+    }
+
+    public String getPassword() {
+        return getProperty(SB_PASWORD);
+    }
 }

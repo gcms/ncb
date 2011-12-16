@@ -1,32 +1,37 @@
 package cvm.ncb.tpm;
 
-import java.util.ArrayList;
-import edu.fiu.strg.ACSTF.resource.AbstractResource;
 import cvm.ncb.csm.CommObject;
+import cvm.ncb.csm.CommServiceManager;
+import cvm.ncb.ks.ConIDMappingTable;
+import cvm.ncb.oem.pe.NCBCallQueue;
+import edu.fiu.strg.ACSTF.resource.AbstractResource;
+
+import java.util.ArrayList;
 
 public class CommFWResource extends AbstractResource {
+    private NCBCallQueue callQueue;
+    private ConIDMappingTable conIDMappingTable;
+    private CommServiceManager csMgr;
 
-	private ArrayList<CommObject> cObjectList;
-	
-    public CommFWResource(ArrayList<CommObject> cObjectList) {
-      	this.cObjectList=cObjectList;
+    public CommFWResource(NCBCallQueue m_callQueue, ConIDMappingTable conIDMappingTable, CommServiceManager csMgr) {
+        this.callQueue = m_callQueue;
+        this.conIDMappingTable = conIDMappingTable;
+        this.csMgr = csMgr;
     }
-    
-	public ArrayList<CommObject> getCObjectList() {
-		return cObjectList;
-	}
 
-	public void setCObjectList(ArrayList<CommObject> cObjectList) {
-		this.cObjectList = cObjectList;
-	}
+    public CommServiceManager getCommServiceManager() {
+        return csMgr;
+    }
 
-	public CommObject getObjectByName(String fwName) {
-		for(CommObject comObj: cObjectList){
-			if(comObj.getName().equalsIgnoreCase(fwName)){
-				return comObj;
-			}
-		}
-		return null;
-		
-	}
+    public ArrayList<CommObject> getCObjectList() {
+        return getCommServiceManager().getCommObjectList();
+    }
+
+    public NCBCallQueue getCallQueue() {
+        return callQueue;
+    }
+
+    public ConIDMappingTable getConIDMappingTable() {
+        return conIDMappingTable;
+    }
 }

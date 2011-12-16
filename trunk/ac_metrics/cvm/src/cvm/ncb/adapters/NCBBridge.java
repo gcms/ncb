@@ -1,6 +1,5 @@
 package cvm.ncb.adapters;
 
-import cvm.ncb.UserObject;
 import cvm.ncb.handlers.exception.LoginException;
 import cvm.ncb.handlers.exception.NoSessionException;
 import cvm.ncb.handlers.exception.PartyNotAddedException;
@@ -23,19 +22,16 @@ public interface NCBBridge extends ManagementInterface {
 
     /**
      * This function logs the user into the communication bridge i.e Skype, GTalk...
-     * @param userName Username registered under the specific bridge.
-     * @param password Password registered under the specific bridge.
      * @return UserObject with the user infromation.
      * @throws cvm.ncb.handlers.exception.LoginException
      * @see cvm.ncb.UserObject
      */
-    UserObject login(String userName, String password) throws LoginException;
+    void login() throws LoginException;
 
     /**
      * Logs the user out of the Bridge.
-     * @param userName
      */
-    void logout(String userName);
+    void logout();
 
     /**
      * Restarts the adapter.
@@ -139,12 +135,4 @@ public interface NCBBridge extends ManagementInterface {
     boolean hasMediumFailed(String sessID, String medium_type);
 
     String getFWName();
-
-    String getUsername();
-
-    String getPassword();
-
-    void setPassword(String password);
-
-    void setUsername(String username);
 }

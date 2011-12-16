@@ -25,7 +25,7 @@ public class DriverThread extends Thread implements Uses_Listener{
     }
 
     public void run() {
-        NCBEventObjectManager.Instance().addUpListener(this);
+        m_facade.getManager().getEventObjectManager().addUpListener(this);
 		m_facade.login("userName", "password");
 		m_facade.createSession("101");
 

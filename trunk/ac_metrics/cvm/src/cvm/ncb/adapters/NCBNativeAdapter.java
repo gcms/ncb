@@ -1,29 +1,30 @@
 package cvm.ncb.adapters;
 
 import cvm.model.CVM_Debug;
-import cvm.ncb.UserObject;
-import cvm.ncb.handlers.NCBEventObjectManager;
-import cvm.ncb.handlers.exception.LoginException;
-import cvm.ncb.handlers.exception.NoSessionException;
-import cvm.ncb.handlers.exception.PartyNotAddedException;
-import cvm.ncb.handlers.exception.PartyNotFoundException;
-
 import cvm.ncb.adapters.ncblite.av.AVReceive;
 import cvm.ncb.adapters.ncblite.av.AVTransmit;
 import cvm.ncb.adapters.ncblite.p2p.P2PChannel;
 import cvm.ncb.adapters.ncblite.p2p.P2PHandler;
 import cvm.ncb.adapters.ncblite.rg.common.RGClient;
+import cvm.ncb.handlers.event.NotifyLoginReply_Event;
+import cvm.ncb.handlers.event.NotifyLogoffReply_Event;
+import cvm.ncb.handlers.event.SchemaReceived_Event;
+import cvm.ncb.handlers.event.SendSchemaReply_Event;
+import cvm.ncb.handlers.exception.LoginException;
+import cvm.ncb.handlers.exception.NoSessionException;
+import cvm.ncb.handlers.exception.PartyNotAddedException;
+import cvm.ncb.handlers.exception.PartyNotFoundException;
+import org.eclipse.swt.widgets.Composite;
+
+import javax.media.MediaLocator;
+import java.util.LinkedList;
+import java.util.StringTokenizer;
 
 /*import edu.fiu.scis.cvm.util.event_listener.Handles_Event;
 import edu.fiu.scis.cvm.util.event_listener.Uses_Listener;
 import edu.fiu.scis.cvm.util.event_listener.CVMAdapter.NotifyLoginReply_Event;
 import se.ISynthesisEngine;
 */
-import java.util.LinkedList;
-import java.util.StringTokenizer;
-
-import javax.media.MediaLocator;
-import org.eclipse.swt.widgets.Composite;
 
 /**
  * 
@@ -95,18 +96,20 @@ public class NCBNativeAdapter extends NCBBridgeBase
 				CVM_Debug.getInstance().printDebugMessage("Error logining in "+e0);
 			}
 		}
-		NCBEventObjectManager.Instance().notifyLoginReply(loginObject);
+		NotifyLoginReply_Event event = new NotifyLoginReply_Event(this, loginObject);
+		notifyEvent(event);
 		//use(new NotifyLoginReply_Event(this,this.loginObject));
 	}
 
 	public void notifyLogout() {
+        boolean success = true;
 		try {
 			rGClient.callDB("logoutUser", (LinkedList)loginObject);
 		}catch (Exception e0) {
-			CVM_Debug.getInstance().printDebugMessage("Error logging out");
-			NCBEventObjectManager.Instance().notifyLogoffReply(false);
+			success = false;
 		}
-		NCBEventObjectManager.Instance().notifyLogoffReply(true);
+        NotifyLogoffReply_Event event = new NotifyLogoffReply_Event(this, success);
+		notifyEvent(event);
 	}
 
 	public void updateClientInfo(Object clientObject) {
@@ -141,7 +144,10 @@ public class NCBNativeAdapter extends NCBBridgeBase
 	private void dealWithSchema(String schema)
 	{
 		CVM_Debug.getInstance().printDebugMessage("NCBNativeAdapterData: dealWithSchema Called.");
-		NCBEventObjectManager.Instance().notifiySchemaReceivedEvent(schema);
+
+        SchemaReceived_Event event = new SchemaReceived_Event(this, schema);
+        notifyEvent(event);
+
 		//Remove Tags.
 		//Code HERE.
 	}
@@ -207,7 +213,8 @@ public class NCBNativeAdapter extends NCBBridgeBase
 			connected = connect();
 		}
 		channel.send(name+"||"+schema);
-		NCBEventObjectManager.Instance().notifySendSchemaReply(true);
+        SendSchemaReply_Event event = new SendSchemaReply_Event(this, true);
+		notifyEvent(event);
 	}
 		
 	public boolean addMedia(String sid, String media_type, String media_location) {
@@ -456,14 +463,13 @@ public class NCBNativeAdapter extends NCBBridge
 		return false;
 	}
 
-	public UserObject login(String userName, String password)
+	public void login()
 			throws LoginException 
 	{
 		// TODO Auto-generated method stub
-		return null;
 	}
 
-	public void logout(String userName)
+	public void logout()
 	{
 		// TODO Auto-generated method stub
 
@@ -502,7 +508,11 @@ public class NCBNativeAdapter extends NCBBridge
 		return false;
 	}
 
-	public void enableMediumReceiver(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
+    public String getFWName() {
+        return "NCBNAT";
+    }
+
+    public void enableMediumReceiver(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
 		// TODO Auto-generated method stub
 		
 	}

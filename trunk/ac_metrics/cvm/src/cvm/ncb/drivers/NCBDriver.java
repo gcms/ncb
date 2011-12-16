@@ -3,37 +3,43 @@ package cvm.ncb.drivers;
 import cvm.model.CVM_Debug;
 import cvm.model.Handles_Event;
 import cvm.model.Uses_Listener;
-import cvm.ncb.handlers.NCBEventObjectManager;
 import cvm.ncb.handlers.event.SchemaReceived_Event;
+import cvm.ncb.manager.NCBManager;
 import cvm.ncb.manager.NCB_M_Facade;
 
 import java.util.Scanner;
 
 public class NCBDriver implements Uses_Listener{
-	private String cvmUname = "Andrew";
+	private String cvmUname;
 	private int DELAY = 20000;
-	NCBEventObjectManager eomgr = null;
-	private NCBDriver(){
-		eomgr = NCBEventObjectManager.Instance();
-		eomgr.addUpListener(this);
-	}
-	/**
+    private NCBManager manager;
+
+    public NCBDriver(NCBManager ncbManager, String cvmUname) {
+        this.manager = ncbManager;
+        this.cvmUname = cvmUname;
+    }
+
+    /**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-	    NCB_M_Facade m_facade = NCB_M_Facade.getInstance();
-		NCBDriver driver = new NCBDriver();
-		
-		m_facade.login("Andrew", "password");
-		m_facade.createSession("101");
-
-		driver.twoWay(m_facade, "AUDIO");
+        NCBDriver driver = new NCBDriver(new NCBManager(), "Andrew");
+        driver.run();
 	}
-	
-	public void twoWay(NCB_M_Facade m_facade, String medium){
-		m_facade.sendSchema("101 ","Andrew"," Yali","101 "+medium+" Yali Andrew");
-		m_facade.addParty("101", "Yali");
-		m_facade.enableMedium("101", medium);
+
+    public void run() {        
+        manager.getEventObjectManager().addUpListener(this);
+
+        manager.login(cvmUname, "password");
+        manager.createSession("101");
+
+        twoWay(manager, "AUDIO");
+    }
+
+	public void twoWay(NCBManager manager, String medium){
+		manager.sendSchema("101 ", "Andrew", " Yali", "101 " + medium + " Yali Andrew");
+		manager.addParty("101", "Yali");
+		manager.enableMedium("101", medium);
 	}
 
 	public void threeWay(NCB_M_Facade m_facade, String medium){
@@ -67,7 +73,7 @@ public class NCBDriver implements Uses_Listener{
 	}
 
 	public void twoToThreeWay(NCB_M_Facade m_facade, String medium){
-		twoWay(m_facade, medium);
+		twoWay(m_facade.getManager(), medium);
 		waitForAWhile(DELAY);
 		m_facade.sendSchema("101 ","Andrew"," Yali","101 "+medium+" Yali Tariq Andrew");
 		m_facade.sendSchema("101 ","Andrew"," Tariq","101 "+medium+" Yali Tariq Andrew");
@@ -101,7 +107,7 @@ public class NCBDriver implements Uses_Listener{
 		m_facade.addParty("101", "Karl");
 		m_facade.enableMedium("101", medium);
 	}
-	
+
 	private void waitForAWhile(int millis){
 		try {
 			Thread.sleep(millis);
@@ -113,7 +119,7 @@ public class NCBDriver implements Uses_Listener{
 	}
 
 	public void use(Handles_Event event) {
-		if (event instanceof SchemaReceived_Event) 
+		if (event instanceof SchemaReceived_Event)
 			dealWithSchema(((SchemaReceived_Event)event).getSchema());
 	}
 
@@ -124,10 +130,9 @@ public class NCBDriver implements Uses_Listener{
 	private synchronized void dealWithSchema(String schema)
 	{
 		CVM_Debug.getInstance().printDebugMessage("NCBDriver: dealWithSchema Called."+schema);
-		NCB_M_Facade m_facade = NCB_M_Facade.getInstance();
 		Scanner sch = new Scanner(schema);
 		String sessId = sch.next();
-		m_facade.createSession(sessId);
+		manager.createSession(sessId);
 		String medium = sch.next();
 		// add participants
 		while (sch.hasNext()){
@@ -136,9 +141,9 @@ public class NCBDriver implements Uses_Listener{
 			if(name.equalsIgnoreCase(cvmUname)){
 				continue;
 			}
-			m_facade.addParty(sessId, name);
+			manager.addParty(sessId, name);
 		}
-		m_facade.enableMediumReceiver(sessId, medium);
+		manager.enableMediumReceiver(sessId, medium);
 	}
 
 }

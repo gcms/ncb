@@ -1,11 +1,11 @@
 package cvm.ncb.csm;
 
+import cvm.model.CVM_Debug;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
-
-import cvm.model.*;
 
 /**
  * Basic property file for loading Bridges
@@ -51,5 +51,9 @@ public class CSM_Properties
 	{
 		return p.toString();
 	}
+
+    public String getBridges() {
+        return getProperty(SB_BRIDGES);
+    }
 	
 }

@@ -2,49 +2,45 @@ package cvm.ncb.oem.policy;
 
 import java.util.HashMap;
 
-public class Framework implements Comparable<Framework>{
+public class Framework implements Comparable<Framework> {
 
-	private String frameworkName;
-	private HashMap<String,Feature> featureList;
-	
-	private boolean available;
-	
-	public Framework(String name) {
-		frameworkName = name;
-		featureList = new HashMap<String,Feature>();
-		restore();
-	}
-	
-	public String getFrameworkName() {
-		return frameworkName;
-	}
-	
-	public HashMap<String,Feature> getFeatureList() {
-		return featureList;
-	}
-	
-	public void addFeature(Feature feat){
-		featureList.put(feat.getFeatureName(),feat);
-	}
-	
-	public String toString(){
-		return frameworkName;
-	}
+    private String name;
+    private boolean available = true;
+    private HashMap<String, Feature> features = new HashMap<String, Feature>();
 
-	public int compareTo(Framework other) {
-		return this.frameworkName.compareTo(other.frameworkName);
-	}
+    public Framework(String name) {
+        this.name = name;
+    }
 
-	public boolean isAvailable() 
-	{ return this.available; }
-	
-	public void fail() 
-	{
-		this.available=false;
-	}
-	
-	public void restore() 
-	{
-		this.available=true;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public HashMap<String, Feature> getFeatures() {
+        return features;
+    }
+
+    public void addFeature(Feature feat) {
+        features.put(feat.getName(), feat);
+    }
+
+    public String toString() {
+        return name;
+    }
+
+    public int compareTo(Framework other) {
+        return name.compareTo(other.name);
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void fail() {
+        available = false;
+    }
+
+    public void restore() {
+        available = true;
+    }
 }

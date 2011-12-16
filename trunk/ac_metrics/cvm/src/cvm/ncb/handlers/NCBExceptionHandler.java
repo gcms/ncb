@@ -1,19 +1,12 @@
 package cvm.ncb.handlers;
 
-import cvm.ncb.handlers.exception.ControlSchemaNotSentException;
-import cvm.ncb.handlers.exception.DataNotFoundException;
-import cvm.ncb.handlers.exception.DataSchemaNotSentException;
-import cvm.ncb.handlers.exception.IllegalMacroArgumentException;
-import cvm.ncb.handlers.exception.LoginException;
-import cvm.ncb.handlers.exception.NoSessionException;
-import cvm.ncb.handlers.exception.PartyNotAddedException;
-import cvm.ncb.handlers.exception.PartyNotFoundException;
-import cvm.ncb.handlers.exception.SchemaNotSavedException;
-//import cvm.ucm.handlers.exception.InvalidScriptException;
-//import cvm.ucm.handlers.exception.MacroNotFoundException;
-import cvm.model.*;
+import cvm.model.CVM_Debug;
+import cvm.ncb.handlers.exception.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+//import cvm.ucm.handlers.exception.InvalidScriptException;
+//import cvm.ucm.handlers.exception.MacroNotFoundException;
 
 /**
  * This class defines all the exceptions that could be handled 
@@ -26,27 +19,25 @@ public class NCBExceptionHandler
 {
     private static Log log = LogFactory.getLog(NCBExceptionHandler.class);
 
-	//Used for singleton.
-	private static NCBExceptionHandler instance = null;
-	//Used for turning exceptions into events.
+    //Used for turning exceptions into events.
 	private NCBEventObjectManager m_ncbNotifier = null;
 
-	private NCBExceptionHandler()
+	public NCBExceptionHandler(NCBEventObjectManager notifier)
 	{
-		m_ncbNotifier = NCBEventObjectManager.Instance();
+		m_ncbNotifier = notifier;
 	}
 
 	/**
 	 * Implementation of the Singleton Pattern
 	 * @return NCBExceptionHandler instnace
 	 */
-	public static NCBExceptionHandler Instance()
-	{
-		if(instance == null)
-			instance = new NCBExceptionHandler();
-		
-		return instance;
-	}
+//	public static NCBExceptionHandler Instance()
+//	{
+//		if(instance == null)
+//			instance = new NCBExceptionHandler();
+//
+//		return instance;
+//	}
 
 	/**
 	 * This method will handle all the exceptions
@@ -143,4 +134,8 @@ public class NCBExceptionHandler
 	
 		
 	}
+
+    public NCBEventObjectManager getObjectManager() {
+        return m_ncbNotifier;
+    }
 }

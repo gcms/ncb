@@ -1,8 +1,7 @@
 package cvm.ncb.adapters;
 
 import cvm.model.CVM_Debug;
-import cvm.ncb.UserObject;
-import cvm.ncb.handlers.NCBEventObjectManager;
+import cvm.ncb.handlers.event.SchemaReceived_Event;
 import cvm.ncb.handlers.exception.LoginException;
 import cvm.ncb.handlers.exception.NoSessionException;
 import cvm.ncb.handlers.exception.PartyNotAddedException;
@@ -16,7 +15,6 @@ import org.jivesoftware.smackx.jingle.JingleSessionRequest;
 import org.jivesoftware.smackx.jingle.listeners.CreatedJingleSessionListener;
 import org.jivesoftware.smackx.jingle.listeners.JingleSessionRequestListener;
 import org.jivesoftware.smackx.jingle.media.JingleMediaManager;
-//import org.jivesoftware.smackx.jingle.mediaimpl.jmf.CloneDS;
 import org.jivesoftware.smackx.jingle.mediaimpl.jmf.JmfMediaManager;
 import org.jivesoftware.smackx.jingle.nat.FixedResolver;
 import org.jivesoftware.smackx.jingle.nat.FixedTransportManager;
@@ -26,6 +24,8 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+
+//import org.jivesoftware.smackx.jingle.mediaimpl.jmf.CloneDS;
 
 /**
  * Smack Jingle Application. It register in a XMPP Server and let users place calls
@@ -86,14 +86,14 @@ public class SmackAdapter extends NCBBridgeBase {
     /**
      * This function logs the user into the communication bridge i.e Skype, GTalk...
      *
-     * @param userName Username registered under the specific bridge.
-     * @param password Password registered under the specific bridge.
      * @return UserObject with the user information.
      * @throws LoginException
      * @see UserObject
      */
-    public UserObject login(String userName, String password)
+    public void login()
             throws LoginException {
+        String userName = getUserInfoStore().getFwUserName(getFWName());
+        String password = getUserInfoStore().getFwPassword(getFWName());
 
         /* Need to separate user and server from userName */
         this.myJID = userName;
@@ -129,7 +129,6 @@ public class SmackAdapter extends NCBBridgeBase {
         createdSessionListener = manager;
 
         CVM_Debug.getInstance().printDebugMessage("Done login");
-        return null;
     }
 
     public boolean isLoggedIn(String userName) {
@@ -415,9 +414,8 @@ public class SmackAdapter extends NCBBridgeBase {
     /**
      * Logs the user out of the Bridge.
      *
-     * @param userName
      */
-    public void logout(String userName) {
+    public void logout() {
         xmppConnection.disconnect();
     }
 
@@ -625,6 +623,10 @@ public class SmackAdapter extends NCBBridgeBase {
         return mediumFailureStatus;
     }
 
+    public String getFWName() {
+        return "Smack";
+    }
+
     public void terminate(String conID) {
         destroySession(conID);
     }
@@ -822,7 +824,10 @@ public class SmackAdapter extends NCBBridgeBase {
                     e.printStackTrace();
                 }
             }
-        } else NCBEventObjectManager.Instance().notifiySchemaReceivedEvent(schema);
+        } else {
+            SchemaReceived_Event event = new SchemaReceived_Event(this, schema);
+            notifyEvent(event);
+        }
     }
 
     /**
@@ -929,7 +934,7 @@ public class SmackAdapter extends NCBBridgeBase {
         if (args.length == 2) {
             SmackAdapter sAdpt = new SmackAdapter(true);
             try {
-                sAdpt.login(args[0], args[1]); //"test@squire.cs.fiu.edu", "test");
+                sAdpt.login(); //"test@squire.cs.fiu.edu", "test");
             } catch (LoginException e) {
                 e.printStackTrace();
             }
@@ -941,7 +946,7 @@ public class SmackAdapter extends NCBBridgeBase {
         } else if (args.length == 4) {
             SmackAdapter sAdpt = new SmackAdapter(true);
             try {
-                sAdpt.login(args[0], args[1]); //"test@squire.cs.fiu.edu", "test");
+                sAdpt.login(); //"test@squire.cs.fiu.edu", "test");
                 String medium = args[2]; //"AUDIO";
                 UUID conID = UUID.randomUUID();
                 //String conID = "101";
@@ -1061,7 +1066,6 @@ public class SmackAdapter extends NCBBridgeBase {
     }
 
     private void init() {
-        super.fwName = "Smack";
         sessMgr = new ArrayList<String>();
         jidsList = new ArrayList<HashSet<String>>();
         jManagers = new TreeMap<String, ArrayList<JingleManager>>();

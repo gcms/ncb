@@ -1,19 +1,9 @@
 package edu.fiu.strg.ACSTF.manager;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-
+import edu.fiu.strg.ACSTF.manager.knowledge.*;
+import edu.fiu.strg.ACSTF.manager.mape.*;
+import edu.fiu.strg.ACSTF.resource.AbstractResource;
+import edu.fiu.strg.ACSTF.touchpoint.AbstractTouchPoint;
 import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -22,16 +12,19 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import edu.fiu.strg.ACSTF.resource.*;
-import edu.fiu.strg.ACSTF.touchpoint.*;
-import edu.fiu.strg.ACSTF.manager.mape.*;
-import edu.fiu.strg.ACSTF.manager.knowledge.*;
+import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class GenericManager<Touchpoint>{
+public class GenericManager<Touchpoint extends AbstractTouchPoint>{
 	private String name;
     private MAPEGroup<Touchpoint> mape;
     private KnowledgeInterface<Touchpoint> knowledge;
-	protected AbstractTouchPoint touchpoint;
+	protected Touchpoint touchpoint;
 	private String sensor;
 	
 	// XML Tag Constants
@@ -124,7 +117,7 @@ public class GenericManager<Touchpoint>{
 					.forName(touchPackageName + touchpointName);
 			Constructor[] cons = sensorClass.getDeclaredConstructors();
 			System.out.println(cons[0]);
-			touchpoint = (AbstractTouchPoint) cons[0]
+			touchpoint = (Touchpoint) cons[0]
 					.newInstance(new Object[] { aResource });
 		}
 		catch (InvocationTargetException e)
