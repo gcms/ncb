@@ -1,5 +1,6 @@
 package cvm.ncb.adapters
 
+import cvm.model.Event
 import cvm.ncb.handlers.exception.LoginException
 
 /**
@@ -33,70 +34,77 @@ class MockAdapter extends NCBBridgeBase {
         calls.push("getCapability()")
     }
 
+    @Method(name = "login", parameters = [])
     void login() {
         calls.push("login()")
         if (loginFail)
             throw new LoginException();
     }
 
+    @Method(name = "logout", parameters = [])
     void logout() {
         calls.push("logout()")
     }
 
+    @Method(name = "restartService", parameters = [])
     void restartService() {
         calls.push("restartService()")
     }
 
-    void createSession(String sessionID) {
-        calls.push("createSession($sessionID)")
+    @Method(name = "createSession", parameters = [ "session" ])
+    void createSession(String session) {
+        calls.push("createSession($session)")
     }
 
-    void destroySession(String sessionID) {
-        calls.push("destroySession($sessionID)")
+    @Method(name = "destroySession", parameters = [ "session" ])
+    void destroySession(String session) {
+        calls.push("destroySession($session)")
     }
 
-    void addParticipant(String sID, String participantID) {
-        calls.push("addParticipant($sID, $participantID)")
+    void addParticipant(String session, String participant) {
+        calls.push("addParticipant($session, $participant)")
     }
 
     void removeParticipant(String sID, String participant) {
-         calls.push("removeParticipant($sID, $participant)")
+        calls.push("removeParticipant($sID, $participant)")
     }
 
-    boolean isLoggedIn(String userName) {
-        return false  //To change body of implemented methods use File | Settings | File Templates.
+
+    @Method(name = "sendSchema", parameters = [ "schema", "participant" ])
+    void sendSchema(String schema, String participant) {
+        calls.push("sendSchema($schema, $participant)")
     }
 
-    boolean isSessionCreated(String sID) {
-        return false  //To change body of implemented methods use File | Settings | File Templates.
+    @Method(name = "enableMedium", parameters = [ "session", "medium" ])
+    void enableMedium(String session, String medium) {
+        calls.push("enableMedium($session, $medium)")
     }
 
-    void sendSchema(String schema, String participantID) {
-         calls.push("sendSchema($schema, $participantID)")
+    @Method(name = "enableMediumReceiver", parameters = [ "session", "medium" ])
+    void enableMediumReceiver(String session, String medium) {
+        calls.push("enableMediumReceiver($session, $medium)")
     }
 
-    void enableMedium(String connectionID, String mediumName) {
-         calls.push("enableMedium($connectionID, $mediumName)")
+    @Method(name = "disableMedium", parameters = [ "session", "medium" ])
+    void disableMedium(String session, String medium) {
+        calls.push("disableMedium($session, $medium)")
     }
 
-    void enableMediumReceiver(String connectionID, String mediumName) {
-        calls.push("enableMediumReceiver($connectionID, $mediumName)")
-    }
-
-    void disableMedium(String connectionID, String mediumName) {
-        calls.push("disableMedium($connectionID, $mediumName)")
-    }
-
-    boolean hasMediumFailed(String sessID, String medium_type) {
+    @Method(name = "hasMediumFailed", parameters = [ "session", "medium" ])
+    boolean hasMediumFailed(String session, String medium) {
         hasFailed
     }
 
-    String getFWName() {
+    String getName() {
         "Mock"
     }
 
     void loginShouldFail() {
         loginFail = true
+    }
+
+    void notifySchemaReceivedEvent(String schema) {
+        notify(new Event("SchemaReceived", [schema: schema]))
     }
 }
 
@@ -108,11 +116,12 @@ class Mock2Adapter extends MockAdapter {
             instance = this
     }
 
-    public String getFWName() {
+    public String getName() {
         "Mock2"
     }
 
-    boolean hasMediumFailed(String sessID, String medium_type) {
+    @Method(name = "hasMediumFailed", parameters = [ "session", "medium" ])
+    boolean hasMediumFailed(String session, String medium_) {
         false
     }
 }

@@ -1,15 +1,12 @@
 package cvm.ncb.adapters;
 
 import cvm.model.CVM_Debug;
+import cvm.model.Event;
 import cvm.ncb.adapters.ncblite.av.AVReceive;
 import cvm.ncb.adapters.ncblite.av.AVTransmit;
 import cvm.ncb.adapters.ncblite.p2p.P2PChannel;
 import cvm.ncb.adapters.ncblite.p2p.P2PHandler;
 import cvm.ncb.adapters.ncblite.rg.common.RGClient;
-import cvm.ncb.handlers.event.NotifyLoginReply_Event;
-import cvm.ncb.handlers.event.NotifyLogoffReply_Event;
-import cvm.ncb.handlers.event.SchemaReceived_Event;
-import cvm.ncb.handlers.event.SendSchemaReply_Event;
 import cvm.ncb.handlers.exception.LoginException;
 import cvm.ncb.handlers.exception.NoSessionException;
 import cvm.ncb.handlers.exception.PartyNotAddedException;
@@ -96,8 +93,10 @@ public class NCBNativeAdapter extends NCBBridgeBase
 				CVM_Debug.getInstance().printDebugMessage("Error logining in "+e0);
 			}
 		}
-		NotifyLoginReply_Event event = new NotifyLoginReply_Event(this, loginObject);
-		notifyEvent(event);
+
+		Event event = new Event("NotifyLoginReply");
+        event.setParam("contactList", loginObject);
+		notify(event);
 		//use(new NotifyLoginReply_Event(this,this.loginObject));
 	}
 
@@ -108,8 +107,10 @@ public class NCBNativeAdapter extends NCBBridgeBase
 		}catch (Exception e0) {
 			success = false;
 		}
-        NotifyLogoffReply_Event event = new NotifyLogoffReply_Event(this, success);
-		notifyEvent(event);
+
+        Event event = new Event("otifyLogoffReply");
+        event.setParam("isLoggedOff", success);
+		notify(event);
 	}
 
 	public void updateClientInfo(Object clientObject) {
@@ -145,8 +146,10 @@ public class NCBNativeAdapter extends NCBBridgeBase
 	{
 		CVM_Debug.getInstance().printDebugMessage("NCBNativeAdapterData: dealWithSchema Called.");
 
-        SchemaReceived_Event event = new SchemaReceived_Event(this, schema);
-        notifyEvent(event);
+
+        Event event = new Event("SchemaReceived");
+        event.setParam("schema", schema);
+        notify(event);
 
 		//Remove Tags.
 		//Code HERE.
@@ -208,13 +211,15 @@ public class NCBNativeAdapter extends NCBBridgeBase
 //		registerHandler(iSynEng);
 		
 	}
-	public void sendSchema(String schema, String name) {
+	public void sendSchema(String schema, String participant) {
 		if (!connected) {
 			connected = connect();
 		}
-		channel.send(name+"||"+schema);
-        SendSchemaReply_Event event = new SendSchemaReply_Event(this, true);
-		notifyEvent(event);
+		channel.send(participant +"||"+schema);
+
+        Event event = new Event("SendSchemaReply");
+        event.setParam("sent", true);
+        notify(event);
 	}
 		
 	public boolean addMedia(String sid, String media_type, String media_location) {
@@ -239,12 +244,12 @@ public class NCBNativeAdapter extends NCBBridgeBase
 		return 0;
 	}
 
-	public void createSession(String uuid) {
+	public void createSession(String session) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void destroySession(String sid) {
+	public void destroySession(String session) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -444,7 +449,7 @@ import cvm.ncb.handlers.exception.PartyNotFoundException;
 public class NCBNativeAdapter extends NCBBridge 
 {
 */
-	public void addParticipant(String sID, String participantID)
+	public void addParticipant(String session, String participant)
 			throws PartyNotAddedException 
 	{
 		// TODO Auto-generated method stub
@@ -457,13 +462,7 @@ public class NCBNativeAdapter extends NCBBridge
 		return null;
 	}
 
-	public boolean isLoggedIn(String userName)
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public void login()
+    public void login()
 			throws LoginException 
 	{
 		// TODO Auto-generated method stub
@@ -488,31 +487,26 @@ public class NCBNativeAdapter extends NCBBridge
 
 	}
 
-	public boolean isSessionCreated(String sID) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public void disableMedium(String connectionID, String mediumName) throws PartyNotFoundException, NoSessionException {
+    public void disableMedium(String session, String medium) throws PartyNotFoundException, NoSessionException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void enableMedium(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
+	public void enableMedium(String session, String medium) throws PartyNotAddedException, NoSessionException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public boolean hasMediumFailed(String sessID, String medium_type) {
+	public boolean hasMediumFailed(String session, String medium_) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-    public String getFWName() {
+    public String getName() {
         return "NCBNAT";
     }
 
-    public void enableMediumReceiver(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
+    public void enableMediumReceiver(String session, String medium) throws PartyNotAddedException, NoSessionException {
 		// TODO Auto-generated method stub
 		
 	}

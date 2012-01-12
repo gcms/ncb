@@ -3,81 +3,65 @@ package cvm.ncb.ks;
 import cvm.model.CVM_Debug;
 import cvm.ncb.csm.BridgeCall;
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.PriorityBlockingQueue;
 
 public class Connection {
-    private String conId;
-    private Queue<BridgeCall> conCallList = new PriorityBlockingQueue<BridgeCall>();
+    private String id;
+    private Queue<BridgeCall> queue = new PriorityBlockingQueue<BridgeCall>();
 
-    private HashMap<String, String> mediumToComObj = new HashMap<String, String>();
-    private HashMap<String, String> oldMediumToComObj = new HashMap<String, String>();
+    private HashMap<String, String> currentMapping = new LinkedHashMap<String, String>();
+    private HashMap<String, String> previousMapping = new LinkedHashMap<String, String>();
 
-    private CopyOnWriteArraySet<String> partyList = new CopyOnWriteArraySet<String>();
-    private String defMedium = null;
+    private Set<String> participants = new CopyOnWriteArraySet<String>();
+    private String defaultMedium = null;
 
     public Connection(String conID, String medium, String comObj) {
-        this.conId = conID;
-        defMedium = medium;
-        mediumToComObj.put(medium, comObj);
+        this.id = conID;
+        defaultMedium = medium;
+        currentMapping.put(medium, comObj);
     }
 
-    public String getConId() {
-        return conId;
+    public String getId() {
+        return id;
     }
 
-    public String getComObj(String medium) {
+    public String getFramework(String medium) {
         CVM_Debug.getInstance().printDebugMessage("Connect Object getter: " + medium);
 
         if (medium == null || medium.equals(""))
-            return mediumToComObj.get(defMedium);
+            return currentMapping.get(defaultMedium);
 
-        return mediumToComObj.get(medium);
+        return currentMapping.get(medium);
     }
 
-    public boolean setComObj(String medium, String comObj) {
-        CVM_Debug.getInstance().printDebugMessage("Connect Object setter: " + medium + " " + comObj);
+    public void setFramework(String medium, String framework) {
+        assert framework != null;
 
-        if (medium == null || medium.equals(""))
-            return false;
+        defaultMedium = medium;
 
-        /*if(defMedium == null)*/
-        defMedium = medium;
-
-        String currentCommObj = mediumToComObj.get(medium);
-        if (currentCommObj != null && currentCommObj.equalsIgnoreCase(comObj))
-            return false;
-
-        oldMediumToComObj.putAll(mediumToComObj);
-        mediumToComObj.put(medium, comObj);
-
-        return true;
+        String currentFramework = currentMapping.get(medium);
+        if (currentFramework == null || !currentFramework.equals(framework)) {
+            previousMapping.putAll(currentMapping);
+            currentMapping.put(medium, framework);
+        }
     }
 
-    public String getPreviousComObj(String medium) {
-        return oldMediumToComObj.get(medium);
+    public String getPreviousFramework(String medium) {
+        return previousMapping.get(medium);
     }
 
-    public void offerNCBCall(BridgeCall call) {
+    public void enqueue(BridgeCall call) {
         if (contains(call))
             return;
 
-        CVM_Debug.getInstance().printDebugMessage("Offering call: " + call.getName() + " currentFw for " + call.getMedium() + ": " + getComObj(call.getMedium()));
-        conCallList.offer(call);
-
-        if (call.getName().equalsIgnoreCase("addAParticipant"))
-            partyList.add((String) call.getParams()[1]);
-        else if (call.getName().equalsIgnoreCase("removeAParticipant"))
-            partyList.remove((String) call.getParams()[1]);
+//        CVM_Debug.getInstance().printDebugMessage("Offering call: " + call.getName() + " currentFw for " + call.getMedium() + ": " + getFramework(call.getMedium()));
+        queue.offer(call);
     }
 
     private boolean contains(BridgeCall call) {
-        for (BridgeCall bridgeCall : conCallList) {
+        for (BridgeCall bridgeCall : queue) {
             if (bridgeCall.equals(call))
                 return true;
         }
@@ -86,34 +70,32 @@ public class Connection {
     }
 
     public BridgeCall pollCall() {
-        return conCallList.poll();
+        return queue.poll();
     }
 
     public BridgeCall peekCall() {
-        return conCallList.peek();
-    }
-
-    public int getNumOfUsers() {
-        return partyList.size() + 1;
+        return queue.peek();
     }
 
     public List<String> getActiveMedia() {
-        return new ArrayList<String>(mediumToComObj.keySet());
-    }
-
-    public List<String> getDeactivatedMedia() {
-        return new ArrayList<String>(oldMediumToComObj.keySet());
+        return new ArrayList<String>(currentMapping.keySet());
     }
 
     public String getDefaultMedium() {
-        return defMedium;
+        return defaultMedium;
     }
 
-    public List<String> getParticipants() {
-        return new ArrayList<String>(partyList);
+    public Collection<String> getParticipants() {
+        return participants;
     }
 
-    public boolean containsComObj(String fwName) {
-        return mediumToComObj.containsValue(fwName);
+    public boolean containsFramework(String fwName) {
+        return currentMapping.containsValue(fwName);
+    }
+
+    public String getFramework(BridgeCall call) {
+        return call.getCommandType() == BridgeCall.CommandType.DESTROYSESSION ?
+                getPreviousFramework(call.getMedium()) :
+                getFramework(call.getMedium());
     }
 }

@@ -1,7 +1,7 @@
 package cvm.ncb.adapters;
 
 import cvm.model.CVM_Debug;
-import cvm.ncb.handlers.event.SchemaReceived_Event;
+import cvm.model.Event;
 
 import java.util.ArrayList;
 /**
@@ -103,8 +103,9 @@ public class SkypeAdapterDataContainer
 	private void dealWithSchema(String schema)
 	{
 		CVM_Debug.getInstance().printDebugMessage("SkypeAdapterData: dealWithSchema Called.");
-        SchemaReceived_Event event = new SchemaReceived_Event(this, schema);
-		adapter.notifyEvent(event);
+          Event event = new Event("SchemaReceived");
+        event.setParam("schema", schema);
+        adapter.notify(event);
 		//Remove Tags.
 		//Code HERE.
 		
@@ -112,7 +113,4 @@ public class SkypeAdapterDataContainer
 		//NCBEventObjectManager.Istance().notifySchemaReceivedEvent(schema);;
 		
 	}
-	
-	
-
 }

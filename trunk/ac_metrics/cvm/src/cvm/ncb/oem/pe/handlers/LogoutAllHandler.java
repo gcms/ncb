@@ -1,19 +1,19 @@
 package cvm.ncb.oem.pe.handlers;
 
-import cvm.ncb.csm.CommObject;
-import cvm.ncb.oem.pe.NCBCall;
-import cvm.ncb.oem.pe.NCBCallHandler;
+import cvm.ncb.csm.ManagedObject;
+import cvm.ncb.oem.pe.Call;
+import cvm.ncb.oem.pe.SignalHandler;
 import cvm.ncb.oem.pe.PolicyEvalManager;
 import cvm.ncb.tpm.CommFWResource;
 
-public class LogoutAllHandler implements NCBCallHandler {
-    public boolean canHandle(NCBCall call) {
-        return call.getCallName().equals("logoutAll");
+public class LogoutAllHandler implements SignalHandler {
+    public boolean canHandle(Call call) {
+        return call.getName().equals("logoutAll");
     }
 
-    public void handle(NCBCall call, CommFWResource resource, PolicyEvalManager pem) {
-        for (CommObject commObject : resource.getCObjectList()) {
-            commObject.getBridge().logout();
+    public void handle(Call call, CommFWResource resource, PolicyEvalManager pem) {
+        for (ManagedObject managedObject : resource.getObjects()) {
+            managedObject.execute("logout");
         }
     }
 }

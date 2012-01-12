@@ -1,10 +1,9 @@
 package cvm.ncb.adapters;
 
 import cvm.model.CVM_Debug;
-import cvm.ncb.handlers.event.SchemaReceived_Event;
+import cvm.model.Event;
 import cvm.ncb.handlers.exception.LoginException;
 import cvm.ncb.handlers.exception.NoSessionException;
-import cvm.ncb.handlers.exception.PartyNotAddedException;
 import cvm.ncb.handlers.exception.PartyNotFoundException;
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.packet.Presence;
@@ -90,10 +89,11 @@ public class SmackAdapter extends NCBBridgeBase {
      * @throws LoginException
      * @see UserObject
      */
+    @Method(name = "login")
     public void login()
             throws LoginException {
-        String userName = getUserInfoStore().getFwUserName(getFWName());
-        String password = getUserInfoStore().getFwPassword(getFWName());
+        String userName = getUserInfoStore().getFwUserName(getName());
+        String password = getUserInfoStore().getFwPassword(getName());
 
         /* Need to separate user and server from userName */
         this.myJID = userName;
@@ -131,25 +131,19 @@ public class SmackAdapter extends NCBBridgeBase {
         CVM_Debug.getInstance().printDebugMessage("Done login");
     }
 
-    public boolean isLoggedIn(String userName) {
-        if (userName.substring(0, userName.indexOf("@")).equals(user)) {
-            return xmppConnection.isAuthenticated();
-        } else {
-            return false;
-        }
-    }
-
-    public void createSession(String sessionID) {
-        if (sessMgr.contains(sessionID)) return;
-        sessMgr.add(sessionID);
-        initSession(sessMgr.indexOf(sessionID));
-        CVM_Debug.getInstance().printDebugMessage("Session " + sessMgr.indexOf(sessionID)
-                + " created for Connection " + sessionID);
+    @Method(name = "createSession", parameters = {"session"})
+    public void createSession(String session) {
+        if (sessMgr.contains(session)) return;
+        sessMgr.add(session);
+        initSession(sessMgr.indexOf(session));
+        CVM_Debug.getInstance().printDebugMessage("Session " + sessMgr.indexOf(session)
+                + " created for Connection " + session);
 
     }
 
-    public void destroySession(String conID) {
-        int sessID = sessMgr.indexOf(conID);
+    @Method(name = "destroySession", parameters = {"session"})
+    public void destroySession(String session) {
+        int sessID = sessMgr.indexOf(session);
         jidsList.remove(sessID);
         for (int i = 0; i < jManagers.get(sessID).size(); i++) {
             jManagers.get(sessID).get(i).removeCreationListener(createdSessionListener);
@@ -175,25 +169,24 @@ public class SmackAdapter extends NCBBridgeBase {
         return true;
     }
 
-    public void addParticipant(String sID, String participantID)
-            throws PartyNotAddedException {
-        if (participantID.equals(myJID)) {
+    public void addParticipant(String session, String participant) {
+        if (participant.equals(myJID)) {
             return;
         }
-        if (isOnline(participantID) == false) {
+        if (isOnline(participant) == false) {
             //throw new PartyNotAddedException(participantID);
             CVM_Debug.getInstance().printDebugMessage("participant offline");
             return;
         }
-        int sessID = sessMgr.indexOf(sID);
+        int sessID = sessMgr.indexOf(session);
         CVM_Debug.getInstance().printDebugMessage("Session id is " + sessID);
         if (sessID < 0) return; // throw some error
         HashSet<String> hs = jidsList.get(sessID);
         if (hs == null) {
             hs = new HashSet<String>();
         }
-        hs.add(participantID);
-        CVM_Debug.getInstance().printDebugMessage("added " + participantID);
+        hs.add(participant);
+        CVM_Debug.getInstance().printDebugMessage("added " + participant);
         jidsList.add(sessID, hs);
         // TODO check for active data stream and add participant
         /*		addToSession(Integer.parseInt(sID),
@@ -413,8 +406,8 @@ public class SmackAdapter extends NCBBridgeBase {
 
     /**
      * Logs the user out of the Bridge.
-     *
      */
+    @Method(name = "logout")
     public void logout() {
         xmppConnection.disconnect();
     }
@@ -441,20 +434,11 @@ public class SmackAdapter extends NCBBridgeBase {
     /**
      * Restarts the adapter.
      */
+    @Method(name = "restartService")
     public void restartService() {
         CVM_Debug.getInstance().printDebugErrorMessage("Restarting Smack");
         resetFW();
         init();
-    }
-
-    /**
-     * Checks is the session is currently created.
-     *
-     * @param sID Session to check.
-     * @return true if the session exist.
-     */
-    public boolean isSessionCreated(String sID) {
-        return sessMgr.contains(sID);
     }
 
 
@@ -481,25 +465,27 @@ public class SmackAdapter extends NCBBridgeBase {
 
         tmp.delete();
     }
+
     /**
      * This function sends the schema file to the specified user.
      *
-     * @param schema        Schema File.
-     * @param participantID Id of the user.
+     * @param schema      Schema File.
+     * @param participant Id of the user.
      */
-    public void sendSchema(String schema, String participantID) {
+    @Method(name = "sendSchema", parameters = {"schema", "participant"})
+    public void sendSchema(String schema, String participant) {
         //synchronized (dataSync){
 
         /* Create the outgoing file transfer */
         CVM_Debug.getInstance().printDebugMessage("transfering schema ...");
 
-        if (isOnline(participantID) == false) {
+        if (isOnline(participant) == false) {
             //throw new PartyNotAddedException(participantID);
             CVM_Debug.getInstance().printDebugMessage("participant offline");
             return;
         }
         try {
-            sendStringAsFile(participantID, "schema", schema);
+            sendStringAsFile(participant, "schema", schema);
         } catch (XMPPException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (IOException e) {
@@ -542,23 +528,24 @@ public class SmackAdapter extends NCBBridgeBase {
         //}
     }
 
-    public void disableMedium(String conID, String mediumName) throws PartyNotFoundException, NoSessionException {
-        if (mediumName.equals(NCBBridgeCapability.AUDIO)) {
-            destroyOutgoingAudioSession(sessMgr.indexOf(conID) + "");
-        } else if (mediumName.equals(NCBBridgeCapability.VIDEO)) {
-            destroyOutgoingVideoSession(sessMgr.indexOf(conID) + "");
+    @Method(name = "disableMedium", parameters = {"session", "medium"})
+    public void disableMedium(String session, String medium) throws PartyNotFoundException {
+        if (medium.equals(NCBBridgeCapability.AUDIO)) {
+            destroyOutgoingAudioSession(sessMgr.indexOf(session) + "");
+        } else if (medium.equals(NCBBridgeCapability.VIDEO)) {
+            destroyOutgoingVideoSession(sessMgr.indexOf(session) + "");
         }
         CVM_Debug.getInstance().printDebugMessage("Smack End:" + System.currentTimeMillis());
     }
 
-    public void enableMedium(String connectionID, String mediumName)
-            throws PartyNotAddedException, NoSessionException {
-        enableMedium(connectionID, mediumName, jidsList.get(
-                sessMgr.indexOf(connectionID)), null);
+    @Method(name = "enableMedium", parameters = {"session", "medium"})
+    public void enableMedium(String session, String medium) {
+        enableMedium(session, medium, jidsList.get(
+                sessMgr.indexOf(session)), null);
     }
 
     private void enableMedium(String connectionID, String mediumName,
-                              HashSet<String> jids, String sender) throws PartyNotAddedException, NoSessionException {
+                              HashSet<String> jids, String sender) {
         int sessID = sessMgr.indexOf(connectionID);
         CVM_Debug.getInstance().printDebugMessage("in send media " + sessID + " medium is " + mediumName);
         if (sessID < 0 || jids.size() <= 0) return; // throw some error for sessID
@@ -581,8 +568,9 @@ public class SmackAdapter extends NCBBridgeBase {
         CVM_Debug.getInstance().printDebugMessage("NCB sendMedia called with sID:\"" + sessID + "\" and Medium:\"" + mediumName + ".");
     }
 
+
     public void enableMediumReceiver(String conID, String mediumName, String sender)
-            throws PartyNotAddedException, NoSessionException {
+            throws NoSessionException {
         int sessID = sessMgr.indexOf(conID);
         String managerName;
         CVM_Debug.getInstance().printDebugMessage("In enableMediumReceiver " + conID + " " + mediumName);
@@ -602,12 +590,13 @@ public class SmackAdapter extends NCBBridgeBase {
         sendNCBCtl(conID + " ReceiverStarted " + mediumName, sender);
     }
 
-    public void enableMediumReceiver(String conID, String mediumName)
-            throws PartyNotAddedException, NoSessionException {
+    @Method(name = "enableMediumReceiver", parameters = {"session", "medium"})
+    public void enableMediumReceiver(String session, String medium)
+            throws NoSessionException {
     }
 
-
-    public boolean hasMediumFailed(String sessID, String medium_type) {
+    @Method(name = "hasMediumFailed", parameters = {"session", "medium"})
+    public boolean hasMediumFailed(String session, String medium_) {
         //CVM_Debug.getInstance().printDebugMessage("Checking medium status");
         /*if(sessMgr.contains(sessID)){
               CVM_Debug.getInstance().printDebugMessage("Found session: "+sessID);
@@ -623,7 +612,7 @@ public class SmackAdapter extends NCBBridgeBase {
         return mediumFailureStatus;
     }
 
-    public String getFWName() {
+    public String getName() {
         return "Smack";
     }
 
@@ -813,20 +802,18 @@ public class SmackAdapter extends NCBBridgeBase {
             String medium = sch.next();
             // add participants
             while (sch.hasNext()) {
-                try {
-                    String name = sch.next();
-                    // remove yourself from list of participants
-                    if (name.equalsIgnoreCase(xmppConnection.getHost())) {
-                        continue;
-                    }
-                    addParticipant(sessId, name);
-                } catch (PartyNotAddedException e) {
-                    e.printStackTrace();
+
+                String name = sch.next();
+                // remove yourself from list of participants
+                if (name.equalsIgnoreCase(xmppConnection.getHost())) {
+                    continue;
                 }
+                addParticipant(sessId, name);
             }
         } else {
-            SchemaReceived_Event event = new SchemaReceived_Event(this, schema);
-            notifyEvent(event);
+            Event event = new Event("SchemaReceived");
+            event.setParam("schema", schema);
+            notify(event);
         }
     }
 
@@ -850,8 +837,6 @@ public class SmackAdapter extends NCBBridgeBase {
             if (medium != null && sender != null) {
                 try {
                     enableMediumReceiver(connectionId, medium, sender);
-                } catch (PartyNotAddedException e) {
-                    e.printStackTrace();
                 } catch (NoSessionException e) {
                     e.printStackTrace();
                 }
@@ -891,23 +876,19 @@ public class SmackAdapter extends NCBBridgeBase {
                         sender);
             }
 //			if(medium.equals(NCBBridgeCapability.AUDIO)){
-            try {
-                enableMedium(connectionId, medium, jids, sender);
-            } catch (PartyNotAddedException e) {
-                e.printStackTrace();
-            } catch (NoSessionException e) {
-                e.printStackTrace();
-            }
+
+            enableMedium(connectionId, medium, jids, sender);
+
 /*				sendNCBCtl( connectionId+" remoteSendMediaStarted "+medium+" "+myJID, 
-						sender);
-			}else if(medium.equals(NCBBridgeCapability.VIDEO)) {
-				sendMedia(connectionId, medium, 
-						jManagers.get(sessID+"").get(1),oSessions_video.get(sessID+""), 
-						iSessions_video.get(sessID+""),jids, sender);
-			}else if(medium.equals(NCBBridgeCapability.LIVE_AV)||medium.equals("liveAV"))
-			{
-				//initRecJmfMgr(jManagers.get(sessID).get(1),sessID, "AV_manager");
-			}
+                        sender);
+            }else if(medium.equals(NCBBridgeCapability.VIDEO)) {
+                sendMedia(connectionId, medium,
+                        jManagers.get(sessID+"").get(1),oSessions_video.get(sessID+""),
+                        iSessions_video.get(sessID+""),jids, sender);
+            }else if(medium.equals(NCBBridgeCapability.LIVE_AV)||medium.equals("liveAV"))
+            {
+                //initRecJmfMgr(jManagers.get(sessID).get(1),sessID, "AV_manager");
+            }
 */
         } else if (type.equalsIgnoreCase("remoteSendMediaStarted")) {
             try {
@@ -970,10 +951,6 @@ public class SmackAdapter extends NCBBridgeBase {
                 sAdpt.enableMedium(conID.toString(), medium);
             } catch (LoginException e) {
                 e.printStackTrace();
-            } catch (PartyNotAddedException e1) {
-                e1.printStackTrace();
-            } catch (NoSessionException e1) {
-                e1.printStackTrace();
             }
             try {
                 Thread.sleep(100000);
@@ -991,44 +968,44 @@ public class SmackAdapter extends NCBBridgeBase {
 
                 new Thread() {
                     public void run() {
-                          try {
-                    // Check to see if the request should be accepted
-                    if (request.getDescription().equals("schema")) {
-                        // Accept schema
-                        CVM_Debug.getInstance().printDebugMessage("Receiving Schema transfer :" + request.getDescription());
-                        IncomingFileTransfer transfer = request.accept();
-                        dealWithSchema((new BufferedReader(
-                                new InputStreamReader(
-                                        transfer.recieveFile()))).readLine());
-                    } else if (request.getDescription().equals("CVM_CHAT_CVM")) {
-                        // Accept schema
-                        CVM_Debug.getInstance().printDebugMessage("Receiving  Chat transfer :" + request.getDescription());
-                        IncomingFileTransfer transfer = request.accept();
-                        dealWithChat((new BufferedReader(
-                                new InputStreamReader(
-                                        transfer.recieveFile()))).readLine());
-                    } else if (request.getDescription().equals("NCB_CTL_NCB")) {
-                        // Accept ctl
-                        CVM_Debug.getInstance().printDebugMessage("Receiving CTL transfer :" + request.getDescription());
-                        IncomingFileTransfer transfer = request.accept();
-                        dealWithNCBCtl((new BufferedReader(
-                                new InputStreamReader(
-                                        transfer.recieveFile()))).readLine());
-                    } else if (!request.getDescription().equals("")) {
-                        // Accept file, file name is description
-                        IncomingFileTransfer transfer = request.accept();
-                        transfer.recieveFile(
-                                new File(request.getDescription()));
-                    } else {
-                        // Reject it
-                        request.reject();
-                    }
-                    CVM_Debug.getInstance().printDebugMessage("File transfer done");
-                } catch (XMPPException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                        try {
+                            // Check to see if the request should be accepted
+                            if (request.getDescription().equals("schema")) {
+                                // Accept schema
+                                CVM_Debug.getInstance().printDebugMessage("Receiving Schema transfer :" + request.getDescription());
+                                IncomingFileTransfer transfer = request.accept();
+                                dealWithSchema((new BufferedReader(
+                                        new InputStreamReader(
+                                                transfer.recieveFile()))).readLine());
+                            } else if (request.getDescription().equals("CVM_CHAT_CVM")) {
+                                // Accept schema
+                                CVM_Debug.getInstance().printDebugMessage("Receiving  Chat transfer :" + request.getDescription());
+                                IncomingFileTransfer transfer = request.accept();
+                                dealWithChat((new BufferedReader(
+                                        new InputStreamReader(
+                                                transfer.recieveFile()))).readLine());
+                            } else if (request.getDescription().equals("NCB_CTL_NCB")) {
+                                // Accept ctl
+                                CVM_Debug.getInstance().printDebugMessage("Receiving CTL transfer :" + request.getDescription());
+                                IncomingFileTransfer transfer = request.accept();
+                                dealWithNCBCtl((new BufferedReader(
+                                        new InputStreamReader(
+                                                transfer.recieveFile()))).readLine());
+                            } else if (!request.getDescription().equals("")) {
+                                // Accept file, file name is description
+                                IncomingFileTransfer transfer = request.accept();
+                                transfer.recieveFile(
+                                        new File(request.getDescription()));
+                            } else {
+                                // Reject it
+                                request.reject();
+                            }
+                            CVM_Debug.getInstance().printDebugMessage("File transfer done");
+                        } catch (XMPPException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }.start();
 

@@ -1,25 +1,23 @@
 package cvm.ncb.tpm;
 
 import cvm.model.CVM_Debug;
-import cvm.ncb.csm.CommObject;
-import cvm.ncb.ks.CommFWCapabilitySet;
-import cvm.ncb.ks.ConIDMappingTable;
+import cvm.ncb.csm.ManagedObject;
 import cvm.ncb.ks.Connection;
+import cvm.ncb.ks.StateManager;
 import edu.fiu.strg.ACSTF.touchpoint.AbstractTouchPoint;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 public class CommFWTouch extends AbstractTouchPoint<CommFWResource> {
     private CopyOnWriteArraySet<String> failedTable = null;
-    private CopyOnWriteArraySet<String> resetFWTable = null;
     private Map<String, Boolean> frameworkFailed;
 
     public CommFWTouch(CommFWResource commFWs) {
         super(commFWs);
         failedTable = new CopyOnWriteArraySet<String>();
-        resetFWTable = new CopyOnWriteArraySet<String>();
         frameworkFailed = new HashMap<String, Boolean>();
     }
 
@@ -34,14 +32,17 @@ public class CommFWTouch extends AbstractTouchPoint<CommFWResource> {
     }
 
     private void checkFrameworkForFailure() {
-        ConIDMappingTable m_conToFwTable = getResource().getConIDMappingTable();
+        StateManager stateManager = getResource().getStateManager();
 
-        for (Connection con : m_conToFwTable.getAllConnections()) {
-            for (CommObject comObj : this.getResource().getCObjectList()) {
-                if (con.containsComObj(comObj.getName())) {
+        for (Connection con : stateManager.getAllConnections()) {
+            for (ManagedObject comObj : this.getResource().getObjects()) {
+                if (con.containsFramework(comObj.getName())) {
                     for (String medium : con.getActiveMedia()) {
-                        boolean hasFailed = comObj.getBridge().hasMediumFailed(con.getConId(),
-                                medium);
+                        Map<String, Object> params = new LinkedHashMap<String, Object>();
+                        params.put("session", con.getId());
+                        params.put("medium", medium);
+
+                        boolean hasFailed = comObj.executeBoolean("hasMediumFailed", params);
 
                         updateFailedTable(comObj.getName(), hasFailed);
                     }
@@ -61,29 +62,12 @@ public class CommFWTouch extends AbstractTouchPoint<CommFWResource> {
         for (String fwName : failedTable) {
             CVM_Debug.getInstance().printDebugMessage(fwName + " is no longer available");
 
-            CommFWCapabilitySet.getInstance().getFramework(fwName).fail();
-            getResource().getCallQueue().add("", 0, "failedFramework", "", new Object[]{fwName});
+            getResource().getCommObjectManager().getObject(fwName).getMetadata().fail();
+            Map<String, Object> params = new LinkedHashMap<String, Object>();
+            params.put("framework", fwName);
+            getResource().getCallQueue().add("failedFramework", params);
             failedTable.remove(fwName);
         }
-    }
-
-    public void resetFramework() {
-        for (String fwName : failedTable) {
-            getObjectByName(fwName).getBridge().restartService();
-            resetFWTable.add(fwName);
-            failedTable.remove(fwName);
-            CVM_Debug.getInstance().printDebugMessage("Removed " + fwName + " from failed table");
-        }
-    }
-
-    public CommObject getObjectByName(String fwName) {
-        for (CommObject comObj : getResource().getCObjectList()) {
-            if (comObj.getName().equalsIgnoreCase(fwName)) {
-                return comObj;
-            }
-        }
-
-        return null;
     }
 
     public boolean hasFailedReset() {
@@ -110,9 +94,5 @@ public class CommFWTouch extends AbstractTouchPoint<CommFWResource> {
 
         CVM_Debug.getInstance().printDebugMessage("timer end");
 
-    }
-
-    public CopyOnWriteArraySet<String> getResetFWTable() {
-        return resetFWTable;
     }
 }

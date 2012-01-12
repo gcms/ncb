@@ -1,11 +1,11 @@
 <CommFeatureRoot>
-    <Video numberOfUsers="" onlineStatus=""></Video>
+    <Video numberOfUsers="" onlineStatus=""/>
     <Audio numberOfUsers="" onlineStatus="">
-        <PC2Phone payment=""></PC2Phone>
-        <Phone2PC payment=""></Phone2PC>
+        <PC2Phone payment=""/>
+        <Phone2PC payment=""/>
     </Audio>
-    <FileTransfer numberOfUsers=""></FileTransfer>
-    <Chat msgArchive="" numberOfUsers="" onlineStatus="" emoticon="" imForward="" avatar=""></Chat>
-    <ContactList contactImport="" contactGroup=""></ContactList>
-    <Other radio="" plugins=""></Other>
+    <FileTransfer numberOfUsers=""/>
+    <Chat msgArchive="" numberOfUsers="" onlineStatus="" emoticon="" imForward="" avatar=""/>
+    <ContactList contactImport="" contactGroup=""/>
+    <Other radio="" plugins=""/>
 </CommFeatureRoot>

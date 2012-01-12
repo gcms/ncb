@@ -89,24 +89,24 @@ public class SIPAdapter extends NCBBridgeBase implements Observer
 		
 	}
 
-	public void addParticipant(String sID, String participantID)
+	public void addParticipant(String session, String participant)
 			throws PartyNotAddedException 
 	{
-    	if(partyMap.containsKey(sID)){
-			if(!partyMap.get(sID).contains(participantID)){
-				partyMap.get(sID).add(participantID);
+    	if(partyMap.containsKey(session)){
+			if(!partyMap.get(session).contains(participant)){
+				partyMap.get(session).add(participant);
 				return;
 			}
 		}
 		//throw new PartyNotAddedException("Already added or invalid session");
 	}
 
-	public void createSession(String sessionID)
+	public void createSession(String session)
 	{
-		if(!sessMap.containsKey(sessionID)){
+		if(!sessMap.containsKey(session)){
 			// assuming we will be getting a UUID string
-			sessMap.put(sessionID, Integer.parseInt(sessionID));
-			partyMap.put(sessionID, new HashSet<String>());
+			sessMap.put(session, Integer.parseInt(session));
+			partyMap.put(session, new HashSet<String>());
 		}
 
 	}
@@ -116,16 +116,11 @@ public class SIPAdapter extends NCBBridgeBase implements Observer
 		return null;
 	}
 
-	public boolean isLoggedIn(String userName)
-	{
-		return true;
-	}
-
-	public void login()
+    public void login()
 			throws LoginException 
 	{
-        String userName = getUserInfoStore().getFwUserName(getFWName());
-        String password = getUserInfoStore().getFwPassword(getFWName());
+        String userName = getUserInfoStore().getFwUserName(getName());
+        String password = getUserInfoStore().getFwPassword(getName());
 		//provider = userName.substring(userName.indexOf("@")+1);
 		myURL = "sip:"+userName;
 		pass = password;
@@ -164,27 +159,20 @@ public class SIPAdapter extends NCBBridgeBase implements Observer
 
 	}
 
-	public boolean isSessionCreated(String sID) {
-		if(sessMap.containsKey(sID)){
-			return true;
-		}
-		return false;
-	}
-
-	public void sendSchema(String schema, String participantID) {
+    public void sendSchema(String schema, String participant) {
 		// TODO Auto-generated method stub
 	}
 
-	public void disableMedium(String connectionID, String mediumName) throws PartyNotFoundException, NoSessionException {
-		if(mediumName.equalsIgnoreCase("AUDIO")){
+	public void disableMedium(String session, String medium) throws PartyNotFoundException, NoSessionException {
+		if(medium.equalsIgnoreCase("AUDIO")){
 			Dialog dialog = userAgent.getDialogManager().getDialog(
-					callMap.get(connectionID));
+					callMap.get(session));
 			hangup(dialog);
-			callMap.remove(connectionID);
+			callMap.remove(session);
 		}
 	}
 
-	public void enableMedium(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
+	public void enableMedium(String session, String medium) throws PartyNotAddedException, NoSessionException {
 /*		if(mediumName.equalsIgnoreCase("AUDIO") && 
 				partyMap.get(connectionID).size()== 1){
 	        if(this.userAgent == null){
@@ -218,12 +206,12 @@ public class SIPAdapter extends NCBBridgeBase implements Observer
 	        	inviteHandlerUac.addObserver(this);
 	        }
 */	        
-			for(String participant: partyMap.get(connectionID)){
+			for(String participant: partyMap.get(session)){
 				if (peersMap.containsKey(participant)){
-					ctlMsgSrv.sendCtlMsg(peersMap.get(participant),connectionID+" enable");
+					ctlMsgSrv.sendCtlMsg(peersMap.get(participant), session +" enable");
 				}
 			}
-			String sipUri = getConfId(connectionID);
+			String sipUri = getConfId(session);
 	        String callId = Utils.generateCallID(this.userAgent.getMyAddress());
             try {	
             	userAgent.getUac().invite(sipUri, callId);
@@ -231,7 +219,7 @@ public class SIPAdapter extends NCBBridgeBase implements Observer
 	            System.out.println("syntax issue "+ e);
 	            return;
 	        }
-			callMap.put(connectionID,callId );
+			callMap.put(session,callId );
 /*		}
 */	}
 
@@ -250,18 +238,18 @@ public class SIPAdapter extends NCBBridgeBase implements Observer
 		return myURL;
 	}
 
-	public boolean hasMediumFailed(String sessID, String medium_type) {
+	public boolean hasMediumFailed(String session, String medium_) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-    public String getFWName() {
+    public String getName() {
         return "Asterisk";
     }
 
-    public void destroySession(String sessionID) {
-		if(sessMap.containsKey(sessionID)){
-			sessMap.remove(sessionID);
+    public void destroySession(String session) {
+		if(sessMap.containsKey(session)){
+			sessMap.remove(session);
 		}
 	}
 	
@@ -345,8 +333,8 @@ public class SIPAdapter extends NCBBridgeBase implements Observer
                 userAgent.getUac().terminate(dialog);
     }
 
-    public void enableMediumReceiver(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
-		if(mediumName.equalsIgnoreCase("AUDIO")) {
+    public void enableMediumReceiver(String session, String medium) throws PartyNotAddedException, NoSessionException {
+		if(medium.equalsIgnoreCase("AUDIO")) {
 
 		}
 	}

@@ -2,58 +2,73 @@ package cvm.ncb.oem.pe.handlers;
 
 import cvm.ncb.csm.BridgeCall;
 import cvm.ncb.ks.Connection;
-import cvm.ncb.oem.pe.NCBCall;
-import cvm.ncb.oem.pe.NCBCallHandler;
+import cvm.ncb.oem.pe.Call;
 import cvm.ncb.oem.pe.PolicyEvalManager;
-import cvm.ncb.oem.policy.Framework;
+import cvm.ncb.oem.pe.SignalHandler;
+import cvm.ncb.oem.policy.Metadata;
 import cvm.ncb.repository.loader.GlobalConstant;
 import cvm.ncb.tpm.CommFWResource;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * User: Gustavo Sousa
  * Date: 12/12/11
  * Time: 00:38
  */
-public class MediumHandler implements NCBCallHandler {
-    public boolean canHandle(NCBCall call) {
-        return call.getCallName().contains("Medium");
+public class MediumHandler implements SignalHandler {
+    public boolean canHandle(Call call) {
+        return call.getName().contains("Medium");
     }
 
-    public void handle(NCBCall call, CommFWResource resource, PolicyEvalManager pem) {
-        Connection con = resource.getConIDMappingTable().getConnection(call.sessionID());
-        con.offerNCBCall(new BridgeCall(resource.getConIDMappingTable().getConnection(call.sessionID()), call));
+    public void handle(Call call, CommFWResource resource, PolicyEvalManager pem) {
+        String session = (String) call.getParam("connection");
+        String medium = (String) call.getParam("medium");
 
-        GlobalConstant.RequestedType reqType = call.getMedium().equalsIgnoreCase("AUDIO")
-                ? GlobalConstant.RequestedType.Audio
-                : GlobalConstant.RequestedType.Video;
+        Connection con = resource.getStateManager().getConnection(session);
+        con.enqueue(new BridgeCall(call.getName(), medium, call.getParams()));
+
+        GlobalConstant.RequestedType reqType = GlobalConstant.RequestedType.getRequestType(medium);
 
         GlobalConstant.OperationType opType = GlobalConstant.OperationType.request;
 
-//        Connection con = resource.getConIDMappingTable().getConnection(call.sessionID());
-        Framework nextFramework = pem.findNewFramework(reqType, opType, con.getNumOfUsers());
+//        Connection con = resource.getState().getConnection(call.sessionID());
+        Map<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("NumberOfUsers", con.getParticipants().size());
+        Metadata nextMetadata = pem.findConformingObject(reqType, opType, params);
 
-        String currentFwName = con.getComObj(call.getMedium());
-        if (currentFwName == null || !currentFwName.equals(nextFramework.getName())) {
-            con.setComObj(call.getMedium(), nextFramework.getName());
-            generateChangeCalls(con);
+        String nextFwName = nextMetadata.getName();
+        String currentFwName = con.getFramework(medium);
+
+        if (currentFwName == null || !currentFwName.equals(nextFwName)) {
+            generateChangeCalls(con, medium, currentFwName, nextFwName);
         }
-        pem.executeAllCommands(resource.getConIDMappingTable().getConnection(call.sessionID()));
+        executeAllCommands(pem, con);
     }
 
-    private void generateChangeCalls(Connection con) {
-        Object[] conIDs = {con.getConId()};
-        for (String medium : con.getDeactivatedMedia()) {
-            if (medium != null) {
-                con.offerNCBCall(new BridgeCall(con.getComObj(medium), "destroySession", medium, conIDs));
+    private void generateChangeCalls(Connection con, String medium, String currentFwName, String nextFwName) {
+        for (String activeMedium : con.getActiveMedia()) {
+            if (activeMedium != null) {
+                assert con.getFramework(medium) == currentFwName || con.getFramework(medium).equals(currentFwName);
+                con.enqueue(new BridgeCall("destroySession", activeMedium, new Object[]{con.getId()}));
             }
         }
 
-        con.offerNCBCall(new BridgeCall(con.getComObj(con.getDefaultMedium()), "createSession", con.getDefaultMedium(), conIDs));
-        for (String party : con.getParticipants()) {
-            Object[] params = {con.getConId(), party};
+        con.setFramework(medium, nextFwName);
 
-//            con.getParticipants().add(party);
-            con.offerNCBCall(new BridgeCall(con.getComObj(con.getDefaultMedium()), "addAParticipant", con.getDefaultMedium(), params));
+        con.enqueue(new BridgeCall("createSession", con.getDefaultMedium(), new Object[]{con.getId()}));
+        for (String party : con.getParticipants()) {
+            Object[] params = {con.getId(), party};
+
+            con.getParticipants().add(party);
+            con.enqueue(new BridgeCall("addAParticipant", con.getDefaultMedium(), params));
+        }
+    }
+
+    public void executeAllCommands(PolicyEvalManager pem, Connection con) {
+        while (con.peekCall() != null) {
+            pem.executeCSMCommand(con, con.pollCall());
         }
     }
 }

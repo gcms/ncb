@@ -1,15 +1,19 @@
 package cvm.ncb.drivers;
 
 import cvm.model.CVM_Debug;
-import cvm.model.Handles_Event;
-import cvm.model.Uses_Listener;
-import cvm.ncb.handlers.event.SchemaReceived_Event;
+import cvm.model.Event;
+import cvm.model.UsesEventListener;
+import cvm.ncb.csm.ManagedObjectFactory;
+import cvm.ncb.handlers.EventManager;
+import cvm.ncb.ks.ObjectManager;
 import cvm.ncb.manager.NCBManager;
 import cvm.ncb.manager.NCB_M_Facade;
+import cvm.ncb.oem.policy.Metadata;
+import util.FeaturesParser;
 
 import java.util.Scanner;
 
-public class NCBDriver implements Uses_Listener{
+public class NCBDriver implements UsesEventListener {
 	private String cvmUname;
 	private int DELAY = 20000;
     private NCBManager manager;
@@ -23,7 +27,12 @@ public class NCBDriver implements Uses_Listener{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        NCBDriver driver = new NCBDriver(new NCBManager(), "Andrew");
+        EventManager eventManager = new EventManager();
+        ObjectManager om = new ObjectManager(new ManagedObjectFactory(eventManager));
+        for (Metadata md : FeaturesParser.createAllFrameworks()) {
+            om.addObject(md);
+        }
+        NCBDriver driver = new NCBDriver(new NCBManager(om, eventManager), "Andrew");
         driver.run();
 	}
 
@@ -37,23 +46,23 @@ public class NCBDriver implements Uses_Listener{
     }
 
 	public void twoWay(NCBManager manager, String medium){
-		manager.sendSchema("101 ", "Andrew", " Yali", "101 " + medium + " Yali Andrew");
+		manager.sendSchema("101 ", "Andrew", " Yali", "101 " + medium + " Yali Andrew", null);
 		manager.addParty("101", "Yali");
 		manager.enableMedium("101", medium);
 	}
 
 	public void threeWay(NCB_M_Facade m_facade, String medium){
-		m_facade.sendSchema("101 ","Andrew"," Yali","101 "+medium+" Yali Tariq Andrew");
-		m_facade.sendSchema("101 ","Andrew"," Tariq","101 "+medium+" Yali Tariq Andrew");
+		m_facade.sendSchema("101 ","Andrew"," Yali","101 "+medium+" Yali Tariq Andrew", null);
+		m_facade.sendSchema("101 ","Andrew"," Tariq","101 "+medium+" Yali Tariq Andrew", null);
 		m_facade.addParty("101", "Yali");
 		m_facade.addParty("101", "Tariq");
 		m_facade.enableMedium("101", medium);
 	}
 
 	public void fourWay(NCB_M_Facade m_facade, String medium){
-		m_facade.sendSchema("101 ","Andrew"," Yali","101 "+medium+" Yali Tariq Yingbo Andrew");
-		m_facade.sendSchema("101 ","Andrew"," Tariq","101 "+medium+" Yali Tariq Yingbo Andrew");
-		m_facade.sendSchema("101 ","Andrew"," Yingbo","101 "+medium+" Yali Tariq Yingbo Andrew");
+		m_facade.sendSchema("101 ","Andrew"," Yali","101 "+medium+" Yali Tariq Yingbo Andrew", null);
+		m_facade.sendSchema("101 ","Andrew"," Tariq","101 "+medium+" Yali Tariq Yingbo Andrew", null);
+		m_facade.sendSchema("101 ","Andrew"," Yingbo","101 "+medium+" Yali Tariq Yingbo Andrew", null);
 		m_facade.addParty("101", "Yali");
 		m_facade.addParty("101", "Tariq");
 		m_facade.addParty("101", "Yingbo");
@@ -61,10 +70,10 @@ public class NCBDriver implements Uses_Listener{
 	}
 
 	public void fiveWay(NCB_M_Facade m_facade, String medium){
-		m_facade.sendSchema("101 ","Andrew"," Yali","101 "+medium+" Yali Tariq Yingbo Karl Andrew");
-		m_facade.sendSchema("101 ","Andrew"," Tariq","101 "+medium+" Yali Tariq Yingbo Karl Andrew");
-		m_facade.sendSchema("101 ","Andrew"," Yingbo","101 "+medium+" Yali Tariq Yingbo Karl Andrew");
-		m_facade.sendSchema("101 ","Andrew"," Karl","101 "+medium+" Yali Tariq Yingbo Karl Andrew");
+		m_facade.sendSchema("101 ","Andrew"," Yali","101 "+medium+" Yali Tariq Yingbo Karl Andrew", null);
+		m_facade.sendSchema("101 ","Andrew"," Tariq","101 "+medium+" Yali Tariq Yingbo Karl Andrew", null);
+		m_facade.sendSchema("101 ","Andrew"," Yingbo","101 "+medium+" Yali Tariq Yingbo Karl Andrew", null);
+		m_facade.sendSchema("101 ","Andrew"," Karl","101 "+medium+" Yali Tariq Yingbo Karl Andrew", null);
 		m_facade.addParty("101", "Yali");
 		m_facade.addParty("101", "Tariq");
 		m_facade.addParty("101", "Yingbo");
@@ -75,8 +84,8 @@ public class NCBDriver implements Uses_Listener{
 	public void twoToThreeWay(NCB_M_Facade m_facade, String medium){
 		twoWay(m_facade.getManager(), medium);
 		waitForAWhile(DELAY);
-		m_facade.sendSchema("101 ","Andrew"," Yali","101 "+medium+" Yali Tariq Andrew");
-		m_facade.sendSchema("101 ","Andrew"," Tariq","101 "+medium+" Yali Tariq Andrew");
+		m_facade.sendSchema("101 ","Andrew"," Yali","101 "+medium+" Yali Tariq Andrew", null);
+		m_facade.sendSchema("101 ","Andrew"," Tariq","101 "+medium+" Yali Tariq Andrew", null);
 		m_facade.addParty("101", "Yali");
 		m_facade.addParty("101", "Tariq");
 		m_facade.enableMedium("101", medium);
@@ -85,9 +94,9 @@ public class NCBDriver implements Uses_Listener{
 	public void threeToFourWay(NCB_M_Facade m_facade, String medium){
 		threeWay(m_facade, medium);
 		waitForAWhile(DELAY);
-		m_facade.sendSchema("101 ","Andrew"," Yali","101 "+medium+" Yali Tariq Yingbo Andrew");
-		m_facade.sendSchema("101 ","Andrew"," Tariq","101 "+medium+" Yali Tariq Yingbo Andrew");
-		m_facade.sendSchema("101 ","Andrew"," Yingbo","101 "+medium+" Yali Tariq Yingbo Andrew");
+		m_facade.sendSchema("101 ","Andrew"," Yali","101 "+medium+" Yali Tariq Yingbo Andrew", null);
+		m_facade.sendSchema("101 ","Andrew"," Tariq","101 "+medium+" Yali Tariq Yingbo Andrew", null);
+		m_facade.sendSchema("101 ","Andrew"," Yingbo","101 "+medium+" Yali Tariq Yingbo Andrew", null);
 		m_facade.addParty("101", "Yali");
 		m_facade.addParty("101", "Tariq");
 		m_facade.addParty("101", "Yingbo");
@@ -97,10 +106,10 @@ public class NCBDriver implements Uses_Listener{
 	public void fourToFiveWay(NCB_M_Facade m_facade, String medium){
 		fourWay(m_facade, medium);
 		waitForAWhile(DELAY);
-		m_facade.sendSchema("101 ","Andrew"," Yali","101 "+medium+" Yali Tariq Yingbo Karl Andrew");
-		m_facade.sendSchema("101 ","Andrew"," Tariq","101 "+medium+" Yali Tariq Yingbo Karl Andrew");
-		m_facade.sendSchema("101 ","Andrew"," Yingbo","101 "+medium+" Yali Tariq Yingbo Karl Andrew");
-		m_facade.sendSchema("101 ","Andrew"," Karl","101 "+medium+" Yali Tariq Yingbo Karl Andrew");
+		m_facade.sendSchema("101 ","Andrew"," Yali","101 "+medium+" Yali Tariq Yingbo Karl Andrew", null);
+		m_facade.sendSchema("101 ","Andrew"," Tariq","101 "+medium+" Yali Tariq Yingbo Karl Andrew", null);
+		m_facade.sendSchema("101 ","Andrew"," Yingbo","101 "+medium+" Yali Tariq Yingbo Karl Andrew", null);
+		m_facade.sendSchema("101 ","Andrew"," Karl","101 "+medium+" Yali Tariq Yingbo Karl Andrew", null);
 		m_facade.addParty("101", "Yali");
 		m_facade.addParty("101", "Tariq");
 		m_facade.addParty("101", "Yingbo");
@@ -118,9 +127,9 @@ public class NCBDriver implements Uses_Listener{
 		System.out.println("Done Sleeping ==============================");
 	}
 
-	public void use(Handles_Event event) {
-		if (event instanceof SchemaReceived_Event)
-			dealWithSchema(((SchemaReceived_Event)event).getSchema());
+	public void use(Event event) {
+		if (event.getName().equals("SchemaReceived"))
+			dealWithSchema((String) event.getParam("schema"));
 	}
 
 	/**

@@ -12,14 +12,14 @@ import java.util.UUID;
 public class JMMLAdapter extends NCBBridgeBase
 {
 
-	public void addParticipant(String sID, String participantID)
+	public void addParticipant(String session, String participant)
 			throws PartyNotAddedException 
 	{
 		// TODO Auto-generated method stub
 
 	}
 
-	public void createSession(String sessionID)
+	public void createSession(String session)
 	{
 		// TODO Auto-generated method stub
 
@@ -31,13 +31,7 @@ public class JMMLAdapter extends NCBBridgeBase
 		return null;
 	}
 
-	public boolean isLoggedIn(String userName)
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public void login()
+    public void login()
 			throws LoginException 
 	{
 		// TODO Auto-generated method stub
@@ -62,41 +56,36 @@ public class JMMLAdapter extends NCBBridgeBase
 
 	}
 
-	public boolean isSessionCreated(String sID) {
+    public void sendSchema(String schema, String participant) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void disableMedium(String session, String medium) throws PartyNotFoundException, NoSessionException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void enableMedium(String session, String medium) throws PartyNotAddedException, NoSessionException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean hasMediumFailed(String session, String medium_) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public void sendSchema(String schema, String participantID) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void disableMedium(String connectionID, String mediumName) throws PartyNotFoundException, NoSessionException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void enableMedium(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public boolean hasMediumFailed(String sessID, String medium_type) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-    public String getFWName() {
+    public String getName() {
         return "JMML";
     }
 
-    public void destroySession(String sessionID) {
+    public void destroySession(String session) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void enableMediumReceiver(String connectionID, String mediumName) throws PartyNotAddedException, NoSessionException {
+	public void enableMediumReceiver(String session, String medium) throws PartyNotAddedException, NoSessionException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -165,10 +154,6 @@ public class JMMLAdapter extends NCBBridgeBase
 				sAdpt.enableMedium(conID.toString(), medium);
 			} catch (LoginException e) {
 				e.printStackTrace();
-			} catch (PartyNotAddedException e1) {
-				e1.printStackTrace();
-			} catch (NoSessionException e1) {
-				e1.printStackTrace();
 			}
             try {
 				Thread.sleep(100000);

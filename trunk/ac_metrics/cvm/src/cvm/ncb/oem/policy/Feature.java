@@ -15,23 +15,19 @@ public class Feature {
     public static final int EQ = 0;
     public static final int LEQ = -1;
     public static final int GEQ = 1;
-
-
     public static final int LT = -2;
     public static final int GT = 2;
-
-    public Feature(String fn, HashSet<Attribute> aList, HashSet<Feature> fList, Feature parent) {
-        name = fn;
-        attributes = aList;
-        subFeatures = fList;
-        parentFeature = parent;
-    }
 
     public Feature(String fn) {
         name = fn;
         attributes = new HashSet<Attribute>();
         subFeatures = new HashSet<Feature>();
         parentFeature = null;
+    }
+
+    public Feature(String nodeName, Feature parent) {
+        this(nodeName);
+        setParent(parent);
     }
 
     public HashSet<Attribute> getAttributes() {
@@ -55,10 +51,6 @@ public class Feature {
         subFeatures.add(feat);
     }
 
-    public boolean hasAttribute(String attr) {
-        return getAttribute(attr) != null;
-    }
-
     public Attribute getAttribute(String attributeName) {
         for (Attribute attribute : getAttributes()) {
             if (attribute.name.equals(attributeName))
@@ -77,7 +69,17 @@ public class Feature {
         return null;
     }
 
-    public boolean hasAttributeValue(String attrName, int val, int opcode) {
+    public boolean hasAttributeValue(String attrName, Object val, int opcode) {
+        if (val instanceof Integer)
+            return hasAttributeValue(attrName, (Integer) val, opcode);
+
+        if (val instanceof Boolean)
+            return hasAttributeValue(attrName, (Boolean) val, opcode);
+
+        return hasAttributeValue(attrName, val.toString(), opcode);
+    }
+
+    public boolean hasAttributeValue(String attrName, Integer val, int opcode) {
         Attribute attr = getAttribute(attrName);
         if (attr == null)
             return false;
@@ -106,22 +108,23 @@ public class Feature {
         }
     }
 
-    public boolean hasAttributeValue(String attrName, boolean val, int opcode) {
+    public boolean hasAttributeValue(String attrName, Boolean val, int opcode) {
         CVM_Debug.getInstance().printDebugMessage("Finding attr " + attrName);
+
         Attribute attr = getAttribute(attrName);
-        if (attr == null) return false;
+        if (attr == null)
+            return false;
+
         CVM_Debug.getInstance().printDebugMessage("Found attribute");
-        boolean attrVal;
-        attrVal = Boolean.parseBoolean(attr.attributeValue);
-        if (attrVal == val) return true;
-        else return false;
+        boolean attrVal = Boolean.parseBoolean(attr.attributeValue);
+        return attrVal == val;
     }
 
     public boolean hasAttributeValue(String attrName, String val, int opcode) {
         CVM_Debug.getInstance().printDebugMessage("here in string");
+
         Attribute attr = getAttribute(attrName);
-        if (attr == null) return false;
-        return attr.attributeValue.equals(val);
+        return attr != null && attr.attributeValue.equals(val);
     }
 
     public String toString() {

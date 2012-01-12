@@ -1,14 +1,15 @@
 package cvm.ncb.oem.pe;
 
 import cvm.ncb.csm.BridgeCall;
-import cvm.ncb.csm.CommServiceManager;
-import cvm.ncb.handlers.NCBExceptionHandler;
+import cvm.ncb.csm.ManagedObject;
+import cvm.ncb.handlers.ExceptionHandler;
 import cvm.ncb.handlers.exception.LoginException;
-import cvm.ncb.ks.CommFWCapabilitySet;
-import cvm.ncb.ks.ConIDMappingTable;
 import cvm.ncb.ks.Connection;
-import cvm.ncb.oem.policy.Framework;
+import cvm.ncb.ks.ObjectManager;
+import cvm.ncb.ks.StateManager;
+import cvm.ncb.oem.policy.Metadata;
 import cvm.ncb.oem.policy.PolicyManager;
+import cvm.ncb.repository.loader.FilePolicyLoader;
 import cvm.ncb.repository.loader.GlobalConstant;
 import cvm.ncb.tpm.CommFWResource;
 import cvm.ncb.tpm.CommTPManager;
@@ -20,38 +21,42 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 
 public class PolicyEvalManager extends AbstractResource implements Runnable {
     private static Log log = LogFactory.getLog(PolicyEvalManager.class);
 
-    private NCBCallQueue m_callQueue = null;
-    private CommServiceManager csMgr = null;
+    private CallQueue signalQueue = new CallQueue();
     private PolicyManager pm = null;
-    private CommTPManager scManager = null;
+    private CommTPManager scManager;
     private boolean useACF = true;
     private boolean run = false;
 
     private CommFWResource commFWResource;
 
-    private List<NCBCallHandler> callHandlers;
-    private NCBExceptionHandler m_xhXHandler;
+    private List<SignalHandler> callHandlers;
+    private ExceptionHandler exceptionHandler;
+    private ObjectManager objectManager;
 
 
-    public PolicyEvalManager(NCBExceptionHandler exceptionHandler) {
-        m_xhXHandler = exceptionHandler;
-        csMgr = new CommServiceManager(exceptionHandler);
+    public PolicyEvalManager(ObjectManager objectManager, String acConfigFile, String pmConfigFile, ExceptionHandler exceptionHandler) throws URISyntaxException {
+        this.objectManager = objectManager;
+        this.exceptionHandler = exceptionHandler;
+        commFWResource = new CommFWResource(signalQueue, new StateManager(), objectManager);
 
-        m_callQueue = new NCBCallQueue();
-        pm = new PolicyManager();
+        scManager = createTouchPointManager(commFWResource, acConfigFile);
+        pm = createPolicyManager(pmConfigFile);
 
-        commFWResource = new CommFWResource(m_callQueue,  new ConIDMappingTable(), csMgr);
-        scManager = createTouchPointManager(commFWResource);
-
-        callHandlers = new ArrayList<NCBCallHandler>();
+        callHandlers = new ArrayList<SignalHandler>();
     }
 
-    public void registerHandler(NCBCallHandler handler) {
+    private PolicyManager createPolicyManager(String pmConfigFile) throws URISyntaxException {
+        FilePolicyLoader loader = FilePolicyLoader.createInstance(this.getClass().getResource(pmConfigFile).toURI());
+        return new PolicyManager(loader);
+    }
+
+    public void registerHandler(SignalHandler handler) {
         callHandlers.add(handler);
     }
 
@@ -65,14 +70,9 @@ public class PolicyEvalManager extends AbstractResource implements Runnable {
         run = false;
     }
 
-    private CommTPManager createTouchPointManager(CommFWResource cr) {
-        try {
-            return new CommTPManager("CVM_SC_MGR",
-                    this.getClass().getResource("../../tpm/CVMSelfConfig.xml").toURI(), cr);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            return null;
-        }
+    private CommTPManager createTouchPointManager(CommFWResource cr, String acConfigFile) throws URISyntaxException {
+        return new CommTPManager("CVM_SC_MGR",
+                this.getClass().getResource(acConfigFile).toURI(), cr);
     }
 
     public void run() {
@@ -80,8 +80,8 @@ public class PolicyEvalManager extends AbstractResource implements Runnable {
             scManager.manage();
 
         while (run) {
-            if (m_callQueue.hasNext()) {
-                NCBCall m_call = m_callQueue.next();
+            if (signalQueue.hasNext()) {
+                Call m_call = signalQueue.next();
                 log.debug("Next command on queue: " + m_call);
                 evaluateCall(m_call);
             }
@@ -98,34 +98,39 @@ public class PolicyEvalManager extends AbstractResource implements Runnable {
      * evaluating the call against the frameworks to
      * find the appropriate framework
      */
-    private void evaluateCall(NCBCall m_call) {
+    private void evaluateCall(Call m_call) {
         log.debug("Evaluating: " + m_call);
-        for (NCBCallHandler callHandler : callHandlers) {
+
+        for (SignalHandler callHandler : callHandlers) {
             if (callHandler.canHandle(m_call)) {
                 callHandler.handle(m_call, commFWResource, this);
-                break;
+                return;
             }
         }
+
+        log.warn("Call not handled!");
     }
 
-    public Framework findNewFramework(GlobalConstant.RequestedType reqType, GlobalConstant.OperationType opType, int numOfUsers) {
-        TreeSet<Framework> allFrameworks = CommFWCapabilitySet.getInstance().getAvailableFrameworks();
-        log.debug("All frameworks: " + allFrameworks);
+    public Metadata findConformingObject(GlobalConstant.RequestedType reqType, GlobalConstant.OperationType opType, Map<String, Object> params) {
+        TreeSet<Metadata> allMetadatas = objectManager.getAvailableObjects();
+        TreeSet<Metadata> fwSet = pm.getConformingObjects(allMetadatas, reqType, opType, params);
 
-        TreeSet<Framework> fwSet = pm.getFrameworkSet(allFrameworks, reqType, opType, numOfUsers);
-        log.debug("Reduced set: " + fwSet);
-
+        log.debug("All objects: " + allMetadatas + " Reduced set: " + fwSet);
         return fwSet.iterator().next();
     }
 
     /**
      * executing the call
      */
-    private void executeCSMCommand(Connection con, BridgeCall m_call) {
-        log.debug("Executing call: " + m_call);
-        log.debug(m_call.getName() + "/" + m_call.getMedium() + "/" + m_call.getFwName() + "/" + con.getComObj(m_call.getMedium()) + "/" + con.getPreviousComObj(m_call.getMedium()));
+    public void executeCSMCommand(Connection con, BridgeCall call) {
+        log.debug("Executing call: " + call);
         try {
-            csMgr.executeCall(con, m_call);
+            String commObjectName = con.getFramework(call);
+
+            log.debug("Calling: " + call + " [" + call.getMedium() + "] on " + commObjectName);
+
+            ManagedObject managedObject = objectManager.getObject(commObjectName);
+            managedObject.execute(call);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (InvocationTargetException e) {
@@ -135,31 +140,15 @@ public class PolicyEvalManager extends AbstractResource implements Runnable {
         }
     }
 
-    public void executeAllCommands(Connection con) {
-        restartService(con);
-
-        while (con.peekCall() != null) {
-            executeCSMCommand(con, con.pollCall());
-        }
-    }
-
-    private void restartService(Connection con) {
-        for (String fwName : scManager.getResetFWTableIterator()) {
-            assert false;
-            if (con.containsComObj(fwName)) {
-                // destroy connection
-                commFWResource.getConIDMappingTable().remove(con.getConId());
-                // remove from FWResetTable
-                scManager.removeFWFromResetFWTable(fwName);
-            }
-        }
-    }
-
-    public NCBCallQueue getCallQueue() {
-        return m_callQueue;
+    public CallQueue getCallQueue() {
+        return signalQueue;
     }
 
     public void handleException(LoginException e) {
-        m_xhXHandler.handleException(e);
+        exceptionHandler.handleException(e);
+    }
+
+    public ObjectManager getObjectManager() {
+        return objectManager;
     }
 }

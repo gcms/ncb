@@ -1,37 +1,37 @@
 package cvm.ncb.tpm;
 
-import cvm.ncb.csm.CommObject;
-import cvm.ncb.csm.CommServiceManager;
-import cvm.ncb.ks.ConIDMappingTable;
-import cvm.ncb.oem.pe.NCBCallQueue;
+import cvm.ncb.csm.ManagedObject;
+import cvm.ncb.ks.ObjectManager;
+import cvm.ncb.ks.StateManager;
+import cvm.ncb.oem.pe.CallQueue;
 import edu.fiu.strg.ACSTF.resource.AbstractResource;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 public class CommFWResource extends AbstractResource {
-    private NCBCallQueue callQueue;
-    private ConIDMappingTable conIDMappingTable;
-    private CommServiceManager csMgr;
+    private CallQueue callQueue;
+    private StateManager stateManager;
+    private ObjectManager csMgr;
 
-    public CommFWResource(NCBCallQueue m_callQueue, ConIDMappingTable conIDMappingTable, CommServiceManager csMgr) {
+    public CommFWResource(CallQueue m_callQueue, StateManager stateManager, ObjectManager csMgr) {
         this.callQueue = m_callQueue;
-        this.conIDMappingTable = conIDMappingTable;
+        this.stateManager = stateManager;
         this.csMgr = csMgr;
     }
 
-    public CommServiceManager getCommServiceManager() {
+    public ObjectManager getCommObjectManager() {
         return csMgr;
     }
 
-    public ArrayList<CommObject> getCObjectList() {
-        return getCommServiceManager().getCommObjectList();
+    public Collection<ManagedObject> getObjects() {
+        return getCommObjectManager().getAllObjects();
     }
 
-    public NCBCallQueue getCallQueue() {
+    public CallQueue getCallQueue() {
         return callQueue;
     }
 
-    public ConIDMappingTable getConIDMappingTable() {
-        return conIDMappingTable;
+    public StateManager getStateManager() {
+        return stateManager;
     }
 }

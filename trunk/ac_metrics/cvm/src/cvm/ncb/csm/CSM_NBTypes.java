@@ -1,5 +1,7 @@
 package cvm.ncb.csm;
 
+import cvm.ncb.adapters.NCBBridge;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,5 +49,11 @@ public class CSM_NBTypes {
 
     public Class getAdapterClass() throws ClassNotFoundException {
         return Class.forName("cvm.ncb.adapters." + fwName + "Adapter");
+    }
+
+    public NCBBridge createBridge() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        NCBBridge adapter = (NCBBridge) getAdapterClass().newInstance();
+//        return NCBBridgeProxy.wrap(adapter);
+        return adapter;
     }
 }

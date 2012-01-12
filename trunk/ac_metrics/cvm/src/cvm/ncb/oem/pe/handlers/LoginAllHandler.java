@@ -1,24 +1,23 @@
 package cvm.ncb.oem.pe.handlers;
 
-import cvm.ncb.csm.CommObject;
+import cvm.ncb.csm.ManagedObject;
 import cvm.ncb.handlers.exception.LoginException;
-import cvm.ncb.ks.CommFWCapabilitySet;
-import cvm.ncb.oem.pe.NCBCall;
-import cvm.ncb.oem.pe.NCBCallHandler;
+import cvm.ncb.oem.pe.Call;
 import cvm.ncb.oem.pe.PolicyEvalManager;
+import cvm.ncb.oem.pe.SignalHandler;
 import cvm.ncb.tpm.CommFWResource;
 
-public class LoginAllHandler implements NCBCallHandler {
-    public boolean canHandle(NCBCall call) {
-        return call.getCallName().equals("loginAll");
+public class LoginAllHandler implements SignalHandler {
+    public boolean canHandle(Call call) {
+        return call.getName().equals("loginAll");
     }
 
-    public void handle(NCBCall call, CommFWResource resource, PolicyEvalManager pem) {
-        for (CommObject commObject : resource.getCObjectList()) {
+    public void handle(Call call, CommFWResource resource, PolicyEvalManager pem) {
+        for (ManagedObject managedObject : resource.getObjects()) {
             try {
-                commObject.getBridge().login();
+                managedObject.execute("login");
             } catch (LoginException e) {
-                CommFWCapabilitySet.getInstance().getFramework(commObject.getName()).fail();
+                managedObject.getMetadata().fail();
                 pem.handleException(e);
             }
         }

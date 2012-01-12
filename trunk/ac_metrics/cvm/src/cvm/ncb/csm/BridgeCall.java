@@ -1,31 +1,18 @@
 package cvm.ncb.csm;
 
-import cvm.ncb.ks.Connection;
-import cvm.ncb.oem.pe.NCBCall;
+import util.StringUtils;
+
+import java.util.Arrays;
 
 public class BridgeCall implements Comparable<BridgeCall> {
     private String name;
     private String medium;
     private Object[] params;
-    private String fwName;
 
-    public BridgeCall(String fwName, String name, String medium, Object[] params) {
-        this.fwName = fwName;
+    public BridgeCall(String name, String medium, Object[] params) {
         this.name = name;
         this.medium = medium;
         this.params = params;
-    }
-
-    public BridgeCall(String fwName, NCBCall call) {
-        this(fwName, call.getName(), call.getMedium(), call.getParams());
-    }
-
-    public BridgeCall(Connection con, NCBCall call) {
-        this(con.getComObj(call.getMedium()), call);
-    }
-
-    public String getFwName() {
-        return fwName;
     }
 
     public String getName() {
@@ -79,11 +66,21 @@ public class BridgeCall implements Comparable<BridgeCall> {
         return getCommandType().compareTo(o.getCommandType());
     }
 
-//    public boolean equals(Object o) {
-//        BridgeCall other = (BridgeCall) o;
-//
-//        return name.equals(other.name)
+    public String toString() {
+        return StringUtils.methodToString(getName(), getParams());
+    }
+
+    public boolean equals(Object o) {
+        BridgeCall other = (BridgeCall) o;
+
+        return name.equals(other.name)
 //                && medium.equals(other.medium)
-//                && Arrays.equals(params, other.params);
-//    }
+                && Arrays.equals(params, other.params);
+    }
+
+    public int hashCode() {
+        return name.hashCode() * 3
+//                + medium.hashCode() * 7
+                + Arrays.hashCode(params);
+    }
 }

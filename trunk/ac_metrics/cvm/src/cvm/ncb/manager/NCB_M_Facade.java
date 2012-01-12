@@ -4,6 +4,9 @@ import cvm.model.CVM_Debug;
 import cvm.ncb.UserObject;
 import cvm.ncb.UserProfile;
 import cvm.ncb.UserSchema;
+import cvm.ncb.csm.ManagedObjectFactory;
+import cvm.ncb.handlers.EventManager;
+import cvm.ncb.ks.ObjectManager;
 
 /**
  * Facade into the NCB_Manager package.
@@ -17,7 +20,9 @@ public class NCB_M_Facade
 	private NCBManager m_ncbManager = null;
 	private NCB_M_Facade()
 	{
-		m_ncbManager = new NCBManager();
+        EventManager eventManager = new EventManager();
+        ManagedObjectFactory mof = new ManagedObjectFactory(eventManager);
+		m_ncbManager = new NCBManager(new ObjectManager(mof), eventManager);
 	}
 	
 	/**
@@ -185,21 +190,6 @@ public class NCB_M_Facade
 	 return true;
 	}
 
-	/**
-	 * This method will send the schema to all participants 
-	 * in the specified connection.
-	 * @param sID
-	 * @param senderID
-	 * @param listReceiver
-	 * @param control_xcml
-	 * @return
-	 */
-	public boolean sendSchema(String sID, String senderID, String listReceiver, Object control_xcml)
-	{
-		CVM_Debug.getInstance().printDebugMessage("NCB_M_Facade : NCB sendSchema called with sID:\""+sID+"\" and senderID:\""+senderID+"\" for receiversIDs:\""+listReceiver+"\".");
-	 m_ncbManager.sendSchema(sID, senderID, listReceiver, control_xcml);
-	 return true;
-	}
 	/**
 	 * This command will send the specified medium to all 
 	 * the participants during the connection.

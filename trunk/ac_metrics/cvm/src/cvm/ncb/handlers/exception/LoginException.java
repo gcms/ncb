@@ -5,7 +5,7 @@ package cvm.ncb.handlers.exception;
  * @author Frank Hernandez
  *
  */
-public class LoginException extends Exception
+public class LoginException extends RuntimeException
 {
 
 }

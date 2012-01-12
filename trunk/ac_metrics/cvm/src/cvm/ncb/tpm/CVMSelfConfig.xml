@@ -12,7 +12,7 @@
       <mapping var="hasFailedReset" op="ne" val="false"/>
     </symptom>
     <!--<symptom sid="TAM_SC_003">-->
-      <!--<mapping var="checkFrameworkForFailure" op="ne" val="true"/>-->
+    <!--<mapping var="checkFrameworkForFailure" op="ne" val="true"/>-->
     <!--</symptom>-->
   </analyzer>
 
@@ -24,7 +24,7 @@
       <action effector="reInstantiate"/>
     </plan>
     <!--<plan pid="TAM_SC_003">-->
-      <!--<action effector="reInstantiate"/>-->
+    <!--<action effector="reInstantiate"/>-->
     <!--</plan>-->
   </planner>
 
