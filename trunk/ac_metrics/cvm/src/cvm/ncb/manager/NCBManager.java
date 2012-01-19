@@ -7,9 +7,11 @@ import cvm.ncb.UserSchema;
 import cvm.ncb.handlers.EventManager;
 import cvm.ncb.handlers.ExceptionHandler;
 import cvm.ncb.ks.ObjectManager;
+import cvm.ncb.oem.pe.ActionSignalHandler;
 import cvm.ncb.oem.pe.CallQueue;
 import cvm.ncb.oem.pe.PolicyEvalManager;
-import cvm.ncb.oem.pe.handlers.*;
+import cvm.ncb.oem.pe.SignalHandler;
+import cvm.ncb.oem.pe.actions.*;
 
 import java.net.URISyntaxException;
 import java.util.LinkedHashMap;
@@ -43,15 +45,44 @@ public class NCBManager {
     }
 
     private PolicyEvalManager createPolicyEvalManager(ObjectManager om, ExceptionHandler m_xhXHandler) throws URISyntaxException {
-        PolicyEvalManager policyManager = new PolicyEvalManager(om, "../../tpm/CVMSelfConfig.xml", "../../repository/examples", m_xhXHandler);
-        policyManager.registerHandler(new FailedFrameworkHandler());
-        policyManager.registerHandler(new SendSchemaHandler());
-        policyManager.registerHandler(new LoginAllHandler());
-        policyManager.registerHandler(new LogoutAllHandler());
-        policyManager.registerHandler(new CreateSessionHandler());
-        policyManager.registerHandler(new AddParticipantHandler());
-        policyManager.registerHandler(new RemoveParticipantHandler());
-        policyManager.registerHandler(new MediumHandler());
+        PolicyEvalManager policyManager = new PolicyEvalManager("../../tpm/CVMSelfConfig.xml", "../../repository/examples", om, m_xhXHandler);
+
+        ActionInstance reenableMedium = new ReenableMediumAction();
+        SignalHandler failedFrameworkHandler = new ActionSignalHandler("failedFramework", reenableMedium);
+        policyManager.registerHandler(failedFrameworkHandler);
+
+        ActionInstance sendSchema = new SendSchemaAction();
+        SignalHandler sendSchemaHandler = new ActionSignalHandler("sendSchema", sendSchema);
+        policyManager.registerHandler(sendSchemaHandler);
+
+        ActionInstance loginAction = new LoginAction();
+        SignalHandler loginAllHandler = new ActionSignalHandler("loginAll", loginAction);
+        policyManager.registerHandler(loginAllHandler);
+
+        ActionInstance logoutAction = new LogoutAction();
+        SignalHandler logoutAllHandler = new ActionSignalHandler("logoutAll", logoutAction);
+        policyManager.registerHandler(logoutAllHandler);
+
+        ActionInstance createSession = new CreateSessionAction();
+        SignalHandler createSessionHandler = new ActionSignalHandler("createSession", createSession);
+        policyManager.registerHandler(createSessionHandler);
+
+        ActionInstance addParticipant = new AddParticipantAction();
+        SignalHandler addParticipantHandler = new ActionSignalHandler("addAParticipant", addParticipant);
+        policyManager.registerHandler(addParticipantHandler);
+
+        ActionInstance removeParticipant = new RemoveParticipantAction();
+        SignalHandler removeParticipantHandler = new ActionSignalHandler("removeAParticipant", removeParticipant);
+        policyManager.registerHandler(removeParticipantHandler);
+
+        ActionInstance mediumChange = new MediumAction();
+        SignalHandler enableMediumHandler = new ActionSignalHandler("enableMedium", mediumChange);
+        policyManager.registerHandler(enableMediumHandler);
+        SignalHandler enableMediumReceiverHandler = new ActionSignalHandler("enableMediumReceiver", mediumChange);
+        policyManager.registerHandler(enableMediumReceiverHandler);
+        SignalHandler disableMediumHandler = new ActionSignalHandler("disableMedium", mediumChange);
+        policyManager.registerHandler(disableMediumHandler);
+
         return policyManager;
     }
 
@@ -210,7 +241,7 @@ public class NCBManager {
     public void enableMedium(String connectionID, String mediumName) {
         Object[] obj = {connectionID, mediumName};
         Map<String, Object> params = new LinkedHashMap<String, Object>();
-        params.put("connection", connectionID);
+        params.put("session", connectionID);
         params.put("medium", mediumName);
         m_callQueue.add("enableMedium", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager : Queuing NCB sendMedia called with connectionID:\"" + connectionID + "\" and MediumName:\"" + mediumName + "\".");
@@ -222,7 +253,7 @@ public class NCBManager {
     public void enableMediumReceiver(String connectionID, String mediumName) {
         Object[] obj = {connectionID, mediumName};
         Map<String, Object> params = new LinkedHashMap<String, Object>();
-        params.put("connection", connectionID);
+        params.put("session", connectionID);
         params.put("medium", mediumName);
         m_callQueue.add("enableMediumReceiver", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager : Queuing NCB sendMedia called with connectionID:\"" + connectionID + "\" and MediumName:\"" + mediumName + "\".");
@@ -234,7 +265,7 @@ public class NCBManager {
     public void disableMedium(String connectionID, String mediumName) {
         Object[] obj = {connectionID, mediumName};
         Map<String, Object> params = new LinkedHashMap<String, Object>();
-        params.put("connection", connectionID);
+        params.put("session", connectionID);
         params.put("medium", mediumName);
         m_callQueue.add("disableMedium", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager : Queuing NCB sendMedia called with connectionID:\"" + connectionID + "\" and MediumName:\"" + mediumName + ".");

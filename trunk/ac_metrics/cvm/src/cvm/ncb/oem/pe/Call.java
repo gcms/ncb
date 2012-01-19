@@ -16,8 +16,8 @@ public class Call {
         return command;
     }
 
-    public Object[] getParams() {
-        return params.values().toArray(new Object[params.size()]);
+    public Map<String, Object> getParams() {
+        return params;
     }
 
     public Object getParam(String param) {
@@ -30,6 +30,6 @@ public class Call {
     }
 
     public String toString() {
-        return StringUtils.methodToString(this.getName(), getParams());
+        return StringUtils.methodToString(this.getName(), getParams().values().toArray());
     }
 }

@@ -1,13 +1,10 @@
 package cvm.ncb.ks;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 public class StateManager {
-    private HashSet<Connection> objects = null;
-
-    public StateManager() {
-        objects = new HashSet<Connection>();
-    }
+    private HashSet<Connection> objects = new LinkedHashSet<Connection>();
 
     private Connection getObjectInternal(String id) {
         for (Connection con : this.objects) {
@@ -18,16 +15,16 @@ public class StateManager {
         return null;
     }
 
-    public synchronized Connection createConnection(String id, String medium, String fw) {
+    public synchronized Connection createConnection(String id) {
         assert getObjectInternal(id) == null;
-        Connection con = new Connection(id, medium, fw);
+        Connection con = new Connection(id);
         objects.add(con);
         return con;
     }
 
     public synchronized Connection getConnection(String id) {
         Connection con = getObjectInternal(id);
-        return con != null ? con : createConnection(id, null, null);
+        return con != null ? con : createConnection(id);
     }
 
 

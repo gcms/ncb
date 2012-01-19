@@ -19,7 +19,7 @@ public class NCB_R_Facade_Driver {
         } catch (URISyntaxException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        List<Policy> arr = ncb_facade.load(GlobalConstant.RequestedType.Video, GlobalConstant.OperationType.request);
+        List<Policy> arr = ncb_facade.load(GlobalConstant.RequestedType.Video.toString(), GlobalConstant.OperationType.request.toString());
         CVM_Debug.getInstance().printDebugMessage("The number of policies applied for this request is " + arr.size());
 
 
@@ -30,7 +30,7 @@ public class NCB_R_Facade_Driver {
             CVM_Debug.getInstance().printDebugMessage("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
 
-        arr = ncb_facade.load(GlobalConstant.RequestedType.Bandwidth, GlobalConstant.OperationType.selection);
+        arr = ncb_facade.load(GlobalConstant.RequestedType.Bandwidth.toString(), GlobalConstant.OperationType.selection.toString());
         CVM_Debug.getInstance().printDebugMessage("The number of policies applied for this request is " + arr.size());
 
         for (Policy p : arr) {

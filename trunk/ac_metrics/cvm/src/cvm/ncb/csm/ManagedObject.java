@@ -1,11 +1,15 @@
 package cvm.ncb.csm;
 
+import cvm.model.EventException;
+import cvm.ncb.adapters.Manageable;
+import cvm.ncb.oem.pe.Call;
 import cvm.ncb.oem.policy.Metadata;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Communication object used by CSM
@@ -13,12 +17,14 @@ import java.util.Map;
  * @author Frank Hernandez
  */
 public class ManagedObject {
-    private Object bridge = null;
+    private Manageable bridge;
     private Metadata metadata;
+    private ManagedObjectRunner runner = new ManagedObjectRunner();
 
-    public ManagedObject(Object bridge, Metadata metadata) {
+    public ManagedObject(Manageable bridge, Metadata metadata) {
         this.bridge = bridge;
         this.metadata = metadata;
+        runner.start();
     }
 
     public Metadata getMetadata() {
@@ -29,23 +35,27 @@ public class ManagedObject {
         return metadata.getName();
     }
 
-    public void execute(BridgeCall call) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method method = bridge.getClass().getMethod(call.getName(), call.getParamTypes());
-        method.invoke(bridge, call.getParams());
+    public Object execute(Call call) {
+        return execute(call.getName(), call.getParams());
     }
 
-    public void execute(String message, Map<String, Object> params) {
+    public Object execute(String message, Map<String, Object> params) {
         try {
-            new BridgeExecutor(bridge).execute(message, params);
+            return new BridgeExecutor(bridge).execute(message, params);
         } catch (InvocationTargetException e) {
-            if (e.getCause() instanceof RuntimeException)
+            if (e.getCause() instanceof EventException) {
+                throw (RuntimeException) e.getCause();
+            } else if (e.getCause() instanceof RuntimeException)
                 throw (RuntimeException) e.getCause();
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+
+        // TODO: fixme
+        return null;
     }
 
-    public void execute(String message) {
-        execute(message, new LinkedHashMap<String, Object>());
+    public Object execute(String message) {
+        return execute(message, new LinkedHashMap<String, Object>());
     }
 
     public boolean executeBoolean(String message, Map<String, Object> params) {
@@ -57,5 +67,43 @@ public class ManagedObject {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         return false;
+    }
+
+    public void enqueue(Call call) {
+        calls.offer(call);
+        runner.wake();
+    }
+
+    public Queue<Call> calls = new ConcurrentLinkedQueue<Call>();
+
+    public class ManagedObjectRunner extends Thread {
+        public void run() {
+            while (true) {
+                while (!calls.isEmpty()) {
+                    process(calls.poll());
+                }
+                doWait();
+            }
+        }
+
+        private void doWait() {
+            try {
+                synchronized (this) {
+                    this.wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
+
+        public void process(Call call) {
+            execute(call);
+        }
+
+        public void wake() {
+            synchronized (this) {
+                this.notify();
+            }
+        }
     }
 }

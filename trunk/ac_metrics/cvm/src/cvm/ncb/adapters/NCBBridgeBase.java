@@ -37,6 +37,7 @@ public abstract class NCBBridgeBase implements NCBBridge {
      * @throws PartyNotAddedException
      * @throws NoSessionException
      */
+    @Method(name = "addAParticipant", parameters = { "session", "participant"})
     public void addAParticipant(String session, String participant) throws PartyNotAddedException, NoSessionException {
         addParticipant(session, getUserMapper().lookupContact(this.getName(), participant));
     }

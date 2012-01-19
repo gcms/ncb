@@ -1,7 +1,7 @@
 package cvm.ncb.csm;
 
 import cvm.ncb.adapters.EventNotifier;
-import cvm.ncb.adapters.NCBBridge;
+import cvm.ncb.adapters.Manageable;
 import cvm.ncb.oem.policy.Metadata;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,7 +27,7 @@ public class ManagedObjectFactory {
 
         try {
             CSM_NBTypes type = CSM_NBTypes.getType(metadata.getName());
-            NCBBridge bridge = type.createBridge();
+            Manageable bridge = type.createBridge();
             bridge.setEventNotifier(eventManager);
             return new ManagedObject(bridge, metadata);
         } catch (Exception ex) {

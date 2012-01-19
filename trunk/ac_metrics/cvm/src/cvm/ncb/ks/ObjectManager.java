@@ -67,5 +67,4 @@ public class ObjectManager {
     public Collection<ManagedObject> getAllObjects() {
         return objects;
     }
-
 }

@@ -4,13 +4,6 @@ import cvm.ncb.repository.loader.FilePolicyLoader
 import cvm.ncb.repository.loader.GlobalConstant
 import cvm.ncb.repository.policy.PolicyRepository
 
-/**
- * Created by IntelliJ IDEA.
- * User: gustavosousa
- * Date: 20/12/11
- * Time: 17:51
- * To change this template use File | Settings | File Templates.
- */
 class FilePolicyRepositoryTests extends GroovyTestCase {
     PolicyRepository policyRepository
 
@@ -38,7 +31,7 @@ class FilePolicyRepositoryTests extends GroovyTestCase {
     }
 
     void checkPolicy(GlobalConstant.RequestedType request, GlobalConstant.OperationType operation, List policiesNames) {
-        def policies = policyRepository.load(request, operation)
+        def policies = policyRepository.load(request.toString(), operation.toString())
         assertEquals policiesNames.size(), policies.size()
 
         policiesNames.each { String name ->

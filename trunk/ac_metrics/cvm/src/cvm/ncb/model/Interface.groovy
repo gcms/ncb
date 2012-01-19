@@ -22,9 +22,8 @@ class Interface {
     }
 
     static List<Parameter> getParameters(java.lang.reflect.Method method, cvm.ncb.adapters.Method annotation) {
-        int idx = 0
         annotation.parameters().collect { String name ->
-            new Parameter(name: name, type: method.getParameterTypes()[idx++])
+            new Parameter(name: name)
         }
     }
 }

@@ -22,8 +22,8 @@ public class FilePolicyRepository implements PolicyRepository {
         return new FilePolicyRepository(ploader);
     }
 
-    public List<Policy> load(GlobalConstant.RequestedType request, GlobalConstant.OperationType oper) {
-        List<Policy> arrPolicy = repLoader.lookup(request.toString(), oper.toString());
+    public List<Policy> load(String request, String oper) {
+        List<Policy> arrPolicy = repLoader.lookup(request, oper);
         CVM_Debug.getInstance().printDebugMessage("Size of policy array is " + arrPolicy.size());
 
 

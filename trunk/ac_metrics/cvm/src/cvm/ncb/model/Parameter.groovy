@@ -7,9 +7,8 @@ package cvm.ncb.model
  */
 class Parameter {
     String name
-    Class type
 
     String toString() {
-        "$type.simpleName $name"
+        name
     }
 }

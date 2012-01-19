@@ -1,101 +1,43 @@
 package cvm.ncb.ks;
 
-import cvm.model.CVM_Debug;
-import cvm.ncb.csm.BridgeCall;
+import cvm.ncb.csm.ManagedObject;
 
-import java.util.*;
-import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.concurrent.PriorityBlockingQueue;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Connection {
     private String id;
-    private Queue<BridgeCall> queue = new PriorityBlockingQueue<BridgeCall>();
+    private Set<String> participants = new LinkedHashSet<String>();
+    private String medium = null;
+    private ManagedObject framework;
 
-    private HashMap<String, String> currentMapping = new LinkedHashMap<String, String>();
-    private HashMap<String, String> previousMapping = new LinkedHashMap<String, String>();
-
-    private Set<String> participants = new CopyOnWriteArraySet<String>();
-    private String defaultMedium = null;
-
-    public Connection(String conID, String medium, String comObj) {
-        this.id = conID;
-        defaultMedium = medium;
-        currentMapping.put(medium, comObj);
+    public Connection(String conID) {
+        id = conID;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getFramework(String medium) {
-        CVM_Debug.getInstance().printDebugMessage("Connect Object getter: " + medium);
-
-        if (medium == null || medium.equals(""))
-            return currentMapping.get(defaultMedium);
-
-        return currentMapping.get(medium);
+    public ManagedObject getFramework() {
+        return framework;
     }
 
-    public void setFramework(String medium, String framework) {
+    public void setFramework(ManagedObject framework) {
         assert framework != null;
-
-        defaultMedium = medium;
-
-        String currentFramework = currentMapping.get(medium);
-        if (currentFramework == null || !currentFramework.equals(framework)) {
-            previousMapping.putAll(currentMapping);
-            currentMapping.put(medium, framework);
-        }
+        this.framework = framework;
     }
 
-    public String getPreviousFramework(String medium) {
-        return previousMapping.get(medium);
-    }
-
-    public void enqueue(BridgeCall call) {
-        if (contains(call))
-            return;
-
-//        CVM_Debug.getInstance().printDebugMessage("Offering call: " + call.getName() + " currentFw for " + call.getMedium() + ": " + getFramework(call.getMedium()));
-        queue.offer(call);
-    }
-
-    private boolean contains(BridgeCall call) {
-        for (BridgeCall bridgeCall : queue) {
-            if (bridgeCall.equals(call))
-                return true;
-        }
-
-        return false;
-    }
-
-    public BridgeCall pollCall() {
-        return queue.poll();
-    }
-
-    public BridgeCall peekCall() {
-        return queue.peek();
-    }
-
-    public List<String> getActiveMedia() {
-        return new ArrayList<String>(currentMapping.keySet());
-    }
-
-    public String getDefaultMedium() {
-        return defaultMedium;
+    public String getMedium() {
+        return medium;
     }
 
     public Collection<String> getParticipants() {
         return participants;
     }
 
-    public boolean containsFramework(String fwName) {
-        return currentMapping.containsValue(fwName);
-    }
-
-    public String getFramework(BridgeCall call) {
-        return call.getCommandType() == BridgeCall.CommandType.DESTROYSESSION ?
-                getPreviousFramework(call.getMedium()) :
-                getFramework(call.getMedium());
+    public void setMedium(String medium) {
+        this.medium = medium;
     }
 }
