@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 
 public class StateManager {
-    private HashSet<Connection> objects = new LinkedHashSet<Connection>();
+    private HashSet<StateHolder> objects = new LinkedHashSet<StateHolder>();
 
-    private Connection getObjectInternal(String id) {
-        for (Connection con : this.objects) {
+    private StateHolder getObjectInternal(Object id) {
+        for (StateHolder con : this.objects) {
             if (con.getId().equals(id)) {
                 return con;
             }
@@ -15,25 +15,25 @@ public class StateManager {
         return null;
     }
 
-    public synchronized Connection createConnection(String id) {
+    public synchronized StateHolder create(Object id) {
         assert getObjectInternal(id) == null;
-        Connection con = new Connection(id);
+        StateHolder con = new StateHolder(id);
         objects.add(con);
         return con;
     }
 
-    public synchronized Connection getConnection(String id) {
-        Connection con = getObjectInternal(id);
-        return con != null ? con : createConnection(id);
+    public synchronized StateHolder get(Object id) {
+        StateHolder con = getObjectInternal(id);
+        return con != null ? con : create(id);
     }
 
 
-    public boolean remove(String id) {
-        Connection con = getObjectInternal(id);
+    public boolean remove(Object id) {
+        StateHolder con = getObjectInternal(id);
         return con != null ? objects.remove(con) : false;
     }
 
-    public Iterable<Connection> getAllConnections() {
+    public Iterable<StateHolder> getAll() {
         return objects;
     }
 }

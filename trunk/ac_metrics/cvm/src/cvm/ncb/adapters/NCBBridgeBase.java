@@ -1,10 +1,9 @@
 package cvm.ncb.adapters;
 
-import cvm.model.Event;
+import cvm.service.UserIDMappingTable;
 import cvm.ncb.handlers.exception.NoSessionException;
 import cvm.ncb.handlers.exception.PartyNotAddedException;
 import cvm.ncb.handlers.exception.PartyNotFoundException;
-import cvm.ncb.ks.UserIDMappingTable;
 
 /**
  * Target class of the Abstract design pattern.

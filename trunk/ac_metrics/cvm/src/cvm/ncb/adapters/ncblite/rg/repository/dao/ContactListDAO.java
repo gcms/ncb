@@ -9,11 +9,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
+import cvm.ncb.adapters.ncblite.model.Constants;
+import cvm.ncb.adapters.ncblite.model.Member;
+import cvm.ncb.adapters.ncblite.model.User;
 import cvm.ncb.adapters.ncblite.rg.repository.session.Session;
-
-import cvm.model.Constants;
-import cvm.model.Member;
-import cvm.model.User;
 
 public class ContactListDAO {
 	

@@ -1,7 +1,7 @@
 package cvm.ncb.handlers.event;
 
+import cvm.facade.UserProfile;
 import cvm.model.Handles_Event;
-import cvm.ncb.UserProfile;
 
 /**
  * Event used to notify the occurance of a UserProfileCreatedEvent

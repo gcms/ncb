@@ -1,7 +1,6 @@
 package cvm.ncb.adapters;
 
 import cvm.model.CVM_Debug;
-import cvm.model.Event;
 import cvm.ncb.adapters.ncblite.av.AVReceive;
 import cvm.ncb.adapters.ncblite.av.AVTransmit;
 import cvm.ncb.adapters.ncblite.p2p.P2PChannel;
@@ -108,7 +107,7 @@ public class NCBNativeAdapter extends NCBBridgeBase
 			success = false;
 		}
 
-        Event event = new Event("otifyLogoffReply");
+        Event event = new Event("notifyLogoffReply");
         event.setParam("isLoggedOff", success);
 		notify(event);
 	}

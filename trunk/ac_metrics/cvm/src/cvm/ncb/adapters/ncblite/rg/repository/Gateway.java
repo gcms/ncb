@@ -2,6 +2,8 @@
 
 import java.util.List;
 
+import cvm.ncb.adapters.ncblite.model.Form;
+import cvm.ncb.adapters.ncblite.model.User;
 import cvm.ncb.adapters.ncblite.rg.repository.facades.DMFacade;
 import cvm.ncb.adapters.ncblite.rg.repository.facades.PMFacade;
 import cvm.ncb.adapters.ncblite.rg.repository.session.Session;

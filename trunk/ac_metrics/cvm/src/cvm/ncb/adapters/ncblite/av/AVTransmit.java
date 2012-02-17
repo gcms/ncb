@@ -368,7 +368,7 @@ public class AVTransmit {
 	p.addControllerListener(new StateListener());
 	failed = false;
 
-	// Call the required method on the processor
+	// SignalInstance the required method on the processor
 	if (state == Processor.Configured) {
 	    p.configure();
 	} else if (state == Processor.Realized) {

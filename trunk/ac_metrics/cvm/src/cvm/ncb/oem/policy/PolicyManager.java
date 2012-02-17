@@ -1,15 +1,20 @@
 package cvm.ncb.oem.policy;
 
 import cvm.model.CVM_Debug;
-import cvm.ncb.repository.FilePolicyRepository;
-import cvm.ncb.repository.loader.FilePolicyLoader;
-import cvm.ncb.repository.policy.Policy;
-import cvm.ncb.repository.policy.PolicyRepository;
+import cvm.ncb.csm.Resource;
+import cvm.ncb.ks.ResourceManager;
+import cvm.ncb.oem.policy.repository.FilePolicyRepository;
+import cvm.ncb.oem.policy.repository.loader.FilePolicyLoader;
+import cvm.ncb.oem.policy.repository.policy.Policy;
+import cvm.ncb.oem.policy.repository.policy.PolicyRepository;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.util.*;
 
 public class PolicyManager {
+    private static Log log = LogFactory.getLog(PolicyManager.class);
     private static final String ROOT_FEATURE = "CommFeatureRoot ";
     private PolicyRepository policyRepository;
     private Feature featTree;
@@ -84,7 +89,7 @@ public class PolicyManager {
         TreeSet<Metadata> outSet = new TreeSet<Metadata>();
         Map params = req.next();
 
-        String reqFeat = (String) params.get("feature");
+        String requestedFeature = (String) params.get("feature");
         String attr = (String) params.get("attribute");
         Object value = params.get("value");
         Integer operation = (Integer) params.get("operation");
@@ -92,7 +97,7 @@ public class PolicyManager {
         for (Metadata fw : inSet) {
             CVM_Debug.getInstance().printDebugMessage("Object name is " + fw.getName());
 
-            if (hasFeature(fw.getFeatures().values(), reqFeat, attr, value, operation))
+            if (hasFeature(fw.getFeatures(), requestedFeature, attr, value, operation))
                 outSet.add(fw);
         }
         return reduceSet(outSet, req);
@@ -115,17 +120,26 @@ public class PolicyManager {
         }
     }
 
-    public TreeSet<Metadata> getConformingObjects(TreeSet<Metadata> availMetadatas, String request, String operation, Map<String, Object> paramValues) {
-        DesiredFeaturesList req = buildDesiredFeatureList(request, operation, paramValues);
+    public Resource findConformingObject(ResourceManager resourceManager, String feature, String operation, Map<String, Object> params) {
+        TreeSet<Metadata> allMetadatas = resourceManager.getAvailableObjects();
+        TreeSet<Metadata> fwSet = getConformingObjects(allMetadatas, feature, operation, params);
+
+        log.debug("All objects: " + allMetadatas + " Reduced set: " + fwSet);
+        Metadata metadata = fwSet.iterator().next();
+        return metadata != null ? resourceManager.getObject(metadata.getName()) : null;
+    }
+
+    public TreeSet<Metadata> getConformingObjects(TreeSet<Metadata> availMetadatas, String feature, String operation, Map<String, Object> paramValues) {
+        DesiredFeaturesList req = buildDesiredFeatureList(feature, operation, paramValues);
 
         return reduceSet(availMetadatas, req);
     }
 
-    private DesiredFeaturesList buildDesiredFeatureList(String request, String operation, Map<String, Object> paramValues) {
+    private DesiredFeaturesList buildDesiredFeatureList(String feature, String operation, Map<String, Object> paramValues) {
         DesiredFeaturesList req = new DesiredFeaturesList();
 
         featTree = policyRepository.loadFeatures();
-        List<Policy> policies = policyRepository.load(request, operation);
+        List<Policy> policies = policyRepository.load(feature, operation);
 
         List<Object> objArr = new ArrayList<Object>();
         for (Policy policy : policies) {

@@ -1,13 +1,13 @@
 package cvm.ncb.tpm;
 
-import cvm.ncb.oem.pe.PolicyEvalManager;
 import edu.fiu.strg.ACSTF.manager.GenericManager;
+import edu.fiu.strg.ACSTF.resource.AbstractResource;
 
 import java.net.URI;
 
 public class TouchpointManager extends GenericManager<Touchpoint> {
 
-    public TouchpointManager(String name, URI policyFileName, PolicyEvalManager aResource) {
+    public TouchpointManager(String name, URI policyFileName, AbstractResource aResource) {
 		super(name, policyFileName, aResource);
     }
 }

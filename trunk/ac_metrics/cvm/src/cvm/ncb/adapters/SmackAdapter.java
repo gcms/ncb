@@ -1,7 +1,6 @@
 package cvm.ncb.adapters;
 
 import cvm.model.CVM_Debug;
-import cvm.model.Event;
 import cvm.ncb.handlers.exception.LoginException;
 import cvm.ncb.handlers.exception.NoSessionException;
 import cvm.ncb.handlers.exception.PartyNotFoundException;
@@ -133,12 +132,10 @@ public class SmackAdapter extends NCBBridgeBase {
 
     @Method(name = "createSession", parameters = {"session"})
     public void createSession(String session) {
-        if (sessMgr.contains(session)) return;
-        sessMgr.add(session);
-        initSession(sessMgr.indexOf(session));
-        CVM_Debug.getInstance().printDebugMessage("Session " + sessMgr.indexOf(session)
-                + " created for Connection " + session);
-
+        if (!sessMgr.contains(session)) {
+            sessMgr.add(session);
+            initSession(sessMgr.indexOf(session));
+        }
     }
 
     @Method(name = "destroySession", parameters = {"session"})
@@ -1077,7 +1074,7 @@ public class SmackAdapter extends NCBBridgeBase {
         oSessions_video.put(sessID + "", new ArrayList<JingleSession>());
     }
 
-    class CtlHelper extends Thread implements EventListener {
+    class CtlHelper extends Thread {
         public void run() {
             while (true) {
             }

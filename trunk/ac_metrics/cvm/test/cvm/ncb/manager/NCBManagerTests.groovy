@@ -2,63 +2,26 @@ package cvm.ncb.manager
 
 import cvm.ncb.adapters.Mock2Adapter
 import cvm.ncb.adapters.MockAdapter
-import cvm.ncb.csm.CSM_NBTypes
-import cvm.ncb.csm.ManagedObjectFactory
 import cvm.ncb.drivers.NCBDriver
 import cvm.ncb.handlers.EventManager
-import cvm.ncb.ks.ObjectManager
-import cvm.ncb.oem.policy.Attribute
-import cvm.ncb.oem.policy.Feature
-import cvm.ncb.oem.policy.Metadata
+import cvm.sb.emf.EMFLoader
+import cvm.sb.emf.ObjectManagerFactory
+import sb.base.ResourceManager
 
-/**
- * Created by IntelliJ IDEA.
- * User: Gustavo Sousa
- * Date: 08/12/11
- * Time: 19:50
- * To change this template use File | Settings | File Templates.
- */
 class NCBManagerTests extends GroovyTestCase {
-    public void registerMock() {
-        String fwName = 'Mock'
-        CSM_NBTypes.registerFramework(fwName, "${fwName}.config".toLowerCase())
-
-        Metadata managedObject = new Metadata(fwName)
-        Feature audio = new Feature("Audio")
-        audio.addAttribute(new Attribute("Enabled", "true"))
-        audio.addAttribute(new Attribute("NumberOfUsers", "2"))
-        managedObject.addFeature(audio)
-
-        objectManager.addObject(managedObject)
-    }
-
-    public void registerMock2() {
-        String fwName = 'Mock2'
-        CSM_NBTypes.registerFramework(fwName, "${fwName}.config".toLowerCase())
-
-        Metadata managedObject = new Metadata(fwName)
-        Feature audio = new Feature("Audio")
-        audio.addAttribute(new Attribute("Enabled", "true"))
-        audio.addAttribute(new Attribute("NumberOfUsers", "2"))
-        managedObject.addFeature(audio)
-        Feature video = new Feature('Video')
-        video.addAttribute(new Attribute("Enabled", "true"))
-        video.addAttribute(new Attribute("NumberOfUsers", "3"))
-        video.addAttribute(new Attribute("onlineStatus.Enabled", "true"))
-        managedObject.addFeature(video)
-
-        objectManager.addObject(managedObject)
+    public void restoreMock2() {
+        objectManager.getObject('Mock2').metadata.restore()
     }
 
     private EventManager eventManager
-    private ObjectManager objectManager
+    private cvm.ncb.ks.ResourceManager objectManager
 
     void setUp() {
+        def rm = EMFLoader.loadFirst('InstanceResourceManager', ResourceManager)
+        objectManager = new ObjectManagerFactory().createObjectManager(rm)
         eventManager = new EventManager()
-        ManagedObjectFactory mof = new ManagedObjectFactory(eventManager);
-        objectManager = new ObjectManager(mof)
-        objectManager.clearAllObjects()
-        registerMock()
+
+        objectManager.getObject('Mock2').metadata.fail()
     }
 
 
@@ -86,7 +49,7 @@ class NCBManagerTests extends GroovyTestCase {
     }
 
     void testTwoMedia() {
-        registerMock2()
+        restoreMock2()
 
         NCBManager manager = new NCBManager(objectManager, eventManager)
         manager.login("Andrew", "password");
@@ -129,7 +92,7 @@ class NCBManagerTests extends GroovyTestCase {
         manager.enableMedium("101", "Audio");
 
         assertNotNull objectManager.getAvailableObjects().find { it.name == 'Mock' }
-        MockAdapter.instance.markFailed()
+        MockAdapter.instance.markFailed('Audio')
 
         waitThreadsFinish(1000)
 
@@ -137,7 +100,7 @@ class NCBManagerTests extends GroovyTestCase {
     }
 
     void testFrameworkChange() {
-        registerMock2()
+        restoreMock2()
 
         NCBManager manager = new NCBManager(objectManager, eventManager)
         manager.login("Andrew", "password");
@@ -148,7 +111,7 @@ class NCBManagerTests extends GroovyTestCase {
 
         waitThreadsFinish(500)
 
-        MockAdapter.instance.markFailed()
+        MockAdapter.instance.markFailed('Audio')
 
         waitThreadsFinish(2000)
 
@@ -200,7 +163,7 @@ class NCBManagerTests extends GroovyTestCase {
     }
 
     void testLoginException() {
-        registerMock2()
+        restoreMock2()
 
         NCBManager manager = new NCBManager(objectManager, eventManager)
         MockAdapter.instance.loginShouldFail()
@@ -234,7 +197,7 @@ class NCBManagerTests extends GroovyTestCase {
 
     void testTwoMediaSameFw() {
         objectManager.removeObject('Mock')
-        registerMock2()
+        restoreMock2()
 
         NCBManager manager = new NCBManager(objectManager, eventManager)
         manager.login("Andrew", "password");

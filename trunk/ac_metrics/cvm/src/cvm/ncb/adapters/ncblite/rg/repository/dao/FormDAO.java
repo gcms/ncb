@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import cvm.model.Form;
+import cvm.ncb.adapters.ncblite.model.Form;
 
 public class FormDAO {
 	

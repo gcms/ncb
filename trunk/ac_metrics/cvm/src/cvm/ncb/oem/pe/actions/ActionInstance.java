@@ -1,8 +1,7 @@
 package cvm.ncb.oem.pe.actions;
 
-import cvm.ncb.oem.pe.Call;
-
+import cvm.ncb.oem.pe.SignalInstance;
 
 public interface ActionInstance {
-    Object execute(ActionContext ctx, Call call);
+    Object execute(ActionContext ctx, SignalInstance signal);
 }

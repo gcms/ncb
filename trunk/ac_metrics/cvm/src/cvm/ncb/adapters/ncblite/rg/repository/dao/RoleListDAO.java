@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import cvm.model.RoleList;
+import cvm.ncb.adapters.ncblite.model.RoleList;
 
 public class RoleListDAO {
 	

@@ -1,9 +1,10 @@
 package cvm.ncb.tpm;
 
 import cvm.model.CVM_Debug;
-import cvm.ncb.csm.ManagedObject;
-import cvm.ncb.ks.Connection;
+import cvm.ncb.csm.Resource;
+import cvm.ncb.ks.StateHolder;
 import cvm.ncb.ks.StateManager;
+import cvm.ncb.oem.pe.SignalInstance;
 import cvm.ncb.oem.pe.actions.ActionContext;
 import edu.fiu.strg.ACSTF.touchpoint.AbstractTouchPoint;
 
@@ -35,14 +36,14 @@ public class Touchpoint extends AbstractTouchPoint<ActionContext> {
     private void checkFrameworkForFailure() {
         StateManager stateManager = getResource().getStateManager();
 
-        for (Connection con : stateManager.getAllConnections()) {
+        for (StateHolder con : stateManager.getAll()) {
             if (con.getFramework() != null) {
                 Map<String, Object> params = new LinkedHashMap<String, Object>();
                 params.put("session", con.getId());
-                params.put("medium", con.getMedium());
+                params.put("medium", con.getAttr("medium"));
 
-                ManagedObject framework = con.getFramework();
-                boolean hasFailed = framework.executeBoolean("hasMediumFailed", params);
+                Resource framework = con.getFramework();
+                Boolean hasFailed = (Boolean) framework.execute(new SignalInstance("hasMediumFailed", params));
                 updateFailedTable(framework.getName(), hasFailed);
             }
         }
@@ -60,10 +61,10 @@ public class Touchpoint extends AbstractTouchPoint<ActionContext> {
         for (String fwName : failedTable) {
             CVM_Debug.getInstance().printDebugMessage(fwName + " is no longer available");
 
-            getResource().getObjectManager().getObject(fwName).getMetadata().fail();
+            getResource().getResourceManager().getObject(fwName).getMetadata().fail();
             Map<String, Object> params = new LinkedHashMap<String, Object>();
             params.put("framework", fwName);
-            getResource().getCallQueue().add("failedFramework", params);
+            getResource().getTouchpoint().enqueue(new SignalInstance(null, "failedFramework", params));
             failedTable.remove(fwName);
         }
     }

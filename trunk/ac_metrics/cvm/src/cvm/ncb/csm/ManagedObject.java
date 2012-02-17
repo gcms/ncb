@@ -1,30 +1,28 @@
 package cvm.ncb.csm;
 
 import cvm.model.EventException;
+import cvm.ncb.adapters.EventNotifier;
 import cvm.ncb.adapters.Manageable;
-import cvm.ncb.oem.pe.Call;
+import cvm.ncb.oem.pe.SignalInstance;
 import cvm.ncb.oem.policy.Metadata;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Communication object used by CSM
  *
  * @author Frank Hernandez
  */
-public class ManagedObject {
+public class ManagedObject extends AbstractTouchpoint implements EventNotifier, Resource {
     private Manageable bridge;
     private Metadata metadata;
-    private ManagedObjectRunner runner = new ManagedObjectRunner();
 
     public ManagedObject(Manageable bridge, Metadata metadata) {
+        bridge.setEventNotifier(this);
         this.bridge = bridge;
         this.metadata = metadata;
-        runner.start();
     }
 
     public Metadata getMetadata() {
@@ -35,8 +33,8 @@ public class ManagedObject {
         return metadata.getName();
     }
 
-    public Object execute(Call call) {
-        return execute(call.getName(), call.getParams());
+    public Object execute(SignalInstance signal) {
+        return execute(signal.getName(), signal.getParams());
     }
 
     public Object execute(String message, Map<String, Object> params) {
@@ -58,52 +56,15 @@ public class ManagedObject {
         return execute(message, new LinkedHashMap<String, Object>());
     }
 
-    public boolean executeBoolean(String message, Map<String, Object> params) {
-        try {
-            return new BridgeExecutor(bridge).executeBoolean(message, params);
-        } catch (InvocationTargetException e) {
-            if (e.getCause() instanceof RuntimeException)
-                throw (RuntimeException) e.getCause();
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        return false;
+    public void notify(SignalInstance event) {
+        getEventListener().notify(event);
     }
 
-    public void enqueue(Call call) {
-        calls.offer(call);
-        runner.wake();
+    public void throwEvent(SignalInstance event) throws EventException {
+        getEventListener().throwEvent(event);
     }
 
-    public Queue<Call> calls = new ConcurrentLinkedQueue<Call>();
-
-    public class ManagedObjectRunner extends Thread {
-        public void run() {
-            while (true) {
-                while (!calls.isEmpty()) {
-                    process(calls.poll());
-                }
-                doWait();
-            }
-        }
-
-        private void doWait() {
-            try {
-                synchronized (this) {
-                    this.wait();
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
-        }
-
-        public void process(Call call) {
-            execute(call);
-        }
-
-        public void wake() {
-            synchronized (this) {
-                this.notify();
-            }
-        }
+    public void notify(cvm.ncb.adapters.Event event) {
+        notify(new SignalInstance(this, event.getName(), event.getParams()));
     }
 }

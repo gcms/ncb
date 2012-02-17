@@ -1,13 +1,15 @@
 package cvm.model;
 
-public class EventException extends RuntimeException {
-    private Event event;
+import cvm.ncb.oem.pe.SignalInstance;
 
-    public EventException(Event event) {
+public class EventException extends RuntimeException {
+    private SignalInstance event;
+
+    public EventException(SignalInstance event) {
         this.event = event;
     }
 
-    public Event getEvent() {
+    public SignalInstance getEvent() {
         return event;
     }
 

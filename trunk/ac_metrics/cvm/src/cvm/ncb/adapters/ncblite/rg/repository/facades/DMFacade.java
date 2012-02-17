@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import cvm.ncb.adapters.ncblite.model.Form;
 import cvm.ncb.adapters.ncblite.rg.repository.dao.ApplicationDAO;
 import cvm.ncb.adapters.ncblite.rg.repository.dao.FormDAO;
 import cvm.ncb.adapters.ncblite.rg.repository.util.DBConnectionFactory;
-import cvm.model.Form;
 
 public class DMFacade
 {
@@ -47,7 +47,7 @@ public class DMFacade
 	}
 	
 	
-	public Form  loadFormInstanceSchema(String userName, String formID)
+	public Form loadFormInstanceSchema(String userName, String formID)
 	{
 		return FormDAO.getFormTypeSchemaByUserNameAndFormID(userName, formID, conn);
 	}

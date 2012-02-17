@@ -4,7 +4,6 @@ import com.skype.*;
 import com.skype.connector.*;
 import com.skype.connector.TimeOutException;
 import cvm.model.CVM_Debug;
-import cvm.model.Event;
 import cvm.ncb.handlers.exception.NoSessionException;
 import cvm.ncb.handlers.exception.PartyNotAddedException;
 import cvm.ncb.handlers.exception.PartyNotFoundException;
@@ -62,7 +61,7 @@ public class SkypeAdapter extends NCBBridgeBase {
     private final String ChatAddTagOpen = "<CHAT>";
     private final String ChatAddTagClose = "</CHAT>";
     //NEW Approach
-    //Maps Sessions to Call Ids
+    //Maps Sessions to SignalInstance Ids
     private Map<String, ArrayList<String>> m_hmSessionCallIdMap;
     private Map<String, ArrayList<String>> m_hmSessionChatIdMap;
     private Map<String, ArrayList<String>> m_hmSessionIdMap;
@@ -597,7 +596,7 @@ public class SkypeAdapter extends NCBBridgeBase {
 
                 //If no call object exist.
                 if (m_cList == null) {
-                    //Call the User
+                    //SignalInstance the User
                     tempID = this.callParticipant(participantID);
                     if (tempID == null) {
                         m_hmSessionCallIdMap.put(sID, null);
@@ -657,15 +656,15 @@ public class SkypeAdapter extends NCBBridgeBase {
                       tempCall = m_hmCallSessionMap.get(sID);
 
                       //Wait while call is stablished.
-                      while(tempCall.getStatus() != Call.Status.INPROGRESS
-                              && tempCall.getStatus() != Call.Status.CANCELLED
-                              && tempCall.getStatus() != Call.Status.FAILED
-                              && tempCall.getStatus() != Call.Status.REFUSED);
+                      while(tempCall.getStatus() != SignalInstance.Status.INPROGRESS
+                              && tempCall.getStatus() != SignalInstance.Status.CANCELLED
+                              && tempCall.getStatus() != SignalInstance.Status.FAILED
+                              && tempCall.getStatus() != SignalInstance.Status.REFUSED);
 
                       //If the call cannot be placed notify.
-                      if(tempCall.getStatus() == Call.Status.CANCELLED
-                              || tempCall.getStatus() == Call.Status.FAILED
-                              || tempCall.getStatus() == Call.Status.REFUSED)
+                      if(tempCall.getStatus() == SignalInstance.Status.CANCELLED
+                              || tempCall.getStatus() == SignalInstance.Status.FAILED
+                              || tempCall.getStatus() == SignalInstance.Status.REFUSED)
                       {
                           m_hmCallSessionMap.put(sID,null);
                           throw new PartyNotAddedException(participantID);
@@ -676,7 +675,7 @@ public class SkypeAdapter extends NCBBridgeBase {
 
                           m_cList = m_hmCallListMap.get(sID);
                           if(m_cList == null)
-                              m_cList = new ArrayList<Call>();
+                              m_cList = new ArrayList<SignalInstance>();
 
                           //Add call to conference/
                           addCallToCallList(tempCall, sID);
@@ -692,17 +691,17 @@ public class SkypeAdapter extends NCBBridgeBase {
 
                       conferenceID = tempCall.getId();
 
-                      while(tempCall2.getStatus() != Call.Status.INPROGRESS
-                              && tempCall2.getStatus() != Call.Status.CANCELLED
-                              && tempCall2.getStatus() != Call.Status.FAILED
-                              && tempCall2.getStatus() != Call.Status.REFUSED);
+                      while(tempCall2.getStatus() != SignalInstance.Status.INPROGRESS
+                              && tempCall2.getStatus() != SignalInstance.Status.CANCELLED
+                              && tempCall2.getStatus() != SignalInstance.Status.FAILED
+                              && tempCall2.getStatus() != SignalInstance.Status.REFUSED);
 
                       // If the call cannot be placed notify.
-                      if(tempCall2.getStatus() == Call.Status.CANCELLED
-                              || tempCall2.getStatus() == Call.Status.FAILED
-                              || tempCall2.getStatus() == Call.Status.REFUSED)
+                      if(tempCall2.getStatus() == SignalInstance.Status.CANCELLED
+                              || tempCall2.getStatus() == SignalInstance.Status.FAILED
+                              || tempCall2.getStatus() == SignalInstance.Status.REFUSED)
                       {
-                          //CVM_Debug.getInstance().printDebugMessage("Call not added: "+ tempCall2.getPartnerDisplayName());
+                          //CVM_Debug.getInstance().printDebugMessage("SignalInstance not added: "+ tempCall2.getPartnerDisplayName());
                           //m_hmCallSessionMap.put(sID,null);
                           //throw new PartyNotAddedException(participantID);
                       }
@@ -792,7 +791,7 @@ public class SkypeAdapter extends NCBBridgeBase {
     /**
      * This function call returns the status of the specified call.
      *
-     * @param sCallID Call id.
+     * @param sCallID SignalInstance id.
      * @return Status of the call.
      */
     private String skypeGetCallStatus(String sCallID) {
@@ -997,7 +996,7 @@ public class SkypeAdapter extends NCBBridgeBase {
     /**
      * Helper function that adds a call to the conference list.
      *
-     * @param sCallID Call to add.
+     * @param sCallID SignalInstance to add.
      * @param sID     Session to which to add the call.
      */
     private void addCallToCallList(String sCallID, String sID) {
@@ -1030,7 +1029,7 @@ public class SkypeAdapter extends NCBBridgeBase {
         //Place every call on the list in hold.
         for (int i = 0; i < m_cList.size(); i++) {
             tempID = (String) m_cList.get(i);
-            //if(this.skypeGetCallStatus(tempID).equals(Call.VideoStatus. RUNNING))
+            //if(this.skypeGetCallStatus(tempID).equals(SignalInstance.VideoStatus. RUNNING))
             //	this.skypeAlterCall(tempID, "STOP_VIDEO_RECEIVE");
             if (this.skypeGetCallStatus(tempID).equals(Call.Status.INPROGRESS.toString())) {
                 this.skypeHoldCall(tempID);
@@ -1057,7 +1056,7 @@ public class SkypeAdapter extends NCBBridgeBase {
         //Place every call on the list in hold.
         for (int i = 0; i < m_cList.size(); i++) {
             tempId = (String) m_cList.get(i);
-            //CVM_Debug.getInstance().printDebugMessage("Call ID: "+ tempCall.getId());
+            //CVM_Debug.getInstance().printDebugMessage("SignalInstance ID: "+ tempCall.getId());
             if (this.skypeGetCallStatus(tempId).toString().contains("HOLD"))
                 this.skypeResumeCall(tempId);
         }
@@ -1065,15 +1064,15 @@ public class SkypeAdapter extends NCBBridgeBase {
 
         /*
           ArrayList m_cList = null;
-          Call tempCall = null;
+          SignalInstance tempCall = null;
           //Get list of calls
           m_cList = m_hmCallListMap.get(sID);
           //Place every call on the list in hold.
           for(int i = 0; i<m_cList.size(); i++)
           {
-              tempCall = (Call)m_cList.get(i);
-              //CVM_Debug.getInstance().printDebugMessage("Call ID: "+ tempCall.getId());
-              if(tempCall.getStatus() == Call.Status.ONHOLD)
+              tempCall = (SignalInstance)m_cList.get(i);
+              //CVM_Debug.getInstance().printDebugMessage("SignalInstance ID: "+ tempCall.getId());
+              if(tempCall.getStatus() == SignalInstance.Status.ONHOLD)
                   tempCall.resume();
           }
           //CVM_Debug.getInstance().printDebugMessage("End of conference resume");
@@ -1108,7 +1107,7 @@ public class SkypeAdapter extends NCBBridgeBase {
 
             /*
                    //Add participant to call.
-                   Call tempCall = m_hmCallSessionMap.get(sID);
+                   SignalInstance tempCall = m_hmCallSessionMap.get(sID);
                    String tempResponse = m_kcConector.executeWithId("", "USER");
 
                    //Add participant to chat.
@@ -1166,11 +1165,11 @@ public class SkypeAdapter extends NCBBridgeBase {
             CVM_Debug.getInstance().printDebugMessage(this.skypeGetPartnerHandle(tempId1));
             //if(this.skypeGetPartnerHandle(tempId1).equals(participantID))
             //{
-            //End Call
+            //End SignalInstance
             this.skypeFinishCall(tempId1);
             Skype.setVideoDevice(null);
             Skype.setAudioInputDevice(null);
-            //Remove Call From List
+            //Remove SignalInstance From List
             if (this.skypeGetPartnerHandle(tempId1) == null) {
                 //m_cList.remove(0);
                 //m_hmSessionCallIdMap.put(sID, null);
@@ -1185,7 +1184,7 @@ public class SkypeAdapter extends NCBBridgeBase {
                 tempId2 = (String) m_cList.get(i);
                 if (this.skypeGetPartnerHandle(tempId2).equalsIgnoreCase(participantID)) {
 
-                    //CVM_Debug.getInstance().printDebugMessage("Call partner ID " + tempCall2.getPartnerId());
+                    //CVM_Debug.getInstance().printDebugMessage("SignalInstance partner ID " + tempCall2.getPartnerId());
                     CVM_Debug.getInstance().printDebugMessage("Participant ID " + participantID);
                     bCallFound = true;
                     //Finish the call.
@@ -1253,7 +1252,7 @@ public class SkypeAdapter extends NCBBridgeBase {
             this.remPartFrmCall(sID, participantID);
         /*
           ArrayList m_cList = m_hmCallListMap.get(sID);
-          Call tempCall = null, tempCall2 = null;
+          SignalInstance tempCall = null, tempCall2 = null;
           boolean bCallFound = false;
 
           if(m_cList == null)
@@ -1262,13 +1261,13 @@ public class SkypeAdapter extends NCBBridgeBase {
           //Check for 2 way call
           if(m_cList.size()==1)
           {
-              tempCall = (Call)m_cList.get(0);
+              tempCall = (SignalInstance)m_cList.get(0);
               //CVM_Debug.getInstance().printDebugMessage("Partner ID:" + tempCall.getPartnerId());
               //CVM_Debug.getInstance().printDebugMessage("Participant ID: " + participantID);
               if(tempCall.getPartnerId().equals(participantID))
               {
                   //tempCall.finish();
-                  //End Call
+                  //End SignalInstance
                   tempCall.finish();
                   m_hmCallSessionMap.put(sID, null);
               }
@@ -1280,11 +1279,11 @@ public class SkypeAdapter extends NCBBridgeBase {
               //Find the call with the participant
               for(int i = 0; i< m_cList.size(); i++)
               {
-                  tempCall2 = (Call)m_cList.get(i);
+                  tempCall2 = (SignalInstance)m_cList.get(i);
                   if(tempCall2.getPartnerId().equalsIgnoreCase(participantID))
                   {
 
-                      //CVM_Debug.getInstance().printDebugMessage("Call partner ID " + tempCall2.getPartnerId());
+                      //CVM_Debug.getInstance().printDebugMessage("SignalInstance partner ID " + tempCall2.getPartnerId());
                       //CVM_Debug.getInstance().printDebugMessage("Participant ID " + participantID);
                       bCallFound = true;
                       //Finish the call.
@@ -1294,7 +1293,7 @@ public class SkypeAdapter extends NCBBridgeBase {
                       if(tempCall2.getId() == tempCall.getId())
                       {
                           //Replace main call with the first in the list.
-                          m_hmCallSessionMap.put(sID, (Call)m_cList.get(0));
+                          m_hmCallSessionMap.put(sID, (SignalInstance)m_cList.get(0));
                       }
                       break;
                   }
@@ -1362,7 +1361,7 @@ public class SkypeAdapter extends NCBBridgeBase {
 
         }
         /*
-          Call tempCall = m_hmCallSessionMap.get(sessionID);
+          SignalInstance tempCall = m_hmCallSessionMap.get(sessionID);
           ArrayList m_cList = m_hmCallListMap.get(sessionID);
           if(tempCall == null)
           {
@@ -1383,7 +1382,7 @@ public class SkypeAdapter extends NCBBridgeBase {
               {
                   try
                   {
-                      if(tempCall.getReceiveVideoStatus() != Call.VideoStatus.AVAILABLE)
+                      if(tempCall.getReceiveVideoStatus() != SignalInstance.VideoStatus.AVAILABLE)
                       {
                           //Set the video receive.
                           CVM_Debug.getInstance().printDebugMessage("Video on");
@@ -1564,10 +1563,10 @@ public class SkypeAdapter extends NCBBridgeBase {
         }
         this.skypeOpenChatWhindow(sID);
         /*
-          ArrayList<Call>tempList = m_hmCallListMap.get(sID);
+          ArrayList<SignalInstance>tempList = m_hmCallListMap.get(sID);
           Chat tempChat = m_hmChatSessionMap.get(sID);
           String tempMember = null;
-          Call tempCall = null;
+          SignalInstance tempCall = null;
           for(int i=0; i<tempList.size(); i++)
           {
               try
@@ -1604,7 +1603,7 @@ public class SkypeAdapter extends NCBBridgeBase {
             m_appSkypeApp.addApplicationListener(new AdapterSkypeApplicationListener(this));
             //Add the Connector listener.
             Connector.getInstance().addConnectorListener(new AdapterSkypeConnectorListener(this));
-            //Add Call Listener
+            //Add SignalInstance Listener
             Skype.addCallListener(new AdapterSkypeCallListener());
             //Add bridege for all friends.
             //CVM_Debug.getInstance().printDebugMessage("Adding App Bridges");

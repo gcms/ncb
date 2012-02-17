@@ -1,15 +1,8 @@
 package cvm.ncb.adapters
 
-import cvm.model.Event
 import cvm.ncb.handlers.exception.LoginException
 
-/**
- * Created by IntelliJ IDEA.
- * User: Gustavo Sousa
- * Date: 08/12/11
- * Time: 19:52
- * To change this template use File | Settings | File Templates.
- */
+
 class MockAdapter extends NCBBridgeBase {
     private List calls = []
     private boolean hasFailed = false
@@ -24,6 +17,10 @@ class MockAdapter extends NCBBridgeBase {
 
     public List getCalls() {
         calls.clone()
+    }
+
+    public void markFailed(String medium) {
+        notify(new Event("MediumFailed", [medium: medium]))
     }
 
     public void markFailed() {

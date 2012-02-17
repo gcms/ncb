@@ -1,15 +1,11 @@
 package cvm.ncb.manager;
 
 import cvm.model.CVM_Debug;
-import cvm.ncb.UserObject;
-import cvm.ncb.UserProfile;
-import cvm.ncb.UserSchema;
+import cvm.ncb.csm.EventListener;
 import cvm.ncb.handlers.EventManager;
-import cvm.ncb.handlers.ExceptionHandler;
-import cvm.ncb.ks.ObjectManager;
+import cvm.ncb.ks.ResourceManager;
 import cvm.ncb.oem.pe.ActionSignalHandler;
-import cvm.ncb.oem.pe.CallQueue;
-import cvm.ncb.oem.pe.PolicyEvalManager;
+import cvm.ncb.oem.pe.MainManager;
 import cvm.ncb.oem.pe.SignalHandler;
 import cvm.ncb.oem.pe.actions.*;
 
@@ -24,64 +20,54 @@ import java.util.Map;
  */
 public class NCBManager {
     private EventManager m_Notifier = null;
-    private CallQueue m_callQueue = null;
+    private MainManager manager = null;
 
-    public NCBManager(ObjectManager objectManager, EventManager eventManager) {
+    public NCBManager(ResourceManager resourceManager, EventManager eventManager) {
         m_Notifier = eventManager;
-        ExceptionHandler m_xhXHandler = new ExceptionHandler(m_Notifier);
-        //NCBEventHandler m_ehEHandler = NCBEventHandler.Instance();
 
-
-        PolicyEvalManager policyManager = null;
         try {
-            policyManager = createPolicyEvalManager(objectManager, m_xhXHandler);
+            manager = createPolicyEvalManager(resourceManager, eventManager);
         } catch (URISyntaxException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             throw new RuntimeException(e);
         }
-
-        m_callQueue = policyManager.getCallQueue();
-        policyManager.start();
+        manager.start();
     }
 
-    private PolicyEvalManager createPolicyEvalManager(ObjectManager om, ExceptionHandler m_xhXHandler) throws URISyntaxException {
-        PolicyEvalManager policyManager = new PolicyEvalManager("../../tpm/CVMSelfConfig.xml", "../../repository/examples", om, m_xhXHandler);
+    private MainManager createPolicyEvalManager(ResourceManager om, EventListener eventHandler) throws URISyntaxException {
+        MainManager policyManager = new MainManager("../policy/repository/examples", om, eventHandler);
 
         ActionInstance reenableMedium = new ReenableMediumAction();
-        SignalHandler failedFrameworkHandler = new ActionSignalHandler("failedFramework", reenableMedium);
-        policyManager.registerHandler(failedFrameworkHandler);
+        SignalHandler failedFrameworkHandler = new ActionSignalHandler("MediumFailed", reenableMedium);
+        policyManager.registerCallHandler(failedFrameworkHandler);
 
         ActionInstance sendSchema = new SendSchemaAction();
         SignalHandler sendSchemaHandler = new ActionSignalHandler("sendSchema", sendSchema);
-        policyManager.registerHandler(sendSchemaHandler);
+        policyManager.registerCallHandler(sendSchemaHandler);
 
         ActionInstance loginAction = new LoginAction();
         SignalHandler loginAllHandler = new ActionSignalHandler("loginAll", loginAction);
-        policyManager.registerHandler(loginAllHandler);
+        policyManager.registerCallHandler(loginAllHandler);
 
         ActionInstance logoutAction = new LogoutAction();
         SignalHandler logoutAllHandler = new ActionSignalHandler("logoutAll", logoutAction);
-        policyManager.registerHandler(logoutAllHandler);
-
-        ActionInstance createSession = new CreateSessionAction();
-        SignalHandler createSessionHandler = new ActionSignalHandler("createSession", createSession);
-        policyManager.registerHandler(createSessionHandler);
+        policyManager.registerCallHandler(logoutAllHandler);
 
         ActionInstance addParticipant = new AddParticipantAction();
         SignalHandler addParticipantHandler = new ActionSignalHandler("addAParticipant", addParticipant);
-        policyManager.registerHandler(addParticipantHandler);
+        policyManager.registerCallHandler(addParticipantHandler);
 
         ActionInstance removeParticipant = new RemoveParticipantAction();
         SignalHandler removeParticipantHandler = new ActionSignalHandler("removeAParticipant", removeParticipant);
-        policyManager.registerHandler(removeParticipantHandler);
+        policyManager.registerCallHandler(removeParticipantHandler);
 
         ActionInstance mediumChange = new MediumAction();
         SignalHandler enableMediumHandler = new ActionSignalHandler("enableMedium", mediumChange);
-        policyManager.registerHandler(enableMediumHandler);
+        policyManager.registerCallHandler(enableMediumHandler);
         SignalHandler enableMediumReceiverHandler = new ActionSignalHandler("enableMediumReceiver", mediumChange);
-        policyManager.registerHandler(enableMediumReceiverHandler);
+        policyManager.registerCallHandler(enableMediumReceiverHandler);
         SignalHandler disableMediumHandler = new ActionSignalHandler("disableMedium", mediumChange);
-        policyManager.registerHandler(disableMediumHandler);
+        policyManager.registerCallHandler(disableMediumHandler);
 
         return policyManager;
     }
@@ -96,7 +82,7 @@ public class NCBManager {
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("session", sessionID);
         params.put("participant", participantID);
-        m_callQueue.add("addAParticipant", params);
+        manager.enqueue(null, "addAParticipant", params);
     }
 
     /**
@@ -117,7 +103,7 @@ public class NCBManager {
         Object[] obj = {sessionID};
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("session", sessionID);
-        m_callQueue.add("createSession", params);
+        manager.enqueue(null, "createSession", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager : Queuing NCB createSession called.");
     }
 
@@ -128,7 +114,7 @@ public class NCBManager {
         Object[] obj = {sessionID};
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("session", sessionID);
-        m_callQueue.add("isSessionCreated", params);
+        manager.enqueue(null, "isSessionCreated", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager : Queuing NCB isCreatedSession called.");
 
 //		return m_coCommCurr.getBridge().isSessionCreated(sessionID);
@@ -155,20 +141,8 @@ public class NCBManager {
     public void login(String userName, String password) {
         Object[] obj = {userName, password};
         Map<String, Object> params = new LinkedHashMap<String, Object>();
-        m_callQueue.add("loginAll", params);
+        manager.enqueue(null, "loginAll", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager : Queuing NCB Login called with userName:\"" + userName + "\" and Password:\"" + password + "\".");
-    }
-
-    /**
-     * This method returns the schemas for the given user.
-     *
-     * @param userName
-     * @param password
-     * @return UserSchema
-     */
-    public UserSchema retrieveSchemas(String userName, String password) {
-        CVM_Debug.getInstance().printDebugMessage("NCBManager : NCB retrieve schema called with userName:\"" + userName + "\" and Password:\"" + password + "\".");
-        return new UserSchema();
     }
 
     /**
@@ -181,20 +155,6 @@ public class NCBManager {
         CVM_Debug.getInstance().printDebugMessage("NCBManager : isSessionCreated----Called");
         return true;
     }
-
-    /**
-     * This method generates a user profile for the give
-     * user.
-     *
-     * @param usr    User object to create the profile.
-     * @param schema Schema to send to the user.
-     * @return a created user profile.
-     */
-    public UserProfile createUserProfile(UserObject usr, Object schema) {
-        CVM_Debug.getInstance().printDebugMessage("NCBManager : NCB createUserProfile called.");
-        return new UserProfile(usr, schema);
-    }
-
     /**
      * Queues command, actual executable command is prefixed with x_
      */
@@ -203,7 +163,7 @@ public class NCBManager {
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("session", sID);
         params.put("participant", participant);
-        m_callQueue.add("removeAParticipant", params);
+        manager.enqueue(null, "removeAParticipant", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager - Queuing Remove Party Called");
     }
 
@@ -218,7 +178,7 @@ public class NCBManager {
         params.put("receivers", listReceiver);
         params.put("controlSchema", control_xcml);
         params.put("dataSchema", data_xcml);
-        m_callQueue.add("sendSchema", params);
+        manager.enqueue(null, "sendSchema", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager : Queuing NCB sendSchema called with sID:\"" + sID + "\" and senderID:\"" + senderID + "\" and receiverID:\"" + listReceiver + "\" and Control_XCML:\"" + control_xcml + "\" and Data_XCML:\"" + data_xcml + "\".");
     }
 
@@ -231,7 +191,7 @@ public class NCBManager {
         params.put("session", sID);
         params.put("medium", medium);
         params.put("url", mediumURL);
-        m_callQueue.add("sendMedia", params);
+        manager.enqueue(null, "sendMedia", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager : Queuing NCB sendMedia called with sID:\"" + sID + "\" and Medium:\"" + medium + "\" and MediumURL:\"" + mediumURL + "\".");
     }
 
@@ -243,7 +203,7 @@ public class NCBManager {
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("session", connectionID);
         params.put("medium", mediumName);
-        m_callQueue.add("enableMedium", params);
+        manager.enqueue(null, "enableMedium", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager : Queuing NCB sendMedia called with connectionID:\"" + connectionID + "\" and MediumName:\"" + mediumName + "\".");
     }
 
@@ -255,7 +215,7 @@ public class NCBManager {
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("session", connectionID);
         params.put("medium", mediumName);
-        m_callQueue.add("enableMediumReceiver", params);
+        manager.enqueue(null, "enableMediumReceiver", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager : Queuing NCB sendMedia called with connectionID:\"" + connectionID + "\" and MediumName:\"" + mediumName + "\".");
     }
 
@@ -267,7 +227,7 @@ public class NCBManager {
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("session", connectionID);
         params.put("medium", mediumName);
-        m_callQueue.add("disableMedium", params);
+        manager.enqueue(null, "disableMedium", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager : Queuing NCB sendMedia called with connectionID:\"" + connectionID + "\" and MediumName:\"" + mediumName + ".");
     }
 
@@ -278,7 +238,7 @@ public class NCBManager {
         Object[] obj = {schema};
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("schema", schema);
-        m_callQueue.add("saveSchema", params);
+        manager.enqueue(null, "saveSchema", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager : Queuing NCB saveSchema called.");
     }
 
@@ -288,7 +248,7 @@ public class NCBManager {
     public void logout(String userName) {
         Object[] obj = {userName};
         Map<String, Object> params = new LinkedHashMap<String, Object>();
-        m_callQueue.add("logoutAll", params);
+        manager.enqueue(null, "logoutAll", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager : Queuing NCB logout called with userName:\"" + userName + "\".");
     }
 
@@ -297,7 +257,7 @@ public class NCBManager {
      */
     public void resetNCB() {
         Map<String, Object> params = new LinkedHashMap<String, Object>();
-        m_callQueue.add("resetNCB", params);
+        manager.enqueue(null, "resetNCB", params);
         CVM_Debug.getInstance().printDebugMessage("NCBManager : Queuing NCB reset called");
     }
 

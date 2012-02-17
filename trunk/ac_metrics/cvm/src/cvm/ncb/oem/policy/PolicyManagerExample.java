@@ -1,7 +1,7 @@
 package cvm.ncb.oem.policy;
 
-import cvm.ncb.repository.loader.FilePolicyLoader;
-import cvm.ncb.repository.loader.GlobalConstant;
+import cvm.ncb.oem.policy.repository.loader.FilePolicyLoader;
+import cvm.ncb.oem.policy.repository.loader.GlobalConstant;
 
 import java.net.URISyntaxException;
 import java.util.LinkedHashMap;

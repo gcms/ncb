@@ -1,15 +1,14 @@
 package cvm.ncb.oem.pe.actions;
 
-import cvm.ncb.csm.ManagedObject;
+import cvm.ncb.csm.Resource;
 import cvm.ncb.handlers.exception.LoginException;
-import cvm.ncb.oem.pe.Call;
-
+import cvm.ncb.oem.pe.SignalInstance;
 
 public class LoginAction implements ActionInstance {
-    public Object execute(ActionContext ctx, Call call) {
-        for (ManagedObject framework : ctx.getObjectManager().getAllObjects()) {
+    public Object execute(ActionContext ctx, SignalInstance signal) {
+        for (Resource framework : ctx.getResourceManager().getAll()) {
             try {
-                framework.execute("login");
+                framework.execute(new SignalInstance("login"));
             } catch (LoginException e) {
                 framework.getMetadata().fail();
             }

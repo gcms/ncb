@@ -10,7 +10,6 @@ public interface NCBBridge extends Manageable {
      * This function logs the user into the communication bridge i.e Skype, GTalk...
      * @return UserObject with the user infromation.
      * @throws cvm.ncb.handlers.exception.LoginException
-     * @see cvm.ncb.UserObject
      */
     @Method(name="login", parameters = {})
     void login() throws LoginException;

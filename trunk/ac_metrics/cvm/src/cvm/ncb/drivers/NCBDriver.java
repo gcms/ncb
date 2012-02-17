@@ -1,13 +1,14 @@
 package cvm.ncb.drivers;
 
+import cvm.facade.NCB_M_Facade;
 import cvm.model.CVM_Debug;
-import cvm.model.Event;
 import cvm.model.UsesEventListener;
-import cvm.ncb.csm.ManagedObjectFactory;
+import cvm.ncb.adapters.Manageable;
+import cvm.ncb.csm.ManagedObject;
 import cvm.ncb.handlers.EventManager;
-import cvm.ncb.ks.ObjectManager;
+import cvm.ncb.ks.ResourceManager;
 import cvm.ncb.manager.NCBManager;
-import cvm.ncb.manager.NCB_M_Facade;
+import cvm.ncb.oem.pe.SignalInstance;
 import cvm.ncb.oem.policy.Metadata;
 import util.FeaturesParser;
 
@@ -26,14 +27,21 @@ public class NCBDriver implements UsesEventListener {
     /**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InterruptedException {
         EventManager eventManager = new EventManager();
-        ObjectManager om = new ObjectManager(new ManagedObjectFactory(eventManager));
+        ResourceManager om = new ResourceManager();
         for (Metadata md : FeaturesParser.createAllFrameworks()) {
-            om.addObject(md);
+            Manageable manageable = (Manageable) Class.forName("cvm.ncb.adapters." + md.getName() + "Adapter").newInstance();
+            om.addObject(new ManagedObject(manageable, md));
         }
-        NCBDriver driver = new NCBDriver(new NCBManager(om, eventManager), "Andrew");
+
+        NCBManager manager = new NCBManager(om, eventManager);
+        NCBDriver driver = new NCBDriver(manager, "Andrew");
         driver.run();
+
+        Thread.sleep(30000);
+        manager.logout("Andrew");
+        System.exit(0);
 	}
 
     public void run() {        
@@ -127,7 +135,7 @@ public class NCBDriver implements UsesEventListener {
 		System.out.println("Done Sleeping ==============================");
 	}
 
-	public void use(Event event) {
+	public void use(SignalInstance event) {
 		if (event.getName().equals("SchemaReceived"))
 			dealWithSchema((String) event.getParam("schema"));
 	}

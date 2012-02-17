@@ -1,8 +1,8 @@
 package cvm.ncb.oem.pe.actions;
 
-import cvm.ncb.csm.ManagedObject;
-import cvm.ncb.ks.UserIDMappingTable;
-import cvm.ncb.oem.pe.Call;
+import cvm.service.UserIDMappingTable;
+import cvm.ncb.csm.Resource;
+import cvm.ncb.oem.pe.SignalInstance;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -10,16 +10,16 @@ import java.util.Scanner;
 
 
 public class SendSchemaAction implements ActionInstance {
-    public Object execute(ActionContext ctx, Call call) {
-        for (ManagedObject framework : ctx.getObjectManager().getAllObjects()) {
-            sendSchemaToCommObj((String) call.getParams().get("receivers"),
-                    call.getParams().get("controlSchema"), call.getParams().get("dataSchema"), framework);
+    public Object execute(ActionContext ctx, SignalInstance signal) {
+        for (Resource framework : ctx.getResourceManager().getAll()) {
+            sendSchemaToCommObj((String) signal.getParams().get("receivers"),
+                    signal.getParams().get("controlSchema"), signal.getParams().get("dataSchema"), framework);
         }
 
         return null;
     }
 
-    private void sendSchemaToCommObj(String listReceiver, Object control_xcml, Object data_xcml, ManagedObject managedObject) {
+    private void sendSchemaToCommObj(String listReceiver, Object control_xcml, Object data_xcml, Resource managedObject) {
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         //Currently there is not list of receivers implemented, all happens one at a time.
         if (control_xcml != null && !control_xcml.equals("") && !control_xcml.equals("null")) {
@@ -28,7 +28,7 @@ public class SendSchemaAction implements ActionInstance {
                 params.put("schema", control_xcml);
                 params.put("participant", UserIDMappingTable.getInstance().lookupContact(managedObject.getName(), tmp.next()));
 
-                managedObject.execute("sendSchema", params);
+                managedObject.execute(new SignalInstance(null, "sendSchema", params));
             }
         }
 
@@ -38,7 +38,7 @@ public class SendSchemaAction implements ActionInstance {
                 params.put("schema", data_xcml);
                 params.put("participant", UserIDMappingTable.getInstance().lookupContact(managedObject.getName(), tmp.next()));
 
-                managedObject.execute("sendSchema", params);
+                managedObject.execute(new SignalInstance(null, "sendSchema", params));
             }
         }
     }

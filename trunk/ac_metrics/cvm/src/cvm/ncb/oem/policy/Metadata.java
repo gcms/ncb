@@ -1,13 +1,15 @@
 package cvm.ncb.oem.policy;
 
-import java.util.HashMap;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Metadata implements Comparable<Metadata> {
 
     private String name;
     private boolean available = true;
 
-    private HashMap<String, Feature> features = new HashMap<String, Feature>();
+    private Map<String, Feature> features = new LinkedHashMap<String, Feature>();
 
     public Metadata(String name) {
         this.name = name;
@@ -17,8 +19,8 @@ public class Metadata implements Comparable<Metadata> {
         return name;
     }
 
-    public HashMap<String, Feature> getFeatures() {
-        return features;
+    public Collection<Feature> getFeatures() {
+        return features.values();
     }
 
     public void addFeature(Feature feat) {

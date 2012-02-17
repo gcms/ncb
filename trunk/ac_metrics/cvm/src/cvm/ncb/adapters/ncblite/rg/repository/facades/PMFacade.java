@@ -4,15 +4,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import cvm.ncb.adapters.ncblite.model.RoleList;
+import cvm.ncb.adapters.ncblite.model.User;
 import cvm.ncb.adapters.ncblite.rg.repository.dao.ApplicationInstDAO;
 import cvm.ncb.adapters.ncblite.rg.repository.dao.ContactListDAO;
 import cvm.ncb.adapters.ncblite.rg.repository.dao.RoleListDAO;
 import cvm.ncb.adapters.ncblite.rg.repository.dao.SessionDAO;
 import cvm.ncb.adapters.ncblite.rg.repository.dao.UserDAO;
 import cvm.ncb.adapters.ncblite.rg.repository.util.DBConnectionFactory;
-
-import cvm.model.RoleList;
-import cvm.model.User;
 
 public class PMFacade
 {
