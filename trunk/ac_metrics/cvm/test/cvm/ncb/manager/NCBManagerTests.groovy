@@ -4,9 +4,10 @@ import cvm.ncb.adapters.Mock2Adapter
 import cvm.ncb.adapters.MockAdapter
 import cvm.ncb.drivers.NCBDriver
 import cvm.ncb.handlers.EventManager
+import cvm.ncb.oem.pe.MainManager
 import cvm.sb.emf.EMFLoader
-import cvm.sb.emf.ObjectManagerFactory
-import sb.base.ResourceManager
+import cvm.sb.emf.ManagerFactory
+import sb.base.Manager
 
 class NCBManagerTests extends GroovyTestCase {
     public void restoreMock2() {
@@ -14,23 +15,45 @@ class NCBManagerTests extends GroovyTestCase {
     }
 
     private EventManager eventManager
+    private MainManager mainManager
     private cvm.ncb.ks.ResourceManager objectManager
 
     void setUp() {
-        def rm = EMFLoader.loadFirst('InstanceResourceManager', ResourceManager)
-        objectManager = new ObjectManagerFactory().createObjectManager(rm)
+        Manager managerDef = EMFLoader.loadFirst(Manager)
+
         eventManager = new EventManager()
+        mainManager = new ManagerFactory().createManager(managerDef)
+        mainManager.setEventListener(eventManager)
+        objectManager = mainManager.resourceManager
 
         objectManager.getObject('Mock2').metadata.fail()
     }
 
+    void exemplo() {
 
-    void testInitOk() {
-        NCBManager manager = new NCBManager(objectManager, eventManager)
+
+        EventManager signalHandler = new EventManager();
+        Manager managerDef = EMFLoader.loadFirst(Manager);
+
+        ManagerFactory factory = new ManagerFactory();
+        NCBManager manager = new NCBManager(factory.createManager(managerDef), signalHandler);
+
         manager.login("Andrew", "password");
         manager.createSession("101");
         manager.addParty("101", "Yali");
-        manager.sendSchema("101 ", "Andrew", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+        manager.enableMedium("101", "Audio");
+
+
+    }
+
+
+    void testInitOk() {
+        NCBManager manager = new NCBManager(mainManager)
+        manager.login("Andrew", "password");
+        manager.createSession("101");
+        manager.addParty("101", "Yali");
+        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
         manager.enableMedium("101", "Audio");
         waitThreadsFinish(1000)
 
@@ -51,11 +74,11 @@ class NCBManagerTests extends GroovyTestCase {
     void testTwoMedia() {
         restoreMock2()
 
-        NCBManager manager = new NCBManager(objectManager, eventManager)
+        NCBManager manager = new NCBManager(mainManager)
         manager.login("Andrew", "password");
         manager.createSession("101");
         manager.addParty("101", "Yali");
-        manager.sendSchema("101 ", "Andrew", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
         manager.enableMedium("101", "Audio");
         waitThreadsFinish(2000)
 
@@ -84,10 +107,10 @@ class NCBManagerTests extends GroovyTestCase {
     }
 
     void testFailedFramework() {
-        NCBManager manager = new NCBManager(objectManager, eventManager)
+        NCBManager manager = new NCBManager(mainManager)
         manager.login("Andrew", "password");
         manager.createSession("101");
-        manager.sendSchema("101 ", "Andrew", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
         manager.addParty("101", "Yali");
         manager.enableMedium("101", "Audio");
 
@@ -102,10 +125,10 @@ class NCBManagerTests extends GroovyTestCase {
     void testFrameworkChange() {
         restoreMock2()
 
-        NCBManager manager = new NCBManager(objectManager, eventManager)
+        NCBManager manager = new NCBManager(mainManager)
         manager.login("Andrew", "password");
         manager.createSession("101");
-        manager.sendSchema("101 ", "Andrew", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
         manager.addParty("101", "Yali");
         manager.enableMedium("101", "Audio");
 
@@ -139,13 +162,13 @@ class NCBManagerTests extends GroovyTestCase {
     }
 
     void testWaitingCall() {
-        NCBManager manager = new NCBManager(objectManager, eventManager)
+        NCBManager manager = new NCBManager(mainManager)
         manager.login("Yali", "password");
         manager.createSession("101");
 
         waitThreadsFinish(500)
 
-        manager.eventObjectManager.addUpListener(new NCBDriver(manager, "Yali"))
+        eventManager.addUpListener(new NCBDriver(manager, "Yali"))
         MockAdapter.instance.notifySchemaReceivedEvent("101 Audio Yali Andrew")
 
         waitThreadsFinish(1000)
@@ -165,12 +188,12 @@ class NCBManagerTests extends GroovyTestCase {
     void testLoginException() {
         restoreMock2()
 
-        NCBManager manager = new NCBManager(objectManager, eventManager)
+        NCBManager manager = new NCBManager(mainManager)
         MockAdapter.instance.loginShouldFail()
 
         manager.login("Andrew", "password");
         manager.createSession("101");
-        manager.sendSchema("101 ", "Andrew", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
         manager.addParty("101", "Yali");
         manager.enableMedium("101", "Audio");
 
@@ -199,11 +222,11 @@ class NCBManagerTests extends GroovyTestCase {
         objectManager.removeObject('Mock')
         restoreMock2()
 
-        NCBManager manager = new NCBManager(objectManager, eventManager)
+        NCBManager manager = new NCBManager(mainManager)
         manager.login("Andrew", "password");
         manager.createSession("101");
         manager.addParty("101", "Yali");
-        manager.sendSchema("101 ", "Andrew", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
         manager.enableMedium("101", "Audio");
         waitThreadsFinish(1000)
 

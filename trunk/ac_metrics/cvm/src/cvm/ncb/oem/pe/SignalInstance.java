@@ -1,11 +1,9 @@
 package cvm.ncb.oem.pe;
 
-import util.StringUtils;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class SignalInstance {
+public class SignalInstance implements ContextProvider {
     private Object source;
     private String name;
     private Map<String, Object> params;
@@ -29,25 +27,22 @@ public class SignalInstance {
     }
 
     public Map<String, Object> getParams() {
-        return params;
+        Map<String, Object> newParams = new LinkedHashMap<String, Object>();
+        newParams.putAll(params);
+        newParams.put("source", source);
+        return newParams;
+    }
+
+    public Object getSelf() {
+        return this;
     }
 
     public Object getParam(String param) {
         return params.get(param);
     }
 
-    public void setParam(String name, Object value) {
-        params.put(name, value);
-    }
-
-
-    public boolean equals(SignalInstance other) {
-        return name.equals(other.name)
-                && params.equals(other.params);
-    }
-
     public String toString() {
-        return StringUtils.methodToString(this.getName(), getParams().values().toArray());
+        return getName() + "(" + getParams() + ")";
     }
 
     public Object getSource() {

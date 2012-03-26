@@ -1,27 +1,16 @@
 package cvm.ncb.adapters;
 
-import cvm.ncb.handlers.exception.LoginException;
-import cvm.ncb.handlers.exception.NoSessionException;
-import cvm.ncb.handlers.exception.PartyNotAddedException;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
 
-/**
- * Created by IntelliJ IDEA.
- * User: gustavosousa
- * Date: 04/01/12
- * Time: 15:37
- * To change this template use File | Settings | File Templates.
- */
 public class SkypeAdapterDemo {
     public static void main(String args[]) {
         if (args.length == 2) {
             SkypeAdapter sAdpt = new SkypeAdapter();
             try {
                 sAdpt.login(); //"test@squire.cs.fiu.edu", "test");
-            } catch (LoginException e) {
+            } catch (EventException e) {
                 e.printStackTrace();
             }
             try {
@@ -54,13 +43,10 @@ public class SkypeAdapterDemo {
                     sAdpt.addParticipant(conID.toString(), remoteParty);
                 }
                 sAdpt.enableMedium(conID.toString(), medium);
-            } catch (LoginException e) {
+            } catch (EventException e) {
                 e.printStackTrace();
-            } catch (PartyNotAddedException e1) {
-                e1.printStackTrace();
-            } catch (NoSessionException e1) {
-                e1.printStackTrace();
             }
+
             try {
                 Thread.sleep(100000);
             } catch (InterruptedException e) {

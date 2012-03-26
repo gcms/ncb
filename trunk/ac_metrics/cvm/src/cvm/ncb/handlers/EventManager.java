@@ -1,6 +1,5 @@
 package cvm.ncb.handlers;
 
-import cvm.model.EventException;
 import cvm.model.UsesEventListener;
 import cvm.ncb.csm.EventListener;
 import cvm.ncb.oem.pe.SignalInstance;
@@ -35,6 +34,7 @@ public class EventManager implements EventListener {
     }
 
     public void throwEvent(SignalInstance event) {
-        throw new EventException(event);
+        throw new RuntimeException(event.toString());
+//        throw new EventException(event);
     }
 }

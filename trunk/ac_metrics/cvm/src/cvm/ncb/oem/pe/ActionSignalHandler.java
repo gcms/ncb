@@ -1,22 +1,25 @@
 package cvm.ncb.oem.pe;
 
-import cvm.ncb.oem.pe.actions.ActionContext;
-import cvm.ncb.oem.pe.actions.ActionInstance;
+import cvm.ncb.oem.pe.actions.ActionCaller;
+import cvm.ncb.oem.pe.actions.ManagerContext;
+import sb.base.Signal;
 
 public class ActionSignalHandler implements SignalHandler {
-    private String signal;
-    public ActionInstance action;
+    private Signal signal;
+    public ActionCaller action;
 
-    public ActionSignalHandler(String signal, ActionInstance action) {
+    public ActionSignalHandler(Signal signal, ActionCaller action) {
         this.signal = signal;
         this.action = action;
     }
 
     public boolean canHandle(SignalInstance signal) {
-        return signal.getName().equals(this.signal);
+        return signal.getName().equals(this.signal.getName());
     }
 
-    public Object handle(SignalInstance signal, ActionContext pem) {
-        return action.execute(pem, signal);
+    public HandlingResult handle(SignalInstance signal, ManagerContext ctx) {
+        return canHandle(signal)
+                ? new HandlingResult(action.execute(ctx, signal))
+                : HandlingResult.NOT_HANDLED;
     }
 }

@@ -6,10 +6,6 @@ import cvm.ncb.adapters.ncblite.av.AVTransmit;
 import cvm.ncb.adapters.ncblite.p2p.P2PChannel;
 import cvm.ncb.adapters.ncblite.p2p.P2PHandler;
 import cvm.ncb.adapters.ncblite.rg.common.RGClient;
-import cvm.ncb.handlers.exception.LoginException;
-import cvm.ncb.handlers.exception.NoSessionException;
-import cvm.ncb.handlers.exception.PartyNotAddedException;
-import cvm.ncb.handlers.exception.PartyNotFoundException;
 import org.eclipse.swt.widgets.Composite;
 
 import javax.media.MediaLocator;
@@ -449,7 +445,6 @@ public class NCBNativeAdapter extends NCBBridge
 {
 */
 	public void addParticipant(String session, String participant)
-			throws PartyNotAddedException 
 	{
 		// TODO Auto-generated method stub
 
@@ -462,7 +457,6 @@ public class NCBNativeAdapter extends NCBBridge
 	}
 
     public void login()
-			throws LoginException 
 	{
 		// TODO Auto-generated method stub
 	}
@@ -474,7 +468,6 @@ public class NCBNativeAdapter extends NCBBridge
 	}
 
 	public void removeParticipant(String sID, String participant)
-			throws PartyNotFoundException 
 	{
 		// TODO Auto-generated method stub
 
@@ -486,12 +479,12 @@ public class NCBNativeAdapter extends NCBBridge
 
 	}
 
-    public void disableMedium(String session, String medium) throws PartyNotFoundException, NoSessionException {
+    public void disableMedium(String session, String medium) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void enableMedium(String session, String medium) throws PartyNotAddedException, NoSessionException {
+	public void enableMedium(String session, String medium) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -505,7 +498,7 @@ public class NCBNativeAdapter extends NCBBridge
         return "NCBNAT";
     }
 
-    public void enableMediumReceiver(String session, String medium) throws PartyNotAddedException, NoSessionException {
+    public void enableMediumReceiver(String session, String medium) {
 		// TODO Auto-generated method stub
 		
 	}

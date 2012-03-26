@@ -1,15 +1,16 @@
 package cvm.ncb.oem.pe.actions;
 
 import cvm.ncb.ks.StateHolder;
-import cvm.ncb.oem.pe.SignalInstance;
+
+import java.util.Map;
 
 
 public class RemoveParticipantAction implements ActionInstance {
-    public Object execute(ActionContext ctx, SignalInstance signal) {
-        Object session = signal.getParams().get("session");
-        Object participant = signal.getParams().get("participant");
+    public Object execute(ManagerContext ctx, Map<String, Object> params) {
+        Object session = params.get("session");
+        Object participant = params.get("participant");
 
-        StateHolder con = ctx.getStateManager().get(session);
+        StateHolder con = ctx.getStateManager().getType("Connection").get(session);
         con.getSet("participants").remove(participant);
 
         return null;

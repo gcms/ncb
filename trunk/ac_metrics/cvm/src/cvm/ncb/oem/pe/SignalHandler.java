@@ -1,8 +1,7 @@
 package cvm.ncb.oem.pe;
 
-import cvm.ncb.oem.pe.actions.ActionContext;
+import cvm.ncb.oem.pe.actions.ManagerContext;
 
 public interface SignalHandler {
-    boolean canHandle(SignalInstance signal);
-    Object handle(SignalInstance signal, ActionContext pem);
+    HandlingResult handle(SignalInstance signal, ManagerContext ctx);
 }

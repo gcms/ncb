@@ -7,13 +7,6 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import sb.base.impl.BasePackageImpl
 
-/**
- * Created by IntelliJ IDEA.
- * User: gustavosousa
- * Date: 20/01/12
- * Time: 17:28
- * To change this template use File | Settings | File Templates.
- */
 class EMFLoader {
     private static ResourceSet resourceSet
     public static ResourceSet getResourceSet() {
@@ -41,6 +34,10 @@ class EMFLoader {
 
     public static <T> T loadFirst(String name, Class<T> type) {
         loadResource(name).contents.find { type.isAssignableFrom(it.getClass()) }
+    }
+
+    public static <T> T loadFirst(Class<T> type) {
+        loadFirst(type.simpleName, type)
     }
 
     public static <T> Collection<T> loadAll(String name, Class<T> type) {

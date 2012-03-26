@@ -1,6 +1,5 @@
 package cvm.ncb.oem.policy;
 
-import cvm.model.CVM_Debug;
 import cvm.ncb.csm.Resource;
 import cvm.ncb.ks.ResourceManager;
 import cvm.ncb.oem.policy.repository.FilePolicyRepository;
@@ -15,9 +14,9 @@ import java.util.*;
 
 public class PolicyManager {
     private static Log log = LogFactory.getLog(PolicyManager.class);
-    private static final String ROOT_FEATURE = "CommFeatureRoot ";
+    private static final String ROOT_FEATURE = "CommFeatureRoot";
     private PolicyRepository policyRepository;
-    private Feature featTree;
+//    private Feature featTree;
 
     public PolicyManager(FilePolicyLoader loader) {
         this(FilePolicyRepository.createInstance(loader));
@@ -33,16 +32,15 @@ public class PolicyManager {
         if (StringUtils.isEmpty(feature))
             return true;
 
-        String superFeatures = getSupperFeatures(feature);
+        Stack<String> superFeatures = getSuperFeatures(inSet, feature);
 
         //See if policy is satisfied by each framework
         for (Feature feat : inSet) {
-            CVM_Debug.getInstance().printDebugMessage("Current feature is: " + feat.getName() +
-                    "\nLooking for Feature name is: " + feature + " Super feature: " + superFeatures);
+            log.debug("Current feature is [" + feat + "]");
+            log.debug("Looking for feature is [" + feature + "] and super feature is [" + superFeatures + "]");
 
             // This is not a subfeature, so do checks at this level
-            if (superFeatures == null || superFeatures.equals(ROOT_FEATURE)) {
-
+            if (superFeatures.isEmpty() || superFeatures.peek().equals(ROOT_FEATURE)) {
                 // Is this the feature we want?
                 if (feat.getName().equals(feature)) { // does this feature exist
                     // found the feature, evaluate desired value vs framwork's reported value
@@ -51,11 +49,11 @@ public class PolicyManager {
                 }
             } else {
                 // We have a subfeature
-                Scanner scan = new Scanner(superFeatures);
-                while (scan.hasNext()) {
-                    if (feat.getName().equals(scan.next())) { // does this feature exist
-                        CVM_Debug.getInstance().printDebugMessage("Found superfeature of the requested feature");
-                        return hasSubFeature(feat, feature, attr, value, opcode, scan);
+                while (!superFeatures.empty()) {
+                    String superFeature = superFeatures.pop();
+                    if (feat.getName().equals(superFeature)) {
+                        log.debug("Found super feature of the requestd type [" + superFeature + "]");
+                        return hasSubFeature(feat, feature, attr, value, opcode, superFeatures);
                     }
                 }
             }
@@ -64,13 +62,13 @@ public class PolicyManager {
     }
 
     private boolean hasSubFeature(Feature feat, String feature, String attr, Object value,
-                                  int opcode, Scanner superFeature) {
+                                  int opcode, Stack<String> superFeatures) {
         if (feat == null)
             return false;
 
-        if (superFeature.hasNext()) {
-            return hasSubFeature(feat.getSubFeature(superFeature.next()), feature, attr,
-                    value, opcode, superFeature);
+        if (!superFeatures.empty()) {
+            String superFeature = superFeatures.pop();
+            return hasSubFeature(feat.getSubFeature(superFeature), feature, attr, value, opcode, superFeatures);
         }
 
         return feat.getSubFeature(feature).hasAttributeValue(attr, value, opcode);
@@ -82,7 +80,7 @@ public class PolicyManager {
 
     public TreeSet<Metadata> reduceSet(TreeSet<Metadata> inSet, Iterator<Map> req) {
         if (!req.hasNext()) {
-            CVM_Debug.getInstance().printDebugMessage("Done reducing!!!!!");
+            log.debug("Done reducing!!!!!");
             return inSet;
         }
 
@@ -95,7 +93,7 @@ public class PolicyManager {
         Integer operation = (Integer) params.get("operation");
 
         for (Metadata fw : inSet) {
-            CVM_Debug.getInstance().printDebugMessage("Object name is " + fw.getName());
+            log.debug("Object name is " + fw.getName());
 
             if (hasFeature(fw.getFeatures(), requestedFeature, attr, value, operation))
                 outSet.add(fw);
@@ -120,6 +118,10 @@ public class PolicyManager {
         }
     }
 
+    public Resource findConformingObject(ResourceManager resourceManager, PolicyContext pec) {
+        return findConformingObject(resourceManager, pec.getFeature(), "request", pec.getParams());
+    }
+
     public Resource findConformingObject(ResourceManager resourceManager, String feature, String operation, Map<String, Object> params) {
         TreeSet<Metadata> allMetadatas = resourceManager.getAvailableObjects();
         TreeSet<Metadata> fwSet = getConformingObjects(allMetadatas, feature, operation, params);
@@ -138,7 +140,7 @@ public class PolicyManager {
     private DesiredFeaturesList buildDesiredFeatureList(String feature, String operation, Map<String, Object> paramValues) {
         DesiredFeaturesList req = new DesiredFeaturesList();
 
-        featTree = policyRepository.loadFeatures();
+//        featTree = policyRepository.loadFeatures();
         List<Policy> policies = policyRepository.load(feature, operation);
 
         List<Object> objArr = new ArrayList<Object>();
@@ -154,7 +156,7 @@ public class PolicyManager {
             int opcode = convertStringToInt(thePolicy.getDecision().getOperation());
 
             if (opcode >= 100)
-                CVM_Debug.getInstance().printDebugMessage("Unrecognizable operator " + thePolicy.getDecision().getOperation());
+                log.debug("Unrecognizable operator " + thePolicy.getDecision().getOperation());
 
             req.addDesiredFeature(thePolicy.getCondition().getFeature(), thePolicy.getDecision().getParam(), objArr.get(i), opcode);
         }
@@ -177,27 +179,56 @@ public class PolicyManager {
             return 100;
     }
 
-    private Feature foundFeature = null;
+//    private Feature foundFeature = null;
 
-    private String getSupperFeatures(String feature) {
-        String parentFeature = "";
-        depthFirstSearchWithoutReturn(featTree, feature);  // two algorithms for depth first search
-        //foundFeature = depthFirstSearchWithReturn(featTree, feature);
-        while (foundFeature.getParentFeature() != null) {
-            parentFeature = foundFeature.getParentFeature().getName() + " " + parentFeature;
-            foundFeature = foundFeature.getParentFeature();
+    private Stack<String> getSuperFeatures(Collection<Feature> inSet, String feature) {
+        for (Feature feat : inSet) {
+            Feature result = depthFirstSearch(feat, feature);
+            if (result != null)
+                return getSuperFeatures(feat);
         }
-        return parentFeature;
+
+        return new Stack<String>();
     }
 
-    private void depthFirstSearchWithoutReturn(Feature treeNode, String feature) {
-        if (treeNode.getName().equals(feature))
-            foundFeature = treeNode;
+//    private Stack<String> getSuperFeatures(String feature) {
+//        Feature foundFeature = depthFirstSearch(featTree, feature);
+//
+//        return getSuperFeatures(foundFeature);
+//    }
 
-        if (treeNode.getSubFeatures().size() > 0) {
-            for (Feature feat : treeNode.getSubFeatures()) {
-                depthFirstSearchWithoutReturn(feat, feature);
-            }
+    private Stack<String> getSuperFeatures(Feature foundFeature) {
+        Stack<String> parentFeatures = new Stack<String>();
+        while (foundFeature.getParentFeature() != null) {
+            parentFeatures.push(foundFeature.getParentFeature().getName());
+            foundFeature = foundFeature.getParentFeature();
         }
+
+        return parentFeatures;
+    }
+
+//    private void depthFirstSearchWithoutReturn(Feature treeNode, String feature) {
+//        if (treeNode.getName().equals(feature))
+//            foundFeature = treeNode;
+//
+//        if (treeNode.getSubFeatures().size() > 0) {
+//            for (Feature feat : treeNode.getSubFeatures()) {
+//                depthFirstSearchWithoutReturn(feat, feature);
+//            }
+//        }
+//    }
+
+    private Feature depthFirstSearch(Feature treeNode, String feature) {
+        if (treeNode.getName().equals(feature))
+            return treeNode;
+
+        Feature result = null;
+        for (Feature subFeature : treeNode.getSubFeatures()) {
+            result = depthFirstSearch(subFeature, feature);
+            if (result != null)
+                break;
+        }
+
+        return result;
     }
 }

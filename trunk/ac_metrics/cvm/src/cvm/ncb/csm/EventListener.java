@@ -1,6 +1,6 @@
 package cvm.ncb.csm;
 
-import cvm.model.EventException;
+import cvm.ncb.adapters.EventException;
 import cvm.ncb.oem.pe.SignalInstance;
 
 public interface EventListener {

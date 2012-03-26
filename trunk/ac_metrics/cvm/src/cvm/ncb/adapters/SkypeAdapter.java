@@ -4,14 +4,8 @@ import com.skype.*;
 import com.skype.connector.*;
 import com.skype.connector.TimeOutException;
 import cvm.model.CVM_Debug;
-import cvm.ncb.handlers.exception.NoSessionException;
-import cvm.ncb.handlers.exception.PartyNotAddedException;
-import cvm.ncb.handlers.exception.PartyNotFoundException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * This is an adapter to the Skype interface. This class wraps around
@@ -220,7 +214,7 @@ public class SkypeAdapter extends NCBBridgeBase {
      * @throws NoSessionException
      * @throws ConnectorException
      */
-    public void addParticipant(String session, String participant) throws PartyNotAddedException, NoSessionException {
+    public void addParticipant(String session, String participant) {
 
         ArrayList<String> tempList;
         if (m_hmSessionIdMap.containsKey(session)) {
@@ -256,7 +250,7 @@ public class SkypeAdapter extends NCBBridgeBase {
      * @throws NoSessionException
      */
     @Method(name = "enableMedium", parameters = {"session", "medium"})
-    public void enableMedium(String session, String medium) throws PartyNotAddedException, NoSessionException {
+    public void enableMedium(String session, String medium) {
         String sID = session;//"S1";
         if (m_hmSessionIdMap.containsKey(sID)) {
             ArrayList<String> tempList;
@@ -293,7 +287,7 @@ public class SkypeAdapter extends NCBBridgeBase {
      * @throws NoSessionException
      */
     @Method(name = "disableMedium", parameters = {"session", "medium"})
-    public void disableMedium(String session, String medium) throws PartyNotFoundException, NoSessionException {
+    public void disableMedium(String session, String medium) {
         String sID = session;//"S1";
         if (m_hmSessionIdMap.containsKey(sID)) {
             ArrayList<String> tempList;
@@ -332,13 +326,15 @@ public class SkypeAdapter extends NCBBridgeBase {
      * @throws PartyNotAddedException
      * @throws NoSessionException
      */
-    private void addParticipantToChat(String sID, String participantID) throws PartyNotAddedException, NoSessionException {
+    private void addParticipantToChat(String sID, String participantID) {
         ArrayList m_cList = null;
         String chatID = null;
 
         if (!m_hmSessionChatIdMap.containsKey(sID)) {
             //Throw no session exception ???
-            throw new NoSessionException(sID);
+            Map<String, Object> params = new LinkedHashMap<String, Object>();
+            params.put("session", sID);
+            throw new EventException("NoSession", params);
         } else if (m_hmChatUpdateMap.containsKey(sID)) {
             //If there is dat to update
             m_cList = m_hmSessionChatIdMap.get(sID);
@@ -395,7 +391,9 @@ public class SkypeAdapter extends NCBBridgeBase {
                     ;
                 else {
                     e.printStackTrace();
-                    throw new PartyNotAddedException(participantID);
+                    Map<String, Object> params = new LinkedHashMap<String, Object>();
+                    params.put("participant", participantID);
+                    throw new EventException("PartyNotAdded", params);
                 }
 
                 // Throw PartyNotAdded NCB Exception.
@@ -542,14 +540,16 @@ public class SkypeAdapter extends NCBBridgeBase {
      * @throws PartyNotAddedException
      * @throws NoSessionException
      */
-    private void addParticipantToCall(String sID, String participantID) throws PartyNotAddedException, NoSessionException {
+    private void addParticipantToCall(String sID, String participantID) {
         ArrayList m_cList = null;
 
         if (!m_hmSessionCallIdMap.containsKey(sID)) {
             CVM_Debug.getInstance().printDebugMessage("No session");
 
             //Throw no session exception ???
-            throw new NoSessionException(sID);
+            Map<String, Object> params = new LinkedHashMap<String, Object>();
+            params.put("session", sID);
+            throw new EventException("NoSession", params);
         } else if (m_hmCallUpdateMap.containsKey(sID)) {
             /*
                 * If the call that we are trying to create was
@@ -600,7 +600,9 @@ public class SkypeAdapter extends NCBBridgeBase {
                     tempID = this.callParticipant(participantID);
                     if (tempID == null) {
                         m_hmSessionCallIdMap.put(sID, null);
-                        throw new PartyNotAddedException(participantID);
+                        Map<String, Object> params = new LinkedHashMap<String, Object>();
+                        params.put("participant", participantID);
+                        throw new EventException("PartyNotAdded", params);
                     } else {
                         m_cList = new ArrayList<String>();
                         //Register the call ID.
@@ -618,7 +620,9 @@ public class SkypeAdapter extends NCBBridgeBase {
                     tempID2 = this.callParticipant(participantID);
                     if (tempID2 == null) {
                         CVM_Debug.getInstance().printDebugMessage(participantID + " , " + tempID);
-                        throw new PartyNotAddedException(participantID);
+                        Map<String, Object> params = new LinkedHashMap<String, Object>();
+                        params.put("participant", participantID);
+                        throw new EventException("PartyNotAdded", params);
                     } else {
                         if (!tempID2.equals("101")) {
                             //Add call to conference.
@@ -639,7 +643,9 @@ public class SkypeAdapter extends NCBBridgeBase {
                 e.printStackTrace();
 
                 // Throw PartyNotAdded NCB Exception.
-                throw new PartyNotAddedException(participantID);
+                Map<String, Object> params = new LinkedHashMap<String, Object>();
+                params.put("participant", participantID);
+                throw new EventException("PartyNotAdded", params);
             }
 
         }
@@ -1089,7 +1095,7 @@ public class SkypeAdapter extends NCBBridgeBase {
      * @throws NoSessionException
      */
     @Method(name = "removeParticipant", parameters = {"session", "participant"})
-    public void removeParticipant(String sID, String participantID) throws PartyNotFoundException, NoSessionException {
+    public void removeParticipant(String sID, String participantID) {
         //if(m_hmCallSessionMap.containsKey(sID)
         //&& m_hmChatSessionMap.containsKey(sID))
         //{
@@ -1120,7 +1126,9 @@ public class SkypeAdapter extends NCBBridgeBase {
 
 
             // Throw PartyNotAdded NCB Exception.
-            throw new PartyNotFoundException(participantID);
+            Map<String, Object> params = new LinkedHashMap<String, Object>();
+            params.put("participant", participantID);
+            throw new EventException("PartyNotAdded", params);
 
 
         }
@@ -1129,7 +1137,7 @@ public class SkypeAdapter extends NCBBridgeBase {
 
     }
 
-    private void remPartFrmCall(String sID, String participantID) throws SkypeException, PartyNotFoundException, NoSessionException {
+    private void remPartFrmCall(String sID, String participantID) throws SkypeException {
         /*
            * 1 - Find the call with the partne name = participantID.
            * 2 - Finish the call.
@@ -1141,16 +1149,23 @@ public class SkypeAdapter extends NCBBridgeBase {
            */
 
         //Check if the session Exists.
-        if (!m_hmSessionCallIdMap.containsKey(sID))
-            throw new NoSessionException(sID);
+        if (!m_hmSessionCallIdMap.containsKey(sID)) {
+            Map<String, Object> params = new LinkedHashMap<String, Object>();
+            params.put("session", sID);
+            throw new EventException("NoSession", params);
+        }
 
         //Retrieve the call list.
         ArrayList m_cList = m_hmSessionCallIdMap.get(sID);
         String tempId1 = null, tempId2 = null;
         boolean bCallFound = false;
 
-        if (m_cList == null)
-            throw new PartyNotFoundException(participantID);
+        if (m_cList == null) {
+            Map<String, Object> params = new LinkedHashMap<String, Object>();
+            params.put("participant", participantID);
+            throw new EventException("PartyNotAdded", params);
+        }
+
         CVM_Debug.getInstance().printDebugMessage("Removing: " + participantID + "" +
                 "from " + m_cList.size() + " way");
         //Check for 2 way call
@@ -1207,7 +1222,9 @@ public class SkypeAdapter extends NCBBridgeBase {
         }
         if (!bCallFound) {
             //Throw NCB Exception.
-            throw new PartyNotFoundException(participantID);
+            Map<String, Object> params = new LinkedHashMap<String, Object>();
+            params.put("participant", participantID);
+            throw new EventException("PartyNotAdded", params);
         }
     }
 
@@ -1220,7 +1237,7 @@ public class SkypeAdapter extends NCBBridgeBase {
      * @throws PartyNotFoundException
      * @throws NoSessionException
      */
-    private void removeParticipantFromCall(String sID, String participantID) throws SkypeException, PartyNotFoundException, NoSessionException {
+    private void removeParticipantFromCall(String sID, String participantID) throws SkypeException {
         ArrayList m_cList = m_hmCallUpdateMapRem.get(sID);
         boolean bPartFound = false;
         if (m_cList != null) {
@@ -1472,14 +1489,7 @@ public class SkypeAdapter extends NCBBridgeBase {
             } catch (SkypeException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            } catch (PartyNotAddedException e) {
-                /*
-                     * Do nothing for now. All the parties in the communication
-                     * are there since we are extracting the names from the list of
-                     * users in the chat. This exception will never be fired.
-                     */
-                e.printStackTrace();
-            } catch (NoSessionException e) {
+            } catch (EventException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -1529,7 +1539,7 @@ public class SkypeAdapter extends NCBBridgeBase {
      * @throws NoSessionException
      * @throws PartyNotAddedException
      */
-    public void transferFromConferenceToChat(String sID) throws PartyNotAddedException, NoSessionException {
+    public void transferFromConferenceToChat(String sID) {
         /*
            * 1 - Get all the calls involved in this session.
            * 2 - Retrieve the partner.
@@ -1556,7 +1566,7 @@ public class SkypeAdapter extends NCBBridgeBase {
             } catch (SkypeException e) {
                 //Do nothing for now.
 
-            } catch (PartyNotFoundException e) {
+            } catch (EventException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -2202,10 +2212,7 @@ public class SkypeAdapter extends NCBBridgeBase {
             for (SkypeAdapter.MEDIUM mediumName : temp) {
                 try {
                     disableMedium(session, mediumName.name());
-                } catch (PartyNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (NoSessionException e) {
+                } catch (EventException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
@@ -2232,7 +2239,7 @@ public class SkypeAdapter extends NCBBridgeBase {
     }
 
     @Method(name = "enableMediumReceiver", parameters = {"session", "medium"})
-    public void enableMediumReceiver(String session, String medium) throws PartyNotAddedException, NoSessionException {
+    public void enableMediumReceiver(String session, String medium) {
         // TODO Auto-generated method stub
     }
 

@@ -8,21 +8,24 @@ import java.util.Map;
 
 
 public class ReenableMediumAction implements ActionInstance {
-    public Object execute(ActionContext ctx, SignalInstance signal) {
-        Object medium = signal.getParam("medium");
-        Object framework = signal.getSource();
+    public Object execute(ManagerContext ctx, Map<String, Object> params) {
+        Object medium = params.get("medium");
+        Object framework = params.get("framework");
 
-        for (StateHolder con : ctx.getStateManager().getAll()) {
-            if (con.getFramework() != null && con.getFramework().equals(framework)
-                    && con.getAttr("medium") != null && con.getAttr("medium").equals(medium)) {
-                con.getFramework().getMetadata().fail();
-                Map<String, Object> params = new LinkedHashMap<String, Object>();
-                params.put("session", con.getId());
-                params.put("medium", con.getAttr("medium"));
-                ctx.getTouchpoint().enqueue(new SignalInstance(null, "enableMedium", params));
+        for (StateHolder con : ctx.getStateManager().getType("Connection").getAll()) {
+            if (con.getResource("framework") != null && con.getResource("framework").equals(framework)
+                    && con.get("medium") != null && con.get("medium").equals(medium)) {
+                enableMedium(ctx, con);
             }
         }
 
         return null;
+    }
+
+    private void enableMedium(ManagerContext ctx, StateHolder con) {
+        Map<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("session", con.getId());
+        params.put("medium", con.get("medium"));
+        ctx.getTouchpoint().enqueue(new SignalInstance(null, "enableMedium", params));
     }
 }

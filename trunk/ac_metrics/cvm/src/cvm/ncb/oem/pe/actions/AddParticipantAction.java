@@ -1,16 +1,17 @@
 package cvm.ncb.oem.pe.actions;
 
 import cvm.ncb.ks.StateHolder;
-import cvm.ncb.oem.pe.SignalInstance;
+
+import java.util.Map;
+import java.util.Set;
 
 public class AddParticipantAction implements ActionInstance {
-    public Object execute(ActionContext ctx, SignalInstance signal) {
-        Object session = signal.getParams().get("session");
-        Object participant = signal.getParams().get("participant");
+    public Object execute(ManagerContext ctx, Map<String, Object> params) {
+        Object session = params.get("session");
+        Object participant = params.get("participant");
 
-        StateHolder con = ctx.getStateManager().get(session);
-        con.getSet("participants").add(participant);
-
-        return null;
+        StateHolder con = ctx.getStateManager().getType("Connection").get(session);
+        Set participants = con.getSet("participants");
+        return participants.add(participant);
     }
 }

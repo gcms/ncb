@@ -1,8 +1,5 @@
 package cvm.ncb.adapters
 
-import cvm.ncb.handlers.exception.LoginException
-
-
 class MockAdapter extends NCBBridgeBase {
     private List calls = []
     private boolean hasFailed = false
@@ -34,8 +31,9 @@ class MockAdapter extends NCBBridgeBase {
     @Method(name = "login", parameters = [])
     void login() {
         calls.push("login()")
-        if (loginFail)
-            throw new LoginException();
+        if (loginFail) {
+            throw new EventException("LoginFailed")
+        }
     }
 
     @Method(name = "logout", parameters = [])
@@ -118,7 +116,7 @@ class Mock2Adapter extends MockAdapter {
     }
 
     @Method(name = "hasMediumFailed", parameters = [ "session", "medium" ])
-    boolean hasMediumFailed(String session, String medium_) {
+    boolean hasMediumFailed(String session, String medium) {
         false
     }
 }

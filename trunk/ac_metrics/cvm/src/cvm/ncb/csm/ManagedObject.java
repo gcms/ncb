@@ -1,6 +1,6 @@
 package cvm.ncb.csm;
 
-import cvm.model.EventException;
+import cvm.ncb.adapters.EventException;
 import cvm.ncb.adapters.EventNotifier;
 import cvm.ncb.adapters.Manageable;
 import cvm.ncb.oem.pe.SignalInstance;
@@ -17,20 +17,11 @@ import java.util.Map;
  */
 public class ManagedObject extends AbstractTouchpoint implements EventNotifier, Resource {
     private Manageable bridge;
-    private Metadata metadata;
 
-    public ManagedObject(Manageable bridge, Metadata metadata) {
+    public ManagedObject(Metadata metadata, Manageable bridge) {
+        super(metadata);
         bridge.setEventNotifier(this);
         this.bridge = bridge;
-        this.metadata = metadata;
-    }
-
-    public Metadata getMetadata() {
-        return metadata;
-    }
-
-    public String getName() {
-        return metadata.getName();
     }
 
     public Object execute(SignalInstance signal) {
@@ -42,7 +33,8 @@ public class ManagedObject extends AbstractTouchpoint implements EventNotifier, 
             return new BridgeExecutor(bridge).execute(message, params);
         } catch (InvocationTargetException e) {
             if (e.getCause() instanceof EventException) {
-                throw (RuntimeException) e.getCause();
+                EventException ee = (EventException) e.getCause();
+                throwEvent(ee.getEvent());
             } else if (e.getCause() instanceof RuntimeException)
                 throw (RuntimeException) e.getCause();
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -56,15 +48,27 @@ public class ManagedObject extends AbstractTouchpoint implements EventNotifier, 
         return execute(message, new LinkedHashMap<String, Object>());
     }
 
-    public void notify(SignalInstance event) {
-        getEventListener().notify(event);
-    }
-
-    public void throwEvent(SignalInstance event) throws EventException {
-        getEventListener().throwEvent(event);
+    public void notify(SignalInstance signal) {
+        getEventListener().notify(signal);
     }
 
     public void notify(cvm.ncb.adapters.Event event) {
-        notify(new SignalInstance(this, event.getName(), event.getParams()));
+        notify(newSignalInstance(event));
+    }
+
+    public void throwEvent(SignalInstance signal) throws EventException {
+        getEventListener().throwEvent(signal);
+    }
+
+    public void throwEvent(cvm.ncb.adapters.Event event) {
+        throwEvent(newSignalInstance(event));
+    }
+
+    private SignalInstance newSignalInstance(cvm.ncb.adapters.Event event) {
+        return new SignalInstance(this, event.getName(), event.getParams());
+    }
+
+    public String toString() {
+        return getName();
     }
 }

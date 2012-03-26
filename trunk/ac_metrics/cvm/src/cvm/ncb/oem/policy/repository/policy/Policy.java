@@ -59,15 +59,15 @@ public class Policy implements Comparable {
         return pName;
     }
 
-    public String toString() {
-        String str = "Outputing the object representation of the NCB Policy \n"
-                + "Scope of policy : " + pScope.getService() + " " + pScope.getOperation() + " " + pScope.getActive() + "\n"
-                + "Condition of policy : " + pCondition.getFeature() + " " + pCondition.getOperation() + " " + pCondition.getLiteral() + "\n"
-                + "Business Value of policy : " + pbvalue.getBusinessGroup() + " " + pbvalue.getValue() + "\n"
-                + "Decision of policy : " + pDecision.getParam() + " " + pDecision.getOperation() + " " + pDecision.getValue();
-
-        return str;
-    }
+//    public String toString() {
+//        String str = "Outputing the object representation of the NCB Policy \n"
+//                + "Scope of policy : " + pScope.getService() + " " + pScope.getOperation() + " " + pScope.getActive() + "\n"
+//                + "Condition of policy : " + pCondition.getFeature() + " " + pCondition.getOperation() + " " + pCondition.getLiteral() + "\n"
+//                + "Business Value of policy : " + pbvalue.getBusinessGroup() + " " + pbvalue.getValue() + "\n"
+//                + "Decision of policy : " + pDecision.getParam() + " " + pDecision.getOperation() + " " + pDecision.getValue();
+//
+//        return str;
+//    }
 
     public int compareTo(Object anotherPolicy) {
         int myIntVar = Integer.parseInt(this.getBValue().getValue());

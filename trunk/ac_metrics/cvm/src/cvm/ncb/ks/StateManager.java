@@ -1,40 +1,39 @@
 package cvm.ncb.ks;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
+import sb.base.context.State;
+
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class StateManager {
-    private HashSet<StateHolder> objects = new LinkedHashSet<StateHolder>();
+    private Map<State, StateTypeManager> typeManagers = new LinkedHashMap<State, StateTypeManager>();
 
-    private StateHolder getObjectInternal(Object id) {
-        for (StateHolder con : this.objects) {
-            if (con.getId().equals(id)) {
-                return con;
-            }
+    public StateManager(Collection<State> types) {
+        for (State type : types) {
+            typeManagers.put(type, new StateTypeManager(type));
         }
+    }
+
+    public Collection<StateTypeManager> getTypes() {
+        return typeManagers.values();
+    }
+
+    public StateTypeManager getType(State type) {
+        return typeManagers.get(type);
+    }
+
+    public StateTypeManager getType(String name) {
+        return getType(findType(name));
+    }
+
+    private State findType(String name) {
+        for (State type : typeManagers.keySet()) {
+            if (type.getName().equals(name))
+                return type;
+        }
+
         return null;
-    }
-
-    public synchronized StateHolder create(Object id) {
-        assert getObjectInternal(id) == null;
-        StateHolder con = new StateHolder(id);
-        objects.add(con);
-        return con;
-    }
-
-    public synchronized StateHolder get(Object id) {
-        StateHolder con = getObjectInternal(id);
-        return con != null ? con : create(id);
-    }
-
-
-    public boolean remove(Object id) {
-        StateHolder con = getObjectInternal(id);
-        return con != null ? objects.remove(con) : false;
-    }
-
-    public Iterable<StateHolder> getAll() {
-        return objects;
     }
 }
 

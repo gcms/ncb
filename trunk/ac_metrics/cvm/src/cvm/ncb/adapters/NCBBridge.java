@@ -1,18 +1,12 @@
 package cvm.ncb.adapters;
 
-import cvm.ncb.handlers.exception.LoginException;
-import cvm.ncb.handlers.exception.NoSessionException;
-import cvm.ncb.handlers.exception.PartyNotAddedException;
-import cvm.ncb.handlers.exception.PartyNotFoundException;
-
 public interface NCBBridge extends Manageable {
     /**
      * This function logs the user into the communication bridge i.e Skype, GTalk...
      * @return UserObject with the user infromation.
-     * @throws cvm.ncb.handlers.exception.LoginException
      */
     @Method(name="login", parameters = {})
-    void login() throws LoginException;
+    void login();
 
     /**
      * Logs the user out of the Bridge.
@@ -44,7 +38,7 @@ public interface NCBBridge extends Manageable {
     void destroySession(String session);
 
     @Method(name="addAParticipant", parameters = {"session", "participant"})
-    void addAParticipant(String session, String participant) throws PartyNotAddedException, NoSessionException;
+    void addAParticipant(String session, String participant);
 
     /**
      * Adds a participant to the session.
@@ -53,10 +47,10 @@ public interface NCBBridge extends Manageable {
      * @throws cvm.ncb.handlers.exception.PartyNotAddedException
      * @throws cvm.ncb.handlers.exception.NoSessionException
      */
-    void addParticipant(String session, String participant) throws PartyNotAddedException, NoSessionException;
+    void addParticipant(String session, String participant);
 
     @Method(name="removeAParticipant", parameters = {"session", "participant"})
-    void removeAParticipant(String session, String participant) throws PartyNotFoundException, NoSessionException;
+    void removeAParticipant(String session, String participant);
 
     /**
      * Removes a participant to the session.
@@ -65,7 +59,7 @@ public interface NCBBridge extends Manageable {
      * @throws cvm.ncb.handlers.exception.PartyNotFoundException
      * @throws cvm.ncb.handlers.exception.NoSessionException
      */
-    void removeParticipant(String sID, String participant) throws PartyNotFoundException, NoSessionException;
+    void removeParticipant(String sID, String participant);
 
     /**
      * This function sends the schema file to the specified user.
@@ -84,7 +78,7 @@ public interface NCBBridge extends Manageable {
      * @throws cvm.ncb.handlers.exception.NoSessionException
      */
     @Method(name="enableMedium", parameters = {"session", "medium"})
-    void enableMedium(String session, String medium) throws PartyNotAddedException, NoSessionException;
+    void enableMedium(String session, String medium);
 
     /**
      * This function is used to setup reception of a communicaciot medium.
@@ -94,7 +88,7 @@ public interface NCBBridge extends Manageable {
      * @throws cvm.ncb.handlers.exception.NoSessionException
      */
     @Method(name="enableMediumReceiver", parameters = {"session", "medium"})
-    void enableMediumReceiver(String session, String medium) throws PartyNotAddedException, NoSessionException;
+    void enableMediumReceiver(String session, String medium);
 
     /**
      * This function is used to disable a communicaciot medium. This will deactivate the
@@ -105,7 +99,7 @@ public interface NCBBridge extends Manageable {
      * @throws cvm.ncb.handlers.exception.NoSessionException
      */
     @Method(name="disableMedium", parameters = {"session", "medium"})
-    void disableMedium(String session, String medium) throws PartyNotFoundException, NoSessionException;
+    void disableMedium(String session, String medium);
 
     /**
      * This function checks if communication medium for a session has failed

@@ -1,9 +1,6 @@
 package cvm.ncb.adapters;
 
 import cvm.model.CVM_Debug;
-import cvm.ncb.handlers.exception.LoginException;
-import cvm.ncb.handlers.exception.NoSessionException;
-import cvm.ncb.handlers.exception.PartyNotFoundException;
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smackx.filetransfer.*;
@@ -85,12 +82,10 @@ public class SmackAdapter extends NCBBridgeBase {
      * This function logs the user into the communication bridge i.e Skype, GTalk...
      *
      * @return UserObject with the user information.
-     * @throws LoginException
      * @see UserObject
      */
     @Method(name = "login")
-    public void login()
-            throws LoginException {
+    public void login() {
         String userName = getUserInfoStore().getFwUserName(getName());
         String password = getUserInfoStore().getFwPassword(getName());
 
@@ -117,7 +112,7 @@ public class SmackAdapter extends NCBBridgeBase {
             startFileTransferListener();
         } catch (XMPPException e) {
             e.printStackTrace();
-            throw new LoginException();
+            throw new EventException("LoginFailed");
         }
         //Create the roster manager
         startRosterListener();
@@ -417,11 +412,12 @@ public class SmackAdapter extends NCBBridgeBase {
      * @throws PartyNotFoundException
      * @throws NoSessionException
      */
-    public void removeParticipant(String sID, String participantID)
-            throws PartyNotFoundException {
+    public void removeParticipant(String sID, String participantID) {
         HashSet<String> hs = jidsList.get(Integer.parseInt(sID));
         if (hs == null || !hs.contains(participantID)) {
-            throw new PartyNotFoundException("");
+            Map<String, Object> params = new LinkedHashMap<String, Object>();
+            params.put("participant", participantID);
+            throw new EventException("PartyNotAdded", params);
         }
         hs.remove(participantID);
         jidsList.add(Integer.parseInt(sID), hs);
@@ -526,7 +522,7 @@ public class SmackAdapter extends NCBBridgeBase {
     }
 
     @Method(name = "disableMedium", parameters = {"session", "medium"})
-    public void disableMedium(String session, String medium) throws PartyNotFoundException {
+    public void disableMedium(String session, String medium) {
         if (medium.equals(NCBBridgeCapability.AUDIO)) {
             destroyOutgoingAudioSession(sessMgr.indexOf(session) + "");
         } else if (medium.equals(NCBBridgeCapability.VIDEO)) {
@@ -566,8 +562,7 @@ public class SmackAdapter extends NCBBridgeBase {
     }
 
 
-    public void enableMediumReceiver(String conID, String mediumName, String sender)
-            throws NoSessionException {
+    public void enableMediumReceiver(String conID, String mediumName, String sender) {
         int sessID = sessMgr.indexOf(conID);
         String managerName;
         CVM_Debug.getInstance().printDebugMessage("In enableMediumReceiver " + conID + " " + mediumName);
@@ -588,12 +583,11 @@ public class SmackAdapter extends NCBBridgeBase {
     }
 
     @Method(name = "enableMediumReceiver", parameters = {"session", "medium"})
-    public void enableMediumReceiver(String session, String medium)
-            throws NoSessionException {
+    public void enableMediumReceiver(String session, String medium) {
     }
 
     @Method(name = "hasMediumFailed", parameters = {"session", "medium"})
-    public boolean hasMediumFailed(String session, String medium_) {
+    public boolean hasMediumFailed(String session, String medium) {
         //CVM_Debug.getInstance().printDebugMessage("Checking medium status");
         /*if(sessMgr.contains(sessID)){
               CVM_Debug.getInstance().printDebugMessage("Found session: "+sessID);
@@ -834,7 +828,7 @@ public class SmackAdapter extends NCBBridgeBase {
             if (medium != null && sender != null) {
                 try {
                     enableMediumReceiver(connectionId, medium, sender);
-                } catch (NoSessionException e) {
+                } catch (EventException e) {
                     e.printStackTrace();
                 }
             }
@@ -913,7 +907,7 @@ public class SmackAdapter extends NCBBridgeBase {
             SmackAdapter sAdpt = new SmackAdapter(true);
             try {
                 sAdpt.login(); //"test@squire.cs.fiu.edu", "test");
-            } catch (LoginException e) {
+            } catch (EventException e) {
                 e.printStackTrace();
             }
             try {
@@ -946,7 +940,7 @@ public class SmackAdapter extends NCBBridgeBase {
                     sAdpt.addParticipant(conID.toString(), remoteParty);
                 }
                 sAdpt.enableMedium(conID.toString(), medium);
-            } catch (LoginException e) {
+            } catch (EventException e) {
                 e.printStackTrace();
             }
             try {

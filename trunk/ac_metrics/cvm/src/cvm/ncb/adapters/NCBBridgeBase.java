@@ -1,9 +1,7 @@
 package cvm.ncb.adapters;
 
 import cvm.service.UserIDMappingTable;
-import cvm.ncb.handlers.exception.NoSessionException;
-import cvm.ncb.handlers.exception.PartyNotAddedException;
-import cvm.ncb.handlers.exception.PartyNotFoundException;
+
 
 /**
  * Target class of the Abstract design pattern.
@@ -37,7 +35,7 @@ public abstract class NCBBridgeBase implements NCBBridge {
      * @throws NoSessionException
      */
     @Method(name = "addAParticipant", parameters = { "session", "participant"})
-    public void addAParticipant(String session, String participant) throws PartyNotAddedException, NoSessionException {
+    public void addAParticipant(String session, String participant) {
         addParticipant(session, getUserMapper().lookupContact(this.getName(), participant));
     }
 
@@ -49,7 +47,7 @@ public abstract class NCBBridgeBase implements NCBBridge {
      * @throws PartyNotFoundException
      * @throws NoSessionException
      */
-    public void removeAParticipant(String session, String participant) throws PartyNotFoundException, NoSessionException {
+    public void removeAParticipant(String session, String participant) {
         removeParticipant(session, getUserMapper().lookupContact(getName(), participant));
     }
 }

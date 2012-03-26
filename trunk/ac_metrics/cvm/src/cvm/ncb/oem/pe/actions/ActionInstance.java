@@ -1,7 +1,7 @@
 package cvm.ncb.oem.pe.actions;
 
-import cvm.ncb.oem.pe.SignalInstance;
+import java.util.Map;
 
 public interface ActionInstance {
-    Object execute(ActionContext ctx, SignalInstance signal);
+    Object execute(ManagerContext ctx, Map<String, Object> params);
 }
