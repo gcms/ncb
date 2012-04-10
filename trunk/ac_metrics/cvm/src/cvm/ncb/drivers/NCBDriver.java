@@ -1,7 +1,7 @@
 package cvm.ncb.drivers;
 
 import cvm.facade.NCB_M_Facade;
-import cvm.model.CVM_Debug;
+import util.CVM_Debug;
 import cvm.model.UsesEventListener;
 import cvm.ncb.adapters.Manageable;
 import cvm.ncb.csm.ManagedObject;

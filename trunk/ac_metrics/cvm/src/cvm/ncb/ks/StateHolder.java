@@ -50,10 +50,6 @@ public class StateHolder implements ContextProvider {
         return attributes;
     }
 
-    public Object getSelf() {
-        return this;
-    }
-
     public String toString() {
         return state.getName() + "(" + getId() + ")";
     }

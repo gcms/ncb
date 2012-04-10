@@ -12,7 +12,7 @@ import org.mr.api.blocks.ScalableHandler;
 import org.mr.api.blocks.ScalableStage;
 
 import cvm.ncb.adapters.ncblite.rg.repository.Gateway;
-import cvm.model.*;
+import util.CVM_Debug;
 
 public class ObjectHandler
 {

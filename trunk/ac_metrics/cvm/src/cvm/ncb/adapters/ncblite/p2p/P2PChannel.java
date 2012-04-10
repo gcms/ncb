@@ -8,7 +8,7 @@ import org.mr.api.blocks.ScalableHandler;
 import org.mr.api.blocks.ScalableStage;
 
 import cvm.ncb.adapters.ncblite.rg.common.RGClient;
-import cvm.model.*;
+import util.CVM_Debug;
 
 public class P2PChannel
 {

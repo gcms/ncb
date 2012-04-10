@@ -3,7 +3,8 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import cvm.model.*;
+
+import util.CVM_Debug;
 
 public class DBConnectionFactory
 {

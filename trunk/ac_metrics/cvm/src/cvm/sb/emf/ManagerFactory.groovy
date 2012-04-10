@@ -28,7 +28,7 @@ class ManagerFactory {
         }
 
         if (manager.policyManager) {
-            signalHandlerManager.register(-1, new PolicyEvaluationSignalHandler(manager.policyManager.points))
+            signalHandlerManager.register(-1, new PolicyEvaluationSignalHandler(manager.policyManager.policies, manager.policyManager.points))
         }
 
 

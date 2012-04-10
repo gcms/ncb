@@ -1,7 +1,7 @@
 /* @author Mario J Lorenzo */
 package cvm.ncb.adapters.ncblite.model;
 
-import cvm.model.CVM_Debug;
+import util.CVM_Debug;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

@@ -1,6 +1,6 @@
 package cvm.ncb.adapters;
 
-import cvm.model.CVM_Debug;
+import util.CVM_Debug;
 
 import java.util.ArrayList;
 /**

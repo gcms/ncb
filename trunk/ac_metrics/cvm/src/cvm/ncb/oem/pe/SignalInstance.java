@@ -33,14 +33,6 @@ public class SignalInstance implements ContextProvider {
         return newParams;
     }
 
-    public Object getSelf() {
-        return this;
-    }
-
-    public Object getParam(String param) {
-        return params.get(param);
-    }
-
     public String toString() {
         return getName() + "(" + getParams() + ")";
     }

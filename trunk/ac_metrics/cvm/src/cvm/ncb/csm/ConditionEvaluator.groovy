@@ -1,12 +1,12 @@
 package cvm.ncb.csm
 
-import sb.base.Binding
+import sb.base.common.Binding
 
 
 class ConditionEvaluator {
-    Binder binder
+    ContextBinder binder
 
-    public ConditionEvaluator(Binder binder) {
+    public ConditionEvaluator(ContextBinder binder) {
         this.binder = binder;
     }
 
@@ -29,15 +29,15 @@ class ConditionEvaluator {
         result
     }
 
-    static void main(String[] args) {
-        Map ctx = [
-                a: [5, 4],
-                b: [7, 11],
-                c: [1, 2]
-        ]
-
-        List result = evaluate("a * b == 56 - c", ctx)
-        result.each { println it.dump() }
-
-    }
+//    static void main(String[] args) {
+//        Map ctx = [
+//                a: [5, 4],
+//                b: [7, 11],
+//                c: [1, 2]
+//        ]
+//
+//        List result = evaluate("a * b == 56 - c", ctx)
+//        result.each { println it.dump() }
+//
+//    }
 }

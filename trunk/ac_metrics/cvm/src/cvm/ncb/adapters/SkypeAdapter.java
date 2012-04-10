@@ -3,7 +3,7 @@ package cvm.ncb.adapters;
 import com.skype.*;
 import com.skype.connector.*;
 import com.skype.connector.TimeOutException;
-import cvm.model.CVM_Debug;
+import util.CVM_Debug;
 
 import java.util.*;
 

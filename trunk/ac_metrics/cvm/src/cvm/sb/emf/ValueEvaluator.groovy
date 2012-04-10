@@ -4,7 +4,7 @@ import cvm.ncb.csm.ContextProviderWrapper
 import cvm.ncb.ks.StateHolder
 import cvm.ncb.ks.StateTypeManager
 import cvm.ncb.oem.pe.ContextProvider
-import sb.base.*
+import sb.base.common.*
 
 class ValueEvaluator {
     // TODO: remove & fix this hack
@@ -38,7 +38,7 @@ class ValueEvaluator {
     }
 
     private static Object evaluate(ContextProvider context, ExpressionValue value) {
-        Map params = context.params + [self: context.self]
+        Map params = context.params
         stateManager.types.each { StateTypeManager typeManager ->
             params[typeManager.name] = new StateTypeManagerContext(typeManager)
         }

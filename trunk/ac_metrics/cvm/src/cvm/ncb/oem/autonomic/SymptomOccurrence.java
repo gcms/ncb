@@ -22,7 +22,4 @@ public class SymptomOccurrence implements ContextProvider {
         return values;
     }
 
-    public Object getSelf() {
-        return this;
-    }
 }

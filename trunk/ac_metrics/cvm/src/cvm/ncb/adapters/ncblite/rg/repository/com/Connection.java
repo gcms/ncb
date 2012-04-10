@@ -13,7 +13,7 @@ import java.util.List;
 
 import cvm.ncb.adapters.ncblite.rg.common.Transaction;
 import cvm.ncb.adapters.ncblite.rg.repository.Gateway;
-import cvm.model.*;
+import util.CVM_Debug;
 
 public class Connection implements Runnable {
 

@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
 import java.util.LinkedList;
 import java.util.List;
 
-import cvm.model.*;
+import util.CVM_Debug;
 
 
 public class RGClient {

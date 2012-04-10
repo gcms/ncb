@@ -1,6 +1,6 @@
 package cvm.service;
 
-import cvm.model.CVM_Debug;
+import util.CVM_Debug;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,7 +26,7 @@ class CSM_PropBridgeSpecifics
             File configFile = new File(configFilename);
 			if (!configFile.exists()){
 				p.store(new FileOutputStream(configFile), "Default Values. Change them accordingly.");
-				CVM_Debug.getInstance().printDebugErrorMessage("Config file not loaded. Change Defaults");				
+				CVM_Debug.getInstance().printDebugErrorMessage("Config file not loaded. Change Defaults");
 			}
 			else {
 				p.load(new FileInputStream(configFile));

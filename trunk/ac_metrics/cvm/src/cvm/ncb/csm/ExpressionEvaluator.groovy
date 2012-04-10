@@ -10,9 +10,5 @@ class ExpressionEvaluator {
     public Object evaluate(String expression) {
         shell.evaluate(expression)
     }
-
-    public boolean evaluateBoolean(String expression) {
-        evaluate(expression)
-    }
 }
 

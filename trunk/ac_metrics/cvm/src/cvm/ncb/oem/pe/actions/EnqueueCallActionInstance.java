@@ -2,7 +2,7 @@ package cvm.ncb.oem.pe.actions;
 
 import cvm.ncb.oem.pe.SignalInstance;
 import cvm.sb.emf.ValueEvaluator;
-import sb.base.EnqueueCall;
+import sb.base.common.EnqueueCall;
 
 import java.util.Map;
 

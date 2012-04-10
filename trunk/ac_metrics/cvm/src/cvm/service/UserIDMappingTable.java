@@ -1,6 +1,6 @@
 package cvm.service;
 
-import cvm.model.CVM_Debug;
+import util.CVM_Debug;
 import cvm.ncb.adapters.NCBUserInfoStore;
 import cvm.ncb.adapters.NCBUserMapper;
 

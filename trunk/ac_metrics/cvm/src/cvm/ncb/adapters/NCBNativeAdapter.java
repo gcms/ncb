@@ -1,6 +1,6 @@
 package cvm.ncb.adapters;
 
-import cvm.model.CVM_Debug;
+import util.CVM_Debug;
 import cvm.ncb.adapters.ncblite.av.AVReceive;
 import cvm.ncb.adapters.ncblite.av.AVTransmit;
 import cvm.ncb.adapters.ncblite.p2p.P2PChannel;

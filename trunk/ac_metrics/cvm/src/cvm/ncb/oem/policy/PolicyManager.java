@@ -14,7 +14,6 @@ import java.util.*;
 
 public class PolicyManager {
     private static Log log = LogFactory.getLog(PolicyManager.class);
-    private static final String ROOT_FEATURE = "CommFeatureRoot";
     private PolicyRepository policyRepository;
 //    private Feature featTree;
 
@@ -40,7 +39,7 @@ public class PolicyManager {
             log.debug("Looking for feature is [" + feature + "] and super feature is [" + superFeatures + "]");
 
             // This is not a subfeature, so do checks at this level
-            if (superFeatures.isEmpty() || superFeatures.peek().equals(ROOT_FEATURE)) {
+            if (superFeatures.isEmpty()) {
                 // Is this the feature we want?
                 if (feat.getName().equals(feature)) { // does this feature exist
                     // found the feature, evaluate desired value vs framwork's reported value

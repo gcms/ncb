@@ -2,7 +2,7 @@ package cvm.ncb.oem.pe;
 
 import cvm.ncb.oem.pe.actions.ActionCaller;
 import cvm.ncb.oem.pe.actions.ManagerContext;
-import sb.base.Signal;
+import sb.base.common.Signal;
 
 public class ActionSignalHandler implements SignalHandler {
     private Signal signal;

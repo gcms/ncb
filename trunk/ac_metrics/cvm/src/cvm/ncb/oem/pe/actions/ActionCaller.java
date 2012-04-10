@@ -3,7 +3,7 @@ package cvm.ncb.oem.pe.actions;
 
 import cvm.ncb.oem.pe.ContextProvider;
 import cvm.sb.emf.ValueEvaluator;
-import sb.base.ActionExecution;
+import sb.base.common.ActionExecution;
 
 import java.util.Map;
 

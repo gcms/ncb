@@ -1,6 +1,6 @@
 package cvm.facade;
 
-import cvm.model.CVM_Debug;
+import util.CVM_Debug;
 
 /**
  * Simple implementation of the UserObject class.

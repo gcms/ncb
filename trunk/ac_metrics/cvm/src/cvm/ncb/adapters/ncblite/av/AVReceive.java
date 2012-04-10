@@ -1,11 +1,7 @@
 /* @author Mario J Lorenzo */ package cvm.ncb.adapters.ncblite.av;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Label;
-import java.awt.Panel;
 import java.net.InetAddress;
 import java.util.Vector;
 
@@ -36,7 +32,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
-import cvm.model.*;
+import util.CVM_Debug;
 
 /**
  * AVReceive2 to receive RTP transmission using the new RTP API.

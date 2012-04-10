@@ -5,29 +5,20 @@ import cvm.ncb.oem.pe.HandlingResult;
 import cvm.ncb.oem.pe.SignalHandler;
 import cvm.ncb.oem.pe.SignalInstance;
 import cvm.ncb.oem.pe.actions.ManagerContext;
-import cvm.ncb.oem.policy.repository.loader.FilePolicyLoader;
+import cvm.ncb.oem.policy.repository.policy.DefaultPolicyRepository;
 import cvm.sb.emf.ValueEvaluator;
+import sb.base.policy.Policy;
 import sb.base.policy.PolicyEvaluationPoint;
 
-import java.net.URISyntaxException;
 import java.util.Collection;
 
 public class PolicyEvaluationSignalHandler implements SignalHandler {
     private Collection<PolicyEvaluationPoint> evalPoints;
     private PolicyManager policyManager;
 
-    private static PolicyManager createPolicyManager(String pmConfigFile) throws URISyntaxException {
-        FilePolicyLoader loader = FilePolicyLoader.createInstance(PolicyManager.class.getResource(pmConfigFile).toURI());
-        return new PolicyManager(loader);
-    }
-
-    public PolicyEvaluationSignalHandler(Collection<PolicyEvaluationPoint> evalPoints) {
+    public PolicyEvaluationSignalHandler(Collection<Policy> policies, Collection<PolicyEvaluationPoint> evalPoints) {
+        policyManager = new PolicyManager(new DefaultPolicyRepository(policies));
         this.evalPoints = evalPoints;
-        try {
-            policyManager = createPolicyManager("./repository/examples");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
     }
 
     public HandlingResult handle(SignalInstance signal, ManagerContext ctx) {

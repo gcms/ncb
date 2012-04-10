@@ -1,6 +1,6 @@
 package cvm.ncb.adapters;
 
-import cvm.model.CVM_Debug;
+import util.CVM_Debug;
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smackx.filetransfer.*;

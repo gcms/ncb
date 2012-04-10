@@ -1,16 +1,14 @@
 package cvm.ncb.oem.autonomic;
 
-import cvm.sb.emf.ValueEvaluator;
-import sb.base.autonomic.Analyzer;
 import sb.base.autonomic.ChangeRequest;
 
-import java.util.Map;
+import java.util.Collection;
 
 public class AnalyzerImpl {
-    private Analyzer analyzer;
+    private Collection<ChangeRequest> requests;
 
-    public AnalyzerImpl(Analyzer analyzer) {
-        this.analyzer = analyzer;
+    public AnalyzerImpl(Collection<ChangeRequest> requests) {
+        this.requests = requests;
     }
 
     private PlannerImpl planner;
@@ -19,7 +17,7 @@ public class AnalyzerImpl {
     }
 
     public void symptomDetected(SymptomOccurrence symptom) {
-        for (ChangeRequest request : analyzer.getRequests()) {
+        for (ChangeRequest request : requests) {
             if (request.getBasedOn().equals(symptom.getSymptom())) {
                 requestChange(symptom, request);
             }

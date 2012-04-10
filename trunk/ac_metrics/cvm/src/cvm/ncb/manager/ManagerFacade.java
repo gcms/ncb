@@ -12,7 +12,7 @@ public abstract class ManagerFacade {
         manager.start();
     }
 
-    protected MainManager getManager() {
+    public MainManager getManager() {
         return manager;
     }
 

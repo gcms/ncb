@@ -29,23 +29,27 @@ class NCBManagerTests extends GroovyTestCase {
         objectManager.getObject('Mock2').metadata.fail()
     }
 
-    void exemplo() {
-
-
-        EventManager signalHandler = new EventManager();
-        Manager managerDef = EMFLoader.loadFirst(Manager);
-
-        ManagerFactory factory = new ManagerFactory();
-        NCBManager manager = new NCBManager(factory.createManager(managerDef), signalHandler);
-
-        manager.login("Andrew", "password");
-        manager.createSession("101");
-        manager.addParty("101", "Yali");
-        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
-        manager.enableMedium("101", "Audio");
-
-
+    void tearDown() {
+        mainManager.stop()
     }
+
+//    void exemplo() {
+//
+//
+//        EventManager signalHandler = new EventManager();
+//        Manager managerDef = EMFLoader.loadFirst(Manager);
+//
+//        ManagerFactory factory = new ManagerFactory();
+//        NCBManager manager = new NCBManager(factory.createManager(managerDef), signalHandler);
+//
+//        manager.login("Andrew", "password");
+//        manager.createSession("101");
+//        manager.addParty("101", "Yali");
+//        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+//        manager.enableMedium("101", "Audio");
+//
+//
+//    }
 
 
     void testInitOk() {

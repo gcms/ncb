@@ -16,7 +16,4 @@ public class ContextProviderParams implements ContextProvider {
         return params;
     }
 
-    public Object getSelf() {
-        return params;
-    }
 }

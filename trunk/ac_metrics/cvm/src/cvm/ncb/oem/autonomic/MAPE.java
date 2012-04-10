@@ -10,9 +10,9 @@ public class MAPE {
     private PlannerImpl planner;
 
     public MAPE(AutonomicManager am, ManagerContext context) {
-        monitor = new MonitorImpl(am.getMonitor());
-        analyzer = new AnalyzerImpl(am.getAnalyzer());
-        planner = new PlannerImpl(am.getPlanner());
+        monitor = new MonitorImpl(am.getIdentifies());
+        analyzer = new AnalyzerImpl(am.getRequests());
+        planner = new PlannerImpl(am.getPlans());
 
         monitor.setAnalyzer(analyzer);
         analyzer.setPlanner(planner);

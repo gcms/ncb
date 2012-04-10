@@ -1,15 +1,14 @@
 package cvm.ncb.oem.autonomic;
 
-import cvm.ncb.csm.Binder;
+import cvm.ncb.csm.ContextBinder;
 import cvm.ncb.csm.ConditionEvaluator;
 import cvm.ncb.csm.EvaluationResult;
 import cvm.ncb.csm.SignalLogger;
 import cvm.ncb.oem.pe.SignalInstance;
 import cvm.ncb.oem.pe.actions.ManagerContext;
-import sb.base.Binding;
-import sb.base.Condition;
-import sb.base.autonomic.Monitor;
 import sb.base.autonomic.Symptom;
+import sb.base.common.Binding;
+import sb.base.common.Condition;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -17,11 +16,11 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 
 public class MonitorImpl implements SignalLogger {
-    private Monitor monitor;
     private ManagerContext context;
+    private Collection<Symptom> identifies;
 
-    public MonitorImpl(Monitor monitor) {
-        this.monitor = monitor;
+    public MonitorImpl(Collection<Symptom> identifies) {
+        this.identifies = identifies;
     }
 
     private AnalyzerImpl analyzer;
@@ -39,7 +38,7 @@ public class MonitorImpl implements SignalLogger {
     public void sense(SignalInstance signal) {
         state.put(signal.getName(), signal);
 
-        for (Symptom symptom : monitor.getIdentifies()) {
+        for (Symptom symptom : identifies) {
             checkSymptom(symptom);
         }
     }
@@ -59,7 +58,7 @@ public class MonitorImpl implements SignalLogger {
             expressions.add(condition.getExpression());
         }
 
-        ConditionEvaluator evaluator = new ConditionEvaluator(new Binder(context, this));
+        ConditionEvaluator evaluator = new ConditionEvaluator(new ContextBinder(context, this));
         return evaluator.evaluate(expressions, bindings);
     }
 

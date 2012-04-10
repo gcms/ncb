@@ -5,7 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Random;
 import java.util.StringTokenizer;
-import cvm.model.*;
+
+import util.CVM_Debug;
 
 public class ApplicationInstDAO 
 {

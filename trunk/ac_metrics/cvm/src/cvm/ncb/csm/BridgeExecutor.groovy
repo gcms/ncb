@@ -47,9 +47,9 @@ class BridgeExecutor {
         method.invoke(bridge, orderParameters(method, params))
     }
 
-    public boolean executeBoolean(String name, Map<String, Object> params) throws InvocationTargetException {
-        execute(name, params)
-    }
+//    public boolean executeBoolean(String name, Map<String, Object> params) throws InvocationTargetException {
+//        execute(name, params)
+//    }
 
     public Object[] orderParameters(JavaMethod method, Map<String, Object> params) {
         Method annotation = method.getAnnotation(Method)

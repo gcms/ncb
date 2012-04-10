@@ -1,12 +1,10 @@
 /* @author Mario J Lorenzo */ package cvm.ncb.adapters.ncblite.properties;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-import cvm.model.*;
+import util.CVM_Debug;
 
 public class PropertyMgr 
 {

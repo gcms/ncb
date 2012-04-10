@@ -1,6 +1,6 @@
 package cvm.facade;
 
-import cvm.model.CVM_Debug;
+import util.CVM_Debug;
 import cvm.ncb.handlers.EventManager;
 import cvm.ncb.manager.NCBManager;
 import cvm.sb.emf.ManagedObjectFactory;

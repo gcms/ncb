@@ -6,13 +6,6 @@ import cvm.ncb.oem.policy.Metadata;
 
 import java.util.*;
 
-/**
- * Created by IntelliJ IDEA.
- * User: gustavosousa
- * Date: 09/01/12
- * Time: 18:20
- * To change this template use File | Settings | File Templates.
- */
 public class FeaturesParser {
     enum Features {
         Chat {

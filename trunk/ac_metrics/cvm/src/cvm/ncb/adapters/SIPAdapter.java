@@ -1,6 +1,6 @@
 package cvm.ncb.adapters;
 
-import cvm.model.CVM_Debug;
+import util.CVM_Debug;
 import net.sourceforge.peers.Logger;
 import net.sourceforge.peers.sip.Utils;
 import net.sourceforge.peers.sip.core.useragent.SipEvent;

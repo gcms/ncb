@@ -4,18 +4,19 @@ import cvm.ncb.oem.pe.actions.ActionCaller;
 import cvm.ncb.oem.pe.actions.ManagerContext;
 import cvm.sb.emf.HandlerFactory;
 import sb.base.autonomic.ChangePlan;
-import sb.base.autonomic.Planner;
+
+import java.util.Collection;
 
 public class PlannerImpl {
-    Planner planner;
+    Collection<ChangePlan> plans;
     private ManagerContext context;
 
-    public PlannerImpl(Planner planner) {
-        this.planner = planner;
+    public PlannerImpl(Collection<ChangePlan> plans) {
+        this.plans = plans;
     }
 
     public void change(ChangeRequestInstance request) {
-        for (ChangePlan plan : planner.getPlans()) {
+        for (ChangePlan plan : plans) {
             if (plan.getBasedOn().equals(request.getRequest())) {
                 executePlan(request, plan);
             }

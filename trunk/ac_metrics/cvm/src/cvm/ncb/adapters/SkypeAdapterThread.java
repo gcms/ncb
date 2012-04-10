@@ -1,7 +1,7 @@
 package cvm.ncb.adapters;
 
 import com.skype.Application;
-import cvm.model.*;
+import util.CVM_Debug;
 
 /**
  * This thread propagation of schemas as they are received.

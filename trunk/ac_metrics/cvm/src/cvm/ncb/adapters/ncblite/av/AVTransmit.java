@@ -28,7 +28,7 @@ import javax.media.rtp.SendStream;
 import javax.media.rtp.SessionAddress;
 import javax.media.rtp.rtcp.SourceDescription;
 
-import cvm.model.*;
+import util.CVM_Debug;
 
 public class AVTransmit {
 

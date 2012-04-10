@@ -3,18 +3,17 @@ package cvm.ncb.csm
 import cvm.ncb.ks.StateHolder
 import cvm.ncb.oem.pe.ContextProvider
 import cvm.ncb.oem.pe.SignalInstance
-
-import sb.base.Bindable
-import sb.base.Binding
-import sb.base.Signal
-import sb.base.context.State
 import cvm.ncb.oem.pe.actions.ManagerContext
+import sb.base.common.Binding
+import sb.base.common.Bindable
+import sb.base.common.Signal
+import sb.base.context.State
 
-class Binder {
+class ContextBinder {
     ManagerContext manager
     SignalLogger signalLogger
 
-    public Binder(ManagerContext manager, SignalLogger signalLogger) {
+    public ContextBinder(ManagerContext manager, SignalLogger signalLogger) {
         this.manager = manager;
         this.signalLogger = signalLogger;
     }

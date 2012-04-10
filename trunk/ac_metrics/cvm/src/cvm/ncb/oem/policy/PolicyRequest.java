@@ -22,10 +22,6 @@ public class PolicyRequest implements ContextProvider {
         return params;
     }
 
-    public Object getSelf() {
-        return this;
-    }
-
     public PolicyContext getPolicyContext() {
         return createPolicyContext(this, request.getHandler().getEvaluation());
     }

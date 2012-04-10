@@ -8,7 +8,7 @@ import cvm.ncb.adapters.ncblite.rg.repository.facades.DMFacade;
 import cvm.ncb.adapters.ncblite.rg.repository.facades.PMFacade;
 import cvm.ncb.adapters.ncblite.rg.repository.session.Session;
 
-import cvm.model.*;
+import util.CVM_Debug;
 
 public class Gateway {
 	PMFacade pm;

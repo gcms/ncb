@@ -20,7 +20,8 @@ public class PolicyDefaultHandler implements PolicyEvaluationHandler {
         Object currentMedium = state.get("medium");
 
         System.out.println("CurrentFW: " + currentFw + "/NextFW: " + selected);
-        if (currentFw == null || !currentFw.equals(selected) || currentMedium == null || !currentMedium.equals(nextMedium)) {
+        if (currentFw == null || !currentFw.equals(selected)
+                || currentMedium == null || !currentMedium.equals(nextMedium)) {
             disableCurrentFramework(state, currentFw);
             enableNextFw(state, nextMedium, selected);
         }

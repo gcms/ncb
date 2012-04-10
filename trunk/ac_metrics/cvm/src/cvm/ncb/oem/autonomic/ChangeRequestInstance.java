@@ -26,7 +26,4 @@ public class ChangeRequestInstance implements ContextProvider {
         return params;
     }
 
-    public Object getSelf() {
-        return this;
-    }
 }

@@ -1,11 +1,13 @@
 package cvm.ncb.oem.policy;
 
-import cvm.model.CVM_Debug;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.util.HashSet;
 import java.util.Iterator;
 
 public class Feature {
+    private static Log log = LogFactory.getLog(Feature.class);
 
     private String name;
     private HashSet<Attribute> attributes;
@@ -88,13 +90,13 @@ public class Feature {
         try {
             attrVal = Integer.parseInt(attr.attributeValue);
         } catch (NumberFormatException e0) {
-            CVM_Debug.getInstance().printDebugMessage("Attribute value is not an integer!! "
+            log.debug("Attribute value is not an integer!! "
                     + attr.attributeValue);
             return false;
         }
 
-        CVM_Debug.getInstance().printDebugMessage("@@@@@@@@@@@@@@@@@@@@@@@@@");
-        CVM_Debug.getInstance().printDebugMessage("The integer comparison is " + val + " " + opcode + " " + attrVal);
+        log.debug("@@@@@@@@@@@@@@@@@@@@@@@@@");
+        log.debug("The integer comparison is " + val + " " + opcode + " " + attrVal);
         switch (opcode) {
             case EQ:
                 return val == attrVal;
@@ -103,25 +105,25 @@ public class Feature {
             case GEQ:
                 return val >= attrVal;
             default:
-                CVM_Debug.getInstance().printDebugMessage("Invalid opcode!!");
+                log.debug("Invalid opcode!!");
                 return false;
         }
     }
 
     public boolean hasAttributeValue(String attrName, Boolean val, int opcode) {
-        CVM_Debug.getInstance().printDebugMessage("Finding attr " + attrName);
+        log.debug("Finding attr " + attrName);
 
         Attribute attr = getAttribute(attrName);
         if (attr == null)
             return false;
 
-        CVM_Debug.getInstance().printDebugMessage("Found attribute");
+        log.debug("Found attribute");
         boolean attrVal = Boolean.parseBoolean(attr.attributeValue);
         return attrVal == val;
     }
 
     public boolean hasAttributeValue(String attrName, String val, int opcode) {
-        CVM_Debug.getInstance().printDebugMessage("here in string");
+        log.debug("here in string");
 
         Attribute attr = getAttribute(attrName);
         return attr != null && attr.attributeValue.equals(val);
