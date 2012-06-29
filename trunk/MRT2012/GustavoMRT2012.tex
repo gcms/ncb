@@ -1,0 +1,101 @@
+\documentclass{sig-alternate}
+
+\usepackage{graphicx}
+
+\begin{document}
+
+\conferenceinfo{Models@Run.Time}{'12 Innsbruck, Austria}
+
+\title{Model-Driven Generation of DSML Execution Engines\titlenote{This work was partly supported by the Capes Foundation, Brazil, Proc. 0759-11-2}}
+
+\numberofauthors{2}
+
+\author{
+\alignauthor Gustavo C. M. Sousa \\ F{\'a}bio M. Costa\\
+       \affaddr{Instituto de Inform{\'a}tica}\\
+       \affaddr{Universidade Federal de Goi{\'a}s}\\
+       \affaddr{Goi{\^a}nia-GO, Brazil}\\
+       \email{\{gustavo|fmc\}@inf.ufg.br}
+%\alignauthor F{\'a}bio M. Costa\\
+%       \affaddr{Instituto de Inform{\'a}tica}\\
+%       \affaddr{Universidade Federal de Goi{\'a}s}\\
+%       \affaddr{Goi{\^a}nia-GO, Brazil}\\
+%       \email{fmc@inf.ufg.br}
+\alignauthor Peter J. Clarke\\
+       \affaddr{School of Computing and\\ Information Sciences}\\
+       \affaddr{Florida International University}\\
+       \affaddr{Miami-FL, USA}\\
+       \email{clarkep@cis.fiu.edu}
+}
+
+\date{July 2012}
+
+\maketitle
+
+\begin{abstract}
+The combination of domain-specific modeling languages and model-driven engineering techniques hold the promise of a breakthrough in the way applications are developed. 
+By raising the level of abstraction and specializing in building blocks that are familiar in a particular domain, it has the potential to turn domain experts into application developers. 
+Applications are developed as models, which in turn are interpreted at runtime by a specialized execution engine in order to produce the intended behavior. 
+% are interpreted or may be interpreted?
+This approach has been successfully applied in different domains, such as communication and smart grid management. 
+However, each time the approach has to be realized in a different domain, substantial re-implementation has to take place in order to put together an execution engine for the respective DSML. 
+In this paper, we present our work towards a generalization of the approach in the form of a meta-model and its respective execution environment, which capture the domain-independent aspects of runtime model interpretation and allow the definition of domain-specific execution engines as instances of the meta-model. 
+We present an initial validation of the approach in the context of the Communication Virtual Machine project, by realizing part of the execution engine architecture in the form of an instance of the proposed meta-model. 
+\end{abstract}
+
+\category{D.2.11} {Software Engineering}{Software Architectures}[domain-specific architectures, languages]
+
+\keywords{Models at Runtime, Model-Driven Engineering, Domain-Specific Modeling Languages, Metamodeling, Middleware}
+
+\section{Introduction}
+
+% Tell the whole story: problem, proposed approach to solution, results. 
+
+\section{Background}
+
+% MDE, DSMLs and models at runtime; analogy with the distinction between structural reflection (modeling of the language) and behavioral reflection (modeling of the execution engine);
+
+models@runtime são uma forma de autorepresentação com causalidade i.e. reflexão mais próxima do domínio
+
+\section{Generic Architecture of the Execution Engine}
+
+% Describe the overall design without going into details of the meta-model.
+% Structure the description around a block diagram. Diagrama de blocos do fluxo para empregar a abordagem
+
+%Emphasize the separation between the domain-independent aspect of model execution and the definition of the DSML (and how you link a particular execution engine definition to its respective DSML).
+Dada uma DSML previamente definida, podemos definir um execution engine que vai executar instancias dessa DSML
+Futuras mudanças no execution engine podem ser para atender mudanças na linguagem ou para mudar requisitos não funcionais
+ligação entre linguagem e plataforma não é formalizado
+
+%Discuss the general application of the approach in CVM-like architectures, but limit it to the broker layer for the purposes of scoping the current work.
+
+%Justify the reduction of scope to the broker
+
+\section{Meta-model for Broker Layer}
+
+% Show the class diagram and describe elements of the meta-model. May structure the section based on the major blocks of the meta-model.
+
+\section{Execution Environment}
+
+% Describe the execution engine based on EMF. This section corresponds to the implementation section that goes in most papers. Make it clear in the text that it is the implementation.
+
+\section{Example in the Communication Domain}
+
+% Present the NCB instance (model) . Describe its use: how it is instantiated (i.e., put to run in the form of an execution engine) and how it interprets a user-derived model at runtime (describe the model that is seen by the NCB layer, i.e., based on the commands available at its interface with the UCM layer).
+
+\section{Related Work}
+Quais as áreas relacionadas, e trabalhos relacionados
+- Outras abordagens de construção de execution engines de DSMLs
+
+% Related work should be in the area of runtime model interpretation and execution engines for DSMLs. Must present them and compare with your approach.
+
+\section{Concluding Remarks}
+
+% Summarize the contributions and discuss limitations and future work.
+
+\section{References}
+
+\bibliographystyle{abbrv}
+\bibliography{GustavoMRT2012}
+
+\end{document}

@@ -1,0 +1,45 @@
+This is BibTeX, Version 0.99c (TeX Live 2009)
+The top-level auxiliary file: modelo-tese.aux
+The style file: inf-ufg.bst
+Database file #1: ./bib/modelo-tese.bib
+You've used 8 entries,
+            2158 wiz_defined-function locations,
+            576 strings with 5163 characters,
+and the built_in function-call counts, 3330 in all, are:
+= -- 304
+> -- 147
+< -- 5
++ -- 60
+- -- 49
+* -- 278
+:= -- 523
+add.period$ -- 27
+call.type$ -- 8
+change.case$ -- 47
+chr.to.int$ -- 0
+cite$ -- 8
+duplicate$ -- 145
+empty$ -- 273
+format.name$ -- 49
+if$ -- 711
+int.to.chr$ -- 0
+int.to.str$ -- 8
+missing$ -- 8
+newline$ -- 44
+num.names$ -- 18
+pop$ -- 37
+preamble$ -- 1
+purify$ -- 39
+quote$ -- 0
+skip$ -- 88
+stack$ -- 0
+substring$ -- 223
+swap$ -- 58
+text.length$ -- 5
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 32
+warning$ -- 0
+while$ -- 31
+width$ -- 9
+write$ -- 95

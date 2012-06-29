@@ -1,0 +1,54 @@
+\begin{thebibliography}{1}
+
+\bibitem{microgrid}
+{\sffamily\scshape Allison, M.; Allen, A.~A.; Yang, Z.; Clarke, P.~J.}
+\newblock {\bfseries A software engineering approach to user-driven control of
+  the microgrid.}
+\newblock In: {\itshape SEKE}, p. 59--64. Knowledge Systems Institute Graduate
+  School, 2011.
+
+\bibitem{mrt}
+{\sffamily\scshape Blair, G.; Bencomo, N.; France, R.}
+\newblock {\bfseries Models@ run.time}.
+\newblock {\itshape Computer}, 42(10):22 --27, oct. 2009.
+
+\bibitem{mdetechnical}
+{\sffamily\scshape Bézivin, J.}
+\newblock {\bfseries Model driven engineering: An emerging technical space}.
+\newblock In: Lämmel, R.; Saraiva, J.; Visser, J., editors, {\itshape
+  Generative and Transformational Techniques in Software Engineering}, volume
+  4143 de {\bfseries Lecture Notes in Computer Science}, p. 36--64. Springer
+  Berlin / Heidelberg, 2006.
+\newblock 10.1007/11877028_2.
+
+\bibitem{cml}
+{\sffamily\scshape Clarke, P.~J.; Hristidis, V.; Wang, Y.; Prabakar, N.; Deng,
+  Y.}
+\newblock {\bfseries A declarative approach for specifying user-centric
+  communication}.
+\newblock {\itshape Information Sciences}, p. 89--98, 2006.
+
+\bibitem{cvm}
+{\sffamily\scshape Deng, Y.; Sadjadi, S.~M.; Clarke, P.~J.; Hristidis, V.;
+  Rangaswami, R.; Wang, Y.}
+\newblock {\bfseries Cvm - a communication virtual machine}.
+\newblock {\itshape Journal of Systems and Software}, 81(10):1640--1662, 2008.
+
+\bibitem{mddcs}
+{\sffamily\scshape France, R.; Rumpe, B.}
+\newblock {\bfseries Model-driven development of complex software: A research
+  roadmap}.
+\newblock In: {\itshape Future of Software Engineering, 2007. FOSE '07}, p. 37
+  --54, may 2007.
+
+\bibitem{MDE}
+{\sffamily\scshape Schmidt, D.}
+\newblock {\bfseries Guest editor's introduction: Model-driven engineering}.
+\newblock {\itshape Computer}, 39(2):25 -- 31, feb. 2006.
+
+\bibitem{pragMDE}
+{\sffamily\scshape Selic, B.}
+\newblock {\bfseries The pragmatics of model-driven development}.
+\newblock {\itshape Software, IEEE}, 20(5):19 -- 25, sept.-oct. 2003.
+
+\end{thebibliography}
