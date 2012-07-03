@@ -48,8 +48,57 @@ We present an initial validation of the approach in the context of the Communica
 \keywords{Models at Runtime, Model-Driven Engineering, Domain-Specific Modeling Languages, Metamodeling, Middleware}
 
 \section{Introduction}
+%TODO: FOR THE WHOLE SECTION... TRY TO FOCUS MORE ON THE MODELS@RUNTIME. I MEAN, I NEED TO MAKE MORE EXPLICIT THE RELATIONSHIP BETWEEN THE WORK AND MODELS@RUNTIME
 
 % Tell the whole story: problem, proposed approach to solution, results. 
+Model driven engineering is being proposed as an approach to deal with the growing complexity involved in the development of modern applications.
+These applications commonly operate in a distributed and heterogeneous environment and must behave in a dependable manner. 
+These applications also often need to adapt at runtime to comply with changing requirements and environment.
+In order to achieve these goals the developers need to employ a variety of strategies to 
+
+MDE proposes to simplify the development of applications.
+By employing models built upon abstractions of the problem domain.
+MDE looks forward reducing the complexity due to the the technical details in the translation from domain concepts to platform concepts.
+
+% OBS: First we introduce the MDE approach of using DSMLs and automated processing
+In order to reduce this complexity, MDE relies on DSMLs and automated processing of models.
+Models can be either transformed or interpreted.
+
+% OBS: Then we discuss about the DSML
+The use of high level (and maybe graphical) DSMLs?
+Making it possible for domain experts, or even end users to create applications from their requirements.
+
+% OBS: And next we discuss about the automated processing as an interpreter (exeution engine)
+Communication Virtual Machine (CVM) and MicroGrid Virtual Machine (MGridVM) are examples of software that employ MDE techniques to allow users to develop applications using DSMLs.
+Don't forget to mention that its not only applications, but complex applications
+Besides allowing the development of applications, these software also enables the users to adapt applications during their runtime by manipulating models. These virtual machines are execution engines for DSMLs named CML and MGridML respectively.
+% TODO: make the concept of execution engine clearer
+% TODO: MAKE IT CLEAR THAT THE MODELS PROCESSED BY THESE ARE MODELS@RUNTIME
+
+% QUESTION: maybe change the order of ideas introducing the need to embody knowledge into the DSML and execution engine before the CVM and MGridVM
+% QUESTION: maybe introduce it not in terms of CVM/MGridVM
+% QUESTION: While mentioning CVM should we mention here that it works by analyzing changes in the model and synthesizing scripts? Or should we delay it to the Background?
+%ALTERNATIVE: State that the use of an interpreter (herein called execution engine) enables the use of models to also change the runtime behavior using constructs closer to the problem domain
+
+to allow the above (user built applications)?
+DSMLs, along with the mechanisms for their processing embed concepts and semantics of the domain.
+Once we have a DSML and the mechanism for processing it, users can directly develop applications in that DSML.
+
+While the development of applications in these domains employing their respective DSMLs is quite simple, the same is not true when talking about the execution engine that interprets their languages. These mechanisms are commonly developed in general purpose language and are subject to all the technical complexities involved in the traditional software development.
+
+Despite that, these execution engines share a lot of commonalities.
+Their applications basically provide a high-level service upon a set of heterogeneous resources.
+In order to do that, the runtime engine may need to execute many operations related to the processing of models, negotiation of configurations, synthesis of commands, evaluation of policies, runtime adaptation, and etc.
+%TODO: Give a better look at how the chapter about the CVM mentions these features and the similarity between these VMs
+Both CVM and MGridVM are built upon a layered architecture, in which each layer has well defined responsibilities.
+%Although the communication domain is the focus of this chapter, we are currently applying the approach to other domains, such as the microgrid energy management applications (Allison, Allen, Yang, & Clarke, 2011). That is, we are in the process of developing the Microgrid Modeling Language (MGridML) and the Microgrid Virtual Machine (MGridVM) using the approach describe here. By applying our approach to multiple domains, we hope to eventually show how the approach can be generalized as a new way for defining semantics for i-DSMLs that can be directly executed by a virtual machine.
+
+Taking that into consideration, we propose a model-driven approach to the construction of execution engines for the provision of high-level services described by DSMLs upon a set of resources. Doing so, we look forward a way to assist the construction of DSML execution engines. 
+%Generalization of approach. The long-term goal of this research project is to generalize the approach on developing i-DSMLs. We expect to create an infrastructure that can be used to assist with developing the i-DSML (see Figure 1), capturing the domain-specific behavior (maybe using LTSs e.g., Tables 4 and 5), and generating the domain specific VM (transformation shown in Figure 4).
+%Such an infrastructure would require: (1) defining a set of domain characteristics that are well suited for these i-DSMLs, (2) a meta-metamodel that can be used to define both the i-DSML and its interpreter, (3) a method for capturing the domain-specific behavior and integrating it into the interpreter.
+Our approach relies on the experience acquired in the development of CVM and MGridVM to propose a generic architecture and the use of modeling as a way to specialize it.
+We illustrate this approach by presenting a meta-model designed to describe one of the layers of the proposed architecture.
+
 
 \section{Background}
 
@@ -74,6 +123,13 @@ ligação entre linguagem e plataforma não é formalizado
 \section{Meta-model for Broker Layer}
 
 % Show the class diagram and describe elements of the meta-model. May structure the section based on the major blocks of the meta-model.
+
+\subsection{Interface}
+\subsection{Signal handling}
+\subsection{Resource management}
+\subsection{State management}
+\subsection{Autonomic computing}
+\subsection{Policies}
 
 \section{Execution Environment}
 
