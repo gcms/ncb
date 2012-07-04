@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009) (format=pdflatex 2010.7.2)  2 JUL 2012 20:53
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009) (format=pdflatex 2010.7.2)  3 JUL 2012 20:18
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -238,35 +238,147 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 ]
-Overfull \hbox (6.79916pt too wide) in paragraph at lines 109--109
+Overfull \hbox (6.79916pt too wide) in paragraph at lines 111--111
 []\secfnt GENERIC AR-CHI-TEC-TURE OF THE EX-
  []
 
-No file GustavoMRT2012.bbl.
-[2
 
-] (./GustavoMRT2012.aux) ) 
+Overfull \hbox (1.36632pt too wide) in paragraph at lines 119--122
+\T1/aer/m/n/9 de-scribes the ab-stract syn-tax and static se-man-tics of a DSML
+
+ []
+
+
+Overfull \hbox (4.07463pt too wide) in paragraph at lines 124--125
+[]\T1/aer/m/n/9 Figure show-ing: DSML meta-model (ab-stract syn-tax [mof],
+ []
+
+
+Overfull \hbox (9.66397pt too wide) in paragraph at lines 149--153
+\T1/aer/m/n/9 quite-tura genérica para a definição dessa cat-e-go-ria de máquin
+as
+ []
+
+
+Overfull \hbox (13.57062pt too wide) in paragraph at lines 157--158
+\T1/aer/m/n/9 provê uma in-ter-face ex-terna para uti-liza-ção da plataforma.
+ []
+
+
+Overfull \hbox (2.7253pt too wide) in paragraph at lines 159--160
+\T1/aer/m/n/9 pos-sui como prin-ci-pal re-spon-s-abil-i-dade a trans-for-mação
+ []
+
+
+./GustavoMRT2012.tex:169: LaTeX Error: File `./fig/uvm' not found.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.169 ...graphics[width=0.40\textwidth]{./fig/uvm}
+                                                  
+? 
+
+Overfull \hbox (4.93889pt too wide) in paragraph at lines 174--178
+\T1/aer/m/n/9 abil-i-dades necessárias para a re-al-iza-ção de serviços no domí
+nio
+ []
+
+[2]
+Overfull \hbox (21.4811pt too wide) in paragraph at lines 183--184
+\T1/aer/m/n/9 modelo que pos-si-bilita a mod-e-lagem do com-por-ta-mento necess
+ário
+ []
+
+
+Overfull \hbox (1.0065pt too wide) in paragraph at lines 183--184
+\T1/aer/m/n/9 meta-modelo em questão con-tem-pla a de-scrição dos seguintes
+ []
+
+
+Overfull \hbox (6.03683pt too wide) in paragraph at lines 183--184
+\T1/aer/m/n/9 as-pec-tos en-volvi-dos no cumpri-mento destas re-spon-s-abil-i-d
+ades: 
+ []
+
+
+LaTeX Warning: Citation `cvm' on page \thepage  undefined on input line 190.
+
+LaTeX Font Info:    Try loading font information for T1+aess on input line 194.
+
+(/usr/local/texlive/2009/texmf-dist/tex/latex/ae/t1aess.fd
+File: t1aess.fd 1997/11/16 Font definitions for T1/aess.
+)
+
+LaTeX Warning: Reference `fig:metamodelo-interface' on page \thepage  undefined
+ on input line 194.
+
+
+LaTeX Warning: Reference `fig:metamodelo-resource' on page \thepage  undefined 
+on input line 200.
+
+
+Overfull \hbox (11.85147pt too wide) in paragraph at lines 200--201
+[]\T1/aer/m/n/9 Uma in-stân-cia da classe mm \T1/aess/m/n/9 In-stanceRe-source-
+M-an-ager \T1/aer/m/n/9 agrupa
+ []
+
+
+LaTeX Warning: Reference `fig:metamodelo-state' on page \thepage  undefined on 
+input line 210.
+
+
+Overfull \hbox (8.58937pt too wide) in paragraph at lines 209--211
+\T1/aer/m/n/9 que pos-sui um nome, pro-priedade chave, e agrupa pro-priedades
+ []
+
+[3]
+Overfull \hbox (14.9743pt too wide) in paragraph at lines 236--240
+\T1/aer/m/n/9 de com-putação autônoma pro-posta pela IBM. Re-visão/descrição
+ []
+
+
+Overfull \hbox (3.20253pt too wide) in paragraph at lines 246--247
+[]\T1/aer/m/n/9 As ab-strações pre-sentes no meta-mod-elo pro-posto per-mitem
+ []
+
+
+LaTeX Warning: Reference `sec:signals' on page \thepage  undefined on input lin
+e 257.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+No file GustavoMRT2012.bbl.
+[4] (./GustavoMRT2012.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 2182 strings out of 493848
- 25144 string characters out of 3149208
- 83512 words of memory out of 3000000
- 5432 multiletter control sequences out of 15000+200000
- 49529 words of font info for 66 fonts, out of 3000000 for 9000
+ 2228 strings out of 493848
+ 25790 string characters out of 3149208
+ 85520 words of memory out of 3000000
+ 5459 multiletter control sequences out of 15000+200000
+ 51200 words of font info for 68 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 39i,10n,26p,609b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/local/texlive/2009/texmf-dist/fonts/enc/dvips/b
-ase/8r.enc}</usr/local/texlive/2009/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mbx9.pfb></usr/local/texlive/2009/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-9.pfb></usr/local/texlive/2009/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.
-pfb></usr/local/texlive/2009/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pf
-b></usr/local/texlive/2009/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr
-/local/texlive/2009/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/
-texlive/2009/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/20
-09/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2009/texmf-d
-ist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on GustavoMRT2012.pdf (2 pages, 116753 bytes).
+ 39i,10n,26p,860b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/local/texlive/2009/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2009/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/tex
+live/2009/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texliv
+e/2009/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/local/texlive/
+2009/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/20
+09/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2009
+/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2009/texmf-
+dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2009/texmf-dist/fo
+nts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2009/texmf-dist/fonts/type1/
+urw/times/utmr8a.pfb></usr/local/texlive/2009/texmf-dist/fonts/type1/urw/times/
+utmri8a.pfb>
+Output written on GustavoMRT2012.pdf (4 pages, 151890 bytes).
 PDF statistics:
- 46 PDF objects out of 1000 (max. 8388607)
+ 56 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

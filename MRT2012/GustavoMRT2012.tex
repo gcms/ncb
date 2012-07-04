@@ -47,10 +47,11 @@ We present an initial validation of the approach in the context of the Communica
 
 \keywords{Models at Runtime, Model-Driven Engineering, Domain-Specific Modeling Languages, Metamodeling, Middleware}
 
-\section{Introduction}
-%TODO: FOR THE WHOLE SECTION... TRY TO FOCUS MORE ON THE MODELS@RUNTIME. I MEAN, I NEED TO MAKE MORE EXPLICIT THE RELATIONSHIP BETWEEN THE WORK AND MODELS@RUNTIME
 
+\section{Introduction}
 % Tell the whole story: problem, proposed approach to solution, results. 
+
+%TODO: FOR THE WHOLE SECTION... TRY TO FOCUS MORE ON THE MODELS@RUNTIME. I MEAN, I NEED TO MAKE MORE EXPLICIT THE RELATIONSHIP BETWEEN THE WORK AND MODELS@RUNTIME
 Model driven engineering is being proposed as an approach to deal with the growing complexity involved in the development of modern applications.
 These applications commonly operate in a distributed and heterogeneous environment and must behave in a dependable manner. 
 These applications also often need to adapt at runtime to comply with changing requirements and environment.
@@ -59,6 +60,8 @@ In order to achieve these goals the developers need to employ a variety of strat
 MDE proposes to simplify the development of applications.
 By employing models built upon abstractions of the problem domain.
 MDE looks forward reducing the complexity due to the the technical details in the translation from domain concepts to platform concepts.
+
+%By employing this approach models can be as high-level as to be created by domain experts or event end users
 
 % OBS: First we introduce the MDE approach of using DSMLs and automated processing
 In order to reduce this complexity, MDE relies on DSMLs and automated processing of models.
@@ -98,6 +101,7 @@ Taking that into consideration, we propose a model-driven approach to the constr
 %Such an infrastructure would require: (1) defining a set of domain characteristics that are well suited for these i-DSMLs, (2) a meta-metamodel that can be used to define both the i-DSML and its interpreter, (3) a method for capturing the domain-specific behavior and integrating it into the interpreter.
 Our approach relies on the experience acquired in the development of CVM and MGridVM to propose a generic architecture and the use of modeling as a way to specialize it.
 We illustrate this approach by presenting a meta-model designed to describe one of the layers of the proposed architecture.
+Next, we create an instance of this meta-model that describes the same behavior expected from the correspondent layer in the CVM.
 
 
 \section{Background}
@@ -108,27 +112,156 @@ models@runtime são uma forma de autorepresentação com causalidade i.e. reflexão 
 
 \section{Generic Architecture of the Execution Engine}
 
+% TODO: After writing the section, find a way to mention the two point-of-views of the model of execution engine: modeling the dynamic (operational) semantics or modeling the behavioral aspects
+% ALSO: The combination of models of the layers can be viewed as a megamodel??? e.g. in fact the model of the platform is a mega-model composed by the models of the layers. the whole environment may also be a megamodel that composes the DSML metamodel, and the execution engine model
+
+
+- Like we introduced, in order to get the benefits of MDE (including m@rt) we need DSMLs and their execution engine
+- While the syntax and static semantics of a DSML can be described by a meta-model, their dynamic semantics is embeded in the execution engine
+
+
 % Describe the overall design without going into details of the meta-model.
+Overview of the approach:
+- Integrate a meta-model that describes the abstract syntax and static semantics of a DSML to a model that describes the execution engine for that language (that on its turn encapsulates the static semantics... it was described in the background) 
+- While there are several tools that can be used to define the metamodel and concrete syntaxes for DSMLs, there is little support for defining the dynamic semantics that the execution engine embedded.
+
 % Structure the description around a block diagram. Diagrama de blocos do fluxo para empregar a abordagem
+Figure showing: {DSML meta-model (abstract syntax [mof], static semantics [ocl]) + concrete syntax [gmf] + dynamic semantics [?]} composing an environment for the development of applications and show a M@RT being fed into this environment
 
 %Emphasize the separation between the domain-independent aspect of model execution and the definition of the DSML (and how you link a particular execution engine definition to its respective DSML).
 Dada uma DSML previamente definida, podemos definir um execution engine que vai executar instancias dessa DSML
-Futuras mudanças no execution engine podem ser para atender mudanças na linguagem ou para mudar requisitos não funcionais
-ligação entre linguagem e plataforma não é formalizado
+Como benefício temos:
+%It would ease the construction of custom virtual machine configurations suited for specific platforms. In this way, a CVM implementation on a mobile phone could use a simpler provider selection method while a PC-based implementation could employ a more sophisticated approach. Other benefit would be the possibility to change the CVM to support new language constructs or even a specific language for another domain.
+- Futuras mudanças no execution engine podem ser para atender mudanças na linguagem (e.g. novas construções) ou para atender requisitos de diferentes ambientes
+%ligação entre linguagem e plataforma não é formalizado (mencionar como limitação/future work)
+
+Even though different domains require different semantics their realization quite often rely on a common set of operations. The processing of runtime models usually requires of the execution engine capabilities of model analysis and negotiation, transformation of models into different representations, adaptation of the internal arrangement of the execution engine among others.
+
+In order to enable the construction and manipulation of models that represent the behavior of a virtual machine we need a specific language (that is, a meta-model) for that. This language needs to be powerful enough to allow the description of virtual machines for different business domains, like the ones described above. Still, this language should not be too generic, as this could make model manipulation as difficult as writing code in a general-purpose language.
+
+%Justify the reduction of scope to the broker
+Considerando isto, essa linguagem deve conter construções capazes de descrever os aspectos comportamentais que independem do domínio de negócio e que estão envolvidos no fornecimento de serviços de alto nível descritos a partir de modelos construídos diretamente pelo usuário.
+Esses aspectos, que englobam tarefas como transformações de modelos, negociação de configurações apropriadas, monitoramento do ambiente, seleção e configuração de recursos, entre outros, podem ser tratados como um domínio técnico. Deste modo, tal linguagem pode ser considerada uma linguagem específica de um domínio que abrange os aspectos técnicos envolvidos na realização de serviços transparentes de alto nível a partir de um conjunto heterogêneo de recursos.
+% procurar referencia que linguagem precisa ser de domínio específico para se tornar realizável
+% e domíno técnico também
+
 
 %Discuss the general application of the approach in CVM-like architectures, but limit it to the broker layer for the purposes of scoping the current work.
 
-%Justify the reduction of scope to the broker
+- based on the solutions employed by CVM/MGridVM, i.e. layered architecture with separation of responsibilities; 
+- a model based way of specializing this generic architecture i.e. employing a meta-model and instances that specialize
+
+Tendo em vista estas necessidades, propomos uma arquitetura genérica para a definição dessa categoria de máquinas virtuais dirigidas por modelos centrados no usuário.
+% baseado na experiencia obtida na CVM (ver uma boa forma de dizer isso)
+Assim como a CVM, tal arquitetura também se baseia em camadas com responsabilidades bem definidas. 
+Na abordagem proposta, as camadas desta arquitetura são definidas através de modelos cujas construções estão relacionadas às responsabilidades relativas à cada camada. A Figura \ref{fig:uvm} ilustra esta arquitetura de Máquinas Virtuais centradas no Usuário (\emph{User-centric Virtual Machine} - UVM) onde temos as seguintes camadas:
+
+
+\begin{itemize}
+
+\item  Interface com o Usuário (\emph{User Interface} - UI), que provê uma interface externa para utilização da plataforma. Além disso, esta camada possibilita a definição e gerenciamento de modelos;
+
+\item Mecanismo de Síntese (\emph{Synthesis Engine} - SE), que possui como principal responsabilidade a transformação de um modelo declarativo fornecido pela UI em uma representação algorítmica a ser executada pela camada inferior;
+
+\item \emph{Middleware} Centrado no Usuário (\emph{User-centric middleware} - UM), que além de executar as requisições geradas pelo Mecanismo de Síntese,  também gerencia os serviços providos pela máquina virtual e as tarefas em execução. Essa também é a camada responsável pela aplicação de restrições de segurança, qualidade de serviço, entre outras específicas do domínio de negócio. 
+
+\item Intermediador de Serviço (\emph{Service Broker} - SB), que é a camada responsável pelo gerenciamento dos recursos. Assim sendo, essa camada tem como objetivo prover uma interface de acesso aos recursos de forma independente da tecnologia empregada por estes, provendo um serviço transparente à camada UM.
+
+\end{itemize}
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.40\textwidth]{./fig/uvm}
+ \caption{Arquitetura proposta para esta categoria de Máquinas Virtuais centradas no Usuário.}
+ \label{fig:uvm}
+\end{figure}
+
+Ao imitar a arquitetura da CVM, nos aproveitamos do conhecimento adquirido em relação à separação de responsabilidades necessárias para a realização de serviços no domínio técnico identificado. No entanto, apesar de apresentar a mesma estrutura, a arquitetura proposta se difere por ser independente do domínio de negócio.
+Além disso, na abordagem proposta, cada camada é descrita através de um modelo. Este modelo, por sua vez, é construído em conformidade com um meta-modelo da camada que contém elementos associados às responsabilidades da camada.
+%Estamos instanciando uma máquina virtual 
+Assim sendo, a abordagem dirigida por modelos é empregada para a definição e manipulação de cada camada da plataforma.
+
+O Intermediador de Serviço é a camada da arquitetura proposta que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para prover o serviço solicitado. Cabe à esta camada disponibilizar uma interface de serviços que abstraia as especificidades dos recursos gerenciados para a camada superior. Além disso, o SB deve possuir capacidade de auto gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
+
+Como uma interface de serviços, o SB se comunica com o UM através de chamadas que podem ser invocadas e eventos que podem ser gerados sinalizando alguma situação. Assim sendo, ao definirmos o comportamento dessa camada, precisamos descrever como serão tratadas as chamadas realizadas pela camada superior, e em que situações serão gerados determinados eventos. Mas além disso, também precisamos descrever como outras tarefas serão realizadas, incluindo o monitoramento e seleção de recursos, manutenção de informações, adaptação da camada, entre outros.
+
+Com isto em mente, neste trabalho, construímos um meta-modelo que possibilita a modelagem do comportamento necessário para atender as responsabilidades definidas para a camada de intermediação de serviço da arquitetura proposta. O meta-modelo em questão contempla a descrição dos seguintes  aspectos envolvidos no cumprimento destas responsabilidades:
 
 \section{Meta-model for Broker Layer}
 
 % Show the class diagram and describe elements of the meta-model. May structure the section based on the major blocks of the meta-model.
 
 \subsection{Interface}
+No metamodelo proposto, a interface para utilização de um gerenciador é definida através de chamadas providas e eventos que podem ser sinalizados. Este tipo de interface segue a mesma abordagem empregada pela CVM para comunicação entre suas camadas \cite{cvm}. Dessa forma, a utilização da interface se dá através da realização de chamadas disponíveis e tratamento de eventos gerados.
+
+A interface de uma camada de intermediação de serviços, por sua vez, é definida pela interface de seu gerenciador principal e, portanto, também interage com a camada superior da forma descrita acima. Além disso, as interfaces para utilização dos recursos gerenciados também é descrita da mesma forma, o que possibilita que um gerenciador possa ser tratado como um recurso.
+
+A classe \textsf{Interface} é utilizada para descrever a interface de um gerenciador ou recurso no metamodelo proposto. Essa classe agrupa um conjunto de chamadas providas e eventos que podem ser sinalizados. Chamadas e eventos são representados respectivamente através das classes \textsf{Call} e \textsf{Event} que apresentam como característica comum o fato de possuírem um nome e um conjunto de parâmetros, e por isso herdam estes atributos da classe \textsf{Signal}. A Figura ~\ref{fig:metamodelo-interface} ilustra as classes do metamodelo relacionadas à descrição de interfaces.
 \subsection{Signal handling}
 \subsection{Resource management}
+A interface mm \textsf{ResourceManager} do metamodelo é utilizada para descrever as interfaces dos recursos gerenciados pela camada, e como estes serão obtidos. As interfaces dos recursos são descritas através da classe mm \textsf{Interface}, da mesma forma que a interface da camada. A obtenção dos recursos por sua vez, é definida de acordo com a sua natureza, por classes mm que implementam a interface \textsf{ResourceManager}. O metamodelo proposto conta com uma classe mm denominada \textsf{InstanceResourceManager} que permite a descrição de um conjunto fixo de recursos e suas características. Outras classes mm que implementam a interface \textsf{ResourceManager} poderiam, por sua vez, possibilitar a obtenção de recursos de formas mais elaboradas, como por exemplo, através de repositórios de objetos distribuídos.
+% ??? Ponto de questionamento: que outras formas de se obter?
+
+Uma instância da classe mm \textsf{InstanceResourceManager} agrupa um conjunto de objetos do tipo mm \textsf{Instance}. A classe mm \textsf{Instance}, por sua vez, representa um recurso que é obtido diretamente a partir da instanciação de uma determinada classe rt que implementa o recurso. Além disso, uma instância de \textsf{Instance} também define qual das interfaces descritas pelo \textsf{ResourceManager} correspondente é a interface do recurso. Por fim, a classe mm \textsf{Instance} implementa a interface \textsf{Annotable}, o que permite que metadados sejam associados aos recursos. A Figura ~\ref{fig:metamodelo-resource} ilustra as classes mm do metamodelo envolvidas na descrição de recursos.
 \subsection{State management}
+
+Ao realizar o seu trabalho, a camada de intermediação de serviços recebe chamadas através da sua interface e eventos gerados pelos seus recursos e realiza o processamento correspondente.
+Muitas vezes, o processamento de um desses sinais recebidos depende de outros sinais já processados anteriormente pela camada. Um sinal pode ter seu processamento diferenciado de acordo com a ocorrência ou não de um evento em um determinado recurso, ou de acordo com o resultado do processamento de uma chamada, etc.
+Devido a esta característica, é necessário que alguns dados sejam mantidos pela camada entre o tratamento de diferentes ocorrências de sinais.
+
+A classe \text{StateManager} do metamodelo tem como função definir os tipos de dados que poderão ser mantidos durante a execução da camada. Os tipos de dados podem ser descritos através de uma estrutura simples baseada em propriedades e subtipos. Além disso, a descrição de um tipo exige a definição de uma propriedade chave que identifique unicamente um registro desse tipo de dados.
+
+Os tipos são definidos através de instâncias da classe \textsf{State} que possui um nome, propriedade chave, e agrupa propriedades e subtipos. Cada propriedade por sua vez é definida por instâncias da classe \textsf{Property}, que por sua vez possuem um nome. Os subtipos são definidos a partir da mesma classe \textsf{State}, o que possibilita a definição de tipos de dados compostos.
+A Figura ~\ref{fig:metamodelo-state} ilustra as classes envolvidas na definição dos tipos de dados a serem mantidos pela camada durante sua execução.
 \subsection{Autonomic computing}
+
+%- A camada de intermediação de serviços deve abstrair os detalhes da dinâmica envolvida no gerenciamento dos recursos da camada superior.
+
+Além de abstrair as diferenças de capacidades entre os recursos existentes, a camada de intermediação de serviços também tem como responsabilidade ocultar da camada superior os detalhes relacionados à dinâmica de utilização dos recursos. Assim sendo, ao usuário da camada é indiferente o recurso que está sendo utilizado, como e quando foi selecionado e todos os detalhes envolvidos em sua preparação realizar as tarefas solicitadas.
+
+%- Para isto deve ser capaz de se auto gerenciar (require self-healing behavior to adapt to changes in user needs, business goals, and environmental conditions such that self-healing decisions are made dynamically and adaptively according to the system context.)
+
+Para atender à esta demanda, a camada de intermediação de serviços deve ser capaz de se auto gerenciar, adaptando-se automaticamente para realizar o serviço solicitado dentro das restrições impostas pelo seu contexto. O auto gerenciamento dessa camada envolve o constante monitoramento dos recursos e das solicitações dos usuários para identificar situações que exigem uma ação e escolher a ação apropriada a ser tomada.
+
+
+%- O auto gerenciamento envolve a capacidade de  selecionar, preparar, monitorar, desativar e reativar recursos com o objetivo de prover o serviço solicitado pelo usuário.
+
+%- Através das construções de tratamento de eventos advindos dos recursos, e chamadas realizadas à camada unidos com a manutenção de estado, é possível monitorar os recursos e tomar ações de acordo com o estado destes.
+
+Através das abstrações presentes no metamodelo é possível definir o tratamento de eventos gerados pelos recursos e chamadas realizadas através da interface da camada. Estes mecanismos, associados à manutenção de estado possibilitam definir como os recursos e solicitações serão monitorados para identificar cenários que exigem a execução de uma ação.
+
+
+%- Apesar de isso ser possível, estas abstrações não são apropriadas para este tipo de tarefa.
+
+
+Apesar de isso ser possível, essas abstrações não são apropriadas para a descrição de situações mais complexas, que podem envolver diversos recursos, o estado da camada, dados de chamadas realizadas, entre outros. Esta limitação ocorre pois as construções para tratamento de sinais associam uma ação diretamente à um evento ou chamada.
+
+%- O metamodelo dispõe de abstrações baseadas na arquitetura de computação autonômica da IBM para descrever o comportamento autonomo.
+
+Com o intuito de facilitar a definição de como se dará o auto gerenciamento da camada, o metamodelo proposto incorpora um conjunto de abstrações baseadas na arquitetura de computação autônoma proposta pela IBM.
+Revisão/descrição breve da arquitetura, do loop MAPE-K, sensores e atuadores.
+%- Em tal arquitetura o gerenciamento se dá através de um control loop MAPE-K
+% Explicar MAPE e Knowledge, que inclui os sintomas, change requests, change plans
+
+%The Autonomic Computing Architectural Blueprint (see Resources for a link) describes an autonomic manager as: an implementation that automates some management function and externalizes this function according to the behavior defined by management interfaces. The autonomic manager is a component that implements the control loop ... For a system component to be self-managing, it must have an automated method to collect the details it needs from the system; to analyze those details to determine if something needs to change; to create a plan, or sequence of actions, that specifies the necessary changes; and to perform those actions. When these functions can be automated, an intelligent control loop is formed.
+
+
+%- No meta-modelo proposto, as funções tem seu comportamento descrito a partir dos elementos que elas devem gerar.
+
+As abstrações presentes no metamodelo proposto permitem descrever regras que determinam a geração e transmissão de conhecimento entre as funções MAPE. Desta forma, ao construir uma camada de intermediação de serviços devem ser descritas regras para identificação de sintomas, solicitações de mudanças e planos de mudança. Em tempo de execução, o monitor utiliza essas regras para identificar a ocorrência de um sintoma. De forma semelhante o analisar e planejador se baseiam nos sintomas identificados e nas solicitações de mudança geradas para realizarem sua tarefa.
+
+% A classe AutonomicManager agrupa os elementos relacionados à gerenciamento autonomico.
+
+A classe \textsf{AutonomicManager} agrupa os elementos relacionados ao gerenciamento autônomo de recursos. Essa classe agrupa elementos que descrevem as regras para geração de sintomas, solicitações de mudanças e planos de mudança. 
+A classe \textsf{Symptom} descreve um sintoma a ser monitorado com o intuito de identificar mudanças no contexto da camada. Um sintoma define um conjunto de condições para que este seja identificado. Em tempo de execução, os recursos e o estado da camada são monitorados e as condições de um sintoma avaliadas. Se todas as condições definidas em um sintoma são atingidas uma ocorrência deste sintoma é gerada e passada ao analisador.
+
+As condições agrupadas pela classe \textsf{Symptom} são descritas a partir de expressões. Além das condições, a classe \textsf{Symptom} também define o contexto em que estas expressões serão avaliadas através da classe \textsf{Binding} que associa um nome (a ser usado na expressão) à um elemento do tipo \textsf{Bindable}. A interface \textsf{Bindable}, por sua vez, é implementada pelas classes \textsf{Signal} e \textsf{State}. Essas abstrações permitem definir condições que envolvam além de dados de chamadas e eventos o estado mantido pela camada.
+
+% TODO: separar symptons devem monitorar só os recursos e change request deve relacionar symptons com calls and state
+
+A classe \textsf{ChangeRequest} define uma requisição de mudança que deve ser gerada quando um determinado sintoma é identificado. Associado à uma requisição de mudança podemos ter um plano de mudança definido por instâncias da classe \textsf{ChangePlan}. No metamodelo proposto, um plano de mudança define uma ação a ser executada. Uma ação por sua vez pode ser composta de outras ações, conforme visto na seção \ref{sec:signals}.
+% Enquanto a função de planejamento pode empregar algoritmos complexos que geram dinâmicamente planos  de mudança que podem envolver um workflow completo de execução, no trabalho em questão optamos por uma abordagem simples, onde um plano é diretamente associado a uma solicitação de mudança
+
 \subsection{Policies}
 
 \section{Execution Environment}
