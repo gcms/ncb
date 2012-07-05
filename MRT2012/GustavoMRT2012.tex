@@ -47,30 +47,34 @@ We present an initial validation of the approach in the context of the Communica
 
 \keywords{Models at Runtime, Model-Driven Engineering, Domain-Specific Modeling Languages, Metamodeling, Middleware}
 
-\section{Introduction}
-Model-driven engineering (MDE) proposes the use of models as a way to deal with the complexity involved in the development and maintenance of contemporary applications. These commonly operate in a distributed and heterogeneous environment and must be able to dynamically adapt in order to meet changes in the requirements and operational environment. The large number of details involved in these applications requires huge efforts in their development and maintenance when using traditional approaches.
-
-By employing DSMLs that
-
-
-Research in model-driven software development (MDD)and domain-specific modeling languages (DSMLs) focuses on how models that provide good abstractions of complex software behaviors can be used to significantly improve software productivity and quality.
+%Research in model-driven software development (MDD)and domain-specific modeling languages (DSMLs) focuses on how models that provide good abstractions of complex software behaviors can be used to significantly improve software productivity and quality.
 
 \section{Introduction}
-% Tell the whole story: problem, proposed approach to solution, results. 
+%% Tell the whole story: problem, proposed approach to solution, results. 
 
-%TODO: FOR THE WHOLE SECTION... TRY TO FOCUS MORE ON THE MODELS@RUNTIME. I MEAN, I NEED TO MAKE MORE EXPLICIT THE RELATIONSHIP BETWEEN THE WORK AND MODELS@RUNTIME
-Model driven engineering is being proposed as an approach to deal with the growing complexity involved in the development of modern applications.
-These applications commonly operate in a distributed and heterogeneous environment and must behave in a dependable manner. 
-These applications also often need to adapt at runtime to comply with changing requirements and environment.
-In order to achieve these goals the developers need to employ a variety of strategies to 
+%%TODO: FOR THE WHOLE SECTION... TRY TO FOCUS MORE ON THE MODELS@RUNTIME. I MEAN, I NEED TO MAKE MORE EXPLICIT THE RELATIONSHIP BETWEEN THE WORK AND MODELS@RUNTIME
+%Model driven engineering is being proposed as an approach to deal with the growing complexity involved in the development of modern applications.
+%These applications commonly operate in a distributed and heterogeneous environment and must behave in a dependable manner. 
+%These applications also often need to adapt at runtime to comply with changing requirements and environment.
+%In order to achieve these goals the developers need to employ a variety of strategies to 
 
-MDE proposes to simplify the development of applications.
-By employing models built upon abstractions of the problem domain.
-MDE looks forward reducing the complexity due to the the technical details in the translation from domain concepts to platform concepts.
+Model-driven engineering (MDE) proposes the use of models as a way to deal with the increasingly complexity of contemporary applications. These applications usually operate in a distributed and heterogeneous environment and must be able to dynamically adapt in order to meet changes in the requirements and operational environment. Their development and maintenance using traditional approaches may require a huge effort due to the limitations of the abstractions available.
+% traditional: (computer/technological centric) 
+% limitations: (too generic/distant from the problem)
 
-%By employing this approach models can be as high-level as to be created by domain experts or event end users
+%MDE proposes to simplify the development of applications.
+%By employing models built upon abstractions of the problem domain.
+%MDE looks forward reducing the complexity due to the the technical details in the translation from domain concepts to platform concepts.
 
-% OBS: First we introduce the MDE approach of using DSMLs and automated processing
+By employing models built upon abstractions that are closer to the problem at hand, model-driven approaches looks forward to abstract details of the implementation platform, thus simplifying the development and maintenance of these applications. Models are usually described in a domain-specific modeling language (DSML) and are automatedly processed by tools that either translate models into artifacts of the target implementation platform or directly interpret models. Execution engines that directly process models also ease the use of models that may be created and changed at runtime.
+
+Models may be used during development to construct new applications or at runtime to dynamically adapt an executing system.
+
+
+According to the degree of abstraction provided by the DSML, models can be created by domain experts or even end users.
+%%By employing this approach models can be as high-level as to be created by domain experts or even end users
+
+%% OBS: First we introduce the MDE approach of using DSMLs and automated processing
 In order to reduce this complexity, MDE relies on DSMLs and automated processing of models.
 Models can be either transformed or interpreted.
 
