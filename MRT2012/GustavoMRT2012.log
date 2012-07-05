@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009) (format=pdflatex 2010.7.2)  3 JUL 2012 20:18
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009) (format=pdflatex 2010.7.2)  4 JUL 2012 20:27
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -232,124 +232,132 @@ LaTeX Font Info:    Try loading font information for U+lasy on input line 33.
 (/usr/local/texlive/2009/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Overfull \hbox (3.92291pt too wide) in paragraph at lines 55--56
+[]\T1/aer/m/n/9 Research in model-driven soft-ware de-vel-op-ment (MDD)and
+ []
 
- [1{/usr/local/texlive/2009/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+
+Overfull \hbox (1.45627pt too wide) in paragraph at lines 55--56
+\T1/aer/m/n/9 domain-specific mod-el-ing lan-guages (DSMLs) fo-cuses on how
+ []
+
+[1{/usr/local/texlive/2009/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-Overfull \hbox (6.79916pt too wide) in paragraph at lines 111--111
+Overfull \hbox (6.79916pt too wide) in paragraph at lines 119--119
 []\secfnt GENERIC AR-CHI-TEC-TURE OF THE EX-
  []
 
 
-Overfull \hbox (1.36632pt too wide) in paragraph at lines 119--122
+Overfull \hbox (1.36632pt too wide) in paragraph at lines 130--133
 \T1/aer/m/n/9 de-scribes the ab-stract syn-tax and static se-man-tics of a DSML
 
  []
 
 
-Overfull \hbox (4.07463pt too wide) in paragraph at lines 124--125
+Overfull \hbox (4.07463pt too wide) in paragraph at lines 135--136
 []\T1/aer/m/n/9 Figure show-ing: DSML meta-model (ab-stract syn-tax [mof],
  []
 
 
-Overfull \hbox (9.66397pt too wide) in paragraph at lines 149--153
+Overfull \hbox (9.66397pt too wide) in paragraph at lines 160--164
 \T1/aer/m/n/9 quite-tura genérica para a definição dessa cat-e-go-ria de máquin
 as
  []
 
 
-Overfull \hbox (13.57062pt too wide) in paragraph at lines 157--158
+Overfull \hbox (13.57062pt too wide) in paragraph at lines 168--169
 \T1/aer/m/n/9 provê uma in-ter-face ex-terna para uti-liza-ção da plataforma.
  []
 
 
-Overfull \hbox (2.7253pt too wide) in paragraph at lines 159--160
+Overfull \hbox (2.7253pt too wide) in paragraph at lines 170--171
 \T1/aer/m/n/9 pos-sui como prin-ci-pal re-spon-s-abil-i-dade a trans-for-mação
  []
 
+[2]
 
-./GustavoMRT2012.tex:169: LaTeX Error: File `./fig/uvm' not found.
+./GustavoMRT2012.tex:180: LaTeX Error: File `./fig/uvm' not found.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.169 ...graphics[width=0.40\textwidth]{./fig/uvm}
+l.180 ...graphics[width=0.40\textwidth]{./fig/uvm}
                                                   
 ? 
 
-Overfull \hbox (4.93889pt too wide) in paragraph at lines 174--178
+Overfull \hbox (4.93889pt too wide) in paragraph at lines 185--189
 \T1/aer/m/n/9 abil-i-dades necessárias para a re-al-iza-ção de serviços no domí
 nio
  []
 
-[2]
-Overfull \hbox (21.4811pt too wide) in paragraph at lines 183--184
+
+Overfull \hbox (21.4811pt too wide) in paragraph at lines 194--195
 \T1/aer/m/n/9 modelo que pos-si-bilita a mod-e-lagem do com-por-ta-mento necess
 ário
  []
 
 
-Overfull \hbox (1.0065pt too wide) in paragraph at lines 183--184
+Overfull \hbox (1.0065pt too wide) in paragraph at lines 194--195
 \T1/aer/m/n/9 meta-modelo em questão con-tem-pla a de-scrição dos seguintes
  []
 
 
-Overfull \hbox (6.03683pt too wide) in paragraph at lines 183--184
+Overfull \hbox (6.03683pt too wide) in paragraph at lines 194--195
 \T1/aer/m/n/9 as-pec-tos en-volvi-dos no cumpri-mento destas re-spon-s-abil-i-d
 ades: 
  []
 
 
-LaTeX Warning: Citation `cvm' on page \thepage  undefined on input line 190.
+LaTeX Warning: Citation `cvm' on page \thepage  undefined on input line 201.
 
-LaTeX Font Info:    Try loading font information for T1+aess on input line 194.
+LaTeX Font Info:    Try loading font information for T1+aess on input line 205.
 
 (/usr/local/texlive/2009/texmf-dist/tex/latex/ae/t1aess.fd
 File: t1aess.fd 1997/11/16 Font definitions for T1/aess.
 )
 
 LaTeX Warning: Reference `fig:metamodelo-interface' on page \thepage  undefined
- on input line 194.
+ on input line 205.
 
 
 LaTeX Warning: Reference `fig:metamodelo-resource' on page \thepage  undefined 
-on input line 200.
+on input line 211.
 
 
-Overfull \hbox (11.85147pt too wide) in paragraph at lines 200--201
+Overfull \hbox (11.85147pt too wide) in paragraph at lines 211--212
 []\T1/aer/m/n/9 Uma in-stân-cia da classe mm \T1/aess/m/n/9 In-stanceRe-source-
 M-an-ager \T1/aer/m/n/9 agrupa
  []
 
 
 LaTeX Warning: Reference `fig:metamodelo-state' on page \thepage  undefined on 
-input line 210.
+input line 221.
 
 
-Overfull \hbox (8.58937pt too wide) in paragraph at lines 209--211
+Overfull \hbox (8.58937pt too wide) in paragraph at lines 220--222
 \T1/aer/m/n/9 que pos-sui um nome, pro-priedade chave, e agrupa pro-priedades
  []
 
 [3]
-Overfull \hbox (14.9743pt too wide) in paragraph at lines 236--240
+Overfull \hbox (14.9743pt too wide) in paragraph at lines 247--251
 \T1/aer/m/n/9 de com-putação autônoma pro-posta pela IBM. Re-visão/descrição
  []
 
 
-Overfull \hbox (3.20253pt too wide) in paragraph at lines 246--247
+Overfull \hbox (3.20253pt too wide) in paragraph at lines 257--258
 []\T1/aer/m/n/9 As ab-strações pre-sentes no meta-mod-elo pro-posto per-mitem
  []
 
 
+Underfull \vbox (badness 1558) has occurred while \output is active []
+
+
+
 LaTeX Warning: Reference `sec:signals' on page \thepage  undefined on input lin
-e 257.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
+e 268.
 
 No file GustavoMRT2012.bbl.
 [4] (./GustavoMRT2012.aux)
@@ -376,7 +384,7 @@ dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2009/texmf-dist/fo
 nts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2009/texmf-dist/fonts/type1/
 urw/times/utmr8a.pfb></usr/local/texlive/2009/texmf-dist/fonts/type1/urw/times/
 utmri8a.pfb>
-Output written on GustavoMRT2012.pdf (4 pages, 151890 bytes).
+Output written on GustavoMRT2012.pdf (4 pages, 152690 bytes).
 PDF statistics:
  56 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
