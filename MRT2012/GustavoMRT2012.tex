@@ -58,7 +58,7 @@ We present an initial validation of the approach in the context of the Communica
 %These applications also often need to adapt at runtime to comply with changing requirements and environment.
 %In order to achieve these goals the developers need to employ a variety of strategies to 
 
-Model-driven engineering (MDE) proposes the use of models as a way to deal with the increasingly complexity of contemporary applications. These applications usually operate in a distributed and heterogeneous environment and must be able to dynamically adapt in order to meet changes in the requirements and operational environment. Their development and maintenance using traditional approaches may require a huge effort due to the limitations of the abstractions available.
+Model-driven engineering (MDE) proposes the use of models as a way to deal with the increasingly complexity of contemporary applications. These applications usually operate in a distributed and heterogeneous environment and must be able to dynamically adapt in order to meet changes in the requirements and operational environment. Their development and maintenance using traditional approaches may require a huge effort due to the limitations of the abstractions based on the implementation platform. % to deal with the large number of details
 % traditional: (computer/technological centric) 
 % limitations: (too generic/distant from the problem)
 
@@ -66,17 +66,18 @@ Model-driven engineering (MDE) proposes the use of models as a way to deal with 
 %By employing models built upon abstractions of the problem domain.
 %MDE looks forward reducing the complexity due to the the technical details in the translation from domain concepts to platform concepts.
 
-By employing models built upon abstractions that are closer to the problem at hand, model-driven approaches looks forward to abstract details of the implementation platform, thus simplifying the development and maintenance of these applications. Models are usually described in a domain-specific modeling language (DSML) and are automatedly processed by tools that either translate models into artifacts of the target implementation platform or directly interpret models. Execution engines that directly process models also ease the use of models that may be created and changed at runtime.
+%% OBS: First we introduce the MDE approach of using DSMLs and automated processing
+%In order to reduce this complexity, MDE relies on DSMLs and automated processing of models.
+%Models can be either transformed or interpreted.
+By employing models built upon abstractions that are closer to the problem at hand, model-driven approaches looks forward to abstract details of the implementation platform, thus simplifying the development and maintenance of these applications. Models are usually described in a domain-specific modeling language (DSML) and are automatedly processed by tools that either translate models into artifacts of the target implementation platform or directly interpret models.
 
-Models may be used during development to construct new applications or at runtime to dynamically adapt an executing system.
+% Maybe move these phrases into the preceding paragraph?
+Models may be used during development to construct new applications or at runtime to dynamically change an executing system. The use of execution engines that directly process models eases the usage of models that may be created and changed at runtime.
 
+High level DSMLs may enable domain experts, or even end users to create applications right from their requirements. 
 
 According to the degree of abstraction provided by the DSML, models can be created by domain experts or even end users.
 %%By employing this approach models can be as high-level as to be created by domain experts or even end users
-
-%% OBS: First we introduce the MDE approach of using DSMLs and automated processing
-In order to reduce this complexity, MDE relies on DSMLs and automated processing of models.
-Models can be either transformed or interpreted.
 
 % OBS: Then we discuss about the DSML
 The use of high level (and maybe graphical) DSMLs?
