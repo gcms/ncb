@@ -218,8 +218,11 @@ Como uma interface de serviços, o SB se comunica com o UM através de chamadas qu
 
 Com isto em mente, neste trabalho, construímos um meta-modelo que possibilita a modelagem do comportamento necessário para atender as responsabilidades definidas para a camada de intermediação de serviço da arquitetura proposta. O meta-modelo em questão contempla a descrição dos seguintes  aspectos envolvidos no cumprimento destas responsabilidades:
 
-\section{Meta-model for Broker Layer}
+\section{Meta-model for Broker layer}
 
+As mentioned in the preceding section, the Broker layer is responsible for providing an independent interface upon its set of managed resources. The Broker should also be able to monitor its resources and decide which actions may need to be taken in order to meet the requests received from its interface. Thus, the proposed meta-model contains abstractions for the description of the interface, managed resources and internal state maintained by the layer. It also enables the description of autonomic behavior and policies for the selection of resources.
+
+The meta-model for the Broker layer was designed using the Eclipse Modeling Framework (EMF) which provides support for the construction and processing of the meta-model instances. The meta-model is structured arround an element called \textsf{Manager}. A manager defines a context for the management of resource where all
 % Show the class diagram and describe elements of the meta-model. May structure the section based on the major blocks of the meta-model.
 
 \subsection{Interface}
