@@ -58,7 +58,7 @@ We present an initial validation of the approach in the context of the Communica
 %These applications also often need to adapt at runtime to comply with changing requirements and environment.
 %In order to achieve these goals the developers need to employ a variety of strategies to 
 
-Model-driven engineering (MDE) proposes the use of models as a way to deal with the increasingly complexity of contemporary applications. These applications usually operate in a distributed and heterogeneous environment and must be able to dynamically adapt in order to meet changes in the requirements and operational environment. Their development and maintenance using traditional approaches may require a huge effort due to the limitations of the abstractions based on the implementation platform. % to deal with the large number of details
+Model-driven engineering (MDE) proposes the use of models as a way to deal with the increasingly complexity of contemporary applications. These applications usually operate in a distributed and heterogeneous environment and must be able to dynamically adapt in order to meet changes in the requirements and operational environment. Their development and maintenance using traditional approaches may require a huge effort due to the limitation of abstractions based on the implementation platform. % to deal with the large number of details
 % traditional: (computer/technological centric) 
 % limitations: (too generic/distant from the problem)
 
@@ -72,21 +72,23 @@ Model-driven engineering (MDE) proposes the use of models as a way to deal with 
 By employing models built upon abstractions that are closer to the problem at hand, model-driven approaches looks forward to abstract details of the implementation platform, thus simplifying the development and maintenance of these applications. Models are usually described in a domain-specific modeling language (DSML) and are automatedly processed by tools that either translate models into artifacts of the target implementation platform or directly interpret models.
 
 % Maybe move these phrases into the preceding paragraph?
-Models may be used during development to construct new applications or at runtime to dynamically change an executing system. The use of execution engines that directly process models eases the usage of models that may be created and changed at runtime.
-
-High level DSMLs may enable domain experts, or even end users to create applications right from their requirements. 
-
-According to the degree of abstraction provided by the DSML, models can be created by domain experts or even end users.
+The use of high-level graphical DSMLs may enable domain experts, or even end users to create applications right from their requirements. 
+Moreover, models may be used during development to construct new applications or at runtime to dynamically change an executing system. The use of execution engines that directly process models eases the usage of models that may be created and changed at runtime.
 %%By employing this approach models can be as high-level as to be created by domain experts or even end users
 
-% OBS: Then we discuss about the DSML
-The use of high level (and maybe graphical) DSMLs?
-Making it possible for domain experts, or even end users to create applications from their requirements.
+%% OBS: Then we discuss about the DSML
+%The use of high level (and maybe graphical) DSMLs?
+%Making it possible for domain experts, or even end users to create applications from their requirements.
 
 % OBS: And next we discuss about the automated processing as an interpreter (exeution engine)
-Communication Virtual Machine (CVM) and MicroGrid Virtual Machine (MGridVM) are examples of software that employ MDE techniques to allow users to develop applications using DSMLs.
-Don't forget to mention that its not only applications, but complex applications
-Besides allowing the development of applications, these software also enables the users to adapt applications during their runtime by manipulating models. These virtual machines are execution engines for DSMLs named CML and MGridML respectively.
+
+%%Besides allowing the development of applications, these software also enables the users to adapt applications during their runtime by manipulating models. These virtual machines are execution engines for DSMLs named CML and MGridML respectively.
+Communication Virtual Machine (CVM) and MicroGrid Virtual Machine (MGridVM) are examples of software that employ MDE techniques to allow users to create complex applications using high-level graphical DSMLs. 
+% They provide a high level service upon a heterogenous set of resources
+%These virtual machines are execution engines for DSMLs named CML and MGridML respectively.
+Their execution engines are capable of processing models described in their respective DSML and realize the service described by them. Such models can also be changed at runtime, triggering adaptations to achieve the newly described requirements. 
+
+%%Don't forget to mention that its not only applications, but complex applications
 % TODO: make the concept of execution engine clearer
 % TODO: MAKE IT CLEAR THAT THE MODELS PROCESSED BY THESE ARE MODELS@RUNTIME
 
@@ -95,28 +97,45 @@ Besides allowing the development of applications, these software also enables th
 % QUESTION: While mentioning CVM should we mention here that it works by analyzing changes in the model and synthesizing scripts? Or should we delay it to the Background?
 %ALTERNATIVE: State that the use of an interpreter (herein called execution engine) enables the use of models to also change the runtime behavior using constructs closer to the problem domain
 
-to allow the above (user built applications)?
-DSMLs, along with the mechanisms for their processing embed concepts and semantics of the domain.
-Once we have a DSML and the mechanism for processing it, users can directly develop applications in that DSML.
 
-While the development of applications in these domains employing their respective DSMLs is quite simple, the same is not true when talking about the execution engine that interprets their languages. These mechanisms are commonly developed in general purpose language and are subject to all the technical complexities involved in the traditional software development.
+%to allow the above (user built applications)?
+%DSMLs, along with the mechanisms for their processing embed concepts and semantics of the domain.
+%Once we have a DSML and the mechanism for processing it, users can directly develop applications in that DSML.
 
-Despite that, these execution engines share a lot of commonalities.
-Their applications basically provide a high-level service upon a set of heterogeneous resources.
-In order to do that, the runtime engine may need to execute many operations related to the processing of models, negotiation of configurations, synthesis of commands, evaluation of policies, runtime adaptation, and etc.
+To enable users to directly create and execute applications in a DSML, much of the knowledge of the application domain must be embedded into the DSML and the execution engine. While this approach simplifies the development of applications in these domains, the same is often not true regarding the execution engines that interpret these DSMLs. These engines are commonly developed in general purpose language and are often built from scratch for an specific DSML.
+
+
+%While the development of applications in these domains employing their respective DSMLs is quite simple, the same is not true when talking about the execution engine that interprets their languages. These mechanisms are commonly developed in general purpose language and are subject to all the technical complexities involved in the traditional software development.
+
+%Despite that, these execution engines share a lot of commonalities.
+%Their applications basically provide a high-level service upon a set of heterogeneous resources.
+%In order to do that, the runtime engine may need to execute many operations related to the processing of models, negotiation of configurations, synthesis of commands, evaluation of policies, runtime adaptation, and etc.
+
+Despite that, execution engines of CVM and MGridVM share a lot of commonalities as both of them are focused towards providing a high-level service upon a heterogeneous set of resources. Both of them need to deal with operations related to the processing of models, negotiation of configurations, synthesis of commands, evaluation of policies, runtime adaptation, and etc. Considering this, both CVM and MGridVM were built upon a layered architecture, in which each layer has a set of well-defined responsibilities.
+
 %TODO: Give a better look at how the chapter about the CVM mentions these features and the similarity between these VMs
-Both CVM and MGridVM are built upon a layered architecture, in which each layer has well defined responsibilities.
+%%Both CVM and MGridVM are built upon a layered architecture, in which each layer has well defined responsibilities.
 %Although the communication domain is the focus of this chapter, we are currently applying the approach to other domains, such as the microgrid energy management applications (Allison, Allen, Yang, & Clarke, 2011). That is, we are in the process of developing the Microgrid Modeling Language (MGridML) and the Microgrid Virtual Machine (MGridVM) using the approach describe here. By applying our approach to multiple domains, we hope to eventually show how the approach can be generalized as a new way for defining semantics for i-DSMLs that can be directly executed by a virtual machine.
 
-Taking that into consideration, we propose a model-driven approach to the construction of execution engines for the provision of high-level services described by DSMLs upon a set of resources. Doing so, we look forward a way to assist the construction of DSML execution engines. 
-%Generalization of approach. The long-term goal of this research project is to generalize the approach on developing i-DSMLs. We expect to create an infrastructure that can be used to assist with developing the i-DSML (see Figure 1), capturing the domain-specific behavior (maybe using LTSs e.g., Tables 4 and 5), and generating the domain specific VM (transformation shown in Figure 4).
+Therefore, we envision an approach to generalize the construction of these execution engines, that are targeted at the processing of DSMLs related to the provision of services upon a set of resources, and capable to transparently execute models created or changed at runtime.
+
+Taking that into account, we propose a model-driven approach to the construction of these execution engines that stems from the solutions employed in the development of CVM and MGridVM. Doing so, we look forward a way to assist the construction of these DSML execution engines. Our proposal relies on the a generic layered architecture and the use of modeling as a way to specialize these architecture into an execution engine for a given DSML.
+
+%Taking that into consideration, we propose a model-driven approach to the construction of execution engines for the provision of high-level services described by DSMLs upon a set of resources. Doing so, we look forward a way to assist the construction of DSML execution engines. 
+%%Generalization of approach. The long-term goal of this research project is to generalize the approach on developing i-DSMLs. We expect to create an infrastructure that can be used to assist with developing the i-DSML (see Figure 1), capturing the domain-specific behavior (maybe using LTSs e.g., Tables 4 and 5), and generating the domain specific VM (transformation shown in Figure 4).
 %Such an infrastructure would require: (1) defining a set of domain characteristics that are well suited for these i-DSMLs, (2) a meta-metamodel that can be used to define both the i-DSML and its interpreter, (3) a method for capturing the domain-specific behavior and integrating it into the interpreter.
-Our approach relies on the experience acquired in the development of CVM and MGridVM to propose a generic architecture and the use of modeling as a way to specialize it.
-We illustrate this approach by presenting a meta-model designed to describe one of the layers of the proposed architecture.
-Next, we create an instance of this meta-model that describes the same behavior expected from the correspondent layer in the CVM.
+
+We illustrate our approach by presenting a meta-model designed for the construction of one of the layers of the proposed architecture. Next, we demonstrate how this meta-model can be used to create a model that describes the same behavior of the equivalent layer in CVM.
+
+%Our approach relies on the experience acquired in the development of CVM and MGridVM to propose a generic architecture and the use of modeling as a way to specialize it.
+%We illustrate this approach by presenting a meta-model designed to describe one of the layers of the proposed architecture.
+%Next, we create an instance of this meta-model that describes the same behavior expected from the correspondent layer in the CVM.
+
+In section ~\ref{sec:background} we review the concepts involved in this work, section ~\ref{sec:approach} we describe our proposed approach. Section ~\ref{sec:meta-model} describes the meta-model of part of the architecture and ~\ref{sec:runtime} explains the runtime environment needed to process the models descbribed using the proposed meta-model.
 
 
 \section{Background}
+\label{sec:background}
 
 % MDE, DSMLs and models at runtime; analogy with the distinction between structural reflection (modeling of the language) and behavioral reflection (modeling of the execution engine);
 
