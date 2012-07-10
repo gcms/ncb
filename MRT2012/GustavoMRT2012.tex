@@ -220,33 +220,49 @@ Com isto em mente, neste trabalho, construímos um meta-modelo que possibilita a 
 
 \section{Meta-model for Broker layer}
 
-As mentioned in the preceding section, the Broker layer is responsible for providing an independent interface upon its set of managed resources. The Broker should also be able to monitor its resources and decide which actions may need to be taken in order to meet the requests received from its interface. Thus, the proposed meta-model contains abstractions for the description of the interface, managed resources and internal state maintained by the layer. It also enables the description of autonomic behavior and policies for the selection of resources.
+As mentioned in the preceding section, a Broker layer is responsible for providing an independent interface upon its set of managed resources. A Broker should also be able to monitor its resources and decide which actions may need to be taken in order to meet the requests received from its interface. Thus, the proposed meta-model contains abstractions for the description of the interface, managed resources and internal state maintained by the layer. It also enables the description of autonomic behavior and policies for the selection of resources.
 
-The meta-model for the Broker layer was designed using the Eclipse Modeling Framework (EMF) which provides support for the construction and processing of the meta-model instances. The meta-model is structured arround an element called \textsf{Manager}. A manager defines a context for the management of resource where all
+The meta-model for the Broker layer was designed using the Eclipse Modeling Framework (EMF) which provides support for the construction and processing of the meta-model instances. The meta-model is structured around a class called \textsf{Manager} that defines a context for the management of resources and aggregates elements for describing the main aspects of the layer.  The figure ~\ref{fig:meta-model} shows an overall view of the meta-model... in this picture...
+
+An instance of a \textsf{Manager} has an interface and can also be viewed as a resource for other managers, facilitating the modularization of the layer and the reuse of specialized resource managers as building blocks for higher-level managers. Therefore a Broker layer may encapsulate an hierarchy of managers where the top-level manager defines the interface of the layer.
+
 % Show the class diagram and describe elements of the meta-model. May structure the section based on the major blocks of the meta-model.
 
 \subsection{Interface}
-No metamodelo proposto, a interface para utilização de um gerenciador é definida através de chamadas providas e eventos que podem ser sinalizados. Este tipo de interface segue a mesma abordagem empregada pela CVM para comunicação entre suas camadas \cite{cvm}. Dessa forma, a utilização da interface se dá através da realização de chamadas disponíveis e tratamento de eventos gerados.
+In the proposed meta-model, the interface for the usage of a manager is defined by provided calls and events that may be signaled to the upper layers. The class \textsf{Interface} is used to describe the interface of managers and resources. This class groups a set of calls and events that are respectively described by classes \textsf{Call} and \textsf{Event} that inherit from the class \textsf{Signal}. A \textsf{Signal} by its turn has a name and a set of named parameters defined by the class \textsf{Parameter}. Since a Broker layer is defined on terms of its top-level manager, their interfaces are also the same and therefore the interaction between layers follow the same approach based on provided calls and signaled events.
 
-A interface de uma camada de intermediação de serviços, por sua vez, é definida pela interface de seu gerenciador principal e, portanto, também interage com a camada superior da forma descrita acima. Além disso, as interfaces para utilização dos recursos gerenciados também é descrita da mesma forma, o que possibilita que um gerenciador possa ser tratado como um recurso.
-
-A classe \textsf{Interface} é utilizada para descrever a interface de um gerenciador ou recurso no metamodelo proposto. Essa classe agrupa um conjunto de chamadas providas e eventos que podem ser sinalizados. Chamadas e eventos são representados respectivamente através das classes \textsf{Call} e \textsf{Event} que apresentam como característica comum o fato de possuírem um nome e um conjunto de parâmetros, e por isso herdam estes atributos da classe \textsf{Signal}. A Figura ~\ref{fig:metamodelo-interface} ilustra as classes do metamodelo relacionadas à descrição de interfaces.
 \subsection{Signal handling}
-\subsection{Resource management}
-A interface mm \textsf{ResourceManager} do metamodelo é utilizada para descrever as interfaces dos recursos gerenciados pela camada, e como estes serão obtidos. As interfaces dos recursos são descritas através da classe mm \textsf{Interface}, da mesma forma que a interface da camada. A obtenção dos recursos por sua vez, é definida de acordo com a sua natureza, por classes mm que implementam a interface \textsf{ResourceManager}. O metamodelo proposto conta com uma classe mm denominada \textsf{InstanceResourceManager} que permite a descrição de um conjunto fixo de recursos e suas características. Outras classes mm que implementam a interface \textsf{ResourceManager} poderiam, por sua vez, possibilitar a obtenção de recursos de formas mais elaboradas, como por exemplo, através de repositórios de objetos distribuídos.
-% ??? Ponto de questionamento: que outras formas de se obter?
+The actual behavior of a Broker layer is defined by what it does when its called from the upper layers or when a given event is generated by its resources. In the Broker meta-model, this is done by defining which action should be taken as a response to a given signal. 
+When a signal, that may be either a call or an event, is signaled at runtime the corresponding action is executed. %This approach draws inspiration from event-driven architecture
 
-Uma instância da classe mm \textsf{InstanceResourceManager} agrupa um conjunto de objetos do tipo mm \textsf{Instance}. A classe mm \textsf{Instance}, por sua vez, representa um recurso que é obtido diretamente a partir da instanciação de uma determinada classe rt que implementa o recurso. Além disso, uma instância de \textsf{Instance} também define qual das interfaces descritas pelo \textsf{ResourceManager} correspondente é a interface do recurso. Por fim, a classe mm \textsf{Instance} implementa a interface \textsf{Annotable}, o que permite que metadados sejam associados aos recursos. A Figura ~\ref{fig:metamodelo-resource} ilustra as classes mm do metamodelo envolvidas na descrição de recursos.
+In this meta-model, \textsf{Signal}, \textsf{Handler} and \textsf{Action} are the main classes used to define the signal handling of a given manager. While signals are described as part of an interface, actions and handlers are directly grouped in the manager. An action represents some operation that can be executed and is defined by the abstract class \textsf{Action} that currently have the following subclasses:
+
+\begin{itemize}
+
+\item  \textsf{MacroAction} that allows the user to define a Java class that implements the intended action
+
+\item \textsf{CallAction} that defines a call to be enqueued or executed in the managed resources or in the manager itself
+
+\item \textsf{EventAction} that defines an event to be generated to the upper layers
+
+\item \textsf{SequenceAction} that combines a list of actions to be executed in a sequence
+
+\end{itemize}
+
+To define a handler, the modeler needs to indicate the signal that it handles, whether it is enabled and the action that will be taken. Besides that, it is also needed to define how the parameter values that come from a given call or event will be mapped into the context needed for the execution of the corresponding. This binding is mediated by a class named \textsf{ActionExecution} that groups a set of \textsf{ParameterBinding}.
+
+
+\subsection{Resource management}
+The \textsf{ResourceManager} in the meta-model has the goal of describing the interface of the managed resources and how they will be obtained at runtime. The interfaces are described in the same way as the manager interface by employing the class \textsf{Interface}. The way the resources are obtained, in its turn, is defined according to the subtypes of \textsf{ResourceManager}. The current meta-model includes a class named \textsf{InstanceResourceManager} that may be used to describe a fixed set of resources that are created by instantiating an implementation class. Other subtypes that define more elaborate ways of obtaining resources such as from distributed objects repositories may be easily defined.
+
+An instance resource manager groups a set of instances defined by the type \textsf{Instance} that is defined in terms of its implementation class. \textsf{Instance} is also a subtype of \textsf{Annotable}, making it possible to define meta-data associated to the resource that may be eventually employed in the selection of resources. 
+
 \subsection{State management}
 
-Ao realizar o seu trabalho, a camada de intermediação de serviços recebe chamadas através da sua interface e eventos gerados pelos seus recursos e realiza o processamento correspondente.
-Muitas vezes, o processamento de um desses sinais recebidos depende de outros sinais já processados anteriormente pela camada. Um sinal pode ter seu processamento diferenciado de acordo com a ocorrência ou não de um evento em um determinado recurso, ou de acordo com o resultado do processamento de uma chamada, etc.
-Devido a esta característica, é necessário que alguns dados sejam mantidos pela camada entre o tratamento de diferentes ocorrências de sinais.
+In a great number of occasions, the processing of a given call or event may depend upon signals that were previously received by the layer. A given signal may have a different processing according to the parameters of a preceding call, the simple occurrence of an event or the result of the processing of a signal. In order to make it possible, the layer should be able to keep state between occurrences of signals.
 
-A classe \text{StateManager} do metamodelo tem como função definir os tipos de dados que poderão ser mantidos durante a execução da camada. Os tipos de dados podem ser descritos através de uma estrutura simples baseada em propriedades e subtipos. Além disso, a descrição de um tipo exige a definição de uma propriedade chave que identifique unicamente um registro desse tipo de dados.
+The class \textsf{StateManager} provides a way to define the data types that will need to be kept by a given manager at runtime. Data types are defined through the class \textsf{State} by a simple structure where a type is defined in terms of its properties and subtypes. Subtypes are also defined as instances of \textsf{State} and therefore may have the same features.  Also, as in a relational model the definition of a type requires the definition of a key property that uniquely identifies a register of a given datatype.
 
-Os tipos são definidos através de instâncias da classe \textsf{State} que possui um nome, propriedade chave, e agrupa propriedades e subtipos. Cada propriedade por sua vez é definida por instâncias da classe \textsf{Property}, que por sua vez possuem um nome. Os subtipos são definidos a partir da mesma classe \textsf{State}, o que possibilita a definição de tipos de dados compostos.
-A Figura ~\ref{fig:metamodelo-state} ilustra as classes envolvidas na definição dos tipos de dados a serem mantidos pela camada durante sua execução.
 \subsection{Autonomic computing}
 
 %- A camada de intermediação de serviços deve abstrair os detalhes da dinâmica envolvida no gerenciamento dos recursos da camada superior.
