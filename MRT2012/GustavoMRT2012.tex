@@ -58,7 +58,7 @@ We present an initial validation of the approach in the context of the Communica
 %These applications also often need to adapt at runtime to comply with changing requirements and environment.
 %In order to achieve these goals the developers need to employ a variety of strategies to 
 
-Model-driven engineering (MDE) proposes the use of models as a way to deal with the increasingly complexity of contemporary applications. These applications usually operate in a distributed and heterogeneous environment and must be able to dynamically adapt in order to meet changes in the requirements and operational environment. Their development and maintenance using traditional approaches may require a huge effort due to the limitation of abstractions based on the implementation platform. % to deal with the large number of details
+Model-driven engineering (MDE) proposes the use of models as a way to deal with the increasingly complexity of contemporary softwre applications. These applications usually operate in a distributed and heterogeneous environment and must be able to dynamically adapt in order to meet changes in the requirements and operational environment. Their development and maintenance using traditional approaches often require a huge effort due to the limitation of abstractions based on the implementation platform. % to deal with the large number of details
 % traditional: (computer/technological centric) 
 % limitations: (too generic/distant from the problem)
 
@@ -69,7 +69,7 @@ Model-driven engineering (MDE) proposes the use of models as a way to deal with 
 %% OBS: First we introduce the MDE approach of using DSMLs and automated processing
 %In order to reduce this complexity, MDE relies on DSMLs and automated processing of models.
 %Models can be either transformed or interpreted.
-By employing models built upon abstractions that are closer to the problem at hand, model-driven approaches looks forward to abstract details of the implementation platform, thus simplifying the development and maintenance of these applications. Models are usually described in a domain-specific modeling language (DSML) and are automatedly processed by tools that either translate models into artifacts of the target implementation platform or directly interpret models.
+By employing models built upon abstractions that are closer to the problem at hand, model-driven approaches look forward to abstract details of the implementation platform, thus simplifying the development and maintenance of these applications. Models are usually described in a domain-specific modeling language (DSML) and are automatedly processed by tools that either translate models into artifacts of the target implementation platform or directly interpret models.
 
 % Maybe move these phrases into the preceding paragraph?
 The use of high-level graphical DSMLs may enable domain experts, or even end users to create applications right from their requirements. 
@@ -111,15 +111,15 @@ To enable users to directly create and execute applications in a DSML, much of t
 %Their applications basically provide a high-level service upon a set of heterogeneous resources.
 %In order to do that, the runtime engine may need to execute many operations related to the processing of models, negotiation of configurations, synthesis of commands, evaluation of policies, runtime adaptation, and etc.
 
-Despite that, execution engines of CVM and MGridVM share a lot of commonalities as both of them are focused towards providing a high-level service upon a heterogeneous set of resources. Both of them need to deal with operations related to the processing of models, negotiation of configurations, synthesis of commands, evaluation of policies, runtime adaptation, and etc. Considering this, both CVM and MGridVM were built upon a layered architecture, in which each layer has a set of well-defined responsibilities.
+Despite being tailored for a given DSML, execution engines of CVM and MGridVM share a lot of commonalities as both of them are focused towards providing a high-level service upon a heterogeneous set of resources. Both of them need to deal with operations related to the processing of models, negotiation of configurations, synthesis of commands, evaluation of policies, runtime adaptation, and etc. Considering this, both CVM and MGridVM were built upon a layered architecture, in which each layer has a set of well-defined responsibilities.
 
 %TODO: Give a better look at how the chapter about the CVM mentions these features and the similarity between these VMs
 %%Both CVM and MGridVM are built upon a layered architecture, in which each layer has well defined responsibilities.
 %Although the communication domain is the focus of this chapter, we are currently applying the approach to other domains, such as the microgrid energy management applications (Allison, Allen, Yang, & Clarke, 2011). That is, we are in the process of developing the Microgrid Modeling Language (MGridML) and the Microgrid Virtual Machine (MGridVM) using the approach describe here. By applying our approach to multiple domains, we hope to eventually show how the approach can be generalized as a new way for defining semantics for i-DSMLs that can be directly executed by a virtual machine.
 
-Therefore, we envision an approach to generalize the construction of these execution engines, that are targeted at the processing of DSMLs related to the provision of services upon a set of resources, and capable to transparently execute models created or changed at runtime.
+Therefore, we envision an approach to generalize the construction of this category of execution engines, that are targeted at the processing of DSMLs related to the provision of services upon a set of resources and capable of transparently executing models created or changed at runtime.
 
-Taking that into account, we propose a model-driven approach to the construction of these execution engines that stems from the solutions employed in the development of CVM and MGridVM. Doing so, we look forward a way to assist the construction of these DSML execution engines. Our proposal relies on the a generic layered architecture and the use of modeling as a way to specialize these architecture into an execution engine for a given DSML.
+Taking that into account, we propose a model-driven approach to the construction of these execution engines that stems from the solutions employed in the development of CVM and MGridVM. Doing so, we look forward a way to assist the construction of these DSML execution engines. Our proposal relies on a generic layered architecture and the use of modeling as a way to specialize these architecture into an execution engine for a given DSML.
 
 %Taking that into consideration, we propose a model-driven approach to the construction of execution engines for the provision of high-level services described by DSMLs upon a set of resources. Doing so, we look forward a way to assist the construction of DSML execution engines. 
 %%Generalization of approach. The long-term goal of this research project is to generalize the approach on developing i-DSMLs. We expect to create an infrastructure that can be used to assist with developing the i-DSML (see Figure 1), capturing the domain-specific behavior (maybe using LTSs e.g., Tables 4 and 5), and generating the domain specific VM (transformation shown in Figure 4).
@@ -137,24 +137,41 @@ In section ~\ref{sec:background} we review the concepts involved in this work, s
 \section{Background}
 \label{sec:background}
 
+\subsection{MDE}
+- mde goals and techniques
+- models@runtime são uma forma de autorepresentação com causalidade i.e. reflexão mais próxima do domínio
+
+\subsection{DSMLs}
+- languages/modeling language
+- formal definition of languages (concrete syntaxes + [abstract syntax + static semantics] + dynamic semantics)
+
 % MDE, DSMLs and models at runtime; analogy with the distinction between structural reflection (modeling of the language) and behavioral reflection (modeling of the execution engine);
 
-models@runtime são uma forma de autorepresentação com causalidade i.e. reflexão mais próxima do domínio
 
 \section{Generic Architecture of the Execution Engine}
 
-% TODO: After writing the section, find a way to mention the two point-of-views of the model of execution engine: modeling the dynamic (operational) semantics or modeling the behavioral aspects
-% ALSO: The combination of models of the layers can be viewed as a megamodel??? e.g. in fact the model of the platform is a mega-model composed by the models of the layers. the whole environment may also be a megamodel that composes the DSML metamodel, and the execution engine model
+%% TODO: After writing the section, find a way to mention the two point-of-views of the model of execution engine: modeling the dynamic (operational) semantics or modeling the behavioral aspects
+%% ALSO: The combination of models of the layers can be viewed as a megamodel??? e.g. in fact the model of the platform is a mega-model composed by the models of the layers. the whole environment may also be a megamodel that composes the DSML metamodel, and the execution engine model
 
 
-- Like we introduced, in order to get the benefits of MDE (including m@rt) we need DSMLs and their execution engine
-- While the syntax and static semantics of a DSML can be described by a meta-model, their dynamic semantics is embeded in the execution engine
+%- Like we introduced, in order to get the benefits of MDE (including m@rt) we need DSMLs and their execution engine
+%- While the syntax and static semantics of a DSML can be described by a meta-model, their dynamic semantics is embeded in the execution engine
+As introduced before, in order to leverage MDE to enable the use of high-level models for the development and runtime adaptation of applications, the construction of DSMLs and their execution engines is needed. While the abstract syntax and static semantics of a DSML can be described by a meta-model, its dynamic semantics are usually embedded in the execution engine.
+Therefore, from a language viewpoint the modeling of an execution engine can be viewed as a way to describe its DSML dynamic semantics.
+
+Still, these execution engines are also designed for processing models that can be created and changed at runtime.
 
 
-% Describe the overall design without going into details of the meta-model.
-Overview of the approach:
-- Integrate a meta-model that describes the abstract syntax and static semantics of a DSML to a model that describes the execution engine for that language (that on its turn encapsulates the static semantics... it was described in the background) 
-- While there are several tools that can be used to define the metamodel and concrete syntaxes for DSMLs, there is little support for defining the dynamic semantics that the execution engine embedded.
+
+%% Describe the overall design without going into details of the meta-model.
+%Overview of the approach:
+%- Integrate a meta-model that describes the abstract syntax and static semantics of a DSML to a model that describes the execution engine for that language (that on its turn encapsulates the static semantics... it was described in the background) 
+%- While there are several tools that can be used to define the metamodel and concrete syntaxes for DSMLs, there is little support for defining the dynamic semantics that the execution engine embedded.
+
+We propose the integration of the meta-model of a DSML to a model that describes its execution engine as a way to create platforms for the development of applications by using high-level models that can be created and changed at runtime.
+While there are several standardized tools that employ modeling to the construction of meta-models, support for the definition of dynamic semantics is still limited.
+We expect that by extending the use of MDE techniques to the definition of execution engines we could not only simplify the construction of execution engines, but also make it easier to evolve them to support changes in their DSML or in the implementation platform. The ability to manipulate the execution engine also enables the modification of the behavior...
+
 
 % Structure the description around a block diagram. Diagrama de blocos do fluxo para empregar a abordagem
 Figure showing: {DSML meta-model (abstract syntax [mof], static semantics [ocl]) + concrete syntax [gmf] + dynamic semantics [?]} composing an environment for the development of applications and show a M@RT being fed into this environment
@@ -219,6 +236,7 @@ Como uma interface de serviços, o SB se comunica com o UM através de chamadas qu
 Com isto em mente, neste trabalho, construímos um meta-modelo que possibilita a modelagem do comportamento necessário para atender as responsabilidades definidas para a camada de intermediação de serviço da arquitetura proposta. O meta-modelo em questão contempla a descrição dos seguintes  aspectos envolvidos no cumprimento destas responsabilidades:
 
 \section{Meta-model for Broker layer}
+% Show the class diagram and describe elements of the meta-model. May structure the section based on the major blocks of the meta-model.
 
 As mentioned in the preceding section, a Broker layer is responsible for providing an independent interface upon its set of managed resources. A Broker should also be able to monitor its resources and decide which actions may need to be taken in order to meet the requests received from its interface. Thus, the proposed meta-model contains abstractions for the description of the interface, managed resources and internal state maintained by the layer. It also enables the description of autonomic behavior and policies for the selection of resources.
 
@@ -234,7 +252,6 @@ The meta-model for the Broker layer was designed using the Eclipse Modeling Fram
 
 An instance of a \textsf{Manager} has an interface and can also be viewed as a resource for other managers, facilitating the modularization of the layer and the reuse of specialized resource managers as building blocks for higher-level managers. Therefore a Broker layer may encapsulate an hierarchy of managers where the top-level manager defines the interface of the layer.
 
-% Show the class diagram and describe elements of the meta-model. May structure the section based on the major blocks of the meta-model.
 
 \subsection{Interface}
 In the proposed meta-model, the interface for the usage of a manager is defined by provided calls and events that may be signaled to the upper layers. The class \textsf{Interface} is used to describe the interface of managers and resources. This class groups a set of calls and events that are respectively described by classes \textsf{Call} and \textsf{Event} that inherit from the class \textsf{Signal}. A \textsf{Signal} by its turn has a name and a set of named parameters defined by the class \textsf{Parameter}. Since a Broker layer is defined on terms of its top-level manager, their interfaces are also the same and therefore the interaction between layers follow the same approach based on provided calls and signaled events.
@@ -303,9 +320,8 @@ A policy specifies a condition over a feature that may be present in resources, 
 At runtime, the resource that achieves the highest accumulated business value is selected among the available resources.
 
 
-An evaluation point on is defined by specifying a signal which triggers the evaluation of policies and a policy evaluation handler that will be executed after the evaluation to handle its result. A policy evaluation point is linked to its handler by an instance of \textsf{PolicyEvaluationRequest} that is responsible for defining the parameter mapping between the context of the signal that triggers the evaluation, and that required for the evaluation itself. Finally, a policy evaluation handler defines an implementation class (similar to the a macro action) that may be executed upon the results of the policy evaluation processes.
-%The scope of the policies is implicitly the set of resources associated to the same manager.
-
+An evaluation point is defined by specifying a signal which triggers the evaluation of policies and the policy evaluation handler that will be executed after the evaluation to handle its result. A policy evaluation point is linked to its handler by an instance of \textsf{PolicyEvaluationRequest} that is responsible for defining the parameter mapping between the context of the signal that triggers the evaluation, and that required for the evaluation itself. Finally, a policy evaluation handler defines an implementation class (similar to the macro action) that is executed upon the results of the policy evaluation process.
+%The scope of the policies is implicitly defined as the set of resources associated to the same manager.
 
 
 
