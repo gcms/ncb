@@ -265,7 +265,7 @@ To define a handler, the modeler needs to indicate the signal that it handles, w
 \subsection{Resource management}
 The \textsf{ResourceManager} in the meta-model has the goal of describing the interface of the managed resources and how they will be obtained at runtime. The interfaces are described in the same way as the manager interface by employing the class \textsf{Interface}. The way the resources are obtained, in its turn, is defined according to the subtypes of \textsf{ResourceManager}. The current meta-model includes a class named \textsf{InstanceResourceManager} that may be used to describe a fixed set of resources that are created by instantiating an implementation class. Other subtypes that define more elaborate ways of obtaining resources such as from distributed objects repositories may be easily defined.
 
-An instance resource manager groups a set of instances defined by the type \textsf{Instance} that is defined in terms of its implementation class. \textsf{Instance} is also a subtype of \textsf{Annotable}, making it possible to define meta-data associated to the resource that may be eventually employed in the selection of resources. 
+An instance resource manager groups a set of instances defined by the type \textsf{Instance} that is defined in terms of its implementation class. \textsf{Instance} is also a subtype of \textsf{Annotable}, making it possible to define meta-data describing features and properties associated to the resource, that may be eventually employed in the selection of resources. 
 
 \subsection{State management}
 
@@ -296,6 +296,18 @@ The \textsf{ChangeRequest} class is used to specify that a change request needs 
 % Enquanto a função de planejamento pode empregar algoritmos complexos que geram dinâmicamente planos  de mudança que podem envolver um workflow completo de execução, no trabalho em questão optamos por uma abordagem simples, onde um plano é diretamente associado a uma solicitação de mudança
 
 \subsection{Policies}
+In the proposed meta-model policies are employed to drive the selection of resources. The class \textsf{PolicyManager} groups abstractions related to the definition of policies and their evaluation. These comprises \textsf{Policy} that identifies a policy, \textsf{PolicyEvaluationPoint} that defines when policy evaluation should be triggered, and \textsf{PolicyEvaluationHandler} that defines how the policy evaluation result should be handled. Besides that, the meta-model also includes auxiliary constructs for establishing links between these main elements.
+
+As mentioned earlier, resources may be annotated with its features and properties.
+A policy specifies a condition over a feature that may be present in resources, and the business value that is associated to the reaching of this condition.
+At runtime, the resource that achieves the highest accumulated business value is selected among the available resources.
+
+
+An evaluation point on is defined by specifying a signal which triggers the evaluation of policies and a policy evaluation handler that will be executed after the evaluation to handle its result. A policy evaluation point is linked to its handler by an instance of \textsf{PolicyEvaluationRequest} that is responsible for defining the parameter mapping between the context of the signal that triggers the evaluation, and that required for the evaluation itself. Finally, a policy evaluation handler defines an implementation class (similar to the a macro action) that may be executed upon the results of the policy evaluation processes.
+%The scope of the policies is implicitly the set of resources associated to the same manager.
+
+
+
 
 \section{Execution Environment}
 
