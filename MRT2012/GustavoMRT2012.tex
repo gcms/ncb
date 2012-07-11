@@ -117,7 +117,7 @@ Despite being tailored for a given DSML, execution engines of CVM and MGridVM sh
 %%Both CVM and MGridVM are built upon a layered architecture, in which each layer has well defined responsibilities.
 %Although the communication domain is the focus of this chapter, we are currently applying the approach to other domains, such as the microgrid energy management applications (Allison, Allen, Yang, & Clarke, 2011). That is, we are in the process of developing the Microgrid Modeling Language (MGridML) and the Microgrid Virtual Machine (MGridVM) using the approach describe here. By applying our approach to multiple domains, we hope to eventually show how the approach can be generalized as a new way for defining semantics for i-DSMLs that can be directly executed by a virtual machine.
 
-Therefore, we envision an approach to generalize the construction of this category of execution engines, that are targeted at the processing of DSMLs related to the provision of services upon a set of resources and capable of transparently executing models created or changed at runtime.
+Therefore, we envision an approach to generalize the construction of this category of execution engines, that are aimed at the processing of DSMLs related to the provision of services upon a set of resources and capable of transparently executing models created or changed at runtime.
 
 Taking that into account, we propose a model-driven approach to the construction of these execution engines that stems from the solutions employed in the development of CVM and MGridVM. Doing so, we look forward a way to assist the construction of these DSML execution engines. Our proposal relies on a generic layered architecture and the use of modeling as a way to specialize these architecture into an execution engine for a given DSML.
 
@@ -136,6 +136,8 @@ In section ~\ref{sec:background} we review the concepts involved in this work, s
 
 \section{Background}
 \label{sec:background}
+% MDE, DSMLs and models at runtime; analogy with the distinction between structural reflection (modeling of the language) and behavioral reflection (modeling of the execution engine);
+
 
 \subsection{MDE}
 - mde goals and techniques
@@ -145,8 +147,7 @@ In section ~\ref{sec:background} we review the concepts involved in this work, s
 - languages/modeling language
 - formal definition of languages (concrete syntaxes + [abstract syntax + static semantics] + dynamic semantics)
 
-% MDE, DSMLs and models at runtime; analogy with the distinction between structural reflection (modeling of the language) and behavioral reflection (modeling of the execution engine);
-
+\subsection{CVM/MGridVM/i-DSML}
 
 \section{Generic Architecture of the Execution Engine}
 
@@ -157,9 +158,8 @@ In section ~\ref{sec:background} we review the concepts involved in this work, s
 %- Like we introduced, in order to get the benefits of MDE (including m@rt) we need DSMLs and their execution engine
 %- While the syntax and static semantics of a DSML can be described by a meta-model, their dynamic semantics is embeded in the execution engine
 As introduced before, in order to leverage MDE to enable the use of high-level models for the development and runtime adaptation of applications, the construction of DSMLs and their execution engines is needed. While the abstract syntax and static semantics of a DSML can be described by a meta-model, its dynamic semantics are usually embedded in the execution engine.
-Therefore, from a language viewpoint the modeling of an execution engine can be viewed as a way to describe its DSML dynamic semantics.
-
-Still, these execution engines are also designed for processing models that can be created and changed at runtime.
+%Therefore, from a language viewpoint the modeling of an execution engine can be viewed as a way to describe its DSML dynamic semantics.
+%Still, these execution engines are also designed for processing models that can be created and changed at runtime.
 
 
 
@@ -168,72 +168,67 @@ Still, these execution engines are also designed for processing models that can 
 %- Integrate a meta-model that describes the abstract syntax and static semantics of a DSML to a model that describes the execution engine for that language (that on its turn encapsulates the static semantics... it was described in the background) 
 %- While there are several tools that can be used to define the metamodel and concrete syntaxes for DSMLs, there is little support for defining the dynamic semantics that the execution engine embedded.
 
-We propose the integration of the meta-model of a DSML to a model that describes its execution engine as a way to create platforms for the development of applications by using high-level models that can be created and changed at runtime.
+We propose the integration of the meta-model of a DSML to a model that describes its execution engine as a way to create platforms targeted at the development of applications by using high-level models that can be created and changed at runtime.
 While there are several standardized tools that employ modeling to the construction of meta-models, support for the definition of dynamic semantics is still limited.
-We expect that by extending the use of MDE techniques to the definition of execution engines we could not only simplify the construction of execution engines, but also make it easier to evolve them to support changes in their DSML or in the implementation platform. The ability to manipulate the execution engine also enables the modification of the behavior...
-
-
-% Structure the description around a block diagram. Diagrama de blocos do fluxo para empregar a abordagem
-Figure showing: {DSML meta-model (abstract syntax [mof], static semantics [ocl]) + concrete syntax [gmf] + dynamic semantics [?]} composing an environment for the development of applications and show a M@RT being fed into this environment
-
-%Emphasize the separation between the domain-independent aspect of model execution and the definition of the DSML (and how you link a particular execution engine definition to its respective DSML).
-Dada uma DSML previamente definida, podemos definir um execution engine que vai executar instancias dessa DSML
-Como benefício temos:
-%It would ease the construction of custom virtual machine configurations suited for specific platforms. In this way, a CVM implementation on a mobile phone could use a simpler provider selection method while a PC-based implementation could employ a more sophisticated approach. Other benefit would be the possibility to change the CVM to support new language constructs or even a specific language for another domain.
-- Futuras mudanças no execution engine podem ser para atender mudanças na linguagem (e.g. novas construções) ou para atender requisitos de diferentes ambientes
+%Dada uma DSML previamente definida, podemos definir um execution engine que vai executar instancias dessa DSML
+%Como benefício temos:
+%- Futuras mudanças no execution engine podem ser para atender mudanças na linguagem (e.g. novas construções) ou para atender requisitos de diferentes ambientes
 %ligação entre linguagem e plataforma não é formalizado (mencionar como limitação/future work)
+We expect that by extending the use of MDE techniques to the definition of execution engines we could not only simplify the construction of execution engines, but also make it easier to evolve them to support changes in their DSML or in the implementation platform. 
+%The ability to manipulate the execution engine also enables the modification of the behavior...
 
-Even though different domains require different semantics their realization quite often rely on a common set of operations. The processing of runtime models usually requires of the execution engine capabilities of model analysis and negotiation, transformation of models into different representations, adaptation of the internal arrangement of the execution engine among others.
-
-In order to enable the construction and manipulation of models that represent the behavior of a virtual machine we need a specific language (that is, a meta-model) for that. This language needs to be powerful enough to allow the description of virtual machines for different business domains, like the ones described above. Still, this language should not be too generic, as this could make model manipulation as difficult as writing code in a general-purpose language.
-
-%Justify the reduction of scope to the broker
-Considerando isto, essa linguagem deve conter construções capazes de descrever os aspectos comportamentais que independem do domínio de negócio e que estão envolvidos no fornecimento de serviços de alto nível descritos a partir de modelos construídos diretamente pelo usuário.
-Esses aspectos, que englobam tarefas como transformações de modelos, negociação de configurações apropriadas, monitoramento do ambiente, seleção e configuração de recursos, entre outros, podem ser tratados como um domínio técnico. Deste modo, tal linguagem pode ser considerada uma linguagem específica de um domínio que abrange os aspectos técnicos envolvidos na realização de serviços transparentes de alto nível a partir de um conjunto heterogêneo de recursos.
-% procurar referencia que linguagem precisa ser de domínio específico para se tornar realizável
-% e domíno técnico também
-
-
-%Discuss the general application of the approach in CVM-like architectures, but limit it to the broker layer for the purposes of scoping the current work.
-
-- based on the solutions employed by CVM/MGridVM, i.e. layered architecture with separation of responsibilities; 
-- a model based way of specializing this generic architecture i.e. employing a meta-model and instances that specialize
-
-Tendo em vista estas necessidades, propomos uma arquitetura genérica para a definição dessa categoria de máquinas virtuais dirigidas por modelos centrados no usuário.
-% baseado na experiencia obtida na CVM (ver uma boa forma de dizer isso)
-Assim como a CVM, tal arquitetura também se baseia em camadas com responsabilidades bem definidas. 
-Na abordagem proposta, as camadas desta arquitetura são definidas através de modelos cujas construções estão relacionadas às responsabilidades relativas à cada camada. A Figura \ref{fig:uvm} ilustra esta arquitetura de Máquinas Virtuais centradas no Usuário (\emph{User-centric Virtual Machine} - UVM) onde temos as seguintes camadas:
-
-
-\begin{itemize}
-
-\item  Interface com o Usuário (\emph{User Interface} - UI), que provê uma interface externa para utilização da plataforma. Além disso, esta camada possibilita a definição e gerenciamento de modelos;
-
-\item Mecanismo de Síntese (\emph{Synthesis Engine} - SE), que possui como principal responsabilidade a transformação de um modelo declarativo fornecido pela UI em uma representação algorítmica a ser executada pela camada inferior;
-
-\item \emph{Middleware} Centrado no Usuário (\emph{User-centric middleware} - UM), que além de executar as requisições geradas pelo Mecanismo de Síntese,  também gerencia os serviços providos pela máquina virtual e as tarefas em execução. Essa também é a camada responsável pela aplicação de restrições de segurança, qualidade de serviço, entre outras específicas do domínio de negócio. 
-
-\item Intermediador de Serviço (\emph{Service Broker} - SB), que é a camada responsável pelo gerenciamento dos recursos. Assim sendo, essa camada tem como objetivo prover uma interface de acesso aos recursos de forma independente da tecnologia empregada por estes, provendo um serviço transparente à camada UM.
 
 \end{itemize}
-
 \begin{figure}
  \centering
- \includegraphics[width=0.40\textwidth]{./fig/uvm}
- \caption{Arquitetura proposta para esta categoria de Máquinas Virtuais centradas no Usuário.}
+ %% Structure the description around a block diagram. Diagrama de blocos do fluxo para empregar a abordagem
+Figure showing: {DSML meta-model (abstract syntax [mof], static semantics [ocl]) + concrete syntax [gmf] + dynamic semantics [?]} composing an environment for the development of applications and show a M@RT being fed into this environment
+% \includegraphics[width=0.40\textwidth]{./fig/uvm}
+ \caption{An execution engine described by a model is used to execute a DSML model}
  \label{fig:uvm}
 \end{figure}
 
-Ao imitar a arquitetura da CVM, nos aproveitamos do conhecimento adquirido em relação à separação de responsabilidades necessárias para a realização de serviços no domínio técnico identificado. No entanto, apesar de apresentar a mesma estrutura, a arquitetura proposta se difere por ser independente do domínio de negócio.
-Além disso, na abordagem proposta, cada camada é descrita através de um modelo. Este modelo, por sua vez, é construído em conformidade com um meta-modelo da camada que contém elementos associados às responsabilidades da camada.
-%Estamos instanciando uma máquina virtual 
-Assim sendo, a abordagem dirigida por modelos é empregada para a definição e manipulação de cada camada da plataforma.
+%%Emphasize the separation between the domain-independent aspect of model execution and the definition of the DSML (and how you link a particular execution engine definition to its respective DSML).
+Despite differences in dynamic semantics of different DSMLs, they quite often rely on a common set of operations regardless of the application domain. The processing of runtime models usually requires of the execution engine capabilities of model analysis and negotiation, transformation of models into different representations, runtime adaptation among others.
 
-O Intermediador de Serviço é a camada da arquitetura proposta que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para prover o serviço solicitado. Cabe à esta camada disponibilizar uma interface de serviços que abstraia as especificidades dos recursos gerenciados para a camada superior. Além disso, o SB deve possuir capacidade de auto gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
+In order to enable the construction and manipulation of models that represent an execution engine, we need a language for that. This language needs to be powerful enough to allow the description of virtual machines for different application domains, like the ones described above. Still, this language should not be very generic, as this could make model manipulation as difficult as writing code in a general-purpose language.
+Therefore, this language should be made up of constructions related to the domain independent aspects of execution engines designed for providing high-level services described in a DSML. Thus, such a language can be regarded as a domain specific language for technical domain that encompasses the technical aspects involved in the realization of high-level services described in a DSML upon a heterogeneous set of resources.
+% MAYBE: procurar referencia que linguagem precisa ser de domínio específico para se tornar realizável
+% ref sobre domíno técnico também, ou mencionado no background
 
-Como uma interface de serviços, o SB se comunica com o UM através de chamadas que podem ser invocadas e eventos que podem ser gerados sinalizando alguma situação. Assim sendo, ao definirmos o comportamento dessa camada, precisamos descrever como serão tratadas as chamadas realizadas pela camada superior, e em que situações serão gerados determinados eventos. Mas além disso, também precisamos descrever como outras tarefas serão realizadas, incluindo o monitoramento e seleção de recursos, manutenção de informações, adaptação da camada, entre outros.
 
-Com isto em mente, neste trabalho, construímos um meta-modelo que possibilita a modelagem do comportamento necessário para atender as responsabilidades definidas para a camada de intermediação de serviço da arquitetura proposta. O meta-modelo em questão contempla a descrição dos seguintes  aspectos envolvidos no cumprimento destas responsabilidades:
+%%Discuss the general application of the approach in CVM-like architectures, but limit it to the broker layer for the purposes of scoping the current work.
+%- based on the solutions employed by CVM/MGridVM, i.e. layered architecture with separation of responsibilities; 
+%- a model based way of specializing this generic architecture i.e. employing a meta-model and instances that specialize
+Our approach relies on the solutions employed in the development of execution engines for the communication and microgrid energy management to identify a generic architecture that can be specialized into execution engines for a DSML. This domain independent architecture is structured in the following layers:
+
+\begin{itemize}
+
+\item  \emph{User Interface}, that provides an external interface for interacting with the execution engine. This layer also supports the construction and management of models by users;
+
+\item \emph{Synthesis Engine}, whose main task is to transform a declarative model received from the user interface into a control script to be executed at the next layer; 
+
+\item \emph{Middleware}, that besides executing the synthesized scripts, also manages the services under provision and applies constraints related to security, quality among other domain specific;
+
+\item \emph{Broker}, that is responsible for the management of resources. This layer provides to  the upper layer an uniform interface that abstracts not just the differences between resources, but also all details involved in their setup, monitoring, selection, among other resource management operations.
+
+\end{itemize}
+\begin{figure}
+ \centering
+ \includegraphics[width=0.40\textwidth]{./fig/uvm}
+ \caption{Generic architecture for a DSML execution engine}
+ \label{fig:uvm}
+\end{figure}
+
+Based on this architecture, we propose its specialization by the construction of  models that represent the mentioned layers in a given domain. Each of these models should be constructed in conformance to a meta-model that provides abstractions related to the responsibilities of the layer as described by the generic architecture. Therefore, an execution engine for a given model is constructed by creating models for each of the layers just described.
+
+In this paper, we focus our work towards the Broker layer, that is responsible for the management of the resources that will ultimately be used to realize a requested service. Therefore, we build a meta-model that provides abstractions for the definition of the behavior expected from the layer to meet the responsibilities of a Broker layer. These comprises the provision of an uniform interface over its managed resources, shielding the middleware layer from setup and configuration details of resources, and the self-management of the layer in order to offer the best service according to its policies and environment constraints.
+
+%O Intermediador de Serviço é a camada da arquitetura proposta que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para prover o serviço solicitado. Cabe à esta camada disponibilizar uma interface de serviços que abstraia as especificidades dos recursos gerenciados para a camada superior. Além disso, o SB deve possuir capacidade de auto gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
+
+%Como uma interface de serviços, o SB se comunica com o UM através de chamadas que podem ser invocadas e eventos que podem ser gerados sinalizando alguma situação. Assim sendo, ao definirmos o comportamento dessa camada, precisamos descrever como serão tratadas as chamadas realizadas pela camada superior, e em que situações serão gerados determinados eventos. Mas além disso, também precisamos descrever como outras tarefas serão realizadas, incluindo o monitoramento e seleção de recursos, manutenção de informações, adaptação da camada, entre outros.
+
+%Com isto em mente, neste trabalho, construímos um meta-modelo que possibilita a modelagem do comportamento necessário para atender as responsabilidades definidas para a camada de intermediação de serviço da arquitetura proposta. O meta-modelo em questão contempla a descrição dos seguintes  aspectos envolvidos no cumprimento destas responsabilidades:
 
 \section{Meta-model for Broker layer}
 % Show the class diagram and describe elements of the meta-model. May structure the section based on the major blocks of the meta-model.
@@ -313,7 +308,7 @@ The \textsf{ChangeRequest} class is used to specify that a change request needs 
 % Enquanto a função de planejamento pode empregar algoritmos complexos que geram dinâmicamente planos  de mudança que podem envolver um workflow completo de execução, no trabalho em questão optamos por uma abordagem simples, onde um plano é diretamente associado a uma solicitação de mudança
 
 \subsection{Policies}
-In the proposed meta-model policies are employed to drive the selection of resources. The class \textsf{PolicyManager} groups abstractions related to the definition of policies and their evaluation. These comprises \textsf{Policy} that identifies a policy, \textsf{PolicyEvaluationPoint} that defines when policy evaluation should be triggered, and \textsf{PolicyEvaluationHandler} that defines how the policy evaluation result should be handled. Besides that, the meta-model also includes auxiliary constructs for establishing links between these main elements.
+In the proposed meta-model policies are employed to drive the selection of resources. The class \textsf{PolicyManager} groups abstractions related to the definition of policies and their evaluation. These comprise \textsf{Policy} that identifies a policy, \textsf{PolicyEvaluationPoint} that defines when policy evaluation should be triggered, and \textsf{PolicyEvaluationHandler} that defines how the policy evaluation result should be handled. Besides that, the meta-model also includes auxiliary constructs for establishing links between these main elements.
 
 As mentioned earlier, resources may be annotated with its features and properties.
 A policy specifies a condition over a feature that may be present in resources, and the business value that is associated to the reaching of this condition.
