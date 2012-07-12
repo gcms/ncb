@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.TreeSet;
 
 public class PolicyManagerExample {
-       public static void main(String args[]) throws URISyntaxException {
+    public static void main(String args[]) throws URISyntaxException {
         FilePolicyLoader loader = FilePolicyLoader.createInstance(PolicyManager.class.getResource("../../repository/examples").toURI());
 
         PolicyManager pm = new PolicyManager(loader);

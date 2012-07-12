@@ -1,7 +1,6 @@
 package cvm.ncb.oem.policy.repository;
 
 import util.CVM_Debug;
-import cvm.ncb.oem.policy.Feature;
 import cvm.ncb.oem.policy.repository.loader.FilePolicyLoader;
 import cvm.ncb.oem.policy.repository.policy.Policy;
 import cvm.ncb.oem.policy.repository.policy.PolicyRepository;
@@ -30,7 +29,4 @@ public class FilePolicyRepository implements PolicyRepository {
         return arrPolicy;
     }
 
-    public Feature loadFeatures() {
-        return repLoader.loadFeatureTree();
-    }
 }

@@ -1,8 +1,6 @@
 package cvm.ncb.oem.policy.repository.policy;
 
 
-import cvm.ncb.oem.policy.Feature;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -34,7 +32,4 @@ public class DefaultPolicyRepository implements PolicyRepository {
         return arr;
     }
 
-    public Feature loadFeatures() {
-        return null;
-    }
 }

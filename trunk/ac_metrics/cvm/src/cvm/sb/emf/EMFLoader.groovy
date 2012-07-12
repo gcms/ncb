@@ -24,12 +24,12 @@ class EMFLoader {
         resourceSet
     }
 
-    public static Resource loadURL(URL uri) {
-        getResourceSet().getResource(org.eclipse.emf.common.util.URI.createURI(uri.toURI().toString()), true)
+    public static Resource loadURL(URI uri) {
+        getResourceSet().getResource(org.eclipse.emf.common.util.URI.createURI(uri.toString()), true)
     }
 
     public static Resource loadResource(String name) {
-        loadURL(new File("ac_metrics/cvm/emf/${name}.xmi").toURL())
+        loadURL(new File("ac_metrics/cvm/emf/${name}.xmi").toURI())
     }
 
     public static <T> T loadFirst(String name, Class<T> type) {
