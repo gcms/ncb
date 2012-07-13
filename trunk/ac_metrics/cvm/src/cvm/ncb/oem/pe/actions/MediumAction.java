@@ -1,7 +1,10 @@
 package cvm.ncb.oem.pe.actions;
 
-import cvm.ncb.ks.StateHolder;
-import cvm.ncb.oem.pe.SignalInstance;
+import cvm.sb.manager.ActionInstance;
+import cvm.sb.state.StateHolder;
+import cvm.sb.manager.ManagerContext;
+import cvm.sb.manager.SignalInstance;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 

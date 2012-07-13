@@ -1,5 +1,6 @@
 package cvm.ncb.adapters;
 
+import cvm.sb.adapters.Event;
 import util.CVM_Debug;
 import cvm.ncb.adapters.ncblite.av.AVReceive;
 import cvm.ncb.adapters.ncblite.av.AVTransmit;

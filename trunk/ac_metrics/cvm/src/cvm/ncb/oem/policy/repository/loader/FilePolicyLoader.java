@@ -9,9 +9,9 @@
 
 package cvm.ncb.oem.policy.repository.loader;
 
-import cvm.ncb.oem.policy.Attribute;
-import cvm.ncb.oem.policy.Feature;
-import cvm.ncb.oem.policy.repository.policy.*;
+import cvm.sb.policy.metadata.Attribute;
+import cvm.sb.policy.metadata.Feature;
+import cvm.sb.policy.repository.*;
 import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

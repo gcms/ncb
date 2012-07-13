@@ -1,5 +1,6 @@
 package cvm.ncb.adapters;
 
+import cvm.sb.adapters.Event;
 import util.CVM_Debug;
 
 import java.util.ArrayList;

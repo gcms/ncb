@@ -1,7 +1,9 @@
 package cvm.ncb.oem.pe.actions;
 
-import cvm.ncb.csm.Resource;
-import cvm.ncb.oem.pe.SignalInstance;
+import cvm.sb.manager.ActionInstance;
+import cvm.sb.manager.ManagerContext;
+import cvm.sb.resource.Resource;
+import cvm.sb.manager.SignalInstance;
 
 import java.util.Map;
 

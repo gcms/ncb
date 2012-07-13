@@ -1,18 +1,18 @@
 package cvm.sb.emf
 
-import cvm.ncb.adapters.Manageable
-import cvm.ncb.csm.ManagedObject
-import cvm.ncb.oem.policy.Metadata
+import cvm.sb.adapters.Manageable
+import cvm.sb.resource.bridge.BridgeResource
+import cvm.sb.policy.metadata.Metadata
 import sb.base.Instance
 
 class ManagedObjectFactory {
     private MetadataFactory metadataFactory = new MetadataFactory()
 
-    public ManagedObject createManagedObject(Instance instance) {
+    public BridgeResource createManagedObject(Instance instance) {
         Manageable manageable = Class.forName(instance.impl).newInstance()
         Metadata metadata = metadataFactory.createMetadata(instance)
 
-        new ManagedObject(metadata, manageable)
+        new BridgeResource(metadata, manageable)
     }
 
 }

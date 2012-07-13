@@ -1,9 +1,9 @@
 package cvm.ncb.oem.policy.repository;
 
+import cvm.sb.policy.repository.Policy;
+import cvm.sb.policy.repository.PolicyRepository;
 import util.CVM_Debug;
 import cvm.ncb.oem.policy.repository.loader.FilePolicyLoader;
-import cvm.ncb.oem.policy.repository.policy.Policy;
-import cvm.ncb.oem.policy.repository.policy.PolicyRepository;
 
 import java.util.Collections;
 import java.util.List;

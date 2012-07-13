@@ -1,5 +1,6 @@
 package cvm.ncb.adapters;
 
+import cvm.sb.adapters.EventException;
 import util.CVM_Debug;
 import net.sourceforge.peers.Logger;
 import net.sourceforge.peers.sip.Utils;

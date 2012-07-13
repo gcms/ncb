@@ -3,6 +3,7 @@ package cvm.ncb.adapters;
 import com.skype.*;
 import com.skype.connector.*;
 import com.skype.connector.TimeOutException;
+import cvm.sb.adapters.*;
 import util.CVM_Debug;
 
 import java.util.*;
@@ -29,8 +30,8 @@ public class SkypeAdapter extends NCBBridgeBase {
     private int count = 100000 + r.nextInt(100000);
     private volatile boolean b_mapLock;
     private Map<String, Chat> m_hmChatSessionMap;
-    private Map<String, Call> m_hmCallSessionMap;
-    private Map<String, ArrayList<Call>> m_hmCallListMap;
+    private Map<String, com.skype.Call> m_hmCallSessionMap;
+    private Map<String, ArrayList<com.skype.Call>> m_hmCallListMap;
     private Map<String, Stream> m_hmStreamUserMap;
     private Connector m_kcConector;
     private String m_sWelcomeMess = "Help Code Monkey Ninjas Are After Me !!!! XP";
@@ -84,9 +85,9 @@ public class SkypeAdapter extends NCBBridgeBase {
 
     private void init() {
         //OLD
-        m_hmCallSessionMap = new HashMap<String, Call>();
+        m_hmCallSessionMap = new HashMap<String, com.skype.Call>();
         m_hmChatSessionMap = new HashMap<String, Chat>();
-        m_hmCallListMap = new HashMap<String, ArrayList<Call>>();
+        m_hmCallListMap = new HashMap<String, ArrayList<com.skype.Call>>();
         m_hmStreamUserMap = new HashMap<String, Stream>();
         m_kcConector = Connector.getInstance();
 
@@ -162,14 +163,14 @@ public class SkypeAdapter extends NCBBridgeBase {
     /**
      * Returns a user object after login
      */
-    @Method(name = "login", parameters = {})
+    @cvm.sb.adapters.Call(name = "login", parameters = {})
     public void login() {
     }
 
     /**
      * Logs the user out.
      */
-    @Method(name = "logout", parameters = {})
+    @cvm.sb.adapters.Call(name = "logout", parameters = {})
     public void logout() {
 
     }
@@ -188,7 +189,7 @@ public class SkypeAdapter extends NCBBridgeBase {
      *
      * @param session Id of the session to create.
      */
-    @Method(name = "createSession", parameters = {"session"})
+    @cvm.sb.adapters.Call(name = "createSession", parameters = {"session"})
     public void createSession(String session) {
         System.out.println("Skype Start:" + System.currentTimeMillis());
         if (!(m_hmCallSessionMap.containsKey(session)
@@ -249,7 +250,7 @@ public class SkypeAdapter extends NCBBridgeBase {
      * @throws PartyNotAddedException
      * @throws NoSessionException
      */
-    @Method(name = "enableMedium", parameters = {"session", "medium"})
+    @cvm.sb.adapters.Call(name = "enableMedium", parameters = {"session", "medium"})
     public void enableMedium(String session, String medium) {
         String sID = session;//"S1";
         if (m_hmSessionIdMap.containsKey(sID)) {
@@ -286,7 +287,7 @@ public class SkypeAdapter extends NCBBridgeBase {
      * @throws PartyNotAddedException
      * @throws NoSessionException
      */
-    @Method(name = "disableMedium", parameters = {"session", "medium"})
+    @cvm.sb.adapters.Call(name = "disableMedium", parameters = {"session", "medium"})
     public void disableMedium(String session, String medium) {
         String sID = session;//"S1";
         if (m_hmSessionIdMap.containsKey(sID)) {
@@ -750,18 +751,18 @@ public class SkypeAdapter extends NCBBridgeBase {
         if (tempID.equals("101")) return tempID;
         CVM_Debug.getInstance().printDebugMessage("====>>>>>>" + tempID);
         try {
-            while (!this.skypeGetCallStatus(tempID).equals(Call.Status.INPROGRESS.toString())
-                    && !this.skypeGetCallStatus(tempID).equals(Call.Status.CANCELLED.toString())
-                    && !this.skypeGetCallStatus(tempID).equals(Call.Status.FAILED.toString())
-                    && !this.skypeGetCallStatus(tempID).equals(Call.Status.REFUSED.toString())) {
+            while (!this.skypeGetCallStatus(tempID).equals(com.skype.Call.Status.INPROGRESS.toString())
+                    && !this.skypeGetCallStatus(tempID).equals(com.skype.Call.Status.CANCELLED.toString())
+                    && !this.skypeGetCallStatus(tempID).equals(com.skype.Call.Status.FAILED.toString())
+                    && !this.skypeGetCallStatus(tempID).equals(com.skype.Call.Status.REFUSED.toString())) {
                 //CVM_Debug.getInstance().printDebugMessage("====>>>>>>"+this.skypeGetCallStatus(tempID));
             }
         } catch (Exception e) {
         }
 //		If the call cannot be placed notify.
-        if (this.skypeGetCallStatus(tempID).equals(Call.Status.CANCELLED.toString())
-                || this.skypeGetCallStatus(tempID).equals(Call.Status.FAILED.toString())
-                || this.skypeGetCallStatus(tempID).equals(Call.Status.REFUSED.toString())) {
+        if (this.skypeGetCallStatus(tempID).equals(com.skype.Call.Status.CANCELLED.toString())
+                || this.skypeGetCallStatus(tempID).equals(com.skype.Call.Status.FAILED.toString())
+                || this.skypeGetCallStatus(tempID).equals(com.skype.Call.Status.REFUSED.toString())) {
             //m_hmCallSessionMap.put(sID,null);
             //throw new PartyNotAddedException(participantID);
             tempID = null;
@@ -1011,7 +1012,7 @@ public class SkypeAdapter extends NCBBridgeBase {
         ArrayList m_cList = m_hmSessionCallIdMap.get(sID);
 
         if (m_cList == null)
-            m_cList = new ArrayList<Call>();
+            m_cList = new ArrayList<com.skype.Call>();
 
         //Add the call if it is not already in the list.
         if (!m_cList.contains(sCallID)) {
@@ -1037,9 +1038,9 @@ public class SkypeAdapter extends NCBBridgeBase {
             tempID = (String) m_cList.get(i);
             //if(this.skypeGetCallStatus(tempID).equals(SignalInstance.VideoStatus. RUNNING))
             //	this.skypeAlterCall(tempID, "STOP_VIDEO_RECEIVE");
-            if (this.skypeGetCallStatus(tempID).equals(Call.Status.INPROGRESS.toString())) {
+            if (this.skypeGetCallStatus(tempID).equals(com.skype.Call.Status.INPROGRESS.toString())) {
                 this.skypeHoldCall(tempID);
-            } else if (this.skypeGetCallStatus(tempID).equals(Call.Status.FINISHED.toString())) {
+            } else if (this.skypeGetCallStatus(tempID).equals(com.skype.Call.Status.FINISHED.toString())) {
                 m_cList.remove(i);
                 i--;
                 m_hmSessionCallIdMap.put(sID, m_cList);
@@ -1094,7 +1095,7 @@ public class SkypeAdapter extends NCBBridgeBase {
      * @throws PartyNotFoundException
      * @throws NoSessionException
      */
-    @Method(name = "removeParticipant", parameters = {"session", "participant"})
+    @cvm.sb.adapters.Call(name = "removeParticipant", parameters = {"session", "participant"})
     public void removeParticipant(String sID, String participantID) {
         //if(m_hmCallSessionMap.containsKey(sID)
         //&& m_hmChatSessionMap.containsKey(sID))
@@ -1806,7 +1807,7 @@ public class SkypeAdapter extends NCBBridgeBase {
      * @param schema      Schema File.
      * @param participant Id of the user.
      */
-    @Method(name = "sendSchema", parameters = {"schema", "participant"})
+    @cvm.sb.adapters.Call(name = "sendSchema", parameters = {"schema", "participant"})
     public synchronized void sendSchema(String schema, String participant) {
         b_SendLock = true;
         CVM_Debug.getInstance().printDebugMessage("Schema Sent: " + schema + " \nTo: " + participant);
@@ -1940,19 +1941,19 @@ public class SkypeAdapter extends NCBBridgeBase {
     private static class AdapterSkypeCallListener implements CallListener {
 
 
-        public void callMaked(Call arg0) throws SkypeException {
+        public void callMaked(com.skype.Call arg0) throws SkypeException {
             // TODO Auto-generated method stub
 
         }
 
 
-        public void callReceived(Call call) throws SkypeException {
+        public void callReceived(com.skype.Call call) throws SkypeException {
             call.answer();
             CVM_Debug.getInstance().printDebugMessage("SkypeAdapter - Callid " + call.getId() + " status " + call.getReceiveVideoStatus());
             CVM_Debug.getInstance().printDebugMessage("SkypeAdapter - Callid " + call.getId() + " status " + call.getSendVideoStatus());
             try {
-                if (call.getReceiveVideoStatus().equals(Call.VideoStatus.valueOf("RUNNING")) ||
-                        call.getReceiveVideoStatus().equals(Call.VideoStatus.valueOf("STARTING"))) {
+                if (call.getReceiveVideoStatus().equals(com.skype.Call.VideoStatus.valueOf("RUNNING")) ||
+                        call.getReceiveVideoStatus().equals(com.skype.Call.VideoStatus.valueOf("STARTING"))) {
                     Connector.getInstance().execute("ALTER CALL " + call.getId() + " START_VIDEO_SEND");
                     Connector.getInstance().execute("ALTER CALL " + call.getId() + " START_VIDEO_RECEIVE");
                 }
@@ -2139,7 +2140,7 @@ public class SkypeAdapter extends NCBBridgeBase {
 
     }
 
-    @Method(name = "hasMediumFailed", parameters = {"session", "medium"})
+    @cvm.sb.adapters.Call(name = "hasMediumFailed", parameters = {"session", "medium"})
     public boolean hasMediumFailed(String session, String medium_) {
         //return false;
         if (medium_ == null) return false;
@@ -2201,7 +2202,7 @@ public class SkypeAdapter extends NCBBridgeBase {
         return "Skype";
     }
 
-    @Method(name = "destroySession", parameters = {"session"})
+    @cvm.sb.adapters.Call(name = "destroySession", parameters = {"session"})
     public void destroySession(String session) {
         ArrayList<SkypeAdapter.MEDIUM> temp = new ArrayList<SkypeAdapter.MEDIUM>();
         if ((m_hmCallSessionMap.containsKey(session)
@@ -2238,7 +2239,7 @@ public class SkypeAdapter extends NCBBridgeBase {
         }
     }
 
-    @Method(name = "enableMediumReceiver", parameters = {"session", "medium"})
+    @cvm.sb.adapters.Call(name = "enableMediumReceiver", parameters = {"session", "medium"})
     public void enableMediumReceiver(String session, String medium) {
         // TODO Auto-generated method stub
     }

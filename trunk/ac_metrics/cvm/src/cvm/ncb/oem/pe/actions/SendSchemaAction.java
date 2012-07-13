@@ -1,7 +1,9 @@
 package cvm.ncb.oem.pe.actions;
 
-import cvm.ncb.csm.Resource;
-import cvm.ncb.oem.pe.SignalInstance;
+import cvm.sb.manager.ActionInstance;
+import cvm.sb.manager.ManagerContext;
+import cvm.sb.manager.SignalInstance;
+import cvm.sb.resource.Resource;
 import cvm.service.UserIDMappingTable;
 
 import java.util.LinkedHashMap;
@@ -17,27 +19,27 @@ public class SendSchemaAction implements ActionInstance {
         return null;
     }
 
-    private void sendSchema(String listReceiver, Object controlSchema, Object dataSchema, Resource managedObject) {
+    private void sendSchema(String listReceiver, Object controlSchema, Object dataSchema, Resource resourceObject) {
         String[] receivers = listReceiver.trim().split("\\s+");
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         //Currently there is not list of receivers implemented, all happens one at a time.
         if (controlSchema != null && !controlSchema.equals("") && !controlSchema.equals("null")) {
             for (String receiver : receivers) {
-                sendSchema(controlSchema, managedObject, params, receiver);
+                sendSchema(controlSchema, resourceObject, params, receiver);
             }
         }
 
         if (dataSchema != null && !dataSchema.equals("") && !dataSchema.equals("null")) {
             for (String receiver : receivers) {
-                sendSchema(dataSchema, managedObject, params, receiver);
+                sendSchema(dataSchema, resourceObject, params, receiver);
             }
         }
     }
 
-    private void sendSchema(Object schema, Resource managedObject, Map<String, Object> params, String receiver) {
+    private void sendSchema(Object schema, Resource resourceObject, Map<String, Object> params, String receiver) {
         params.put("schema", schema);
-        params.put("participant", UserIDMappingTable.getInstance().lookupContact(managedObject.getName(), receiver));
+        params.put("participant", UserIDMappingTable.getInstance().lookupContact(resourceObject.getName(), receiver));
 
-        managedObject.execute(new SignalInstance(null, "sendSchema", params));
+        resourceObject.execute(new SignalInstance(null, "sendSchema", params));
     }
 }

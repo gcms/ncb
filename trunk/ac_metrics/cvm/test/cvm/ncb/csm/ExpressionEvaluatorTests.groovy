@@ -1,5 +1,7 @@
 package cvm.ncb.csm
 
+import cvm.sb.expression.ExpressionEvaluator
+
 /**
  * Created by IntelliJ IDEA.
  * User: Gustavo Sousa

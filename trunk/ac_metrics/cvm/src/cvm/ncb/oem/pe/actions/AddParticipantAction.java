@@ -1,6 +1,8 @@
 package cvm.ncb.oem.pe.actions;
 
-import cvm.ncb.ks.StateHolder;
+import cvm.sb.manager.ActionInstance;
+import cvm.sb.manager.ManagerContext;
+import cvm.sb.state.StateHolder;
 
 import java.util.Map;
 import java.util.Set;
@@ -11,7 +13,7 @@ public class AddParticipantAction implements ActionInstance {
         Object participant = params.get("participant");
 
         StateHolder con = ctx.getStateManager().getType("Connection").get(session);
-        Set participants = con.getSet("participants");
+        Set participants = con.getAsSet("participants");
         return participants.add(participant);
     }
 }

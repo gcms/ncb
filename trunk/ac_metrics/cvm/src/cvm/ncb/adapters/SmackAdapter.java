@@ -1,5 +1,8 @@
 package cvm.ncb.adapters;
 
+import cvm.sb.adapters.Call;
+import cvm.sb.adapters.Event;
+import cvm.sb.adapters.EventException;
 import util.CVM_Debug;
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.packet.Presence;
@@ -84,7 +87,7 @@ public class SmackAdapter extends NCBBridgeBase {
      * @return UserObject with the user information.
      * @see UserObject
      */
-    @Method(name = "login")
+    @Call(name = "login")
     public void login() {
         String userName = getUserInfoStore().getFwUserName(getName());
         String password = getUserInfoStore().getFwPassword(getName());
@@ -125,7 +128,7 @@ public class SmackAdapter extends NCBBridgeBase {
         CVM_Debug.getInstance().printDebugMessage("Done login");
     }
 
-    @Method(name = "createSession", parameters = {"session"})
+    @Call(name = "createSession", parameters = {"session"})
     public void createSession(String session) {
         if (!sessMgr.contains(session)) {
             sessMgr.add(session);
@@ -133,7 +136,7 @@ public class SmackAdapter extends NCBBridgeBase {
         }
     }
 
-    @Method(name = "destroySession", parameters = {"session"})
+    @Call(name = "destroySession", parameters = {"session"})
     public void destroySession(String session) {
         int sessID = sessMgr.indexOf(session);
         jidsList.remove(sessID);
@@ -399,7 +402,7 @@ public class SmackAdapter extends NCBBridgeBase {
     /**
      * Logs the user out of the Bridge.
      */
-    @Method(name = "logout")
+    @Call(name = "logout")
     public void logout() {
         xmppConnection.disconnect();
     }
@@ -427,7 +430,7 @@ public class SmackAdapter extends NCBBridgeBase {
     /**
      * Restarts the adapter.
      */
-    @Method(name = "restartService")
+    @Call(name = "restartService")
     public void restartService() {
         CVM_Debug.getInstance().printDebugErrorMessage("Restarting Smack");
         resetFW();
@@ -465,7 +468,7 @@ public class SmackAdapter extends NCBBridgeBase {
      * @param schema      Schema File.
      * @param participant Id of the user.
      */
-    @Method(name = "sendSchema", parameters = {"schema", "participant"})
+    @Call(name = "sendSchema", parameters = {"schema", "participant"})
     public void sendSchema(String schema, String participant) {
         //synchronized (dataSync){
 
@@ -521,7 +524,7 @@ public class SmackAdapter extends NCBBridgeBase {
         //}
     }
 
-    @Method(name = "disableMedium", parameters = {"session", "medium"})
+    @Call(name = "disableMedium", parameters = {"session", "medium"})
     public void disableMedium(String session, String medium) {
         if (medium.equals(NCBBridgeCapability.AUDIO)) {
             destroyOutgoingAudioSession(sessMgr.indexOf(session) + "");
@@ -531,7 +534,7 @@ public class SmackAdapter extends NCBBridgeBase {
         CVM_Debug.getInstance().printDebugMessage("Smack End:" + System.currentTimeMillis());
     }
 
-    @Method(name = "enableMedium", parameters = {"session", "medium"})
+    @Call(name = "enableMedium", parameters = {"session", "medium"})
     public void enableMedium(String session, String medium) {
         enableMedium(session, medium, jidsList.get(
                 sessMgr.indexOf(session)), null);
@@ -582,11 +585,11 @@ public class SmackAdapter extends NCBBridgeBase {
         sendNCBCtl(conID + " ReceiverStarted " + mediumName, sender);
     }
 
-    @Method(name = "enableMediumReceiver", parameters = {"session", "medium"})
+    @Call(name = "enableMediumReceiver", parameters = {"session", "medium"})
     public void enableMediumReceiver(String session, String medium) {
     }
 
-    @Method(name = "hasMediumFailed", parameters = {"session", "medium"})
+    @Call(name = "hasMediumFailed", parameters = {"session", "medium"})
     public boolean hasMediumFailed(String session, String medium) {
         //CVM_Debug.getInstance().printDebugMessage("Checking medium status");
         /*if(sessMgr.contains(sessID)){

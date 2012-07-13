@@ -2,7 +2,7 @@ package cvm.ncb.oem.policy.repository
 
 import cvm.ncb.oem.policy.repository.loader.FilePolicyLoader
 import cvm.ncb.oem.policy.repository.loader.GlobalConstant
-import cvm.ncb.oem.policy.repository.policy.PolicyRepository
+import cvm.sb.policy.repository.PolicyRepository
 
 class FilePolicyRepositoryTests extends GroovyTestCase {
     PolicyRepository policyRepository

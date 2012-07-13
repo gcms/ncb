@@ -1,8 +1,8 @@
 package util;
 
-import cvm.ncb.oem.policy.Attribute;
-import cvm.ncb.oem.policy.Feature;
-import cvm.ncb.oem.policy.Metadata;
+import cvm.sb.policy.metadata.Attribute;
+import cvm.sb.policy.metadata.Feature;
+import cvm.sb.policy.metadata.Metadata;
 
 import java.util.*;
 

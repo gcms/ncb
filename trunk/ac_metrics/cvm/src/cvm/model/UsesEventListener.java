@@ -1,7 +1,8 @@
 package cvm.model;
 
 
-import cvm.ncb.oem.pe.SignalInstance;
+import cvm.sb.manager.SignalInstance;
+
 import java.util.EventListener;
 
 

@@ -1,5 +1,9 @@
 package cvm.ncb.adapters
 
+import cvm.sb.adapters.Call
+import cvm.sb.adapters.EventException
+import cvm.sb.adapters.Event
+
 class MockAdapter extends NCBBridgeBase {
     private List calls = []
     private boolean hasFailed = false
@@ -28,7 +32,7 @@ class MockAdapter extends NCBBridgeBase {
         calls.push("getCapability()")
     }
 
-    @Method(name = "login", parameters = [])
+    @Call(name = "login", parameters = [])
     void login() {
         calls.push("login()")
         if (loginFail) {
@@ -36,22 +40,22 @@ class MockAdapter extends NCBBridgeBase {
         }
     }
 
-    @Method(name = "logout", parameters = [])
+    @Call(name = "logout", parameters = [])
     void logout() {
         calls.push("logout()")
     }
 
-    @Method(name = "restartService", parameters = [])
+    @Call(name = "restartService", parameters = [])
     void restartService() {
         calls.push("restartService()")
     }
 
-    @Method(name = "createSession", parameters = [ "session" ])
+    @Call(name = "createSession", parameters = [ "session" ])
     void createSession(String session) {
         calls.push("createSession($session)")
     }
 
-    @Method(name = "destroySession", parameters = [ "session" ])
+    @Call(name = "destroySession", parameters = [ "session" ])
     void destroySession(String session) {
         calls.push("destroySession($session)")
     }
@@ -65,27 +69,27 @@ class MockAdapter extends NCBBridgeBase {
     }
 
 
-    @Method(name = "sendSchema", parameters = [ "schema", "participant" ])
+    @Call(name = "sendSchema", parameters = [ "schema", "participant" ])
     void sendSchema(String schema, String participant) {
         calls.push("sendSchema($schema, $participant)")
     }
 
-    @Method(name = "enableMedium", parameters = [ "session", "medium" ])
+    @Call(name = "enableMedium", parameters = [ "session", "medium" ])
     void enableMedium(String session, String medium) {
         calls.push("enableMedium($session, $medium)")
     }
 
-    @Method(name = "enableMediumReceiver", parameters = [ "session", "medium" ])
+    @Call(name = "enableMediumReceiver", parameters = [ "session", "medium" ])
     void enableMediumReceiver(String session, String medium) {
         calls.push("enableMediumReceiver($session, $medium)")
     }
 
-    @Method(name = "disableMedium", parameters = [ "session", "medium" ])
+    @Call(name = "disableMedium", parameters = [ "session", "medium" ])
     void disableMedium(String session, String medium) {
         calls.push("disableMedium($session, $medium)")
     }
 
-    @Method(name = "hasMediumFailed", parameters = [ "session", "medium" ])
+    @Call(name = "hasMediumFailed", parameters = [ "session", "medium" ])
     boolean hasMediumFailed(String session, String medium) {
         hasFailed
     }
@@ -115,7 +119,7 @@ class Mock2Adapter extends MockAdapter {
         "Mock2"
     }
 
-    @Method(name = "hasMediumFailed", parameters = [ "session", "medium" ])
+    @Call(name = "hasMediumFailed", parameters = [ "session", "medium" ])
     boolean hasMediumFailed(String session, String medium) {
         false
     }

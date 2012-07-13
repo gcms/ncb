@@ -1,5 +1,8 @@
 package cvm.ncb.adapters;
 
+import cvm.sb.adapters.Call;
+import cvm.sb.adapters.Event;
+import cvm.sb.adapters.EventNotifier;
 import cvm.service.UserIDMappingTable;
 
 
@@ -34,7 +37,7 @@ public abstract class NCBBridgeBase implements NCBBridge {
      * @throws PartyNotAddedException
      * @throws NoSessionException
      */
-    @Method(name = "addAParticipant", parameters = { "session", "participant"})
+    @Call(name = "addAParticipant", parameters = { "session", "participant"})
     public void addAParticipant(String session, String participant) {
         addParticipant(session, getUserMapper().lookupContact(this.getName(), participant));
     }

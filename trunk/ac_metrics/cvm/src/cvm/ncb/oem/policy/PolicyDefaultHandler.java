@@ -1,9 +1,11 @@
 package cvm.ncb.oem.policy;
 
-import cvm.ncb.csm.Resource;
-import cvm.ncb.ks.StateHolder;
-import cvm.ncb.oem.pe.SignalInstance;
-import cvm.ncb.oem.pe.actions.ManagerContext;
+import cvm.sb.manager.ManagerContext;
+import cvm.sb.manager.SignalInstance;
+import cvm.sb.policy.PolicyEvaluationHandler;
+import cvm.sb.policy.PolicyRequest;
+import cvm.sb.resource.Resource;
+import cvm.sb.state.StateHolder;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -43,7 +45,7 @@ public class PolicyDefaultHandler implements PolicyEvaluationHandler {
         params.put("session", con.getId());
         nextFw.enqueue(new SignalInstance(null, "createSession", params));
 
-        for (Object party : con.getSet("participants")) {
+        for (Object party : con.getAsSet("participants")) {
             Map<String, Object> partyParams = new LinkedHashMap<String, Object>();
             partyParams.put("session", con.getId());
             partyParams.put("participant", party);

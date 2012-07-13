@@ -4,19 +4,20 @@ import cvm.ncb.adapters.Mock2Adapter
 import cvm.ncb.adapters.MockAdapter
 import cvm.ncb.drivers.NCBDriver
 import cvm.ncb.handlers.EventManager
-import cvm.ncb.oem.pe.MainManager
+import cvm.sb.manager.MainManager
 import cvm.sb.emf.EMFLoader
 import cvm.sb.emf.ManagerFactory
 import sb.base.Manager
+import cvm.sb.resource.ResourceManager
 
 class NCBManagerTests extends GroovyTestCase {
     public void restoreMock2() {
-        objectManager.getObject('Mock2').metadata.restore()
+        resourceManager.getObject('Mock2').metadata.restore()
     }
 
     private EventManager eventManager
     private MainManager mainManager
-    private cvm.ncb.ks.ResourceManager objectManager
+    private ResourceManager resourceManager
 
     void setUp() {
         Manager managerDef = EMFLoader.loadFirst(Manager)
@@ -24,9 +25,9 @@ class NCBManagerTests extends GroovyTestCase {
         eventManager = new EventManager()
         mainManager = new ManagerFactory().createManager(managerDef)
         mainManager.setEventListener(eventManager)
-        objectManager = mainManager.resourceManager
+        resourceManager = mainManager.resourceManager
 
-        objectManager.getObject('Mock2').metadata.fail()
+        resourceManager.getObject('Mock2').metadata.fail()
     }
 
     void tearDown() {
@@ -118,12 +119,12 @@ class NCBManagerTests extends GroovyTestCase {
         manager.addParty("101", "Yali");
         manager.enableMedium("101", "Audio");
 
-        assertNotNull objectManager.getAvailableObjects().find { it.name == 'Mock' }
+        assertNotNull resourceManager.getAvailableObjects().find { it.name == 'Mock' }
         MockAdapter.instance.markFailed('Audio')
 
         waitThreadsFinish(1000)
 
-        assertNull objectManager.getAvailableObjects().find { it.name == 'Mock' }
+        assertNull resourceManager.getAvailableObjects().find { it.name == 'Mock' }
     }
 
     void testFrameworkChange() {
@@ -142,8 +143,8 @@ class NCBManagerTests extends GroovyTestCase {
 
         waitThreadsFinish(2000)
 
-        assertNull objectManager.getAvailableObjects().find { it.name == 'Mock' }
-        assertNotNull objectManager.getAvailableObjects().find { it.name == 'Mock2' }
+        assertNull resourceManager.getAvailableObjects().find { it.name == 'Mock' }
+        assertNotNull resourceManager.getAvailableObjects().find { it.name == 'Mock2' }
 
 
         List calls = MockAdapter.instance.calls
@@ -203,8 +204,8 @@ class NCBManagerTests extends GroovyTestCase {
 
         waitThreadsFinish(2000)
 
-        assertNull objectManager.getAvailableObjects().find { it.name == 'Mock' }
-        assertNotNull objectManager.getAvailableObjects().find { it.name == 'Mock2' }
+        assertNull resourceManager.getAvailableObjects().find { it.name == 'Mock' }
+        assertNotNull resourceManager.getAvailableObjects().find { it.name == 'Mock2' }
 
 
         List calls = MockAdapter.instance.calls
@@ -223,7 +224,7 @@ class NCBManagerTests extends GroovyTestCase {
     }
 
     void testTwoMediaSameFw() {
-        objectManager.removeObject('Mock')
+        resourceManager.removeObject('Mock')
         restoreMock2()
 
         NCBManager manager = new NCBManager(mainManager)

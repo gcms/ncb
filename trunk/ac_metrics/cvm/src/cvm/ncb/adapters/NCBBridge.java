@@ -1,24 +1,27 @@
 package cvm.ncb.adapters;
 
+import cvm.sb.adapters.Manageable;
+import cvm.sb.adapters.Call;
+
 public interface NCBBridge extends Manageable {
     /**
      * This function logs the user into the communication bridge i.e Skype, GTalk...
      * @return UserObject with the user infromation.
      */
-    @Method(name="login", parameters = {})
+    @Call(name="login", parameters = {})
     void login();
 
     /**
      * Logs the user out of the Bridge.
      */
-    @Method(name="logout", parameters = {})
+    @Call(name="logout", parameters = {})
     void logout();
 
     /**
      * Restarts the adapter.
      *
      */
-    @Method(name="restartService", parameters = {})
+    @Call(name="restartService", parameters = {})
     void restartService();
 
     /**
@@ -26,7 +29,7 @@ public interface NCBBridge extends Manageable {
      * for the specified session ID.
      * @param session Id of the session to create.
      */
-    @Method(name="createSession", parameters = {"session"})
+    @Call(name="createSession", parameters = {"session"})
     void createSession(String session);
 
     /**
@@ -34,10 +37,10 @@ public interface NCBBridge extends Manageable {
      * for the specified session ID.
      * @param session Id of the session to create.
      */
-    @Method(name="destroySession", parameters = {"session"})
+    @Call(name="destroySession", parameters = {"session"})
     void destroySession(String session);
 
-    @Method(name="addAParticipant", parameters = {"session", "participant"})
+    @Call(name="addAParticipant", parameters = {"session", "participant"})
     void addAParticipant(String session, String participant);
 
     /**
@@ -49,7 +52,7 @@ public interface NCBBridge extends Manageable {
      */
     void addParticipant(String session, String participant);
 
-    @Method(name="removeAParticipant", parameters = {"session", "participant"})
+    @Call(name="removeAParticipant", parameters = {"session", "participant"})
     void removeAParticipant(String session, String participant);
 
     /**
@@ -66,7 +69,7 @@ public interface NCBBridge extends Manageable {
      * @param schema Schema File.
      * @param participant Id of the user.
      */
-    @Method(name="sendSchema", parameters = {"schema", "participant"})
+    @Call(name="sendSchema", parameters = {"schema", "participant"})
     void sendSchema(String schema, String participant);
 
     /**
@@ -77,7 +80,7 @@ public interface NCBBridge extends Manageable {
      * @throws cvm.ncb.handlers.exception.PartyNotAddedException
      * @throws cvm.ncb.handlers.exception.NoSessionException
      */
-    @Method(name="enableMedium", parameters = {"session", "medium"})
+    @Call(name="enableMedium", parameters = {"session", "medium"})
     void enableMedium(String session, String medium);
 
     /**
@@ -87,7 +90,7 @@ public interface NCBBridge extends Manageable {
      * @throws cvm.ncb.handlers.exception.PartyNotAddedException
      * @throws cvm.ncb.handlers.exception.NoSessionException
      */
-    @Method(name="enableMediumReceiver", parameters = {"session", "medium"})
+    @Call(name="enableMediumReceiver", parameters = {"session", "medium"})
     void enableMediumReceiver(String session, String medium);
 
     /**
@@ -98,7 +101,7 @@ public interface NCBBridge extends Manageable {
      * @throws cvm.ncb.handlers.exception.PartyNotAddedException
      * @throws cvm.ncb.handlers.exception.NoSessionException
      */
-    @Method(name="disableMedium", parameters = {"session", "medium"})
+    @Call(name="disableMedium", parameters = {"session", "medium"})
     void disableMedium(String session, String medium);
 
     /**
@@ -107,7 +110,7 @@ public interface NCBBridge extends Manageable {
      * @param session
      * @param medium
      */
-    @Method(name="hasMediumFailed", parameters = {"session", "medium"})
+    @Call(name="hasMediumFailed", parameters = {"session", "medium"})
     boolean hasMediumFailed(String session, String medium);
 
     String getName();

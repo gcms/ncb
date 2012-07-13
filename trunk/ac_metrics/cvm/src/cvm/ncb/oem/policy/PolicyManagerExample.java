@@ -1,7 +1,12 @@
 package cvm.ncb.oem.policy;
 
+import cvm.ncb.oem.policy.repository.FilePolicyRepository;
 import cvm.ncb.oem.policy.repository.loader.FilePolicyLoader;
 import cvm.ncb.oem.policy.repository.loader.GlobalConstant;
+import cvm.sb.policy.PolicyManager;
+import cvm.sb.policy.metadata.Attribute;
+import cvm.sb.policy.metadata.Feature;
+import cvm.sb.policy.metadata.Metadata;
 
 import java.net.URISyntaxException;
 import java.util.LinkedHashMap;
@@ -9,10 +14,14 @@ import java.util.Map;
 import java.util.TreeSet;
 
 public class PolicyManagerExample {
+    public static PolicyManager createPolicyManager(FilePolicyLoader loader) {
+        return new PolicyManager(FilePolicyRepository.createInstance(loader));
+    }
+
     public static void main(String args[]) throws URISyntaxException {
         FilePolicyLoader loader = FilePolicyLoader.createInstance(PolicyManager.class.getResource("../../repository/examples").toURI());
 
-        PolicyManager pm = new PolicyManager(loader);
+        PolicyManager pm = createPolicyManager(loader);
         TreeSet<Metadata> hs = new TreeSet<Metadata>();
 
         // Frameworks that are available
@@ -137,7 +146,7 @@ public class PolicyManagerExample {
         //	opt.addDesiredFeature("Payment", "Enabled", true, Feature.EQ, "Audio PC2Phone");
         //	CVM_Debug.getInstance().printDebugMessage(pm.orderSet(pm.reduceSet(hs, req),opt));
 
-        PolicyManager pm2 = new PolicyManager(loader);
+        PolicyManager pm2 = createPolicyManager(loader);
         Map<String, Object> params = new LinkedHashMap<String, Object>();
         params.put("NumberOfUsers", 5);
         TreeSet<Metadata> set = pm2.getConformingObjects(hs, GlobalConstant.RequestedType.Audio.toString(), GlobalConstant.OperationType.request.toString(), params);

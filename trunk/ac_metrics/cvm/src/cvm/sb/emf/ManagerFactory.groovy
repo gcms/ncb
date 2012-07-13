@@ -1,13 +1,13 @@
 package cvm.sb.emf
 
-import cvm.ncb.ks.ResourceManager
-import cvm.ncb.ks.StateManager
-import cvm.ncb.oem.autonomic.MAPE
-import cvm.ncb.oem.autonomic.MonitorSignalHandler
-import cvm.ncb.oem.pe.MainManager
-import cvm.ncb.oem.pe.SignalHandlerManager
-import cvm.ncb.oem.policy.Metadata
-import cvm.ncb.oem.policy.PolicyEvaluationSignalHandler
+import cvm.sb.resource.ResourceManager
+import cvm.sb.state.StateManager
+import cvm.sb.autonomic.MAPE
+import cvm.sb.autonomic.MonitorSignalHandler
+import cvm.sb.manager.MainManager
+import cvm.sb.manager.SignalHandlerManager
+import cvm.sb.policy.metadata.Metadata
+import cvm.sb.policy.PolicyEvaluationSignalHandler
 import sb.base.Manager
 
 class ManagerFactory {

@@ -1,13 +1,13 @@
 package cvm.sb.emf
 
 
-import cvm.ncb.oem.pe.ActionSignalHandler
-import cvm.ncb.oem.pe.SignalHandler
-import cvm.ncb.oem.pe.SignalHandlerManager
-import cvm.ncb.oem.pe.actions.ActionCaller
-import cvm.ncb.oem.pe.actions.ActionInstance
-import cvm.ncb.oem.pe.actions.EnqueueCallActionInstance
-import cvm.ncb.oem.pe.actions.SequenceActionInstance
+import cvm.sb.manager.ActionSignalHandler
+import cvm.sb.manager.SignalHandler
+import cvm.sb.manager.SignalHandlerManager
+import cvm.sb.manager.ActionCaller
+import cvm.sb.manager.ActionInstance
+import cvm.sb.manager.EnqueueCallActionInstance
+import cvm.sb.manager.SequenceActionInstance
 import sb.base.Handler
 import sb.base.common.*
 

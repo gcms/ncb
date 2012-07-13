@@ -1,8 +1,8 @@
 package cvm.ncb.handlers;
 
 import cvm.model.UsesEventListener;
-import cvm.ncb.csm.EventListener;
-import cvm.ncb.oem.pe.SignalInstance;
+import cvm.sb.manager.SignalInstance;
+import cvm.sb.resource.EventListener;
 
 import java.util.ArrayList;
 import java.util.List;

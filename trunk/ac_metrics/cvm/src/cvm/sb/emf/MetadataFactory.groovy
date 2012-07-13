@@ -1,6 +1,6 @@
 package cvm.sb.emf
 
-import cvm.ncb.oem.policy.Metadata
+import cvm.sb.policy.metadata.Metadata
 import sb.base.metadata.Annotable
 import sb.base.metadata.Attribute
 import sb.base.metadata.Feature
@@ -20,8 +20,8 @@ class MetadataFactory {
         result
     }
 
-    cvm.ncb.oem.policy.Feature createFeature(cvm.ncb.oem.policy.Feature parent, Feature feature) {
-        cvm.ncb.oem.policy.Feature result = new cvm.ncb.oem.policy.Feature(feature.name, parent)
+    cvm.sb.policy.metadata.Feature createFeature(cvm.sb.policy.metadata.Feature parent, Feature feature) {
+        cvm.sb.policy.metadata.Feature result = new cvm.sb.policy.metadata.Feature(feature.name, parent)
         feature.subFeatures.each { Feature subFeature ->
             result.addSubFeature(createFeature(result, subFeature))
         }
@@ -31,7 +31,7 @@ class MetadataFactory {
         result
     }
 
-    cvm.ncb.oem.policy.Attribute createAttribute(Attribute attribute) {
-        new cvm.ncb.oem.policy.Attribute(attribute.name, attribute.value)
+    cvm.sb.policy.metadata.Attribute createAttribute(Attribute attribute) {
+        new cvm.sb.policy.metadata.Attribute(attribute.name, attribute.value)
     }
 }

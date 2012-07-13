@@ -1,5 +1,7 @@
 package cvm.ncb.adapters;
 
+import cvm.sb.adapters.EventException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;

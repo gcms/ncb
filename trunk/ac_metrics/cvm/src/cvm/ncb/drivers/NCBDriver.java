@@ -1,15 +1,15 @@
 package cvm.ncb.drivers;
 
 import cvm.facade.NCB_M_Facade;
+import cvm.sb.adapters.Manageable;
+import cvm.sb.resource.bridge.BridgeResource;
+import cvm.sb.resource.ResourceManager;
+import cvm.sb.manager.SignalInstance;
 import util.CVM_Debug;
 import cvm.model.UsesEventListener;
-import cvm.ncb.adapters.Manageable;
-import cvm.ncb.csm.ManagedObject;
 import cvm.ncb.handlers.EventManager;
-import cvm.ncb.ks.ResourceManager;
 import cvm.ncb.manager.NCBManager;
-import cvm.ncb.oem.pe.SignalInstance;
-import cvm.ncb.oem.policy.Metadata;
+import cvm.sb.policy.metadata.Metadata;
 import util.FeaturesParser;
 
 import java.util.Scanner;
@@ -27,7 +27,7 @@ public class NCBDriver implements UsesEventListener {
         ResourceManager om = new ResourceManager();
         for (Metadata md : FeaturesParser.createAllFrameworks()) {
             Manageable manageable = (Manageable) Class.forName("cvm.ncb.adapters." + md.getName() + "Adapter").newInstance();
-            om.addObject(new ManagedObject(md, manageable));
+            om.addObject(new BridgeResource(md, manageable));
         }
 
 //        manager = new NCBManager(om, eventManager);

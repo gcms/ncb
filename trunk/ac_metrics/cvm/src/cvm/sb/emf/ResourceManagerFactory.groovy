@@ -7,12 +7,12 @@ import sb.base.ResourceManager
 class ResourceManagerFactory {
     ManagedObjectFactory objectFactory = new ManagedObjectFactory()
 
-    public cvm.ncb.ks.ResourceManager createObjectManager(ResourceManager resourceManager) {
+    public cvm.sb.resource.ResourceManager createObjectManager(ResourceManager resourceManager) {
         doCreateObjectManager(resourceManager)
     }
 
-    private cvm.ncb.ks.ResourceManager doCreateObjectManager(InstanceResourceManager resourceManager) {
-        cvm.ncb.ks.ResourceManager manager = new cvm.ncb.ks.ResourceManager()
+    private cvm.sb.resource.ResourceManager doCreateObjectManager(InstanceResourceManager resourceManager) {
+        cvm.sb.resource.ResourceManager manager = new cvm.sb.resource.ResourceManager()
         resourceManager.instances.each { Instance instance ->
             manager.addObject(objectFactory.createManagedObject(instance))
         }
@@ -20,7 +20,7 @@ class ResourceManagerFactory {
         manager
     }
 
-    private cvm.ncb.ks.ResourceManager doCreateObjectManager(ResourceManager resourceManager) {
+    private cvm.sb.resource.ResourceManager doCreateObjectManager(ResourceManager resourceManager) {
         null
     }
 
