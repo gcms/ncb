@@ -58,7 +58,7 @@ We present an initial validation of the approach in the context of the Communica
 %These applications also often need to adapt at runtime to comply with changing requirements and environment.
 %In order to achieve these goals the developers need to employ a variety of strategies to 
 
-Model-driven engineering (MDE) proposes the use of models as a way to deal with the increasingly complexity of contemporary softwre applications. These applications usually operate in a distributed and heterogeneous environment and must be able to dynamically adapt in order to meet changes in the requirements and operational environment. Their development and maintenance using traditional approaches often require a huge effort due to the limitation of abstractions based on the implementation platform. % to deal with the large number of details
+Model-driven engineering (MDE) proposes the use of models as a way to deal with the increasingly complexity of contemporary software applications. These applications usually operate in a distributed and heterogeneous environment and must be able to dynamically adapt in order to meet changes in the requirements and operational environment. Their development and maintenance using traditional approaches often require a huge effort due to the limitation of abstractions based on the implementation platform. % to deal with the large number of details
 % traditional: (computer/technological centric) 
 % limitations: (too generic/distant from the problem)
 
@@ -283,7 +283,7 @@ An instance resource manager groups a set of instances defined by the type \text
 
 In a great number of occasions, the processing of a given call or event may depend upon signals that were previously received by the layer. A given signal may have a different processing according to the parameters of a preceding call, the simple occurrence of an event or the result of the processing of a signal. In order to make it possible, the layer should be able to keep state between occurrences of signals.
 
-The class \textsf{StateManager} provides a way to define the data types that will need to be kept by a given manager at runtime. Data types are defined through the class \textsf{State} by a simple structure where a type is defined in terms of its properties and subtypes. Subtypes are also defined as instances of \textsf{State} and therefore may have the same features.  Also, as in a relational model the definition of a type requires the definition of a key property that uniquely identifies a register of a given datatype.
+The class \textsf{StateManager} provides a way to define the data types that will need to be kept by a given manager at runtime. Data types are defined through the class \textsf{State} by a simple structure where a type is defined in terms of its attributes and subtypes. Subtypes are also defined as instances of \textsf{State} and therefore may have the same features.  Also, as in a relational model the definition of a type requires the definition of a key attribute that uniquely identifies a register of a given datatype.
 
 \subsection{Autonomic computing}
 
@@ -308,14 +308,14 @@ The \textsf{ChangeRequest} class is used to specify that a change request needs 
 % Enquanto a função de planejamento pode empregar algoritmos complexos que geram dinâmicamente planos  de mudança que podem envolver um workflow completo de execução, no trabalho em questão optamos por uma abordagem simples, onde um plano é diretamente associado a uma solicitação de mudança
 
 \subsection{Policies}
-In the proposed meta-model policies are employed to drive the selection of resources. The class \textsf{PolicyManager} groups abstractions related to the definition of policies and their evaluation. These comprise \textsf{Policy} that identifies a policy, \textsf{PolicyEvaluationPoint} that defines when policy evaluation should be triggered, and \textsf{PolicyEvaluationHandler} that defines how the policy evaluation result should be handled. Besides that, the meta-model also includes auxiliary constructs for establishing links between these main elements.
+In the proposed meta-model policies are employed to drive the selection of resources. The class \textsf{PolicyManager} groups abstractions related to the definition of policies and their evaluation. These comprise \textsf{Policy} that identifies a policy, \textsf{PolicyEvaluationPoint} that defines when policies should be evaluated, and \textsf{PolicyEvaluationHandler} that defines how the policy evaluation result should be handled. Besides that, the meta-model also includes auxiliary constructs for establishing links between these main elements.
 
 As mentioned earlier, resources may be annotated with its features and properties.
 A policy specifies a condition over a feature that may be present in resources, and the business value that is associated to the reaching of this condition.
 At runtime, the resource that achieves the highest accumulated business value is selected among the available resources.
 
 
-An evaluation point is defined by specifying a signal which triggers the evaluation of policies and the policy evaluation handler that will be executed after the evaluation to handle its result. A policy evaluation point is linked to its handler by an instance of \textsf{PolicyEvaluationRequest} that is responsible for defining the parameter mapping between the context of the signal that triggers the evaluation, and that required for the evaluation itself. Finally, a policy evaluation handler defines an implementation class (similar to the macro action) that is executed upon the results of the policy evaluation process.
+An evaluation point is defined by specifying a signal which triggers the evaluation of policies and the policy evaluation handler that will be executed after the evaluation to handle its result. A policy evaluation point is linked to its handler by an instance of \textsf{PolicyEvaluationRequest} that is responsible for defining the parameter mapping between the context of the signal that initiated the evaluation, and the parameters required for the evaluation itself. Finally, a policy evaluation handler defines an implementation class (similar to the macro action) that is executed upon the results of the policy evaluation process.
 %The scope of the policies is implicitly defined as the set of resources associated to the same manager.
 
 
@@ -323,6 +323,52 @@ An evaluation point is defined by specifying a signal which triggers the evaluat
 \section{Execution Environment}
 
 % Describe the execution engine based on EMF. This section corresponds to the implementation section that goes in most papers. Make it clear in the text that it is the implementation.
+
+% Describe why the execution environment is needed
+- The meta-model allows for us to define a Broker layer...
+- but in order to execute it so that it is capable of handling requests from the middleware layer ...
+- we developed an execution engine (that therefore provides dynamic semantics to the meta-model)
+
+
+% MAKE IT CLEAR that the execution engine loads the XMI models defined by using EMF
+The execution environment loads a Broker layer model defined as an EMF XMI file.
+Based on this model, the execution environment initializes a Broker layer for a DSML execution engine.
+It uses the classes generated by EMF from the meta-model to process the model.
+
+% Introduction to understand the following paragraphs
+in this section we deal with the actual implementation that actually process the requests driven by a given Broker model
+- The name of the classes are overloaded (always refer to the implementation exception when mentioned)
+- The architecture resembles the meta-model
+
+% Describe the overall flow of the execution environment
+Under the implemented execution environment, a Broker layer constantly waits for calls from the upper layer or events from resources, that once arrived are enqueued for later processing. In order to process a signal, the appropriate handler is found and executed. In accordance with the model, the handler executes the associated action that may interact with resources and manipulate the state maintained by the layer. Specialized handlers are also set up for handling signals that may activate self-management functions.
+
+The figure ~\ref{} illustrates the flow of control for a Broker layer at runtime. The \emph{Broker Manager} is the main element of the execution environment which is the responsible for controlling the flow of execution. This element is the runtime object that realizes a \textsf{Manager} described in the meta-model.
+%Therefore, at runtime a \emph{Broker Manager] may also be used as a resource for another \emph{Broker Manager}  and so on
+
+A \emph{Broker Manager} serializes the handling of signals by enqueueing them and afterwards proc.essing them one at a time. Once a signal is dequeued, it is processed by the \emph{Signal Handler Manager} that identifies and executes the correct handler for the given signal. The \emph{Signal Handler Manager} maintains a registry of \emph{Signal Handlers} and searches for the first that is capable of handling the given signal. \emph{Signal Handlers} in the registry are loaded from the handlers and actions defined in the executing model, in conformance to the equivalent meta-model constructs mentioned earlier.
+
+%signals/events
+%handlers registered into the SignalHandlerManager
+Besides those, the specialized \emph{Autonomic Signal Handler} and \emph{Policy Evaluation Signal Handler} are also set up for monitoring signals that may be of interest for self-management. \emph{Autonomic Signal Handler} checks if a signal is related to any of the symptoms that are to be monitored and if positive sends the signal information to the \emph{Autonomic Manager} that may then execute its functions. The \emph{Policy Evaluation Signal Handler}, on its turn, verifies if a signal is defined as a policy evaluation point and requests the \emph{Policy Manager} to start the policy evaluation process. Regardless of their result, these specialized handlers leave the signal flagged as not handled, so that it can be handled by an action defined in the model. An action
+
+
+The \emph{Resource Manager} provides an interface for querying and obtaining its managed resources. These resources are returned as instances of \textsf{ManagedResource}, a class that wraps the actual resource along with its metadata.
+In order to be managed by a Broker layer, resources should implement the \textsf{Manageable} interface and annotate their provided calls with a \textsf{@Call} annotation. Resources should also use the provided class \textsf{Event} to signal an event to be handled by the layer. The \emph{Resource Manager} interacts with a resources through a touchpoint which serializes calls to a resource and handles the events signaled by resources.
+% Also expose the setEventListener method
+% Main manager registers into the resource manager as a listener of the resource events
+
+In a similar way, the \emph{State Manager} provides an interface for creating and querying registers for the data types described in the meta-model. A data register is represented by the class \textsf{StateHolder} that provides methods for obtaining the values for its attributes and children.
+% autonomic manager registers into the state manager as a listener of state changes
+
+%Both state and resource managers are made available to macro actions, so that such actions can query and change the layer state and interact with the resources.
+
+The \emph{Autonomic Manager} encapsulates the MAPE functions and may be activated by signals filtered by the \emph{Autonomic Signal Handler} or state changes notified by the \emph{State Manager}. Once one of these events occur, the \emph{Monitor} function identify the related symptom definitions and reevaluate their conditions.
+If the conditions are met the \emph{Monitor} notifies the \emph{Analyzer} of the symptoms that were detected. Along with the notification it also sends the context in which the conditions for a symptom were evaluated as true such as the source and parameters of signals, and data registers which made the conditions true. Based on the detected symptoms, the \emph{Analyzer} looks up the associated change request defined in the layer model and sends to the planner a change request along with the data from symptoms that triggered this request. Next the \emph{Planner} identifies the change plan associated with the change request and sends it to the \emph{Executor} that obtains the action defined in this plan and executes it.
+
+policy manager
+specialized handler
+
 
 \section{Example in the Communication Domain}
 
