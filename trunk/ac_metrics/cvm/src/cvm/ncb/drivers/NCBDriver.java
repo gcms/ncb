@@ -2,7 +2,7 @@ package cvm.ncb.drivers;
 
 import cvm.facade.NCB_M_Facade;
 import cvm.sb.adapters.Manageable;
-import cvm.sb.resource.bridge.BridgeResource;
+import cvm.sb.resource.bridge.ManagedResource;
 import cvm.sb.resource.ResourceManager;
 import cvm.sb.manager.SignalInstance;
 import util.CVM_Debug;
@@ -27,7 +27,7 @@ public class NCBDriver implements UsesEventListener {
         ResourceManager om = new ResourceManager();
         for (Metadata md : FeaturesParser.createAllFrameworks()) {
             Manageable manageable = (Manageable) Class.forName("cvm.ncb.adapters." + md.getName() + "Adapter").newInstance();
-            om.addObject(new BridgeResource(md, manageable));
+            om.addObject(new ManagedResource(md, manageable));
         }
 
 //        manager = new NCBManager(om, eventManager);

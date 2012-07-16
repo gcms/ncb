@@ -8,7 +8,7 @@ import cvm.sb.resource.Touchpoint;
 public interface ManagerContext {
     public StateManager getStateManager();
 
-    public Touchpoint getTouchpoint();
+    public Touchpoint getMainManager();
 
     public ResourceManager getResourceManager();
 }

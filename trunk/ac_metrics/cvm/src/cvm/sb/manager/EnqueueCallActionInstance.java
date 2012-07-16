@@ -15,7 +15,7 @@ public class EnqueueCallActionInstance implements ActionInstance {
     public Object execute(ManagerContext ctx, Map<String, Object> params) {
         Map<String, Object> callParams = ValueEvaluator.getParams(new ContextProviderParams(params), call.getBindings());
 
-        ctx.getTouchpoint().enqueue(new SignalInstance(call.getCall().getName(), callParams));
+        ctx.getMainManager().enqueue(new SignalInstance(call.getCall().getName(), callParams));
 
         return null;
     }

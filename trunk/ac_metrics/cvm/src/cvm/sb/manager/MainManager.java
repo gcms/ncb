@@ -27,7 +27,7 @@ public class MainManager extends AbstractTouchpoint implements EventListener {
             return MainManager.this.getStateManager();
         }
 
-        public Touchpoint getTouchpoint() {
+        public MainManager getMainManager() {
             return MainManager.this;
         }
 
