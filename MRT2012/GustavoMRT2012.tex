@@ -6,7 +6,7 @@
 
 \conferenceinfo{Models@Run.Time}{'12 Innsbruck, Austria}
 
-\title{Model-Driven Generation of DSML Execution Engines\titlenote{This work was partly supported by the Capes Foundation, Brazil, Proc. 0759-11-2}}
+\title{Model-Driven Development of DSML Execution Engines\titlenote{This work was partly supported by the Capes Foundation, Brazil, Proc. 0759-11-2}}
 
 \numberofauthors{2}
 
@@ -119,7 +119,7 @@ Despite being tailored for a given DSML, execution engines of CVM and MGridVM sh
 
 Therefore, we envision an approach to generalize the construction of this category of execution engines, that are aimed at the processing of DSMLs related to the provision of services upon a set of resources and capable of transparently executing models created or changed at runtime.
 
-Taking that into account, we propose a model-driven approach to the construction of these execution engines that stems from the solutions employed in the development of CVM and MGridVM. Doing so, we look forward a way to assist the construction of these DSML execution engines. Our proposal relies on a generic layered architecture and the use of modeling as a way to specialize these architecture into an execution engine for a given DSML.
+Taking that into account, we propose a model-driven approach to the construction of these execution engines that stems from the solutions employed in the development of CVM and MGridVM. By doing so, we look forward a way to assist the construction of these DSML execution engines. Our proposal relies on a generic layered architecture and the use of modeling as a way to specialize these architecture into an execution engine for a given DSML.
 
 %Taking that into consideration, we propose a model-driven approach to the construction of execution engines for the provision of high-level services described by DSMLs upon a set of resources. Doing so, we look forward a way to assist the construction of DSML execution engines. 
 %%Generalization of approach. The long-term goal of this research project is to generalize the approach on developing i-DSMLs. We expect to create an infrastructure that can be used to assist with developing the i-DSML (see Figure 1), capturing the domain-specific behavior (maybe using LTSs e.g., Tables 4 and 5), and generating the domain specific VM (transformation shown in Figure 4).
@@ -211,14 +211,6 @@ Our approach relies on the solutions employed in the development of execution en
 \item \emph{Middleware}, that besides executing the synthesized scripts, also manages the services under provision and applies constraints related to security, quality among other domain specific;
 
 \item \emph{Broker}, that is responsible for the management of resources. This layer provides to  the upper layer an uniform interface that abstracts not just the differences between resources, but also all details involved in their setup, monitoring, selection, among other resource management operations.
-
-\end{itemize}
-\begin{figure}
- \centering
- \includegraphics[width=0.40\textwidth]{./fig/uvm}
- \caption{Generic architecture for a DSML execution engine}
- \label{fig:uvm}
-\end{figure}
 
 Based on this architecture, we propose its specialization by the construction of  models that represent the mentioned layers in a given domain. Each of these models should be constructed in conformance to a meta-model that provides abstractions related to the responsibilities of the layer as described by the generic architecture. Therefore, an execution engine for a given model is constructed by creating models for each of the layers just described.
 
@@ -346,7 +338,10 @@ In this section, we describe the implementation of this execution environment, i
 % Describe the overall flow of the execution environment
 Under the implemented execution environment, a Broker layer constantly waits for calls from the upper layer or events from resources, that once arrived are enqueued for later processing. In order to process a signal, the appropriate handler is found and executed. In accordance with the model, the handler executes the associated action that may interact with resources and manipulate the state maintained by the layer. Specialized handlers are also set up for handling signals that may activate self-management functions.
 
-The figure ~\ref{} illustrates the flow of control for a Broker layer at runtime. The \emph{Broker Manager} is the main element of the execution environment which is the responsible for controlling the flow of execution. This element is the runtime object that realizes a \textsf{Manager} described in the meta-model.
+The figure ~\ref{} illustrates the
+%flow of control for 
+main elements that compose
+a Broker layer at runtime. The \emph{Broker Manager} is the main element of the execution environment which is the responsible for controlling the flow of execution. This element is the runtime object that realizes a \textsf{Manager} described in the meta-model.
 %Therefore, at runtime a \emph{Broker Manager] may also be used as a resource for another \emph{Broker Manager}  and so on
 
 A \emph{Broker Manager} serializes the handling of signals by enqueueing them and afterwards proc.essing them one at a time. Once a signal is dequeued, it is processed by the \emph{Signal Handler Manager} that identifies and executes the correct handler for the given signal. The \emph{Signal Handler Manager} maintains a registry of \emph{Signal Handlers} and searches for the first that is capable of handling the given signal. \emph{Signal Handlers} in the registry are loaded from the handlers and actions defined in the executing model, in conformance to the equivalent meta-model constructs mentioned earlier.
@@ -384,6 +379,25 @@ Quais as áreas relacionadas, e trabalhos relacionados
 \section{Concluding Remarks}
 
 % Summarize the contributions and discuss limitations and future work.
+
+%- Brief review: approach for the construction (and usage) of DSML execution engines for models@rt
+The use of MDE and DSMLs certainly brings benefits to the development and maintenance of complex applications by providing abstractions closer to the application problem domain. Meanwhile, the development of execution engines for DSMLs still requires a lot of effort and is largely based on code-centric approaches.
+
+In this paper we have proposed a model-driven approach for the development and usage of execution engines for DSMLs targeted at the construction of high-level services upon a set of heterogeneous resources. This approach relies on a generic architecture that addresses the issues involved in the execution of models described in these DSMLs and that can be created and changed at runtime.
+%- Contributions: 
+%Argue in favor of the generality (domain independence) of this approach
+%- Simplify the development of execution engines for DSMLs by extending the use of MDE from the construction of applications to the construction of the execution engine that process a model.
+%- We look after the common aspects involved in the processing of domain-specific models at runtime.
+%- We propose a systematic way of applying the solutions acquired in the experience with the CVM to other domains
+By doing so, we expect to simplify the development of execution engines for DSMLs, extending the benefits of MDE beyond the construction of applications to the construction of their execution engines. Our work leverages the solutions employed in the  communication and microgrid management domains to provide a systematic 
+
+%Therefore, we have identified  common aspects in the processing of these DSMLs and proposed a model-driven approach to employ the solutions identified in the communication and microgrid management domains
+
+
+- Limitations: 
+
+no formal link between DSML meta-model and the execution engine definition 
+- Future work: extend to other layers; enable changes to the execution engine model at runtime; experiment the concept in other application domains
 
 \section{References}
 
