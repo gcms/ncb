@@ -7,12 +7,12 @@ import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import cvm.sb.adapters.Call
 
-class BridgeExecutor {
-    private static Log log = LogFactory.getLog(BridgeExecutor)
+class CallExecutor {
+    private static Log log = LogFactory.getLog(CallExecutor)
 
     private Object bridge
 
-    public BridgeExecutor(Object bridge) {
+    public CallExecutor(Object bridge) {
         this.bridge = bridge
     }
 

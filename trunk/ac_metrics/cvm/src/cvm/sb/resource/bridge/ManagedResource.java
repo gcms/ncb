@@ -18,10 +18,10 @@ import java.util.Map;
  *
  * @author Frank Hernandez
  */
-public class BridgeResource extends AbstractTouchpoint implements EventNotifier, Resource {
+public class ManagedResource extends AbstractTouchpoint implements EventNotifier, Resource {
     private Manageable bridge;
 
-    public BridgeResource(Metadata metadata, Manageable bridge) {
+    public ManagedResource(Metadata metadata, Manageable bridge) {
         super(metadata);
         bridge.setEventNotifier(this);
         this.bridge = bridge;
@@ -33,7 +33,7 @@ public class BridgeResource extends AbstractTouchpoint implements EventNotifier,
 
     public Object execute(String message, Map<String, Object> params) {
         try {
-            return new BridgeExecutor(bridge).execute(message, params);
+            return new CallExecutor(bridge).execute(message, params);
         } catch (InvocationTargetException e) {
             if (e.getCause() instanceof EventException) {
                 EventException ee = (EventException) e.getCause();

@@ -2,9 +2,9 @@ package cvm.ncb.drivers;
 
 import cvm.facade.NCB_M_Facade;
 import cvm.sb.adapters.Manageable;
-import cvm.sb.resource.bridge.ManagedResource;
 import cvm.sb.resource.ResourceManager;
 import cvm.sb.manager.SignalInstance;
+import cvm.sb.resource.bridge.ManagedResource;
 import util.CVM_Debug;
 import cvm.model.UsesEventListener;
 import cvm.ncb.handlers.EventManager;
