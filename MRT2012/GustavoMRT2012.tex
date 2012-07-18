@@ -177,15 +177,14 @@ While there are several standardized tools that employ modeling to the construct
 We expect that by extending the use of MDE techniques to the definition of execution engines we could not only simplify the construction of execution engines, but also make it easier to evolve them to support changes in their DSML or in the implementation platform. 
 %The ability to manipulate the execution engine also enables the modification of the behavior...
 
-
-\end{itemize}
 \begin{figure}
  \centering
+ \includegraphics[width=0.3\textwidth]{overall}
  %% Structure the description around a block diagram. Diagrama de blocos do fluxo para empregar a abordagem
-Figure showing: {DSML meta-model (abstract syntax [mof], static semantics [ocl]) + concrete syntax [gmf] + dynamic semantics [?]} composing an environment for the development of applications and show a M@RT being fed into this environment
+%Figure showing: {DSML meta-model (abstract syntax [mof], static semantics [ocl]) + concrete syntax [gmf] + dynamic semantics [?]} composing an environment for the development of applications and show a M@RT being fed into this environment
 % \includegraphics[width=0.40\textwidth]{./fig/uvm}
- \caption{An execution engine described by a model is used to execute a DSML model}
- \label{fig:uvm}
+ \caption{An execution engine described by a model is used to execute DSML application models}
+ \label{fig:overall}
 \end{figure}
 
 %%Emphasize the separation between the domain-independent aspect of model execution and the definition of the DSML (and how you link a particular execution engine definition to its respective DSML).
@@ -211,6 +210,7 @@ Our approach relies on the solutions employed in the development of execution en
 \item \emph{Middleware}, that besides executing the synthesized scripts, also manages the services under provision and applies constraints related to security, quality among other domain specific;
 
 \item \emph{Broker}, that is responsible for the management of resources. This layer provides to  the upper layer an uniform interface that abstracts not just the differences between resources, but also all details involved in their setup, monitoring, selection, among other resource management operations.
+\end{itemize}
 
 Based on this architecture, we propose its specialization by the construction of  models that represent the mentioned layers in a given domain. Each of these models should be constructed in conformance to a meta-model that provides abstractions related to the responsibilities of the layer as described by the generic architecture. Therefore, an execution engine for a given model is constructed by creating models for each of the layers just described.
 
@@ -227,14 +227,14 @@ In this paper, we focus our work towards the Broker layer, that is responsible f
 
 As mentioned in the preceding section, a Broker layer is responsible for providing an independent interface upon its set of managed resources. A Broker should also be able to monitor its resources and decide which actions may need to be taken in order to meet the requests received from its interface. Thus, the proposed meta-model contains abstractions for the description of the interface, managed resources and internal state maintained by the layer. It also enables the description of autonomic behavior and policies for the selection of resources.
 
-The meta-model for the Broker layer was designed using the Eclipse Modeling Framework (EMF) which provides support for the construction and processing of the meta-model instances. The meta-model is structured around a class called \textsf{Manager} that defines a context for the management of resources and aggregates elements for describing the main aspects of the layer.  The figure ~\ref{fig:meta-model} shows an overall view of the meta-model... in this figure...
+The meta-model for the Broker layer was designed using the Eclipse Modeling Framework (EMF) which provides support for the construction and processing of the meta-model instances. The meta-model is structured around a class called \textsf{Manager} that defines a context for the management of resources and aggregates elements for describing the main aspects of the layer.  The figure ~\ref{fig:metamodel} shows a class diagram of the meta-model displaying the main classes and their relationships.
 
-\begin{figure}
+\begin{figure*}
  \centering
- \includegraphics[width=0.90\textwidth]{metamodel}
+ \includegraphics[width=0.90\textwidth]{metamodel2}
  \caption{Overall view of the meta-model for the definition of a Broker layer}
  \label{fig:metamodel}
-\end{figure}
+\end{figure*}
 
 
 An instance of a \textsf{Manager} has an interface and can also be viewed as a resource for other managers, facilitating the modularization of the layer and the reuse of specialized resource managers as building blocks for higher-level managers. Therefore a Broker layer may encapsulate an hierarchy of managers where the top-level manager defines the interface of the layer.
@@ -338,11 +338,18 @@ In this section, we describe the implementation of this execution environment, i
 % Describe the overall flow of the execution environment
 Under the implemented execution environment, a Broker layer constantly waits for calls from the upper layer or events from resources, that once arrived are enqueued for later processing. In order to process a signal, the appropriate handler is found and executed. In accordance with the model, the handler executes the associated action that may interact with resources and manipulate the state maintained by the layer. Specialized handlers are also set up for handling signals that may activate self-management functions.
 
-The figure ~\ref{} illustrates the
+The figure ~\ref{fig:environment} illustrates the
 %flow of control for 
 main elements that compose
-a Broker layer at runtime. The \emph{Broker Manager} is the main element of the execution environment which is the responsible for controlling the flow of execution. This element is the runtime object that realizes a \textsf{Manager} described in the meta-model.
+a Broker layer at runtime. The \emph{Broker Manager} is the main element of the execution environment which is the responsible for controlling the flow of execution. It is a runtime object that realizes a \textsf{Manager} described in the meta-model.
 %Therefore, at runtime a \emph{Broker Manager] may also be used as a resource for another \emph{Broker Manager}  and so on
+
+\begin{figure*}
+ \centering
+ \includegraphics[width=0.7\textwidth]{environment}
+ \caption{Execution environment for the Broker layer}
+ \label{fig:environment}
+\end{figure*}
 
 A \emph{Broker Manager} serializes the handling of signals by enqueueing them and afterwards proc.essing them one at a time. Once a signal is dequeued, it is processed by the \emph{Signal Handler Manager} that identifies and executes the correct handler for the given signal. The \emph{Signal Handler Manager} maintains a registry of \emph{Signal Handlers} and searches for the first that is capable of handling the given signal. \emph{Signal Handlers} in the registry are loaded from the handlers and actions defined in the executing model, in conformance to the equivalent meta-model constructs mentioned earlier.
 
@@ -351,7 +358,7 @@ A \emph{Broker Manager} serializes the handling of signals by enqueueing them an
 Besides those, the specialized \emph{Autonomic Signal Handler} and \emph{Policy Evaluation Signal Handler} are also set up for monitoring signals that may be of interest for self-management. \emph{Autonomic Signal Handler} checks if a signal is related to any of the symptoms that are to be monitored and if positive sends the signal information to the \emph{Autonomic Manager} that may then execute its functions. The \emph{Policy Evaluation Signal Handler}, on its turn, verifies if a signal is defined as a policy evaluation point and requests the \emph{Policy Manager} to start the policy evaluation process. Regardless of their result, these specialized handlers leave the signal flagged as not handled, so that it can be handled by an action defined in the model. An action
 
 
-The \emph{Resource Manager} provides an interface for querying and obtaining its managed resources. These resources are returned as instances of \textsf{ManagedResource}, a class that wraps the actual resource along with its metadata.
+The \emph{Resource Manager} provides an interface for querying and obtaining its managed resources. These resources are returned as instances of \textsf{Resource}. \textsf{ManagedResource} is a subtype of \textsf{Resource} and wraps the actual resource along with its metadata. \textsf{BrokerManager} is the other subtype of \textsf{Resource}, which allows a \emph{Broker Manager} to be employed as a resource.
 In order to be managed by a Broker layer, resources should implement the \textsf{Manageable} interface and annotate their provided calls with a \textsf{@Call} annotation. Resources should also use the provided class \textsf{Event} to signal an event to be handled by the layer. The \emph{Resource Manager} interacts with a resources through a touchpoint which serializes calls to a resource and handles the events signaled by resources.
 % Also expose the setEventListener method
 % Main manager registers into the resource manager as a listener of the resource events
@@ -369,7 +376,19 @@ In a similar fashion, \emph{Policy Manager} is activated by the \emph{Policy Eva
 \section{Example in the Communication Domain}
 
 % Present the NCB instance (model) . Describe its use: how it is instantiated (i.e., put to run in the form of an execution engine) and how it interprets a user-derived model at runtime (describe the model that is seen by the NCB layer, i.e., based on the commands available at its interface with the UCM layer).
+In order to demonstrate the usage of the proposed meta-model along with the provided execution environment, we designed a model that describes the behavior present in the NCB layer of the CVM. The existing CVM implementation of NCB was analyzed and used as a reference for the construction of this model. In order to verify its accuracy we designed a set of automated test scenarios that simulate requests from the middleware layer.
+These tests were executed both in the existing NCB implementation, and in the modeled NCB loaded in the execution engine, leading to same expected results. 
+%[Refers to Andrew's NCB implementation] 
 
+\begin{figure*}
+ \centering
+ \includegraphics[width=0.9\textwidth]{instance}
+ \caption{Instance of the Broker layer meta-model that describes a Network Communication Broker for the CVM}
+ \label{fig:instance}
+\end{figure*}
+
+
+Figure ~\ref{fig:instance} shows an object diagram that illustrates a reduced part of the model designed. This diagram omits some relationships and objects due to space limitations. In this diagram, It is possible to outline how the main elements of the meta-model are instantiated.
 
 \section{Related Work}
 Quais as áreas relacionadas, e trabalhos relacionados
