@@ -131,7 +131,7 @@ We illustrate our approach by presenting a meta-model designed for the construct
 %We illustrate this approach by presenting a meta-model designed to describe one of the layers of the proposed architecture.
 %Next, we create an instance of this meta-model that describes the same behavior expected from the correspondent layer in the CVM.
 
-In Section ~\ref{sec:background} we review the concepts involved in this work. Section ~\ref{sec:approach} describes our proposed approach. Section ~\ref{sec:meta-model} describes the meta-model of part of the architecture and section ~\ref{sec:runtime} explains the runtime environment needed to process the models descbribed using the proposed meta-model.
+In Section ~\ref{sec:background} we review the concepts involved in this work. Section ~\ref{sec:approach} describes our proposed approach. Section ~\ref{sec:meta-model} describes the meta-model of part of the architecture and section ~\ref{sec:runtime} explains the runtime environment needed to process the models descbribed using the proposed meta-model. Section ~\ref{sec:instance} shows an instance of the meta-model that describes a layer of CVM.
 
 
 \section{Background}
@@ -141,18 +141,11 @@ In Section ~\ref{sec:background} we review the concepts involved in this work. S
 
 \subsection{Model-Driven Engineering}
 
-The term Model-Driven Engineering is used to describe of a set of approaches that employ models as the main artifacts in the engineering of software.
-In these approaches, the use of models is not restricted to the documentation or design of software, and can be virtually extended to all the software engineering process.
-Model-Driven Engineering proposes the use of modeling languages that provides abstractions closer to the problem as a way to simplify the engineering of software. Models are
-, and automated tools for their processing as a way to abstract details of the implementation platform.
+The term Model-Driven Engineering is used to describe of a set of software engineering approaches that employ models as their primary artifacts.
+In these approaches, the use of models is not restricted to the documentation or design of software, but can be extended to all the software engineering process.
+Through the use of models based on abstractions closer to the problem, model-driven approaches seek to abstract technical details of the underlying platform, therefore simplifying the engineering of software. To make it feasible, these approaches rely on automated tools for the processing of models into constructs of the implementation platform.
 
-MDE approaches rely on modeling languages and tools that automatedly process them to support this usage.
-
-
-, maintenance, evolution, adaptation, monitoring, and any other activity that may benefit from the abstraction brought by the use of models.
-
-Model-Driven Engineering (MDE) é utilizado para descrever esse conjunto de abordagens que utilizam modelos como os principais artefatos no processo de engenharia de software
-
+Due to its potential, MDE techiques have been proposed as a way to deal with the growing complexity of contemporary software\cite{}.
 
 - mde goals and techniques
 - models@runtime são uma forma de autorepresentação com causalidade i.e. reflexão mais próxima do domínio
@@ -166,6 +159,7 @@ Model-Driven Engineering (MDE) é utilizado para descrever esse conjunto de abord
 % refer to CVM papers that describe the approach based on identifying the differences between models (chapter and Runtime models to support...)
 
 \section{Generic Architecture of the Execution Engine}
+\label{sec:approach}
 
 %% TODO: After writing the section, find a way to mention the two point-of-views of the model of execution engine: modeling the dynamic (operational) semantics or modeling the behavioral aspects
 %% ALSO: The combination of models of the layers can be viewed as a megamodel??? e.g. in fact the model of the platform is a mega-model composed by the models of the layers. the whole environment may also be a megamodel that composes the DSML metamodel, and the execution engine model
@@ -239,6 +233,7 @@ In this paper, we focus our work towards the Broker layer, that is responsible f
 %Com isto em mente, neste trabalho, construímos um meta-modelo que possibilita a modelagem do comportamento necessário para atender as responsabilidades definidas para a camada de intermediação de serviço da arquitetura proposta. O meta-modelo em questão contempla a descrição dos seguintes  aspectos envolvidos no cumprimento destas responsabilidades:
 
 \section{Meta-model for the Broker layer}
+\label{sec:meta-model}
 % Show the class diagram and describe elements of the meta-model. May structure the section based on the major blocks of the meta-model.
 
 As mentioned in the preceding section, a broker layer is responsible for providing an independent interface upon its set of managed resources. A broker should also be able to monitor its resources and decide which actions may need to be taken in order to meet the requests received from its interface. Thus, the proposed meta-model contains abstractions for the description of the interface, managed resources and internal state maintained by the layer. It also enables the description of autonomic behavior and policies for the selection of resources.
@@ -329,6 +324,7 @@ An evaluation point is defined by specifying a signal which triggers the evaluat
 
 
 \section{Execution Environment}
+\label{sec:runtime}
 
 % Describe the execution engine based on EMF. This section corresponds to the implementation section that goes in most papers. Make it clear in the text that it is the implementation.
 
@@ -390,6 +386,7 @@ If the conditions are met the \emph{Monitor} notifies the \emph{Analyzer} of the
 In a similar fashion, \emph{Policy Manager} is activated by the \emph{Policy Evaluation Signal Handler}. It works by evaluating the set of available resources against the policies and selecting the resource which leads to the highest business value. It then forwards the selected resource to the associated policy evaluation handler that calls the implementation class described in the model.
 
 \section{Example in the Communication Domain}
+\label{sec:instance}
 
 % Present the NCB instance (model) . Describe its use: how it is instantiated (i.e., put to run in the form of an execution engine) and how it interprets a user-derived model at runtime (describe the model that is seen by the NCB layer, i.e., based on the commands available at its interface with the UCM layer).
 In order to demonstrate the usage of the proposed meta-model along with the provided execution environment, we designed a model that describes the behavior present in the NCB layer of the CVM. The existing CVM implementation of NCB was analyzed and used as a reference for the construction of this model. In order to verify its accuracy we designed a set of automated test scenarios that simulate requests from the middleware layer.
