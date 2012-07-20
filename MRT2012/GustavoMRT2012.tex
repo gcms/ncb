@@ -141,9 +141,13 @@ In Section ~\ref{sec:background} we review the concepts involved in this work. S
 
 \subsection{Model-Driven Engineering}
 
-The term Model-Driven Engineering is used to describe of a set of software engineering approaches that employ models as their primary artifacts.
-In these approaches, the use of models is not restricted to the documentation or design of software, but can be extended to all the software engineering process.
-Through the use of models based on abstractions closer to the problem, model-driven approaches seek to abstract technical details of the underlying platform, therefore simplifying the engineering of software. To make it feasible, these approaches rely on automated tools for the processing of models into constructs of the implementation platform.
+The term Model-Driven Engineering is commonly used to describe of a set of software engineering approaches that employ models as their primary artifacts. In these approaches, the use of models is not restricted to the documentation or design of software, but may extend through all the software engineering process.
+%By employing models based on abstractions closer to the problem to be solved, model-driven approaches seek to abstract technical details of the underlying platform, therefore simplifying the engineering of software. To make it feasible, these approaches rely on automated tools for the processing of models into constructs of the implementation platform.
+
+Models are usually described in domain-specific modeling languages \cite{Schmidt, Kurtev:2006:MDF:1176617.1176632}, and processed by automated tools into constructs of the implementation platform. 
+A DSML, as any other language is defined by its syntax and semantics. A language can be describe by ...
+
+MDE principles and tools provides support for building DSMLs\cite{Kurtev:2006:MDF:1176617.1176632}, ... provides tools for defining abstract syntax/static semantics and a systematic approach for defining the dynamics (still lack standard)
 
 Due to its potential, MDE techiques have been proposed as a way to deal with the growing complexity of contemporary software\cite{}.
 
@@ -442,9 +446,6 @@ However, there are several areas that have not been covered by our work and stil
 As future work, we plan to advance in the construction of meta-models for the description of other layers of the proposed archicture. This task requires identifying domain-independent aspects related to the responsibilities of a layer and creating abstractions that enables the description of the functionality.
 Moreover, we need to evaluate the application of the proposed approach in other application domains and reach a better comprehension of its applicability.
 Further research also needs to be conducted towards the integration between the models of each layer and the meta-model for the DSML. Other research direction is towards the manipulation of execution engine models at runtime which may bring new unexploited possibilities to adaptation at runtime.
-
-
-\section{References}
 
 \bibliographystyle{abbrv}
 \bibliography{GustavoMRT2012}
