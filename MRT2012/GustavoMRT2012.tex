@@ -105,7 +105,7 @@ Their execution engines are capable of processing models described in their resp
 %DSMLs, along with the mechanisms for their processing embed concepts and semantics of the domain.
 %Once we have a DSML and the mechanism for processing it, users can directly develop applications in that DSML.
 
-To enable users to directly create and execute applications in a DSML, much of the knowledge of the application domain must be embedded into the DSML and the execution engine. While this approach simplifies the development of applications in these domains, the same is often not true regarding the execution engines that interpret these DSMLs. These engines are commonly developed in general purpose languages and are often built from scratch for an specific DSML.
+To enable users to directly create and execute applications in a DSML, much of the knowledge of the application domain must be embedded into the DSML and the execution engine. While this approach simplifies the development of applications in these domains, the same is often not true regarding the execution engines that interpret these DSMLs. These engines are commonly developed in general purpose languages and are usually built from scratch for an specific DSML.
 
 
 %While the development of applications in these domains employing their respective DSMLs is quite simple, the same is not true when talking about the execution engine that interprets their languages. These mechanisms are commonly developed in general purpose language and are subject to all the technical complexities involved in the traditional software development.
@@ -150,25 +150,34 @@ The term Model-Driven Engineering is commonly used to describe of a set of softw
 Models are usually described in domain-specific modeling languages, and processed by automated tools into constructs of the implementation platform \cite{Schmidt}. The use of domain-specific models switches the focus of software engineering from implementation technologies to problem-level abstractions.
 Nonetheless, automation in the processing of high-level models into software implementation requires encoding substantial domain-specific knowledge into the language and the processing tools
 
-A modeling language is described using a  metamodel, which is itself a model that defines the abstractions available in the domain and how they interrelate. Metamodeling is standardized by the OMG Meta-Object Facility \cite{Omg_2006}, but there are several tools such as the Eclipse Modeling Framework \cite{emf}, that provide similar capabilities.
+A modeling language is described using a  metamodel, which is itself a model that defines the abstractions available in the domain and how they interrelate. Metamodeling is standardized by the OMG Meta-Object Facility \cite{Omg_2006}, but there are several tools such as the Eclipse Modeling Framework \cite{emf}, that provide metamodeling capabilities.
 
-DSML models may be transformed into artifacts of the implementation platform or directly executed by a model interpreter. The use of model interpreters has the potential of facilitating the processing of models at runtime in order to adapt a running application. This usage of models has been proposed as an alternative to deal with the growing complexity of contemporary software \cite{FranceEtAl}.
+Domain-specific models may be transformed into artifacts of the implementation platform or directly executed by a model interpreter. The use of model interpreters has the potential of facilitating the processing of models at runtime in order to adapt a running application. This usage of models has been proposed as an alternative to deal with the growing complexity of contemporary software \cite{FranceEtAl}.
 
 The use of models at runtime seeks to use better abstractions for manipulating and inspecting a running system. Models at runtime bear a certain resemblance with reflection in which both deal with self-representations of a system that are causally connected. However, models at runtime look for representations that are closer to the problem domain, in contrast with reflection whose representations tend to be based on the implementation platform \cite{Blair2009}.
 
 \subsection{Domain-Specific Modeling Languages} 
 
-A DSML, as any other language is defined by its syntax and semantics. A language can be describe by ...
+Domain-specific languages (DSLs) provide constructs that are directly related to the concepts of a given problem domain. Through the use of appropriate concepts and notations, DSLs may enable domain experts or even end users to create applications.
+Unlike general-purpose languages, that may be employed for large set of tasks over multiple domains, domain-specific languages are usually restricted to a delimited set of tasks in a particular domain. Nevertheless, DSLs offer a greater expressive power on their focused domain.
+%When and how to develop domain-specific languages
+%Domain-specific languages: an annotated bibliography
 
-MDE principles and tools provides support for building DSMLs \cite{Kurtev:2006:MDF:1176617.1176632}, ... provides tools for defining abstract syntax/static semantics and a systematic approach for defining the dynamics (still lack standard)
 
-%- mde goals and techniques
-%- models@runtime são uma forma de autorepresentação com causalidade i.e. reflexão mais próxima do domínio
+A domain can be viewed as a delimited area of interest. We can categorize domains as a technical domain, such as persistency, graphical user interface, databases, or as a business domain, such as insurance, telecommunication, banking. Still, this separation is sometimes blurry and the proper delimitation of a domain should be defined according to the problem at hand.
 
-- languages/modeling language
-- formal definition of languages (concrete syntaxes + [abstract syntax + static semantics] + dynamic semantics)
+Model-driven engineering provides conceptual and tool support for language engineering, and is therefore suitable for the construction of domain-specific languages \cite{Kurtev:2006:MDF:1176617.1176632}. MDE employs metamodeling to describe the constructs in these languages, henceforth called domain-specific modeling languages.
 
-\subsection{CVM/MGridVM/i-DSML}
+As other languages, a DSML may be defined in terms of its syntax and semantics. The syntax of a DSML may be further divided in concrete syntax, which represents the textual or graphical notations of the language, and abstract syntax, which represents the concepts available in the language and how they are related. The semantics is also commonly treated separately as static semantics, which define well-formedness criteria, and dynamic semantics which gives meaning to models.
+
+Metamodels can be employed to describe the abstract syntax and static semantics of a language. Moreover, MDE tools often provide support for the construction of concrete syntax and their mapping to a metamodel.
+
+dynamic semantics is defined by either transformation/interpreter, and the process is called semantic mapping
+
+- usually built from code or using general-purpose transforming languages
+
+
+\subsection{Communication Virtual Machine}
 
 % refer to CVM papers that describe the approach based on identifying the differences between models (chapter and Runtime models to support...)
 
@@ -266,7 +275,7 @@ An instance of a \textsf{Manager} has an interface and can also be viewed as a r
 
 
 \subsection{Interface}
-In the proposed  metamodel, the interface for use of a manager is defined by provided calls and events that may be signaled to the upper layers. The class \textsf{Interface} is used to describe the interface of managers and resources. This class groups a set of calls and events that are respectively described by classes \textsf{Call} and \textsf{Event} which inherit from class \textsf{Signal}. A \textsf{Signal} in turn has a name and a set of named parameters defined by the class \textsf{Parameter}. Since a broker layer is defined in terms of its top-level manager, their interfaces are also the same and therefore the interaction between layers follows the same approach based on provided calls and signaled events.
+In the proposed metamodel, the interface for the use of a manager is defined by provided calls and events that may be signaled to the upper layers. The class \textsf{Interface} is used to describe the interface of managers and resources. This class groups a set of calls and events that are respectively described by classes \textsf{Call} and \textsf{Event} which inherit from class \textsf{Signal}. A \textsf{Signal} in turn has a name and a set of named parameters defined by the class \textsf{Parameter}. Since a broker layer is defined in terms of its top-level manager, their interfaces are also the same and therefore the interaction between layers follows the same approach based on provided calls and signaled events.
 
 \subsection{Signal handling}
 The actual behavior of a broker layer is defined by what it does when it is called from the upper layer or when a given event is generated by the resources underneath. In the Broker  metamodel, this is done by defining which action should be taken as a response to a given signal. 
