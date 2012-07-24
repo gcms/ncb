@@ -8,7 +8,7 @@
 
 \title{Model-Driven Development of DSML Execution Engines\titlenote{This work was partly supported by the Capes Foundation, Brazil, Proc. 0759-11-2}}
 
-\numberofauthors{2}
+\numberofauthors{3}
 
 \author{
 \alignauthor Gustavo C. M. Sousa \\ F{\'a}bio M. Costa\\
@@ -26,6 +26,11 @@
        \affaddr{Florida International University}\\
        \affaddr{Miami-FL, USA}\\
        \email{clarkep@cis.fiu.edu}
+\alignauthor Andrew A. Allen\\
+       \affaddr{Computer Sciences Department}\\
+       \affaddr{Georgia Southern University}\\
+       \affaddr{Statesboro-GA, USA}\\
+%       \email{andrewallen@georgiasouthern.edu}
 }
 
 \date{July 2012}
@@ -72,7 +77,7 @@ Model-driven engineering (MDE) proposes the use of models as a way to deal with 
 %% OBS: First we introduce the MDE approach of using DSMLs and automated processing
 %In order to reduce this complexity, MDE relies on DSMLs and automated processing of models.
 %Models can be either transformed or interpreted.
-By employing models built upon abstractions that are closer to the problem at hand, model-driven approaches seek to abstract details of the implementation platform, thus simplifying the development and maintenance of these applications. Models are usually described in a domain-specific modeling language (DSML) and are automatedly processed by tools that either translate the models into artifacts of the target implementation platform or directly interpret them.
+By employing models built upon abstractions that are closer to the problem at hand, model-driven approaches seek to abstract details of the implementation platform, thus simplifying the development and maintenance of these applications. Models are usually described in a domain-specific modeling language (DSML) and are automatically processed by tools that either translate the models into artifacts of the target implementation platform or directly interpret them.
 
 % Maybe move these phrases into the preceding paragraph?
 The use of high-level graphical DSMLs may enable domain experts, or even end users to create applications right from their requirements. 
@@ -114,7 +119,7 @@ To enable users to directly create and execute applications in a DSML, much of t
 %Their applications basically provide a high-level service upon a set of heterogeneous resources.
 %In order to do that, the runtime engine may need to execute many operations related to the processing of models, negotiation of configurations, synthesis of commands, evaluation of policies, runtime adaptation, and etc.
 
-Despite being tailored for different DSMLs, execution engines of CVM and MGridVM share a lot of commonalities as both of them are focused on providing high-level services on the top of a heterogeneous set of resources. Both of them need to deal with operations related to the processing of models, negotiation of configurations, synthesis of commands, evaluation of policies, runtime adaptation, etc. Considering this, both CVM and MGridVM were built upon a layered architecture, in which each layer has a set of well-defined responsibilities.
+Despite being tailored for different DSMLs, execution engines of CVM and MGridVM share a lot of commonalities as both of them are focused on providing high-level services on the top of a heterogeneous set of resources. Both of these engines need to deal with operations related to the processing of models, negotiation of configurations, synthesis of commands, evaluation of policies, runtime adaptation, etc. Both CVM and MGridVM were built upon a layered architecture, in which each layer has a set of well-defined responsibilities.
 
 %TODO: Give a better look at how the chapter about the CVM mentions these features and the similarity between these VMs
 %%Both CVM and MGridVM are built upon a layered architecture, in which each layer has well defined responsibilities.
@@ -141,6 +146,8 @@ In Section ~\ref{sec:background} we review the concepts involved in this work. S
 \label{sec:background}
 % MDE, DSMLs and models at runtime; analogy with the distinction between structural reflection (modeling of the language) and behavioral reflection (modeling of the execution engine);
 
+%In this section, we review the principles of model-driven engineering and domain-specific modeling languages. We also introduce the Communication Virtual Machine.
+
 \subsection{Model-Driven Engineering}
 
 The term Model-Driven Engineering is commonly used to describe of a set of software engineering approaches that employ models as their primary artifacts. In these approaches, the use of models is not restricted to the documentation or design of software, but may extend through all the software engineering process.
@@ -158,9 +165,7 @@ The use of models at runtime seeks to use better abstractions for manipulating a
 \subsection{Domain-Specific Modeling Languages} 
 
 Domain-specific languages (DSLs) provide constructs that are directly related to the concepts of a given problem domain. Through the use of appropriate concepts and notations, DSLs may enable domain experts or even end users to create applications.
-Unlike general-purpose languages, that may be employed for large set of tasks over multiple domains, domain-specific languages are usually restricted to a delimited set of tasks in a particular domain. Nevertheless, DSLs offer a greater expressive power on their focused domain.
-%When and how to develop domain-specific languages
-%Domain-specific languages: an annotated bibliography
+Unlike general-purpose languages, that may be employed for large set of tasks over multiple domains, domain-specific languages are usually restricted to a delimited set of tasks in a particular domain. Nevertheless, DSLs offer a greater expressive power on their focused domain \cite{vanDeursen:2000:DLA:352029.352035}.
 
 
 A domain can be viewed as a delimited area of interest. We can categorize domains as a technical domain, such as persistency, graphical user interface, databases, or as a business domain, such as insurance, telecommunication, banking. Still, this separation is sometimes blurry and the proper delimitation of a domain should be defined according to the problem at hand.
@@ -169,7 +174,7 @@ Model-driven engineering provides conceptual and tool support for language engin
 
 As other languages, a DSML may be defined in terms of its syntax and semantics. The syntax of a DSML may be further divided in concrete syntax, which represents the textual or graphical notations of the language, and abstract syntax, which represents the concepts available in the language and how they are related. The semantics is also commonly treated separately as static semantics, which define well-formedness criteria, and dynamic semantics which gives meaning to models.
 
-Metamodels can be employed to describe the abstract syntax and static semantics of a language. Moreover, there are  tools often provide support for the construction of concrete syntax and their mapping to a metamodel. However, there are not yet widely accepted methods for describing the dynamic semantics of DSMLs \cite{Kurtev:2006:MDF:1176617.1176632}. Current methods usually rely on a transformations from the DSML metamodel to another language with well-defined semantics or modeling the operational behavior associated to language constructs.
+Metamodels can be employed to describe the abstract syntax and static semantics of a language. Moreover, there are  tools often provide support for the construction of concrete syntax and their mapping to a metamodel. However, there are not yet widely accepted methods for describing the dynamic semantics of DSMLs \cite{Kurtev:2006:MDF:1176617.1176632}. Current methods usually rely on transformations from the DSML metamodel to another language with well-defined semantics or modeling the operational behavior associated to language constructs.
 % Both approaches can be implemented by code in general-purpose languages
 %There are standardized languages for defining both transformations and operational semantics, but they tend to be generic in a way that sometimes they do not provide greater advantage than the use of a general-purpose language.
 
@@ -179,9 +184,9 @@ Metamodels can be employed to describe the abstract syntax and static semantics 
 
 The Communication Virtual Machine (CVM) is an execution engine designed for the creation and realization of user-centric communication  \cite{Deng20081640}. CVM works by processing models described in a very high-level domain-specific modeling language called Communication Modeling Language (CML). A CML model describes a communication scenario by defining and associating elements of the communication domain such as connections, participants, media types and attached devices. 
 
-Once a CML model is fed into the CVM, it is capable to realize the described service independently, abstracting from the user details involved in the negotiation of capabilities or selection of communication technologies. CML models can also be changed at runtime and reprocessed by the CVM that identifies the differences between the models and executes the operations needed to meet the new requirements \cite{Wang}.
+Once a CML model is fed into the CVM, it is capable to realize the described service independently, abstracting from the user details involved in the negotiation of capabilities or selection of communication technologies. CML models can also be changed at runtime and reprocessed in the CVM, that identifies the differences between the models and executes the operations needed to meet the new requirements \cite{Wang}.
 
-CVM is built on a layered architecture that lies between the user and the underlying communication frameworks. The first layer, called \emph{User Communication Interface} (UCI) provides an interface for interacting with the CVM and an environment for the construction and management of CML models. Models received by the UCI are transformed in an internal XML representation and sent to the \emph{Synthesis Engine} (SE) layer. The primary responsibility of SE is to identify changes in an executing model (or new models) and synthesize an executable communication control script. \emph{User-centric Communication Middleware} (UCM) executes the communication control script and assures that desired policies are enforced. At last, the \emph{Network Communication Broker} layer provides an technology independent interface that masks the heterogeneity of the communication frameworks available for the realization of the communication services. 
+CVM is built on a layered architecture that lies between the user and the underlying communication frameworks. The first layer, called \emph{User Communication Interface} (UCI) provides an interface for interacting with the CVM and an environment for the construction and management of CML models. Models received by the UCI are transformed into an internal XML representation and sent to the \emph{Synthesis Engine} (SE) layer. The primary responsibility of SE is to identify changes in an executing model (or new models) and synthesize an executable communication control script. \emph{User-centric Communication Middleware} (UCM) executes the communication control script and assures that desired policies are enforced. Finally, the \emph{Network Communication Broker} layer provides a technology independent interface that masks the heterogeneity of the communication frameworks available for the realization of the communication services. 
 
 \section{Generic Architecture of the Execution Engine}
 \label{sec:approach}
@@ -223,7 +228,8 @@ We expect that by extending the use of MDE techniques to the definition of execu
 \end{figure}
 
 %%Emphasize the separation between the domain-independent aspect of model execution and the definition of the DSML (and how you link a particular execution engine definition to its respective DSML).
-Despite differences in the dynamic semantics of different DSMLs, they quite often rely on a common set of operations regardless of the application domain. The processing of runtime models usually requires that the execution engine has capabilities for model analysis and negotiation, as well as for the transformation of models into different representations, runtime adaptation among others.
+Despite differences in the dynamic semantics of different DSMLs, they quite often rely on a common set of operations regardless of the application domain.
+The processing of runtime models usually requires from the execution engine capabilities for model analysis and negotiation, transformation of models into different representations, as well as for runtime adaptation, among others.
 
 In order to enable the construction and manipulation of models that represent an execution engine, we need a language for that. This language needs to be powerful enough to allow the description of virtual machines for different application domains, like the ones described above. Still, this language should not be very generic, as this could make model manipulation as difficult as writing code in a general-purpose language.
 Therefore, this language should be made up of constructs related to the domain independent aspects of execution engines designed for providing high-level services described in a DSML. Thus, such a language can be regarded as a domain-specific language for the technical domain that encompasses the technical aspects involved in the use of a heterogeneous set of resources for the realization of high-level services described in a DSML.
@@ -249,7 +255,7 @@ Our approach builds on the solutions employed in the development of execution en
 
 Based on this architecture, we propose its specialization by the construction of  models that represent the mentioned layers in a given domain. Each of these models should be constructed in conformance to a  metamodel that provides abstractions related to the responsibilities of the layer as described by the generic architecture. Therefore, an execution engine for a given model is constructed by creating models for each of the layers just described.
 
-In this paper, we focus our work towards the Broker layer, that is responsible for the management of the resources that will ultimately be used to realize a requested service. Therefore, we build a  metamodel that provides abstractions for the definition of the behavior expected to meet the responsibilities of a broker layer. These comprise the provision of a uniform interface over its managed resources, shielding the middleware layer from setup and configuration details of resources, and the self-management of the layer in order to offer the best service according to its policies and environment constraints.
+In this paper, we will limit our discussions to the Broker layer which was the primary focus of this phase of the work. The Broker layer is responsible for the management of the resources that will ultimately be used to realize a requested service. Therefore, we build a  metamodel that provides abstractions for the definition of the behavior expected to meet the responsibilities of a broker layer. These comprise the provision of a uniform interface over its managed resources, shielding the middleware layer from setup and configuration details of resources, and the self-management of the layer in order to offer the best service according to its policies and environment constraints.
 
 %O Intermediador de Serviço é a camada da arquitetura proposta que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para prover o serviço solicitado. Cabe à esta camada disponibilizar uma interface de serviços que abstraia as especificidades dos recursos gerenciados para a camada superior. Além disso, o SB deve possuir capacidade de auto gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
 
@@ -257,7 +263,7 @@ In this paper, we focus our work towards the Broker layer, that is responsible f
 
 %Com isto em mente, neste trabalho, construímos um  metamodelo que possibilita a modelagem do comportamento necessário para atender as responsabilidades definidas para a camada de intermediação de serviço da arquitetura proposta. O  metamodelo em questão contempla a descrição dos seguintes  aspectos envolvidos no cumprimento destas responsabilidades:
 
-\section{Metamodel for the Broker lay-er}
+\section{Metamodel for the broker lay-er}
 \label{sec: metamodel}
 % Show the class diagram and describe elements of the  metamodel. May structure the section based on the major blocks of the  metamodel.
 
@@ -280,7 +286,7 @@ An instance of a \textsf{Manager} has an interface and can also be viewed as a r
 In the proposed metamodel, the interface for the use of a manager is defined by provided calls and events that may be signaled to the upper layers. The class \textsf{Interface} is used to describe the interface of managers and resources. This class groups a set of calls and events that are respectively described by classes \textsf{Call} and \textsf{Event} which inherit from class \textsf{Signal}. A \textsf{Signal} in turn has a name and a set of named parameters defined by the class \textsf{Parameter}. Since a broker layer is defined in terms of its top-level manager, their interfaces are also the same and therefore the interaction between layers follows the same approach based on provided calls and signaled events.
 
 \subsection{Signal handling}
-The actual behavior of a broker layer is defined by what it does when it is called from the upper layer or when a given event is generated by the resources underneath. In the Broker  metamodel, this is done by defining which action should be taken as a response to a given signal. 
+The actual behavior of a broker layer is defined by what it does when it is called from the upper layer or when a given event is generated by the resources underneath. In the broker  metamodel, this is done by defining which action should be taken as a response to a given signal. 
 When a signal, which may be either a call or an event, is received, the corresponding action is executed. %This approach draws inspiration from event-driven architecture
 
 In this  metamodel, \textsf{Signal}, \textsf{Handler} and \textsf{Action} are the main classes used to define the signal handling of a given manager. While signals are described as part of an interface, actions and handlers are directly grouped in the manager. An action represents some operation that can be executed and is defined by the abstract class \textsf{Action} which has the following subclasses:
@@ -310,13 +316,13 @@ An instance resource manager groups a set of instances defined by the type \text
 
 \subsection{State management}
 
-In a great number of occasions, the processing of a given call or event may depend upon signals that were previously received by the layer. A given signal may have a different processing according to the parameters of a preceding call, the simple occurrence of an event or the result of the processing of a signal. In order to make it possible, the layer should be able to keep state between occurrences of signals.
+In a significant number of cases, the processing of a given call or event may depend upon signals that were previously received by the layer. A given signal can be processed differently according to the parameters of a preceding call, the simple occurrence of an event, the result of the processing of a signal, etc. In order to support the variability in signal processing, the layer should be able to keep state between occurrences of signals.
 
 The class \textsf{StateManager} provides a way to define the data types that need to be kept by a given manager at runtime. Data types are defined through the class \textsf{State} by a simple structure, where a type is defined in terms of its attributes and subtypes. Subtypes are also defined as instances of \textsf{State} and therefore may have the same features.  Also, as in a relational model, the definition of a type requires the selection of a key attribute that uniquely identifies a register of a given data type.
 
 \subsection{Autonomic computing}
 
-Besides abstracting the differences in capabilities and interfacing of resources, a broker layer should also mask to the upper layers the dynamics involved in the utilization of the resources. By doing so, the layer is capable of providing an interface that keeps the upper layers oblivious of the details of selection, setup and maintenance of resources.
+Besides abstracting the differences in capabilities and interfacing of resources, a broker layer should also mask from the upper layers the dynamics involved in the utilization of the resources. By doing so, the layer is capable of providing an interface that keeps the upper layers oblivious of the details of selection, setup and maintenance of resources, thereby reducing the complexity of the modeling in the upper layers.
 
 The signal handling provided by the  metamodel enables to a certain degree the handling of events (generated by resources) and calls (received from the upper layer). These constructs, associated with state management, make it possible to define how resources and requests will be monitored in order to identify a variety of scenarios that require an action to be taken.
 Nonetheless, these abstractions are not appropriate for the description of more complex situations that may involve many resources, the current layer state, and data from received calls, among others.
@@ -330,19 +336,18 @@ The constructs in the  metamodel allow for the description of rules that define 
 
 The class \textsf{AutonomicManager} groups the elements that are related to the autonomic management of resources. These elements describe the rules for the generation of knowledge, such as symptoms, change requests and change plans. The class \textsf{Symptom} defines a set of conditions for the detection of a given symptom. At runtime, the resources and the state kept by the layer are continuously monitored, and when all conditions of a symptom are met, an occurrence of the symptom is generated and sent to the analyzer.
 
-The conditions that define a symptom are described using expressions. Therefore, in addition to the conditions, the class \textsf{Symptom} should define the context for evaluation of these expressions. The context is defined through the class \textsf{Binding}, which is used to map a name used in the expression to an instance of the type \textsf{Bindable}. The interface \textsf{Bindable}, on its turn, is implemented by the classes \textsf{Signal} and \textsf{State}. This structure allows for the definition of conditions that combine data from calls and events, as well as from the state kept by the layer.
+The conditions that define a symptom are described using expressions. Therefore, in addition to the conditions, the class \textsf{Symptom} defines the context for evaluation of these expressions. The context is defined through the class \textsf{Binding}, which is used to map a name used in the expression to an instance of the type \textsf{Bindable}. The interface \textsf{Bindable}, in turn, is implemented by the classes \textsf{Signal} and \textsf{State}. This structure allows for the definition of conditions that combine data from calls and events, as well as from the state kept by the layer.
 
-The \textsf{ChangeRequest} class is used to specify that a change request needs to be generated at runtime when a given symptom is detected. A change plan, defined as an instance of the class \textsf{ChangePlan}, associates a change request to an action to be executed. An action, on its turn, may be any of the aforementioned \textsf{Action} subtypes.
+The \textsf{ChangeRequest} class is used to specify that a change request needs to be generated at runtime when a given symptom is detected. A change plan, defined as an instance of the class \textsf{ChangePlan}, associates a change request to an action to be executed. An action, in turn, may be any of the \textsf{Action} subtypes.
 
 % Enquanto a função de planejamento pode empregar algoritmos complexos que geram dinâmicamente planos  de mudança que podem envolver um workflow completo de execução, no trabalho em questão optamos por uma abordagem simples, onde um plano é diretamente associado a uma solicitação de mudança
 
 \subsection{Policies}
 In the proposed  metamodel policies are employed to drive the selection of resources. The class \textsf{PolicyManager} groups abstractions related to the definition of policies and their evaluation. These comprise \textsf{Policy}, which identifies a policy, \textsf{PolicyEvaluationPoint}, which defines when policies should be evaluated, and \textsf{PolicyEvaluationHandler}, which defines how the policy evaluation result should be handled. Besides that, the  metamodel also includes auxiliary constructs for establishing links between these main elements.
 
-As mentioned earlier, resources may be annotated with their features and properties.
-A policy specifies a condition over a feature that may be present in resources, and the business value that is associated to the reaching of this condition.
-At runtime, the resource that achieves the highest accumulated business value is selected among the available resources.
-
+%As mentioned earlier, resources may be annotated with their features and properties.
+%A policy specifies a condition over a feature that may be present in resources, and the business value that is associated to the reaching of this condition.
+%At runtime, the resource that achieves the highest accumulated business value is selected among the available resources.
 
 An evaluation point is defined by specifying a signal which triggers the evaluation of policies, and the policy evaluation handler that will be executed after the evaluation to handle its result. A policy evaluation point is linked to its handler by an instance of \textsf{PolicyEvaluationRequest}, which is responsible for defining the parameter mapping between the context of the signal that initiated the evaluation, and the parameters required for the evaluation itself. Finally, a policy evaluation handler defines an implementation class (similar to the macro action) that is executed on the results of the policy evaluation process.
 %The scope of the policies is implicitly defined as the set of resources associated to the same manager.
@@ -357,14 +362,14 @@ An evaluation point is defined by specifying a signal which triggers the evaluat
 %- The  metamodel allows for us to define a Broker layer...
 %- but in order to execute it so that it is capable of handling requests from the middleware layer ...
 %- we developed an execution engine (that therefore provides dynamic semantics to the  metamodel)
-Though the  metamodel provides abstractions that enable the description of a Broker layer, it is not enough to have an executable layer, capable of handling requests at runtime. In order to fill in this gap, we developed an execution environment that loads a Broker layer model and behaves accordingly, therefore providing operational semantics for the proposed  metamodel.
+Though the  metamodel provides abstractions that enable the description of a broker layer, it is not enough to have an executable layer, capable of handling requests at runtime. In order to fill in this gap, we developed an execution environment that loads a broker layer model and behaves accordingly, therefore providing operational semantics for the proposed  metamodel.
 
 
 %% MAKE IT CLEAR that the execution engine loads the XMI models defined by using EMF
 %- The execution environment loads a Broker layer model defined as an EMF XMI file.
 %- Based on this model, the execution environment initializes a Broker layer for a DSML execution engine.
 %- It uses the classes generated by EMF from the  metamodel to process the model.
-The provided execution environment was developed in the Java platform and comprises components for executing a Broker layer model and a library for interfacing with the resources to be managed by the layer. It loads a model described in EMF XMI 2.0 and initializes a Broker layer for a DSML execution engine.
+The provided execution environment was developed in the Java platform and comprises components for executing a broker layer model and a library for interfacing with the resources to be managed by the layer. It loads a model described in EMF XMI 2.0 and initializes a broker layer for a DSML execution engine.
 
 % Introduction to understand the following paragraphs
 %in this section we deal with the actual implementation that actually process the requests driven by a given Broker model
@@ -373,18 +378,18 @@ The provided execution environment was developed in the Java platform and compri
 In this section, we describe the implementation of this execution environment, including its main components and how they interact in order to provide the behavior described by the model loaded in it. Though the names employed for describing these components may be the same used for elements of the  metamodel they are not the same. The components described here are part of the actual Java implementation but are related to their homonymous in the  metamodel.
 
 % Describe the overall flow of the execution environment
-Under the implemented execution environment, a Broker layer constantly waits for calls from the upper layer or events from resources, that once arrived are enqueued for later processing. In order to process a signal, the appropriate handler is found and executed. In accordance with the model, the handler executes the associated action that may interact with resources and manipulate the state maintained by the layer. Specialized handlers are also set up for handling signals that may activate self-management functions.
+Under the implemented execution environment, a broker layer constantly waits for calls from the upper layer or events from resources, that once arrived are enqueued for later processing. In order to process a signal, the appropriate handler is found and executed. In accordance with the model, the handler executes the associated action that may interact with resources and manipulate the state maintained by the layer. Specialized handlers are also set up for handling signals that may activate self-management functions.
 
 The figure ~\ref{fig:environment} illustrates the
 %flow of control for 
 main elements that compose
-a Broker layer at runtime. The \emph{Broker Manager} is the main element of the execution environment which is the responsible for controlling the flow of execution. It is a runtime object that realizes a \textsf{Manager} described in the  metamodel.
+a broker layer at runtime. The \emph{Broker Manager} is the main element of the execution environment which is the responsible for controlling the flow of execution. It is a runtime object that realizes a \textsf{Manager} described in the  metamodel.
 %Therefore, at runtime a \emph{Broker Manager] may also be used as a resource for another \emph{Broker Manager}  and so on
 
 \begin{figure*}
  \centering
  \includegraphics[width=0.7\textwidth]{environment}
- \caption{Execution environment for the Broker layer}
+ \caption{Execution environment for the broker layer}
  \label{fig:environment}
 \end{figure*}
 
@@ -392,11 +397,11 @@ A \emph{Broker Manager} serializes the handling of signals by enqueueing them an
 
 %signals/events
 %handlers registered into the SignalHandlerManager
-Besides those, the specialized \emph{Autonomic Signal Handler} and \emph{Policy Evaluation Signal Handler} are also set up for monitoring signals that may be of interest for self-management. \emph{Autonomic Signal Handler} checks if a signal is related to any of the symptoms that are to be monitored and if positive sends the signal information to the \emph{Autonomic Manager} that may then execute its functions. The \emph{Policy Evaluation Signal Handler}, on its turn, verifies if a signal is defined as a policy evaluation point and requests the \emph{Policy Manager} to start the policy evaluation process. Regardless of their result, these specialized handlers leave the signal flagged as not handled, so that it can be handled by an action defined in the model. An action
+Besides those, the specialized \emph{Autonomic Signal Handler} and \emph{Policy Evaluation Signal Handler} are also set up for monitoring signals that may be of interest for self-management. \emph{Autonomic Signal Handler} checks if a signal is related to any of the symptoms that are to be monitored and if positive sends the signal information to the \emph{Autonomic Manager} that may then execute its functions. The \emph{Policy Evaluation Signal Handler}, in turn, verifies if a signal is defined as a policy evaluation point and requests the \emph{Policy Manager} to start the policy evaluation process. Regardless of their result, these specialized handlers leave the signal flagged as not handled, so that it can be handled by an action defined in the model. An action
 
 
 The \emph{Resource Manager} provides an interface for querying and obtaining its managed resources. These resources are returned as instances of \textsf{Resource}. \textsf{ManagedResource} is a subtype of \textsf{Resource} and wraps the actual resource along with its metadata. \textsf{BrokerManager} is the other subtype of \textsf{Resource}, which allows a \emph{Broker Manager} to be employed as a resource.
-In order to be managed by a Broker layer, resources should implement the \textsf{Manageable} interface and annotate their provided calls with a \textsf{@Call} annotation. Resources should also use the provided class \textsf{Event} to signal an event to be handled by the layer. The \emph{Resource Manager} interacts with a resources through a touchpoint which serializes calls to a resource and handles the events signaled by resources.
+In order to be managed by a broker layer, resources should implement the \textsf{Manageable} interface and annotate their provided calls with a \textsf{@Call} annotation. Resources should also use the provided class \textsf{Event} to signal an event to be handled by the layer. The \emph{Resource Manager} interacts with a resources through a touchpoint which serializes calls to a resource and handles the events signaled by resources.
 % Also expose the setEventListener method
 % Main manager registers into the resource manager as a listener of the resource events
 
@@ -421,7 +426,7 @@ These tests were executed both in the existing NCB implementation, and in the mo
 \begin{figure*}
  \centering
  \includegraphics[width=0.9\textwidth]{instance}
- \caption{Instance of the Broker layer  metamodel that describes a Network Communication Broker for the CVM}
+ \caption{Instance of the broker layer  metamodel that describes a Network Communication Broker for the CVM}
  \label{fig:instance}
 \end{figure*}
 
@@ -429,10 +434,23 @@ These tests were executed both in the existing NCB implementation, and in the mo
 Figure ~\ref{fig:instance} shows an object diagram that illustrates a reduced part of the model designed. This diagram omits some relationships and objects due to space limitations. In this diagram, It is possible to outline how the main elements of the  metamodel are instantiated.
 
 \section{Related Work}
+
+% Related work should be in the area of runtime model interpretation and execution engines for DSMLs. Must present them and compare with your approach.
 Quais as áreas relacionadas, e trabalhos relacionados
 - Outras abordagens de construção de execution engines de DSMLs
 
-% Related work should be in the area of runtime model interpretation and execution engines for DSMLs. Must present them and compare with your approach.
+
+A developing trend in this area is to remove the
+steps involved in model translation, and to instead execute the
+models directly. To achieve this, one requires a semantically
+rich environment capable of interpreting these models. The
+use of an Interpreted Domain-Speci?c Modeling Language
+execution engine is one such environment [2]
+
+
+P. J. Clarke, Y. Wu, A. A. Allen, F. Hernandez, M. Allison, and
+R. France, Towards Dynamic Semantics for Synthesizing DomainSpeci?c Models, ch. 9. IGI Global, 2012.
+
 
 \section{Concluding Remarks}
 % TODO: MAKE IT CONFORMANT TO THE ABSTRACT/INTRODUCTION/GENERIC ARCHITECTURE
@@ -446,7 +464,7 @@ The use of MDE and DSMLs certainly brings benefits to the development and mainte
 In this paper we have presented a model-driven approach towards the development and usage of execution engines for DSMLs aimed at the construction of high-level services upon a set of heterogeneous resources.
 This approach relies on a generic architecture that addresses issues involved in the execution of models that are described in these DSMLs and that can be created and changed at runtime.
 Hence we proposed the use of MDE techniques to specialize this architecture into domain-specific execution engines.
-We then designed a  metamodel that captures domain-independent aspects of a Broker layer of the proposed architecture and demonstrated its use by modeling a Network Communication Broker for the Communication Virtual Machine.
+We then designed a  metamodel that captures domain-independent aspects of a broker layer of the proposed architecture and demonstrated its use by modeling a Network Communication Broker for the Communication Virtual Machine.
 By doing so, we look after a way to simplify the development of execution engines for DSMLs, extending the benefits of MDE beyond the construction of applications to the construction of their execution engines.
 
 % NOTE: OTHER PHRASES THAT I THOUGHT ABOUT BEFORE
