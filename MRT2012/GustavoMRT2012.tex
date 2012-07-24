@@ -61,7 +61,7 @@ We present an initial validation of the approach in the context of the Communica
 %These applications also often need to adapt at runtime to comply with changing requirements and environment.
 %In order to achieve these goals the developers need to employ a variety of strategies to 
 
-Model-driven engineering (MDE) proposes the use of models as a way to deal with the increasing complexity of contemporary software applications. These applications usually operate in a distributed and heterogeneous environment and must be able to dynamically adapt in order to meet changes in the requirements and operational environment. Their development and maintenance using traditional approaches often require a huge effort due to the limitation of abstractions based on the implementation platform. % to deal with the large number of details
+Model-driven engineering (MDE) proposes the use of models as a way to deal with the increasing complexity of contemporary software applications \cite{FranceEtAl}. These applications usually operate in a distributed and heterogeneous environment and must be able to dynamically adapt in order to meet changes in the requirements and operational environment. Their development and maintenance using traditional approaches often require a huge effort due to the limitation of abstractions based on the implementation platform. % to deal with the large number of details
 % traditional: (computer/technological centric) 
 % limitations: (too generic/distant from the problem)
 
@@ -141,7 +141,6 @@ In Section ~\ref{sec:background} we review the concepts involved in this work. S
 \label{sec:background}
 % MDE, DSMLs and models at runtime; analogy with the distinction between structural reflection (modeling of the language) and behavioral reflection (modeling of the execution engine);
 
-
 \subsection{Model-Driven Engineering}
 
 The term Model-Driven Engineering is commonly used to describe of a set of software engineering approaches that employ models as their primary artifacts. In these approaches, the use of models is not restricted to the documentation or design of software, but may extend through all the software engineering process.
@@ -170,16 +169,19 @@ Model-driven engineering provides conceptual and tool support for language engin
 
 As other languages, a DSML may be defined in terms of its syntax and semantics. The syntax of a DSML may be further divided in concrete syntax, which represents the textual or graphical notations of the language, and abstract syntax, which represents the concepts available in the language and how they are related. The semantics is also commonly treated separately as static semantics, which define well-formedness criteria, and dynamic semantics which gives meaning to models.
 
-Metamodels can be employed to describe the abstract syntax and static semantics of a language. Moreover, MDE tools often provide support for the construction of concrete syntax and their mapping to a metamodel.
-
-dynamic semantics is defined by either transformation/interpreter, and the process is called semantic mapping
-
-- usually built from code or using general-purpose transforming languages
-
+Metamodels can be employed to describe the abstract syntax and static semantics of a language. Moreover, there are  tools often provide support for the construction of concrete syntax and their mapping to a metamodel. However, there are not yet widely accepted methods for describing the dynamic semantics of DSMLs \cite{Kurtev:2006:MDF:1176617.1176632}. Current methods usually rely on a transformations from the DSML metamodel to another language with well-defined semantics or modeling the operational behavior associated to language constructs.
+% Both approaches can be implemented by code in general-purpose languages
+%There are standardized languages for defining both transformations and operational semantics, but they tend to be generic in a way that sometimes they do not provide greater advantage than the use of a general-purpose language.
 
 \subsection{Communication Virtual Machine}
 
 % refer to CVM papers that describe the approach based on identifying the differences between models (chapter and Runtime models to support...)
+
+The Communication Virtual Machine (CVM) is an execution engine designed for the creation and realization of user-centric communication  \cite{Deng20081640}. CVM works by processing models described in a very high-level domain-specific modeling language called Communication Modeling Language (CML). A CML model describes a communication scenario by defining and associating elements of the communication domain such as connections, participants, media types and attached devices. 
+
+Once a CML model is fed into the CVM, it is capable to realize the described service independently, abstracting from the user details involved in the negotiation of capabilities or selection of communication technologies. CML models can also be changed at runtime and reprocessed by the CVM that identifies the differences between the models and executes the operations needed to meet the new requirements \cite{Wang}.
+
+CVM is built on a layered architecture that lies between the user and the underlying communication frameworks. The first layer, called \emph{User Communication Interface} (UCI) provides an interface for interacting with the CVM and an environment for the construction and management of CML models. Models received by the UCI are transformed in an internal XML representation and sent to the \emph{Synthesis Engine} (SE) layer. The primary responsibility of SE is to identify changes in an executing model (or new models) and synthesize an executable communication control script. \emph{User-centric Communication Middleware} (UCM) executes the communication control script and assures that desired policies are enforced. At last, the \emph{Network Communication Broker} layer provides an technology independent interface that masks the heterogeneity of the communication frameworks available for the realization of the communication services. 
 
 \section{Generic Architecture of the Execution Engine}
 \label{sec:approach}
@@ -255,7 +257,7 @@ In this paper, we focus our work towards the Broker layer, that is responsible f
 
 %Com isto em mente, neste trabalho, construímos um  metamodelo que possibilita a modelagem do comportamento necessário para atender as responsabilidades definidas para a camada de intermediação de serviço da arquitetura proposta. O  metamodelo em questão contempla a descrição dos seguintes  aspectos envolvidos no cumprimento destas responsabilidades:
 
-\section{ metamodel for the Broker layer}
+\section{Metamodel for the Broker lay-er}
 \label{sec: metamodel}
 % Show the class diagram and describe elements of the  metamodel. May structure the section based on the major blocks of the  metamodel.
 
@@ -355,7 +357,7 @@ An evaluation point is defined by specifying a signal which triggers the evaluat
 %- The  metamodel allows for us to define a Broker layer...
 %- but in order to execute it so that it is capable of handling requests from the middleware layer ...
 %- we developed an execution engine (that therefore provides dynamic semantics to the  metamodel)
-Though the  metamodel provides abstractions that enable the description of a Broker layer, it is not enough to have an executable layer, capable of handling requests at runtime. In order to fill in this gap, we developed an execution environment that loads a Broker layer model and behaves accordingly, therefore providing dynamic semantics for the proposed  metamodel.
+Though the  metamodel provides abstractions that enable the description of a Broker layer, it is not enough to have an executable layer, capable of handling requests at runtime. In order to fill in this gap, we developed an execution environment that loads a Broker layer model and behaves accordingly, therefore providing operational semantics for the proposed  metamodel.
 
 
 %% MAKE IT CLEAR that the execution engine loads the XMI models defined by using EMF
@@ -386,7 +388,7 @@ a Broker layer at runtime. The \emph{Broker Manager} is the main element of the 
  \label{fig:environment}
 \end{figure*}
 
-A \emph{Broker Manager} serializes the handling of signals by enqueueing them and afterwards proc.essing them one at a time. Once a signal is dequeued, it is processed by the \emph{Signal Handler Manager} that identifies and executes the correct handler for the given signal. The \emph{Signal Handler Manager} maintains a registry of \emph{Signal Handlers} and searches for the first that is capable of handling the given signal. \emph{Signal Handlers} in the registry are loaded from the handlers and actions defined in the executing model, in conformance to the equivalent  metamodel constructs mentioned earlier.
+A \emph{Broker Manager} serializes the handling of signals by enqueueing them and afterwards processing them one at a time. Once a signal is dequeued, it is processed by the \emph{Signal Handler Manager} that identifies and executes the correct handler for the given signal. The \emph{Signal Handler Manager} maintains a registry of \emph{Signal Handlers} and searches for the first that is capable of handling the given signal. \emph{Signal Handlers} in the registry are loaded from the handlers and actions defined in the executing model, in conformance to the equivalent  metamodel constructs mentioned earlier.
 
 %signals/events
 %handlers registered into the SignalHandlerManager
