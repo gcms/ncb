@@ -53,7 +53,7 @@ We present an initial validation of the approach in the context of the Communica
 
 \category{D.2.11} {Software Engineering}{Software Architectures}[domain-specific architectures, languages]
 
-\keywords{Infrastructure for Models at Runtime, Model-Driven Engineering, Domain-Specific Modeling Languages, Metamodeling}
+\keywords{Infrastructure for Models@Run.Time, Model-Driven Engineering, Domain-Specific Modeling Languages, Metamodeling}
 
 %Research in model-driven software development (MDD)and domain-specific modeling languages (DSMLs) focuses on how models that provide good abstractions of complex software behaviors can be used to significantly improve software productivity and quality.
 
@@ -153,32 +153,32 @@ In Section ~\ref{sec:background} we review the concepts involved in this work. S
 The term Model-Driven Engineering is commonly used to describe a set of software engineering approaches that employ models as their primary artifacts. In these approaches, the use of models is not restricted to the documentation or design of software, but may extend throughout the software engineering process.
 %By employing models based on abstractions closer to the problem to be solved, model-driven approaches seek to abstract technical details of the underlying platform, therefore simplifying the engineering of software. To make it feasible, these approaches rely on automated tools for the processing of models into constructs of the implementation platform.
 
-Models are usually described in domain-specific modeling languages, and processed by automated tools into constructs of the implementation platform \cite{Schmidt}. The use of domain-specific models switches the focus of software engineering from implementation technologies to problem-level abstractions.
-Nonetheless, automation in the processing of high-level models into software implementation requires encoding substantial domain-specific knowledge into the language and processing tools
+Models are usually described in domain-specific modeling languages (DSMLs), and processed by automated tools into constructs of the implementation platform \cite{Schmidt}.
+We can categorize domains as a technical domain, such as persistency, graphical user interface, databases, or as a business domain, such as insurance, telecommunication, banking.
+% CITE mdsd
+% Domain-specific modeling: enabling full code generation
+% Model driven software development Markus Völter
+Still, this separation is sometimes blurry and the proper delimitation of a domain should be defined according to the problem at hand.
 
-A modeling language is described using a  metamodel, which is itself a model that defines the abstractions available in the domain and how they interrelate. Metamodeling techniques have been standardized by the OMG Meta-Object Facility \cite{Omg_2006}, but there are several tools, such as the Eclipse Modeling Framework \cite{emf}, that provide metamodeling capabilities.
+%Domain-specific modeling languages provide constructs that are directly related to the concepts of a given problem domain. 
+Through the use of appropriate concepts and notations, DSMLs may enable domain experts or even end users to create applications.
+% CITE end user programming
+Unlike general-purpose languages, that may be employed for a large set of tasks over multiple domains, DSMLs are usually restricted to a limited set of tasks in a particular domain. Nevertheless, domain-specific languages offer a greater expressive power on their focused domain \cite{Mernik:2005:DDL:1118890.1118892, vanDeursen:2000:DLA:352029.352035}.
+
+%Nonetheless, automation in the processing of high-level models into software implementation requires encoding substantial domain-specific knowledge into the language and processing tools
+
+As other languages, a DSML may be defined in terms of its syntax and semantics. The syntax of a DSML may be further divided in concrete syntax, which represents the textual or graphical notations of the language, and abstract syntax, which represents the concepts available in the language and how they are related. The semantics is also commonly treated separately as static semantics, which define well-formedness criteria, and dynamic semantics which gives meaning to models.
+
+The abstract syntax and static semantics of a DSML is described using a  metamodel, which is itself a model that defines the abstractions available in the domain and how they interrelate. Metamodeling techniques have been standardized by the OMG Meta-Object Facility \cite{Omg_2006}, but there are several tools, such as the Eclipse Modeling Framework \cite{emf}, that provide metamodeling capabilities.
+Moreover, there are  tools that provide support for the specification of concrete syntax and its mapping to a metamodel.
+However, there are not yet widely accepted methods for describing the dynamic semantics of DSMLs \cite{Kurtev:2006:MDF:1176617.1176632}. Current methods usually rely on transformations from the DSML metamodel to another language with well-defined semantics, or on the modeling of operational behavior associated to language constructs.
 
 Domain-specific models may be transformed into artifacts of the implementation platform or directly executed by a model interpreter. The use of model interpreters has the potential of facilitating the processing of models at runtime in order to adapt a running application. This usage of models has been proposed as an alternative to deal with the growing complexity of contemporary software \cite{FranceEtAl}.
 
 The use of models at runtime seeks to use better abstractions for manipulating and inspecting a running system. Models at runtime bear a certain resemblance with reflection in which both deal with self-representations of a system that are causally connected. However, models at runtime use representations that are closer to the problem domain, in contrast with reflection, whose representations tend to be based on the implementation platform \cite{Blair2009}.
 
-\subsection{Domain-Specific Modeling Languages} 
-
-Domain-specific languages (DSLs) provide constructs that are directly related to the concepts of a given problem domain. Through the use of appropriate concepts and notations, DSLs may enable domain experts or even end users to create applications.
-Unlike general-purpose languages, that may be employed for large set of tasks over multiple domains, domain-specific languages are usually restricted to a limited set of tasks in a particular domain. Nevertheless, DSLs offer a greater expressive power on their focused domain \cite{Mernik:2005:DDL:1118890.1118892, vanDeursen:2000:DLA:352029.352035}.
-
-
-A domain can be viewed as a delimited area of interest. We can categorize domains as a technical domain, such as persistency, graphical user interface, databases, or as a business domain, such as insurance, telecommunication, banking. Still, this separation is sometimes blurry and the proper delimitation of a domain should be defined according to the problem at hand.
-
-Model-driven engineering provides conceptual and tool support for language engineering, and is therefore suitable for the construction of domain-specific languages \cite{Kurtev:2006:MDF:1176617.1176632}. MDE employs metamodeling to describe the constructs in these languages, henceforth called domain-specific modeling languages.
-
-As other languages, a DSML may be defined in terms of its syntax and semantics. The syntax of a DSML may be further divided in concrete syntax, which represents the textual or graphical notations of the language, and abstract syntax, which represents the concepts available in the language and how they are related. The semantics is also commonly treated separately as static semantics, which define well-formedness criteria, and dynamic semantics which gives meaning to models.
-
-Metamodels can be employed to describe the abstract syntax and static semantics of a language. Moreover, there are  tools that provide support for the specificiation of concrete syntax and its mapping to a metamodel. However, there are not yet widely accepted methods for describing the dynamic semantics of DSMLs \cite{Kurtev:2006:MDF:1176617.1176632}. Current methods usually rely on transformations from the DSML metamodel to another language with well-defined semantics, or on the modeling of operational behavior associated to language constructs.
-% Both approaches can be implemented by code in general-purpose languages
-%There are standardized languages for defining both transformations and operational semantics, but they tend to be generic in a way that sometimes they do not provide greater advantage than the use of a general-purpose language.
-
 \subsection{Communication Virtual Machine}
+\label{sec:cvm}
 
 % refer to CVM papers that describe the approach based on identifying the differences between models (chapter and Runtime models to support...)
 
@@ -190,7 +190,7 @@ Once a CML model is fed into the CVM, it is capable of realizing the described s
 CVM is built on a layered architecture that lies between the user and the underlying communication frameworks that provide primitive communication services. 
 The first layer, called \emph{User Communication Interface} (UCI) provides an interface for interacting with the CVM and an environment for the construction and management of CML models. Models received by the UCI are transformed into an internal XML representation and sent to the \emph{Synthesis Engine} (SE) layer. The primary responsibility of SE is to identify changes in an executing model and synthesize executable communication control scripts. The \emph{User-centric Communication Middleware} (UCM) executes the communication control script and assures that desired policies are enforced. Finally, the \emph{Network Communication Broker} layer provides a technology-independent interface that masks the heterogeneity of the communication frameworks. 
 
-\section{Generic Architecture of the Execution Engine}
+\section{Generic Architecture of the \\Execution Engine}
 \label{sec:approach}
 
 %% TODO: After writing the section, find a way to mention the two point-of-views of the model of execution engine: modeling the dynamic (operational) semantics or modeling the behavioral aspects
@@ -199,7 +199,7 @@ The first layer, called \emph{User Communication Interface} (UCI) provides an in
 
 %- Like we introduced, in order to get the benefits of MDE (including m@rt) we need DSMLs and their execution engine
 %- While the syntax and static semantics of a DSML can be described by a  metamodel, their dynamic semantics is embeded in the execution engine
-As introduced before, in order to leverage MDE to enable the use of high-level models for the development and runtime adaptation of applications, the construction of DSMLs and their execution engines is needed. While the abstract syntax and static semantics of a DSML can be described by a  metamodel, its dynamic semantics are usually embedded in the execution engine.
+As introduced before, in order to leverage MDE to enable the use of high-level models for the development and runtime adaptation of applications, the construction of DSMLs and their execution engines is needed. While the abstract syntax and static semantics of a DSML can be described by a  metamodel, its dynamic semantics is usually embedded in the execution engine.
 %Therefore, from a language viewpoint the modeling of an execution engine can be viewed as a way to describe its DSML dynamic semantics.
 %Still, these execution engines are also designed for processing models that can be created and changed at runtime.
 
@@ -233,8 +233,8 @@ We expect that by extending the use of MDE techniques to the definition of execu
 Despite differences in the dynamic semantics of different DSMLs, they quite often rely on a common set of operations regardless of the application domain.
 The processing of runtime models usually requires from the execution engine capabilities for model analysis and negotiation, transformation of models into different representations, as well as for runtime adaptation, among others.
 
-In order to enable the construction and manipulation of models that represent an execution engine, we need a language for that. This language needs to be powerful enough to allow the description of virtual machines for different application domains, like the ones described above. Still, this language should not be very generic, as this could make model manipulation as difficult as writing code in a general-purpose language.
-Therefore, this language should be made up of constructs related to the domain independent aspects of execution engines designed for providing high-level services described in a DSML. Thus, such a language can be regarded as a domain-specific language for the technical domain that encompasses the technical aspects involved in the use of a heterogeneous set of resources for the realization of high-level services described in a DSML.
+In order to enable the construction and manipulation of models that represent an execution engine, we need a language that captures these commons capabilities. This language needs to be powerful enough to allow the description of execution engines for different application domains, like the ones described above. Still, this language should not be very generic, as this could make model creation and manipulation as difficult as writing code in a general-purpose language.
+Therefore, this language should be made up of constructs related to the domain-independent aspects of execution engines designed for providing high-level services described using a DSML. Thus, such a language can be regarded as a domain-specific language for the technical domain that encompasses the technical aspects involved in the use of a heterogeneous set of resources for the realization of high-level services described in a DSML.
 % MAYBE: procurar referencia que linguagem precisa ser de domínio específico para se tornar realizável
 % ref sobre domíno técnico também, ou mencionado no background
 
@@ -242,22 +242,16 @@ Therefore, this language should be made up of constructs related to the domain i
 %%Discuss the general application of the approach in CVM-like architectures, but limit it to the broker layer for the purposes of scoping the current work.
 %- based on the solutions employed by CVM/MGridVM, i.e. layered architecture with separation of responsibilities; 
 %- a model based way of specializing this generic architecture i.e. employing a  metamodel and instances that specialize
-Our approach builds on the solutions employed in the development of execution engines for communication and microgrid energy management. We aim to identify a generic architecture that can be specialized to produce execution engines for any given DSML. This domain independent architecture is structured in the following layers:
+Our approach builds on the solutions employed in the development of execution engines for communication \cite{Deng20081640} and microgrid energy management \cite{DBLP:conf/seke/AllisonAYC11}. 
+We aim to identify a generic architecture that can be specialized to produce execution engines for any given DSML whose execution semantics belongs to the above described technical domain.
+This domain-independent architecture is a generalization of the layered architecture of CVM, described in Section \ref{sec:cvm}. Its layers are named \emph{User Interface}, \emph{Synthesis Engine}, \emph{Middleware} and \emph{Broker}.
 
-\begin{itemize}
+Based on this architecture, we propose the definition of this generic architecture in the form of a metamodel that can be used to construct models that represent the mentioned layers in different application domains.
 
-\item  \emph{User Interface}, that provides an external interface for interacting with the execution engine. This layer also supports the construction and management of models by users;
-
-\item \emph{Synthesis Engine}, whose main task is to transform a declarative model received from the user interface into a control script to be executed at the next layer; 
-
-\item \emph{Middleware}, that besides executing the synthesized scripts, also manages the services under provision and applies constraints related to security and quality of service among other domain specific concerns;
-
-\item \emph{Broker}, that is responsible for the management of resources. This layer provides to  the upper layer a uniform interface that abstracts not just the differences between resources, but also all details involved in their setup, monitoring, and selection, among other resource management operations.
-\end{itemize}
-
-Based on this architecture, we propose its specialization by the construction of  models that represent the mentioned layers in a given domain. Each of these models should be constructed in conformance to a  metamodel that provides abstractions related to the responsibilities of the layer as described by the generic architecture. Therefore, an execution engine for a given model is constructed by creating models for each of the layers just described.
-
-In this paper, we will limit our discussions to the Broker layer which was the primary focus of this phase of the work. The Broker layer is responsible for the management of the resources that will ultimately be used to realize a requested service. Therefore, we build a  metamodel that provides abstractions for the definition of the behavior expected to meet the responsibilities of a broker layer. These comprise the provision of a uniform interface over its managed resources, shielding the middleware layer from setup and configuration details of resources, and the self-management of the layer in order to offer the best service according to its policies and environment constraints.
+In this paper, we will limit our discussions to the \emph{Broker} layer, which was the primary focus of this phase of the work.
+The Broker layer is responsible for the management of the resources that will ultimately be used to realize a requested service.
+This layer provides to the upper layer a uniform interface that abstracts not just the differences between resources, but also all details involved in their setup, monitoring, and selection, among other resource management operations.
+In the next section, we describe a metamodel for the Broker layer that provides abstractions that are directly related to these responsibilities.
 
 %O Intermediador de Serviço é a camada da arquitetura proposta que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para prover o serviço solicitado. Cabe à esta camada disponibilizar uma interface de serviços que abstraia as especificidades dos recursos gerenciados para a camada superior. Além disso, o SB deve possuir capacidade de auto gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
 
@@ -265,13 +259,13 @@ In this paper, we will limit our discussions to the Broker layer which was the p
 
 %Com isto em mente, neste trabalho, construímos um  metamodelo que possibilita a modelagem do comportamento necessário para atender as responsabilidades definidas para a camada de intermediação de serviço da arquitetura proposta. O  metamodelo em questão contempla a descrição dos seguintes  aspectos envolvidos no cumprimento destas responsabilidades:
 
-\section{Metamodel for the broker lay-er}
+\section{Broker layer metamodel}
 \label{sec: metamodel}
 % Show the class diagram and describe elements of the  metamodel. May structure the section based on the major blocks of the  metamodel.
 
-As mentioned in the preceding section, a broker layer is responsible for providing an independent interface upon its set of managed resources. A broker should also be able to monitor its resources and decide which actions may need to be taken in order to meet the requests received from its interface. Thus, the proposed  metamodel contains abstractions for the description of the interface, managed resources and internal state maintained by the layer. It also enables the description of autonomic behavior and policies for the selection of resources.
+As mentioned in the preceding section, a broker layer is responsible for providing to the upper layer a uniform interface upon the managed resources. A broker should also be able to monitor its resources and decide which actions may need to be taken in order to meet the requests received at its interface with the above layer. Thus, the proposed  metamodel contains abstractions for the description of the interface, the managed resources and the internal state maintained by the layer. It also enables the description of autonomic behavior and policies for the selection of resources.
 
-The  metamodel for the broker layer was designed using the Eclipse Modeling Framework (EMF) which provides support for the construction and processing of the  metamodel instances. The  metamodel is structured around a class called \textsf{Manager} that defines a context for the management of resources and aggregates elements for describing the main aspects of the layer. Figure ~\ref{fig:metamodel} shows a class diagram of the  metamodel displaying the main classes and their relationships.
+The  metamodel for the broker layer was designed using the Eclipse Modeling Framework (EMF) \cite{emf}, which provides support for the construction and processing of the  metamodel instances. The  metamodel is structured around a class called \textsf{Manager} which defines a context for the management of resources and aggregates elements that describe the main aspects of the layer. Figure ~\ref{fig:metamodel} shows the class diagram of the metamodel, with its the main classes and relationships.
 
 \begin{figure*}
  \centering
@@ -285,62 +279,46 @@ An instance of a \textsf{Manager} has an interface and can also be viewed as a r
 
 
 \subsection{Interface}
-In the proposed metamodel, the interface for the use of a manager is defined by provided calls and events that may be signaled to the upper layers. The class \textsf{Interface} is used to describe the interface of managers and resources. This class groups a set of calls and events that are respectively described by classes \textsf{Call} and \textsf{Event} which inherit from class \textsf{Signal}. A \textsf{Signal} in turn has a name and a set of named parameters defined by the class \textsf{Parameter}. Since a broker layer is defined in terms of its top-level manager, their interfaces are also the same and therefore the interaction between layers follows the same approach based on provided calls and signaled events.
+In the proposed metamodel, the interface of a manager is defined by provided calls as well as events that may be signaled to the upper layers. The class \textsf{Interface} is used to describe the interface of managers and resources. This class groups a set of calls and events that are respectively described by classes \textsf{Call} and \textsf{Event}, which inherit from class \textsf{Signal}. A \textsf{Signal} in turn has a name and a set of named parameters defined by class \textsf{Parameter}. Since a broker layer is defined in terms of its top-level manager, its interface is also the same and therefore the interaction with the above layer follows the same approach based on provided calls and signaled events.
 
 \subsection{Signal handling}
 The actual behavior of a broker layer is defined by what it does when it is called from the upper layer or when a given event is generated by the resources underneath. In the broker  metamodel, this is done by defining which action should be taken as a response to a given signal. 
 When a signal, which may be either a call or an event, is received, the corresponding action is executed. %This approach draws inspiration from event-driven architecture
 
-In this  metamodel, \textsf{Signal}, \textsf{Handler} and \textsf{Action} are the main classes used to define the signal handling of a given manager. While signals are described as part of an interface, actions and handlers are directly grouped in the manager. An action represents some operation that can be executed and is defined by the abstract class \textsf{Action} which has the following subclasses:
-
-\begin{itemize}
-
-\item  \textsf{MacroAction}: allows the user to define a Java class that implements the intended action
-
-\item \textsf{CallAction}: defines a call to be enqueued or executed in the managed resources or in the manager itself
-
-\item \textsf{EventAction}: defines an event to be generated to the upper layers
-
-\item \textsf{SequenceAction}: combines a list of actions to be executed in a sequence
-
-\end{itemize}
-
-To define a handler, the modeler needs to indicate the signal that it handles, whether it is enabled, and the action that will be taken.
-In addition, it is necessary to define how the parameter values that come with a given call or event should be mapped into the context needed for the execution of the corresponding \textsf{Action}. This binding is mediated by a class named \textsf{ActionExecution} which groups a set of \textsf{ParameterBinding}s. A parameter may be bound to a fixed value, a parameter value, an expression, or even the result of a call to another action. This latter option, together with the use of sequence actions, enables the definition of elaborate actions that can be used to handle a signal.
-
-% we look forward to extend the types of actions specializing into new operations that are currently only realized through macroactions such as querying/storing data in state management
-
+In the  metamodel, \textsf{Signal}, \textsf{Handler} and \textsf{Action} are the main classes used to define the signal handling of a given manager. While signals are described as part of an interface, actions and handlers are directly grouped in the manager. An action represents some operation that can be executed and is defined by the abstract class \textsf{Action}. \textsf{Action} subclasses may describe a macro to be executed, a call to be enqueued or executed, an event to be generated, or any combination of these.
+Finally, a handler is used to indicate an action that will be executed when a given signal is identified.
 
 \subsection{Resource management}
-The \textsf{ResourceManager} in the  metamodel has the goal of describing the interface of the managed resources and how they will be obtained at runtime. The interfaces of resources are described in the same way as the manager interface, i.e., by employing the class \textsf{Interface}. The way the resources are obtained, in turn, is defined according to the subtypes of \textsf{ResourceManager}. The current  metamodel includes a class named \textsf{InstanceResourceManager} which may be used to describe a fixed set of resources that are created by instantiating an implementation class. Other subtypes that define more elaborate ways of obtaining resources, such as from distributed objects repositories, may be easily defined.
+The \textsf{ResourceManager} in the  metamodel has the goal of describing the interface of the managed resources and how they will be obtained at runtime. The interfaces of resources are described in the same way as the manager interface, i.e., by class \textsf{Interface}. The way the resources are obtained, in turn, is defined according to the subtypes of \textsf{ResourceManager}. The current  metamodel includes a class named \textsf{InstanceResourceManager}, which may be used to describe a fixed set of resources that are created by instantiating an implementation class. Other subtypes that define more elaborate ways of obtaining resources, such as from distributed object repositories, may be easily defined.
 
-An instance resource manager groups a set of instances defined by the type \textsf{Instance}. An \textsf{Instance} specifies the actual implementation class of a resource, which will be instantiated at runtime. \textsf{Instance} is also a subtype of \textsf{Annotable}, making it possible to define meta-data describing features and properties associated to the resource, which may be eventually employed in the selection of resources. 
+An instance resource manager groups a set of instances defined by type \textsf{Instance}. An \textsf{Instance} specifies the actual implementation class of a resource, which will be instantiated at runtime.
+%\textsf{Instance} is also a subtype of \textsf{Annotable}, making it possible to define meta-data describing features and properties associated to the resource, which may be eventually employed in the selection of resources. 
 
 \subsection{State management}
 
-In a significant number of cases, the processing of a given call or event may depend upon signals that were previously received by the layer. A given signal can be processed differently according to the parameters of a preceding call, the simple occurrence of an event, the result of the processing of a signal, etc. In order to support the variability in signal processing, the layer should be able to keep state between occurrences of signals.
+In a significant number of cases, the processing of a given call or event may depend upon signals that were previously received by the layer. A given signal can be processed differently depending on the parameters of a preceding call, the simple occurrence of an event, the result of the processing of a signal, etc. In order to support the variability in signal processing, the layer should be able to keep state between occurrences of signals.
 
-The class \textsf{StateManager} provides a way to define the data types that need to be kept by a given manager at runtime. Data types are defined through the class \textsf{State} by a simple structure, where a type is defined in terms of its attributes and subtypes. Subtypes are also defined as instances of \textsf{State} and therefore may have the same features.  Also, as in a relational model, the definition of a type requires the selection of a key attribute that uniquely identifies a register of a given data type.
+Class \textsf{StateManager} provides a way to define the data types that need to be kept by a given manager at runtime. Data types are defined by class \textsf{State} using a simple structure, where a type consists of attributes and subtypes. Subtypes are also defined as instances of \textsf{State} and therefore may have the same features.  Also, as in a relational model, the definition of a type requires the selection of a key attribute that uniquely identifies a data register of a given data type.
 
 \subsection{Autonomic computing}
 
 Besides abstracting the differences in capabilities and interfacing of resources, a broker layer should also mask from the upper layers the dynamics involved in the utilization of the resources. By doing so, the layer is capable of providing an interface that keeps the upper layers oblivious of the details of selection, setup and maintenance of resources, thereby reducing the complexity of the modeling in the upper layers.
 
 The signal handling provided by the  metamodel enables to a certain degree the handling of events (generated by resources) and calls (received from the upper layer). These constructs, associated with state management, make it possible to define how resources and requests will be monitored in order to identify a variety of scenarios that require an action to be taken.
-Nonetheless, these abstractions are not appropriate for the description of more complex situations that may involve many resources, the current layer state, and data from received calls, among others.
+Nonetheless, the use of more appropriate abstractions would facilitate the treatment of complex situations that involve many resources, the current layer state, data from received calls, etc.
 
-To facilitate the definition of the self-management of the layer, the proposed  metamodel includes a group of abstractions inspired by the IBM autonomic computing architecture \cite{ac}. This architecture suggests the use of a control loop called MAPE-K, which executes the MAPE (Monitor, Analyze, Plan, Execute) functions and use Knowledge.
+To facilitate the definition of the self-management of the layer, the proposed  metamodel includes a group of abstractions inspired by the IBM autonomic computing architecture \cite{ac}. This architecture suggests the use of a control loop called MAPE-K, which executes the MAPE (Monitor, Analyze, Plan, Execute) functions and uses a Knowledge base.
 %- Em tal arquitetura o gerenciamento se dá através de um control loop MAPE-K
 % Explicar MAPE e Knowledge, que inclui os sintomas, change requests, change plans
 %The Autonomic Computing Architectural Blueprint (see Resources for a link) describes an autonomic manager as: an implementation that automates some management function and externalizes this function according to the behavior defined by management interfaces. The autonomic manager is a component that implements the control loop ... For a system component to be self-managing, it must have an automated method to collect the details it needs from the system; to analyze those details to determine if something needs to change; to create a plan, or sequence of actions, that specifies the necessary changes; and to perform those actions. When these functions can be automated, an intelligent control loop is formed.
 
-The constructs in the  metamodel allow for the description of rules that define the creation and transmission of knowledge between the MAPE functions. Thus, during the modeling of the layer, rules for the detection of symptoms, identification of change requests and selection of change plans need to be defined. At runtime, the monitor function makes use of these rules to identify the occurrence of a symptom and transmit this knowledge to the next function. The analyzer and planner functions work in a similar way, by evaluating its rules against knowledge received from previous functions.
+The constructs in the  metamodel allow for the description of rules that define the creation and communication of knowledge between the MAPE functions. Thus, during the modeling of the layer, rules for the detection of symptoms, identification of change requests and selection of change plans need to be defined. At runtime, the monitor function makes use of these rules to identify the occurrence of a symptom and transmit this knowledge to the next function. The analyzer and planner functions work in a similar way, by evaluating its rules against knowledge received from previous functions.
 
-The class \textsf{AutonomicManager} groups the elements that are related to the autonomic management of resources. These elements describe the rules for the generation of knowledge, such as symptoms, change requests and change plans. The class \textsf{Symptom} defines a set of conditions for the detection of a given symptom. At runtime, the resources and the state kept by the layer are continuously monitored, and when all conditions of a symptom are met, an occurrence of the symptom is generated and sent to the analyzer.
+The class \textsf{AutonomicManager} groups the elements that are related to the autonomic management of resources. These elements describe rules for knowledge generation, such as symptoms, change requests and change plans. The \textsf{Symptom} class defines a set of conditions for the detection of a given symptom. At runtime, the resources and the state kept by the layer are continuously monitored, and when all conditions of a symptom are met, an occurrence of the symptom is generated and sent to the analyzer.
 
-The conditions that define a symptom are described using expressions. Therefore, in addition to the conditions, the class \textsf{Symptom} defines the context for evaluation of these expressions. The context is defined through the class \textsf{Binding}, which is used to map a name used in the expression to an instance of the type \textsf{Bindable}. The interface \textsf{Bindable}, in turn, is implemented by the classes \textsf{Signal} and \textsf{State}. This structure allows for the definition of conditions that combine data from calls and events, as well as from the state kept by the layer.
+%The conditions that define a symptom are described using expressions. Therefore, in addition to the conditions, the class \textsf{Symptom} defines the context for evaluation of these expressions. The context is defined through the class \textsf{Binding}, which is used to map a name used in the expression to an instance of the type \textsf{Bindable}. The interface \textsf{Bindable}, in turn, is implemented by the classes \textsf{Signal} and \textsf{State}. This structure allows for the definition of conditions that combine data from calls and events, as well as from the state kept by the layer.
 
-The \textsf{ChangeRequest} class is used to specify that a change request needs to be generated at runtime when a given symptom is detected. A change plan, defined as an instance of the class \textsf{ChangePlan}, associates a change request to an action to be executed. An action, in turn, may be any of the \textsf{Action} subtypes.
+The \textsf{ChangeRequest} class is used to specify that a change request needs to be generated at runtime when a given symptom is detected. A change plan, defined as an instance of class \textsf{ChangePlan}, associates a change request to an action to be executed. An action, in turn, may be any of the \textsf{Action} subtypes.
 
 % Enquanto a função de planejamento pode empregar algoritmos complexos que geram dinâmicamente planos  de mudança que podem envolver um workflow completo de execução, no trabalho em questão optamos por uma abordagem simples, onde um plano é diretamente associado a uma solicitação de mudança
 
