@@ -53,7 +53,7 @@ We present an initial validation of the approach in the context of the Communica
 
 \category{D.2.11} {Software Engineering}{Software Architectures}[domain-specific architectures, languages]
 
-\keywords{Models at Runtime, Model-Driven Engineering, Domain-Specific Modeling Languages, Metamodeling, Middleware}
+\keywords{Infrastructure for Models at Runtime, Model-Driven Engineering, Domain-Specific Modeling Languages, Metamodeling}
 
 %Research in model-driven software development (MDD)and domain-specific modeling languages (DSMLs) focuses on how models that provide good abstractions of complex software behaviors can be used to significantly improve software productivity and quality.
 
@@ -150,22 +150,22 @@ In Section ~\ref{sec:background} we review the concepts involved in this work. S
 
 \subsection{Model-Driven Engineering}
 
-The term Model-Driven Engineering is commonly used to describe of a set of software engineering approaches that employ models as their primary artifacts. In these approaches, the use of models is not restricted to the documentation or design of software, but may extend through all the software engineering process.
+The term Model-Driven Engineering is commonly used to describe a set of software engineering approaches that employ models as their primary artifacts. In these approaches, the use of models is not restricted to the documentation or design of software, but may extend throughout the software engineering process.
 %By employing models based on abstractions closer to the problem to be solved, model-driven approaches seek to abstract technical details of the underlying platform, therefore simplifying the engineering of software. To make it feasible, these approaches rely on automated tools for the processing of models into constructs of the implementation platform.
 
 Models are usually described in domain-specific modeling languages, and processed by automated tools into constructs of the implementation platform \cite{Schmidt}. The use of domain-specific models switches the focus of software engineering from implementation technologies to problem-level abstractions.
-Nonetheless, automation in the processing of high-level models into software implementation requires encoding substantial domain-specific knowledge into the language and the processing tools
+Nonetheless, automation in the processing of high-level models into software implementation requires encoding substantial domain-specific knowledge into the language and processing tools
 
-A modeling language is described using a  metamodel, which is itself a model that defines the abstractions available in the domain and how they interrelate. Metamodeling is standardized by the OMG Meta-Object Facility \cite{Omg_2006}, but there are several tools such as the Eclipse Modeling Framework \cite{emf}, that provide metamodeling capabilities.
+A modeling language is described using a  metamodel, which is itself a model that defines the abstractions available in the domain and how they interrelate. Metamodeling techniques have been standardized by the OMG Meta-Object Facility \cite{Omg_2006}, but there are several tools, such as the Eclipse Modeling Framework \cite{emf}, that provide metamodeling capabilities.
 
 Domain-specific models may be transformed into artifacts of the implementation platform or directly executed by a model interpreter. The use of model interpreters has the potential of facilitating the processing of models at runtime in order to adapt a running application. This usage of models has been proposed as an alternative to deal with the growing complexity of contemporary software \cite{FranceEtAl}.
 
-The use of models at runtime seeks to use better abstractions for manipulating and inspecting a running system. Models at runtime bear a certain resemblance with reflection in which both deal with self-representations of a system that are causally connected. However, models at runtime look for representations that are closer to the problem domain, in contrast with reflection whose representations tend to be based on the implementation platform \cite{Blair2009}.
+The use of models at runtime seeks to use better abstractions for manipulating and inspecting a running system. Models at runtime bear a certain resemblance with reflection in which both deal with self-representations of a system that are causally connected. However, models at runtime use representations that are closer to the problem domain, in contrast with reflection, whose representations tend to be based on the implementation platform \cite{Blair2009}.
 
 \subsection{Domain-Specific Modeling Languages} 
 
 Domain-specific languages (DSLs) provide constructs that are directly related to the concepts of a given problem domain. Through the use of appropriate concepts and notations, DSLs may enable domain experts or even end users to create applications.
-Unlike general-purpose languages, that may be employed for large set of tasks over multiple domains, domain-specific languages are usually restricted to a delimited set of tasks in a particular domain. Nevertheless, DSLs offer a greater expressive power on their focused domain \cite{vanDeursen:2000:DLA:352029.352035}.
+Unlike general-purpose languages, that may be employed for large set of tasks over multiple domains, domain-specific languages are usually restricted to a limited set of tasks in a particular domain. Nevertheless, DSLs offer a greater expressive power on their focused domain \cite{Mernik:2005:DDL:1118890.1118892, vanDeursen:2000:DLA:352029.352035}.
 
 
 A domain can be viewed as a delimited area of interest. We can categorize domains as a technical domain, such as persistency, graphical user interface, databases, or as a business domain, such as insurance, telecommunication, banking. Still, this separation is sometimes blurry and the proper delimitation of a domain should be defined according to the problem at hand.
@@ -174,7 +174,7 @@ Model-driven engineering provides conceptual and tool support for language engin
 
 As other languages, a DSML may be defined in terms of its syntax and semantics. The syntax of a DSML may be further divided in concrete syntax, which represents the textual or graphical notations of the language, and abstract syntax, which represents the concepts available in the language and how they are related. The semantics is also commonly treated separately as static semantics, which define well-formedness criteria, and dynamic semantics which gives meaning to models.
 
-Metamodels can be employed to describe the abstract syntax and static semantics of a language. Moreover, there are  tools often provide support for the construction of concrete syntax and their mapping to a metamodel. However, there are not yet widely accepted methods for describing the dynamic semantics of DSMLs \cite{Kurtev:2006:MDF:1176617.1176632}. Current methods usually rely on transformations from the DSML metamodel to another language with well-defined semantics or modeling the operational behavior associated to language constructs.
+Metamodels can be employed to describe the abstract syntax and static semantics of a language. Moreover, there are  tools that provide support for the specificiation of concrete syntax and its mapping to a metamodel. However, there are not yet widely accepted methods for describing the dynamic semantics of DSMLs \cite{Kurtev:2006:MDF:1176617.1176632}. Current methods usually rely on transformations from the DSML metamodel to another language with well-defined semantics, or on the modeling of operational behavior associated to language constructs.
 % Both approaches can be implemented by code in general-purpose languages
 %There are standardized languages for defining both transformations and operational semantics, but they tend to be generic in a way that sometimes they do not provide greater advantage than the use of a general-purpose language.
 
@@ -184,9 +184,11 @@ Metamodels can be employed to describe the abstract syntax and static semantics 
 
 The Communication Virtual Machine (CVM) is an execution engine designed for the creation and realization of user-centric communication  \cite{Deng20081640}. CVM works by processing models described in a very high-level domain-specific modeling language called Communication Modeling Language (CML). A CML model describes a communication scenario by defining and associating elements of the communication domain such as connections, participants, media types and attached devices. 
 
-Once a CML model is fed into the CVM, it is capable to realize the described service independently, abstracting from the user details involved in the negotiation of capabilities or selection of communication technologies. CML models can also be changed at runtime and reprocessed in the CVM, that identifies the differences between the models and executes the operations needed to meet the new requirements \cite{Wang}.
 
-CVM is built on a layered architecture that lies between the user and the underlying communication frameworks. The first layer, called \emph{User Communication Interface} (UCI) provides an interface for interacting with the CVM and an environment for the construction and management of CML models. Models received by the UCI are transformed into an internal XML representation and sent to the \emph{Synthesis Engine} (SE) layer. The primary responsibility of SE is to identify changes in an executing model (or new models) and synthesize an executable communication control script. \emph{User-centric Communication Middleware} (UCM) executes the communication control script and assures that desired policies are enforced. Finally, the \emph{Network Communication Broker} layer provides a technology independent interface that masks the heterogeneity of the communication frameworks available for the realization of the communication services. 
+Once a CML model is fed into the CVM, it is capable of realizing the described service automatically. CML models can also be changed at runtime and reprocessed in the CVM, which identifies the differences between the current and previous version of the model and executes the operations needed to meet the new requirements \cite{Wang}.
+
+CVM is built on a layered architecture that lies between the user and the underlying communication frameworks that provide primitive communication services. 
+The first layer, called \emph{User Communication Interface} (UCI) provides an interface for interacting with the CVM and an environment for the construction and management of CML models. Models received by the UCI are transformed into an internal XML representation and sent to the \emph{Synthesis Engine} (SE) layer. The primary responsibility of SE is to identify changes in an executing model and synthesize executable communication control scripts. The \emph{User-centric Communication Middleware} (UCM) executes the communication control script and assures that desired policies are enforced. Finally, the \emph{Network Communication Broker} layer provides a technology-independent interface that masks the heterogeneity of the communication frameworks. 
 
 \section{Generic Architecture of the Execution Engine}
 \label{sec:approach}
@@ -405,7 +407,7 @@ In order to be managed by a broker layer, resources should implement the \textsf
 % Also expose the setEventListener method
 % Main manager registers into the resource manager as a listener of the resource events
 
-In a similar way, the \emph{State Manager} provides an interface for creating and querying registers for the data types described in the  metamodel. A data register is represented by the class \textsf{StateHolder} that provides methods for obtaining the values for its attributes and children.
+In a similar way, the \emph{State Manager} provides an interface for creating and querying registers for the data types described in the  metamodel. A data register is represented by the class \textsf{StateHolder} that provides methods for obtaining the values for its attributes and subtypes.
 % autonomic manager registers into the state manager as a listener of state changes
 
 %Both state and resource managers are made available to macro actions, so that such actions can query and change the layer state and interact with the resources.
@@ -436,6 +438,130 @@ Figure ~\ref{fig:instance} shows an object diagram that illustrates a reduced pa
 \section{Related Work}
 
 % Related work should be in the area of runtime model interpretation and execution engines for DSMLs. Must present them and compare with your approach.
+
+Most work related to model-driven development of execution engines for DSMLs is directly associated to the definition of DSML dynamic semantics as there are standards and several tools for the definition of other aspects of these languages.
+
+---
+Model Driven Language Engineering with Kermeta
+
+This article aims at showing
+how Model Driven Engineering can easily complement these o-the-shelf
+tools to obtain a complete environment for such a language, including
+interpreter, compiler, pretty-printer and customizable editors
+
+Language Engineering completely based on models [22], that we call Model
+Driven Language Engineering (MDLE).
+In this paper we present one of these approaches, based on the Kernel MetaModeling environment Kermeta [16,7]. We start in Section 2 by giving a quick
+overview of executable meta-modeling, and then focusing on Kermeta, seen both
+as an aspect-oriented programming language as well as an integration platform
+for heterogeneous meta-modeling. We then recall in Section 3 how to model the
+abstract syntax of a language in E-MOF, allowing for a direct implementation of
+its meta-model in the Eclipse Modeling Framework (EMF). We then show how
+to weave both the static and dynamic semantics of the language into the metamodel using Kermeta to get an interpreter for the language. Then we address
+compilation, which is just a special case of model transformation to a platform
+specic model [17,3]. W
+
+MOF does not
+include however concepts for the denition of constraints or operational semantics (operations in MOF do jot contain bodies). Kermeta can thus be seen as an
+extension of MOF with an imperative action language for specifying constraints
+and operation bodies at the meta-model level.
+
+Kermeta action language that is used to express operational semantics is very close to 3rd generation general-purpose programming languages.
+
+Kermet is at most a tool that integrates the code of the interpreter to the meta-model in order to facilitate their synchronization
+
+In contrast our work seeks for describing semantics using constructs that are related to the semantics of execution engines for models at runtime rather than the technological aspects that are associated to programming languages.
+Ours is also separated from the metamodel.
+
+Kermeta cannot really be compared to source transformation systems and
+languages such as DMS [1], Rascal [12], Stratego [2], or TXL [5] that provide
+powerful general purpose set of capabilities for addressing a wide range of software analysis problems
+
+----
+Grammar-based
+
+Automatic Generation of Language-based Tools using the LISA system
+
+Attribute grammars have proved to be
+very useful in specifying the semantics of programming languages, in automatic construction of compilers/interpreters, and in specifying and generating interactive programming environments [9]. The approach presented in this
+paper is strongly tied to the power provided by attribute grammars.
+
+----
+
+Virtual machine framework for constructing domain-speci?c languages
+
+Object oriented framework to construct virtual machines for traditional DSLs described by grammars
+Advantage over constructing interpreters or compilers from scratch
+Semantics are defined by implementation in general-purpose programming languages
+
+ASF+SDF
+---
+2.2. Mapping the DSML into Existing Formal Languages 
+
+
+Extending AMMA for Supporting Dynamic Semantics Speci?cations of DSLs
+Toward a Semantic Anchoring Infrastructure for Domain 
+
+The paper presents an extension of AMMA to specify the dynamic semantics of a wide range of DSLs by
+means of Abstract State Machines [10] (ASMs), which are introduced in the framework as a further core DSL.
+Thus, DSLs can be de?ned not only by their abstract and concrete syntax but also by their semantics in a uniform
+and systematic way. The approach is validated by means of the semantic bootstrap of the ATL transformation
+language.
+
+ ASMs consists of the speci?cation of an abstract machine
+able to interpret programs de?ned by means of the given DSL.
+
+
+One concrete approach that uses translation semantics is called  semantic 
+anchoring [9], which uses the well-known Abstract State Machines (ASM) 
+formalism [7] to define the semantics. We will discuss the technique in detail 
+below.  This solution maps the abstract syntax of the DSML, which was 
+defined in the GME (Generic Modeling Environment) metamodeling tool [33],    ----- mesmo que mapear metamodel
+into well-established semantic domains, called semantic units (e.g., timed 
+automata, and discrete event systems) that have been defined in the ASML 
+(Abstract State Machine Language) tool. The  initial  work on semantic 
+anchoring did not show any application of tool generation from the semantics 
+specification,  although  the usage of ASML enables compilation, simulation, 
+test case generation and verification of ASML specifications, as will be 
+discussed further in Section 3.
+
+----
+Look for d GReAT, short for ?Graph Rewriting and Transformation 
+language?.  
+and ATL
+
+In the context of MDE some other approaches for semantics speci?cation have been proposed. The approach
+of Xactium [14, 1] follows the canonical scheme for the speci?cation of semantics of programming languages. In
+this scheme the semantics is de?ned by specifying mappings (known as semantic mappings) from abstract syntax
+to semantic domain. Both the abstract syntax and the semantic domain are given as metamodels. The semantic
+mapping is speci?ed by model elements (mostly associations). This approach has become known as denotational
+metamodeling. The work presented in [19] extends the denotational metamodeling approach by de?ning Meta
+Relations as a mechanism for specifying semantic mappings between the abstract syntax and the semantic domain.
+The dynamic semantics speci?cation (part of the semantic domain) is given by graph transformation rules. This
+approach is called Dynamic Metamodeling. In our approach the semantic domains and semantic mappings are
+de?ned as parts of ASMs. Dynamic aspect is de?ned by transition rules.
+
+MIC (Também transformações para outro metamodelo) ferramenta é o GME (ver acima também)
+The Model-Integrated Computing Toolsuite:  Metaprogrammable Tools for Embedded Control System Design
+
+Composing DomainSpeci?c Design Environments (MIC)
+
+First, a translator transforms the domain models
+into executable models?for example, in the form of
+API calls to a real-time OS. This mapping process
+assigns dynamic semantics to the models. Next, the
+execution platform executes those models. A transformation engine and an execution engine together
+realize the domain semantics.
+
+Traditionally, developers implement translators manually in standard languages like C++. A translator
+maps the domain modeling language to the executable
+modeling language. If formal models of the mapping?
+
+along with its inputs and outputs?are available, a metalevel translator can generate the translator code.
+---
+
+
+
 Quais as áreas relacionadas, e trabalhos relacionados
 - Outras abordagens de construção de execution engines de DSMLs
 
