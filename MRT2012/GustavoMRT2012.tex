@@ -43,7 +43,7 @@ By raising the level of abstraction and specializing in building blocks that are
 Applications are developed as models, which in turn are interpreted at runtime by a specialized execution engine in order to produce the intended behavior. 
 This approach has been successfully applied in different domains, such as communication and smart grid management to execute applications described by models that can be created and changed at runtime.
 However, each time the approach has to be realized in a different domain, substantial re-implementation has to take place in order to put together an execution engine for the respective DSML. 
-In this paper, we present our work towards a generalization of the approach in the form of a  metamodel which capture the domain-independent aspects of runtime model interpretation and allow the definition of domain-specific execution engines. 
+In this paper, we present our work towards a generalization of the approach in the form of a  metamodel which captures the domain-independent aspects of runtime model interpretation and allow the definition of domain-specific execution engines. 
 %We present an initial validation of the approach in the context of the Communication Virtual Machine project, by realizing part of the execution engine architecture in the form of an instance of the proposed  metamodel. 
 \end{abstract}
 
@@ -79,7 +79,7 @@ Model-driven engineering (MDE) proposes the use of models as a way to deal with 
 By employing models built upon abstractions that are closer to the problem at hand, model-driven approaches seek to abstract details of the implementation platform, thus simplifying the development and maintenance of these applications. Models are usually described in a domain-specific modeling language (DSML) and are automatically processed by tools that either translate the models into artifacts of the target implementation platform or directly interpret them.
 
 % Maybe move these phrases into the preceding paragraph?
-The use of high-level graphical DSMLs may enable domain experts, or even end users to create applications right from their requirements. 
+The use of high-level graphical DSMLs may enable domain experts, or even end users to create applications directly from their requirements. 
 Moreover, models may be used during development to construct new applications or at runtime to dynamically change an executing system. The use of execution engines that directly process models eases the usage of models that may be created and changed at runtime.
 %%By employing this approach models can be as high-level as to be created by domain experts or even end users
 
@@ -93,7 +93,7 @@ Moreover, models may be used during development to construct new applications or
 The Communication Virtual Machine (CVM) \cite{Deng20081640} and the MicroGrid Virtual Machine (MGridVM) \cite{DBLP:conf/seke/AllisonAYC11} are examples of software that employ MDE techniques to allow users to create complex applications using high-level graphical DSMLs. 
 % They provide a high level service upon a heterogenous set of resources
 %These virtual machines are execution engines for DSMLs named CML and MGridML respectively.
-Their execution engines are capable of processing models described in their respective DSML and realize the services described by them. Such models can also be changed at runtime, triggering adaptations to achieve the newly described requirements. 
+Their execution engines are capable of processing models and realize the services described by them. Such models can also be changed at runtime, triggering adaptations to achieve the newly described requirements. 
 
 %%Don't forget to mention that its not only applications, but complex applications
 % TODO: make the concept of execution engine clearer
@@ -109,7 +109,7 @@ Their execution engines are capable of processing models described in their resp
 %DSMLs, along with the mechanisms for their processing embed concepts and semantics of the domain.
 %Once we have a DSML and the mechanism for processing it, users can directly develop applications in that DSML.
 
-To enable users to directly create and execute applications in a DSML, much of the knowledge of the application domain must be embedded into the DSML and the execution engine. While this approach simplifies the development of applications in these domains, the same is often not true regarding the execution engines that interpret these DSMLs. These engines are commonly developed in general purpose languages and are usually built from scratch for an specific DSML.
+To enable users to directly create and execute applications in a DSML, much of the knowledge of the application domain must be embedded into the DSML and the execution engine. While this simplifies the development of applications in these domains, the same is often not true regarding the execution engines that interpret these DSMLs. These engines are commonly developed in general purpose languages and are usually built from scratch for an specific DSML.
 
 
 %While the development of applications in these domains employing their respective DSMLs is quite simple, the same is not true when talking about the execution engine that interprets their languages. These mechanisms are commonly developed in general purpose language and are subject to all the technical complexities involved in the traditional software development.
@@ -166,9 +166,9 @@ Unlike general-purpose languages, that may be employed for a large set of tasks 
 
 %Nonetheless, automation in the processing of high-level models into software implementation requires encoding substantial domain-specific knowledge into the language and processing tools
 
-As other languages, a DSML may be defined in terms of its syntax and semantics. The syntax of a DSML may be further divided in concrete syntax, which represents the textual or graphical notations of the language, and abstract syntax, which represents the concepts available in the language and how they are related. The semantics is also commonly treated separately as static semantics, which define well-formedness criteria, and dynamic semantics which gives meaning to models.
+Similar to other languages, a DSML may be defined in terms of its syntax and semantics. The syntax of a DSML may be further divided in concrete syntax, which represents the textual or graphical notations of the language, and abstract syntax, which represents the concepts available in the language and how they are related. The semantics is also commonly treated separately as static semantics, which define well-formedness criteria, and dynamic semantics which gives meaning to models.
 
-The abstract syntax and static semantics of a DSML is described using a  metamodel, which is itself a model that defines the abstractions available in the domain and how they interrelate. Metamodeling techniques have been standardized by the OMG Meta-Object Facility \cite{Omg_2006}, but there are several tools, such as the Eclipse Modeling Framework \cite{emf}, that provide metamodeling capabilities.
+The abstract syntax and static semantics of a DSML is described using a  metamodel, which is itself a model that defines the abstractions available in the domain and how they interrelate. Metamodeling techniques have been standardized by the OMG Meta-Object Facility \cite{Omg_2006}, and there are several tools, such as the Eclipse Modeling Framework \cite{emf}, that provide metamodeling capabilities.
 Moreover, there are  tools that provide support for the specification of concrete syntax and its mapping to a metamodel.
 However, there are not yet widely accepted methods for describing the dynamic semantics of DSMLs \cite{Kurtev:2006:MDF:1176617.1176632}. Current methods usually rely on transformations from the DSML metamodel to another language with well-defined semantics, or on the modeling of operational behavior associated to language constructs.
 
@@ -199,6 +199,7 @@ The first layer, called \emph{User Communication Interface} (UCI) provides an in
 %- Like we introduced, in order to get the benefits of MDE (including m@rt) we need DSMLs and their execution engine
 %- While the syntax and static semantics of a DSML can be described by a  metamodel, their dynamic semantics is embeded in the execution engine
 As introduced before, in order to leverage MDE to enable the use of high-level models for the development and runtime adaptation of applications, the construction of DSMLs and their execution engines is needed. While the abstract syntax and static semantics of a DSML can be described by a  metamodel, its dynamic semantics is usually embedded in the execution engine.
+
 %Therefore, from a language viewpoint the modeling of an execution engine can be viewed as a way to describe its DSML dynamic semantics.
 %Still, these execution engines are also designed for processing models that can be created and changed at runtime.
 
@@ -240,16 +241,18 @@ Therefore, this language should be made up of constructs related to the domain-i
 %- a model based way of specializing this generic architecture i.e. employing a  metamodel and instances that specialize
 Our approach builds on the solutions employed in the development of execution engines for communication \cite{Deng20081640} and microgrid energy management \cite{DBLP:conf/seke/AllisonAYC11}. 
 We aim to identify a generic architecture that can be specialized to produce execution engines for any given DSML whose execution semantics belongs to the above described technical domain.
-This domain-independent architecture is a generalization of the layered architecture of CVM, described in Section \ref{sec:cvm}. Its layers are named \emph{User Interface}, \emph{Synthesis Engine}, \emph{Middleware} and \emph{Broker}.
+This architecture is a generalization of the layered architecture of CVM, described in Section \ref{sec:cvm}. Its layers are named \emph{User Interface}, \emph{Synthesis Engine}, \emph{Middleware} and \emph{Broker}.
 
-Based on this generic architecture, we propose the use of models as a method to define specializations of this generic architecture into domain-specific execution engines. 
+
+%Fabio:Based on this architecture, we propose the definition of this generic architecture in the form of a metamodel that can be used to construct models that represent the mentioned layers in different application domains.
+
+%Me: Based on this generic architecture, we propose the use of models as a method to define specializations of this generic architecture into domain-specific execution engines. 
 
 Based on this generic architecture, we propose a metamodel that can be used to construct models that represent specializations of this generic architecture into domain-specific execution engines. This metamodel should encompass constructs related to the concerns identified for the mentioned layers.
 
-%Based on this architecture, we propose the definition of this generic architecture in the form of a metamodel that can be used to construct models that represent the mentioned layers in different application domains.
 
 In this paper, we will limit our discussions to the \emph{Broker} layer, which was the primary focus of the initial phase of the work.
-The Broker layer is responsible for the management of the resources that will ultimately be used to realize a requested service.
+In the proposed architecture, the Broker layer is responsible for the management of the resources that will ultimately be used to realize a requested service.
 This layer provides to the upper layer a uniform interface that abstracts not just the differences between resources, but also all details involved in their setup, monitoring, and selection, among other resource management operations.
 In the next section, we describe a metamodel for the Broker layer that provides abstractions that are directly related to these responsibilities.
 
@@ -269,16 +272,16 @@ The  metamodel for the broker layer was designed using the Eclipse Modeling Fram
 
 \begin{figure}
  \centering
- \includegraphics[width=0.4\textwidth]{mrt3}
+ \includegraphics[width=0.47\textwidth]{mrt3}
  \caption{Overall view of the  metamodel for the definition of a broker layer}
  \label{fig:metamodel}
 \end{figure}
 
-An instance of a \textsf{Manager} has an interface and can also be viewed as a resource by other managers, facilitating the modularization of the layer and the reuse of specialized resource managers as building blocks for higher-level managers. Therefore a broker layer may encapsulate a hierarchy of managers where the top-level manager defines the interface of the layer.
+An instance of a \textsf{Manager} has an interface and can also be viewed as a resource by other managers, facilitating the modularization of the layer and the reuse of specialized managers as building blocks for higher-level managers. Therefore a broker layer may encapsulate a hierarchy of managers where the top-level manager defines the interface of the layer.
 
 
 \subsection{Interface}
-In the proposed metamodel, the interface of a manager is defined by provided calls as well as events that may be signaled to the upper layers. The class \textsf{Interface} is used to describe the interface of managers and resources. This class groups a set of calls and events that are respectively described by classes \textsf{Call} and \textsf{Event}, which inherit from class \textsf{Signal}. A \textsf{Signal} in turn has a name and a set of named parameters defined by class \textsf{Parameter}. Since a broker layer is defined in terms of its top-level manager, its interface is also the same and therefore the interaction with the above layer follows the same approach based on provided calls and signaled events.
+In the proposed metamodel, the interface of a manager is defined by provided calls as well as events that may be signaled to the upper layer. The class \textsf{Interface} is used to describe the interface of managers and resources. This class groups a set of calls and events that are respectively described by classes \textsf{Call} and \textsf{Event}, which inherit from class \textsf{Signal}. A \textsf{Signal} in turn has a name and a set of named parameters defined by class \textsf{Parameter}. Since a broker layer is defined in terms of its top-level manager, its interface is also the same and therefore the interaction with the above layer follows the same approach based on provided calls and signaled events.
 
 \subsection{Signal handling}
 The actual behavior of a broker layer is defined by what it does when it is called from the upper layer or when a given event is generated by the resources underneath. In the broker  metamodel, this is done by defining which action should be taken as a response to a given signal. 
@@ -296,7 +299,7 @@ The \textsf{ResourceManager} in the  metamodel has the goal of describing the in
 
 \subsection{State management}
 
-In a significant number of cases, the processing of a given call or event may depend upon signals that were previously received by the layer. A given signal may require different processing depending on the parameters of a preceding call, the simple occurrence of an event, the result of the processing of a signal, etc. In order to make it possible, the layer should be able to keep state between occurrences of signals.
+In a significant number of cases, the processing of a given call or event may depend upon signals that were previously received by the layer. A given signal may require different processing depending on the parameters of a preceding call, the occurrence of an event, the result of processing a signal, etc. In order to make it possible, the layer should be able to keep state between occurrences of signals.
 
 Class \textsf{StateManager} provides a way to define the data types that need to be kept by a given manager at runtime. Data types are defined by class \textsf{State} using a simple structure, where a type consists of attributes and subtypes. Subtypes are also defined as instances of \textsf{State} and therefore may have the same features.  Also, as in a relational model, the definition of a type requires the selection of a key attribute that uniquely identifies a data register of a given data type.
 
@@ -369,13 +372,12 @@ The metamodel described in the preceding section provides abstractions to enable
 %in this section we deal with the actual implementation that actually process the requests driven by a given Broker model
 %- The name of the classes are overloaded (always refer to the implementation exception when mentioned)
 %- The architecture resembles the  metamodel
-In this section, we briefly describe the implementation of this execution environment, including its main components and how they interact in order to provide the behavior described by the model loaded in it. Though the names of these components may be the same used for elements of the  metamodel they do not represent the same entities. The components described here are part of the actual implementation, and represent the runtime infrastructure to process a broker layer model. As other elements of this work, the execution environment stems from the existing work in the Network Communication Broker layer for CVM \cite{Allen:2009:AFU:1723028.1723052}.
+In this section, we briefly describe the implementation of this execution environment, including its main components and how they interact in order to provide the behavior described by the model loaded in it. Though the names of these components may be the same used for elements of the  metamodel they do not represent the same entities. The components described here are part of the actual implementation, and represent the runtime infrastructure to process a broker layer model. As other elements of this work, the execution environment stems from existing work in the Network Communication Broker layer for CVM \cite{Allen:2009:AFU:1723028.1723052}.
 
 % Describe the overall flow of the execution environment
 %Under the implemented execution environment, a broker layer constantly waits for calls from the upper layer or events from resources that, once arrived, are enqueued for later processing. In order to process such signals, the appropriate handler is found and executed. In accordance with the broker layer model, the handler executes the associated action that may interact with resources and manipulate the state maintained by the layer. Specialized handlers are also set up for handling signals that may activate self-management functions. Figure ~\ref{fig:environment} illustrates the main elements that compose a broker layer at runtime and how they interact.
 
-
-Under the implemented execution environment, the \emph{Broker Manager} is the main element of the execution environment and is the responsible for controlling the flow of execution.
+ Figure~\ref{fig:environment} illustrates the main elements that compose a broker layer at runtime and how they interact. The \emph{Broker Manager} is the main element of the execution environment and is the responsible for controlling the flow of execution.
 It serializes the handling of signals by enqueueing and subsequently processing them one at a time. Once a signal is dequeued, it is processed by the \emph{Signal Handler Manager}, which identifies and executes the correct handler for the given signal.
 The \emph{Signal Handler Manager} maintains a registry of \emph{Signal Handlers}, loaded from the executing broker layer model, and searches for the first one that is capable of handling the given signal.
 An \emph{Action}, in turn, can manipulate resources and state through the \emph{Resource Manager} and \emph{State manager}.
@@ -412,24 +414,27 @@ Besides those, the specialized \emph{Autonomic Signal Handler} and \emph{Policy 
 To demonstrate the utilization of the proposed  metamodel along with the provided execution environment, we designed a model that describes the behavior present in the NCB layer of the CVM. The existing CVM implementation of NCB \cite{Allen:2009:AFU:1723028.1723052} was analyzed and used as a reference for the construction of this model.
 
 In order to validate the behavior of the modeled layer against the existing NCB implementation, we designed automated test cases for a set of scenarios.
-The proposed scenarios are 1) communication between two parties using one media type; 2) communication between two parties using two media types; 3) failure of a framework in use; 4) failure of all available frameworks; 5) communication initiated by other parties; 6) login failure; 7) communication between three parties. Each of these scenarios is described by a valid sequence of calls that could be generated by theupper layer, or events that could be generated by resources. 
+The proposed scenarios are 1) communication between two parties using one media type; 2) communication between two parties using two media types; 3) failure of a framework in use; 4) failure of all available frameworks; 5) communication initiated by other parties; 6) login failure; 7) communication between three parties. Each of these scenarios is described by a valid sequence of calls that could be generated by the upper layer, or events that could be generated by resources. 
 
-We set up the existing NCB implementation with set of simulated resources, and executed all the proposed scenarios to obtain a log of calls generated by the NCB to the underlying simulated resources, as well as events generated to the upper layer. 
+We set up the existing NCB implementation with a set of simulated resources, and executed all the proposed scenarios to obtain a log of calls generated by the NCB to the underlying simulated resources, as well as events generated to the upper layer. 
 This information was then used to create automated black box test cases to validate a model-based broker layer against this behavior.
 
-While modeling NCB based on the proposed metamodel, the test cases were ran to validate its equivalence to the existing NCB implementation. Table~\ref{tab:scenario} shows a scenario where the used framework fails during communication between two parties. The first column shows the sequence of commands issued by the simulator of the upper layer, and the later columns show the calls made by NCB to the simulated resources.
+While modeling NCB based on the proposed metamodel, the test cases were ran to validate its equivalence to the existing NCB implementation. 
+Table~\ref{tab:scenario} shows a scenario where the used framework fails during communication between two parties. 
+The first column shows the sequence of commands issued by the simulator of the upper layer, and the later columns show the calls made by NCB to the simulated resources.
+In this scenario an audio communication is initially established using \emph{Mock Resource 1}, and later switched to \emph{Mock Resource 2}, when a failure is simulated in the initial resource. 
+
 Finally, all the proposed scenarios were executed in the existing NCB implementation, and in the modeled NCB. As expected, both implementations generated the same output when provided the same inputs.
 %[Refers to Andrew's NCB implementation] 
 
-
-\begin{table*}
+\begin{table*}\scriptsize
 \centering
 \caption{Results of executing a scenario of framework failure during a communication}
 \begin{tabular}{|l|l|l|} \hline
 
-NCB & Mock resource 1 & Mock resource 2\\ \hline
+NCB & Mock Resource 1 & Mock Resource 2\\ \hline
 
-\parbox{5cm}{
+\parbox{5.4cm}{
 login("Andrew", "password") \\
 createSession("101")\\
 sendSchema("101", "Yali", "101 Audio Yali Andrew", null) \\
@@ -437,7 +442,7 @@ addParty("101", "Yali") \\
 enableMedium("101", "Audio"); \\
 mock1.markAsFailed("Audio")}
 &
-\parbox{5cm}{
+\parbox{5.4cm}{
 login() \\
 sendSchema("101", "Audio Yali Andrew", "Yali") \\
 createSession("101") \\
@@ -445,7 +450,7 @@ addParticipant("101", "Yali") \\
 enableMedium("101", "Audio") \\
 destroySession("101") }
 &
-\parbox{5cm}{
+\parbox{5.4cm}{
 login() \\
 sendSchema("101", "Audio Yali Andrew", "Yali") \\
 createSession("101") \\
@@ -497,7 +502,7 @@ In this paper we have presented a model-driven approach towards the development 
 This approach relies on a generic architecture that addresses issues involved in the execution of models that are described in these DSMLs and that can be created and changed at runtime.
 Hence we proposed the use of MDE techniques to specialize this architecture into domain-specific execution engines.
 We then designed a  metamodel that captures domain-independent aspects of a broker layer of the proposed architecture and demonstrated its use by modeling a Network Communication Broker for the Communication Virtual Machine.
-By doing so, we look after a way to simplify the development of execution engines for DSMLs, extending the benefits of MDE beyond the construction of applications to the construction of their execution engines.
+By doing so, we look for a way to simplify the development of execution engines for DSMLs, extending the benefits of MDE beyond the construction of applications to the construction of their execution engines.
 
 % NOTE: OTHER PHRASES THAT I THOUGHT ABOUT BEFORE
 % leverages solutions identified in the development of execution engines for communication and microgrid management domains.
