@@ -2,7 +2,15 @@
 \chapter{Metamodelo do Intermediador de Serviços}
 \label{cap:metamodelo}
 
-\section{Introdução}
+A camada de intermediação de serviços é a responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para provisão de serviços. Um intermediador de serviços deve prover uma interface uniforme sobre um conjunto heterogêneo de recursos gerenciados. Essa interface deve abstrair da camada superior as diferenças entre os recursos e a dinâmica envolvida em sua utilização.
+
+Além de disponibilizar uma interface uniforme sobre os recursos, a camada de intermediação de serviços deve apresentar um certo grau de auto gerenciamento.
+% Apresentar um certo grau de auto-gerenciamento (ver referencias dissertacao Andrew ou artigo Autonomic Framework...)
+O auto gerenciamento da camada é essencial para abstrair da camada superior as operações de manutenção dos recursos.
+Estas incluem a seleção de recursos apropriados, bem como sua preparação para atender às solicitações recebidas.
+Além disso, uma camada auto gerenciável é capaz de monitorar seus recursos e adaptar sua configuração interna para atender à essas solicitações.
+Isto possibilita à camada otimizar a utilização de seus recursos, bem como a identificação e recuperação de falhas.
+
 
 \begin{comment}
 
@@ -78,11 +86,11 @@ As seções abaixo descrevem em detalhes os principais elementos do metamodelo ide
 %% Como resolver a sobrecarga de nomes? e.g. classe no metamodelo e classe da implementação do ambiente de execução?
 \section{Interface}
 
-No metamodelo proposto, a interface para utilização de um gerenciador é definida através de chamadas providas e eventos que podem ser sinalizados. Este tipo de interface segue a mesma abordagem empregada pela CVM para comunicação entre suas camadas \cite{cvm}. Dessa forma, a utilização da interface se dá através da realização de chamadas disponíveis e tratamento de eventos gerados.
+No metamodelo proposto, a interface para utilização de um gerenciador é definida através de chamadas providas e eventos que podem ser sinalizados. Este tipo de interface segue a mesma abordagem empregada pela CVM para comunicação entre suas camadas \cite{cvm}. Dessa forma, a utilização de um gerenciador se dá através da realização de chamadas disponíveis e tratamento de eventos gerados.
 
-A interface de uma camada de intermediação de serviços, por sua vez, é definida pela interface de seu gerenciador principal e, portanto, também interage com a camada superior da forma descrita acima. Além disso, as interfaces para utilização dos recursos gerenciados também é descrita da mesma forma, o que possibilita que um gerenciador possa ser tratado como um recurso.
+A interface de uma camada de intermediação de serviços, por sua vez, é definida pela interface de seu gerenciador principal e, portanto, também interage com a camada superior da forma descrita acima. Além disso, as interfaces para utilização dos recursos gerenciados também é descrita da mesma forma, o que possibilita que um gerenciador seja tratado como um recurso.
 
-A classe \textsf{Interface} é utilizada para descrever a interface de um gerenciador ou recurso no metamodelo proposto. Essa classe agrupa um conjunto de chamadas providas e eventos que podem ser sinalizados. Chamadas e eventos são representados respectivamente através das classes \textsf{Call} e \textsf{Event} que apresentam como característica comum o fato de possuírem um nome e um conjunto de parâmetros, e por isso herdam estes atributos da classe \textsf{Signal}. A Figura ~\ref{fig:metamodelo-interface} ilustra as classes do metamodelo relacionadas à descrição de interfaces.
+A classe \textsf{Interface} é utilizada para descrever a interface de um gerenciador ou recurso. Essa classe agrupa um conjunto de chamadas providas e eventos que podem ser sinalizados. Chamadas e eventos, denominados sinais, são representados respectivamente através das classes \textsf{Call} e \textsf{Event} que apresentam como característica comum o fato de possuírem um nome e um conjunto de parâmetros, e por isso herdam estes atributos da classe \textsf{Signal}. Os parâmetros de um sinal, por sua vez, são definidos por meio da classe \textsf{Parameter}. A Figura ~\ref{fig:metamodelo-interface} ilustra as classes do metamodelo relacionadas à descrição de interfaces.
 
 \begin{figure}
  \centering
@@ -93,6 +101,50 @@ A classe \textsf{Interface} é utilizada para descrever a interface de um gerenci
 
 
 \section{Tratamento de sinais}
+
+O comportamento de uma camada de intermediação de serviços é definido pela forma como esta reage às chamadas realizadas pela camada superior e aos eventos sinalizados pelos recursos. O metamodelo proposto disponibiliza construções que permitem definir uma ação a ser realizada como resposta à um determinado sinal. Esta estratégia se inspira em uma architetura dirigida por eventos \cite{}.
+
+O tratamento de sinais na camada de intermediação é definido por meio das classes \textsf{Signal}, \textsf{Handler} e \textsf{Action}. Enquanto os sinais a serem tratados por um gerenciador são descritos como parte da interface do gerenciador e dos recursos gerenciados, os últimos são diretamente agrupados no gerenciador.
+
+Uma ação representa uma operação que pode ser executada por um gerenciador, e é definida por meio da classe abstrata \textsf{Action}, que possui as seguintes subclasses:
+
+\begin{itemize}
+
+\item  \textsf{MacroAction}: permite ao usuário definir uma classe Java que implementa a ação desejada
+
+\item \textsf{CallAction}: define uma chamada a ser enfileirada ou executada nos recursos gerenciados ou no próprio gerenciador
+
+\item \textsf{EventAction}: define um evento a ser gerado para a camada superior
+
+\item \textsf{SequenceAction}: combina uma lista de ações a ser executada em sequência
+
+\end{itemize}
+
+
+Uma ação também exige um contexto para execução... também definido por parâmetros
+
+Além disso, os parâmetros de uma ação podem ser resultados da execução de uma outra ação... Permite muitas variações.
+
+Um tratador de sinais, representado pela classe \textsf{Handler}, é utilizado para indicar qual ação deve ser tomada quando um determinado sinal é identificado.
+Uma instancia de \textsf{Handler} descreve o sinal a ser tratado, se este tratador está habilitado, e a ação a ser tomada.
+
+Além disso, ao definir um tratador é necessário descrever como os valores de parâmetros de uma determinada chamada ou evento são mapeados para o contexto necessário para a execução da ação associada.
+
+Esta ligação é mediada pela classe \textsf{ActionExecution}
+
+
+
+
+To define a handler, the modeler needs to indicate the signal that it handles, whether it is enabled, and the action that will be taken.
+
+In addition, it is necessary to define how the parameter values that come with a given call or event should be mapped into the context needed for the execution of the corresponding \textsf{Action}.
+
+This binding is mediated by a class named \textsf{ActionExecution} which groups a set of \textsf{ParameterBinding}s. A parameter may be bound to a fixed value, a parameter value, an expression, or even the result of a call to another action. This latter option, together with the use of sequence actions, enables the definition of elaborate actions that can be used to handle a signal.
+
+To define a handler, the modeler needs to indicate the signal that it handles, whether it is enabled and the action that will be taken. Besides that, it is also needed to define how the parameter values that come from a given call or event will be mapped into the context needed for the execution of the corresponding. This binding is mediated by a class named \textsf{ActionExecution} that groups a set of \textsf{ParameterBinding}. A parameter may be bound to a fixed value, a parameter value, an expression, or event the result of a call to an other action. This latter option, together with the use of sequence actions, enables the definition of elaborate actions that can be used to handle a signal.
+
+
+
 
 
 
