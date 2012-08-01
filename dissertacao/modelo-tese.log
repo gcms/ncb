@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009) (format=pdflatex 2010.7.2)  28 JUN 2012 09:39
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009) (format=pdflatex 2010.7.2)  31 JUL 2012 18:50
 entering extended mode
  %&-line parsing enabled.
 **modelo-tese.tex
@@ -682,7 +682,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 Cap\'{\i }tulo 3.
 [21
 
-] [22] <./fig/uvm.pdf, id=355, 247.92625pt x 392.46625pt>
+] [22] <./fig/uvm.pdf, id=350, 247.92625pt x 392.46625pt>
 File: ./fig/uvm.pdf Graphic file (type pdf)
 
 <use ./fig/uvm.pdf>
@@ -691,21 +691,29 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10.95> not available
  [23] [24 <./fig/uvm.pdf>]) (./tex/Cap4Metamodelo.tex
 [25]
 Cap\'{\i }tulo 4.
-<./fig/manager.pdf, id=382, 582.175pt x 301.125pt>
-File: ./fig/manager.pdf Graphic file (type pdf)
- <use ./fig/manager.pdf>
 [26
 
-] [27 <./fig/manager.pdf>]
-<./fig/interface.pdf, id=404, 355.3275pt x 281.05pt>
+] <./fig/manager.pdf, id=380, 582.175pt x 301.125pt>
+File: ./fig/manager.pdf Graphic file (type pdf)
+
+<use ./fig/manager.pdf> [27 <./fig/manager.pdf>]
+<./fig/interface.pdf, id=397, 355.3275pt x 281.05pt>
 File: ./fig/interface.pdf Graphic file (type pdf)
  <use ./fig/interface.pdf>
-[28 <./fig/interface.pdf>] <./fig/resource.pdf, id=420, 355.3275pt x 176.66pt>
+[28 <./fig/interface.pdf>]
+
+LaTeX Warning: Reference `fig:signalhandling' on page 29 undefined on input lin
+e 108.
+
+
+LaTeX Warning: Reference `fig:binding' on page 29 undefined on input line 129.
+
+[29] <./fig/resource.pdf, id=418, 355.3275pt x 176.66pt>
 File: ./fig/resource.pdf Graphic file (type pdf)
 
-<use ./fig/resource.pdf> [29 <./fig/resource.pdf>]
+<use ./fig/resource.pdf> [30 <./fig/resource.pdf>]
 ! Undefined control sequence.
-l.125 A classe \text
+l.164 A classe \text
                     {StateManager} do metamodelo tem como função definir os ...
 
 ? 
@@ -716,14 +724,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.132 ...raphics[width=0.5\textwidth]{./fig/state}
+l.171 ...raphics[width=0.5\textwidth]{./fig/state}
                                                   
 ? 
-[30]
+[31] [32]
 
-LaTeX Warning: Reference `sec:signals' on page 31 undefined on input line 184.
+LaTeX Warning: Reference `sec:signals' on page 33 undefined on input line 223.
 
-) [31] (./modelo-tese.bbl
+) [33] (./modelo-tese.bbl
 LaTeX Font Info:    Font shape `T1/phv/m/sc' will be
 (Font)              scaled to size 10.79993pt on input line 4.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <12> not available
@@ -755,22 +763,25 @@ l.23
 l.23 
      
 ? 
-) [32
+) [34
 
 
 ] AED: lastpage setting LastPage (./modelo-tese.aux)
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 8851 strings out of 493848
- 128592 string characters out of 3149208
+ 8846 strings out of 493848
+ 128522 string characters out of 3149208
  242123 words of memory out of 3000000
- 11767 multiletter control sequences out of 15000+200000
+ 11763 multiletter control sequences out of 15000+200000
  103669 words of font info for 102 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 45i,12n,45p,1220b,410s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 45i,12n,45p,1220b,406s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/local/texlive/2009/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2009/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/te
 xlive/2009/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
@@ -780,9 +791,9 @@ f-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></usr/local/texlive/2009/texmf-dist
 /fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2009/texmf-dist/fonts/typ
 e1/urw/times/utmr8a.pfb></usr/local/texlive/2009/texmf-dist/fonts/type1/urw/tim
 es/utmri8a.pfb>
-Output written on modelo-tese.pdf (34 pages, 258215 bytes).
+Output written on modelo-tese.pdf (36 pages, 261137 bytes).
 PDF statistics:
- 500 PDF objects out of 1000 (max. 8388607)
- 96 named destinations out of 1000 (max. 500000)
- 373 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 501 PDF objects out of 1000 (max. 8388607)
+ 95 named destinations out of 1000 (max. 500000)
+ 365 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -21,14 +21,13 @@
 \contentsline {section}{\numberline {2.4}Computa\c c\~ao aut\^onoma}{20}{section.21}
 \contentsline {chapter}{\numberline {3}Uma abordagem dirigida por modelos para constru\c c\~ao de m\'aquinas virtuais dirigidas por modelos}{21}{chapter.22}
 \contentsline {section}{\numberline {3.1}Vis\~ao geral}{21}{section.23}
-\contentsline {section}{\numberline {3.2}Abordagem dirigida por modelos para defini\c c\~ao do Intermediador de Servi\c co}{24}{section.26}
-\contentsline {chapter}{\numberline {4}Metamodelo do Intermediador de Servi\c cos}{26}{chapter.28}
-\contentsline {section}{\numberline {4.1}Introdu\c c\~ao}{26}{section.29}
-\contentsline {section}{\numberline {4.2}Interface}{27}{section.32}
-\contentsline {section}{\numberline {4.3}Tratamento de sinais}{28}{section.34}
-\contentsline {section}{\numberline {4.4}Recursos}{28}{section.35}
-\contentsline {section}{\numberline {4.5}Manuten\c c\~ao de estado}{29}{section.37}
-\contentsline {section}{\numberline {4.6}Computa\c c\~ao Aut\^onoma}{30}{section.39}
-\contentsline {section}{\numberline {4.7}Pol\IeC {\'\i }ticas para sele\c c\~ao de recursos}{31}{section.40}
-\contentsline {chapter}{Refer\^encias Bibliogr\'aficas}{32}{section*.41}
+\contentsline {section}{\numberline {3.2}Abordagem dirigida por modelos para defini\c c\~ao do Intermediador de Servi\c co}{24}{section.25}
+\contentsline {chapter}{\numberline {4}Metamodelo do Intermediador de Servi\c cos}{26}{chapter.26}
+\contentsline {section}{\numberline {4.1}Interface}{28}{section.29}
+\contentsline {section}{\numberline {4.2}Tratamento de sinais}{29}{section.31}
+\contentsline {section}{\numberline {4.3}Recursos}{30}{section.32}
+\contentsline {section}{\numberline {4.4}Manuten\c c\~ao de estado}{31}{section.34}
+\contentsline {section}{\numberline {4.5}Computa\c c\~ao Aut\^onoma}{31}{section.36}
+\contentsline {section}{\numberline {4.6}Pol\IeC {\'\i }ticas para sele\c c\~ao de recursos}{33}{section.37}
+\contentsline {chapter}{Refer\^encias Bibliogr\'aficas}{34}{section*.38}
 \contentsfinish 

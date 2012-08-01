@@ -32,13 +32,12 @@
 \BOOKMARK [1][-]{section.21}{2.4 Computa\347\343o aut\364noma}{chapter.12}
 \BOOKMARK [0][-]{chapter.22}{3 Uma abordagem dirigida por modelos para constru\347\343o de m\341quinas virtuais dirigidas por modelos}{}
 \BOOKMARK [1][-]{section.23}{3.1 Vis\343o geral}{chapter.22}
-\BOOKMARK [1][-]{section.26}{3.2 Abordagem dirigida por modelos para defini\347\343o do Intermediador de Servi\347o}{chapter.22}
-\BOOKMARK [0][-]{chapter.28}{4 Metamodelo do Intermediador de Servi\347os}{}
-\BOOKMARK [1][-]{section.29}{4.1 Introdu\347\343o}{chapter.28}
-\BOOKMARK [1][-]{section.32}{4.2 Interface}{chapter.28}
-\BOOKMARK [1][-]{section.34}{4.3 Tratamento de sinais}{chapter.28}
-\BOOKMARK [1][-]{section.35}{4.4 Recursos}{chapter.28}
-\BOOKMARK [1][-]{section.37}{4.5 Manuten\347\343o de estado}{chapter.28}
-\BOOKMARK [1][-]{section.39}{4.6 Computa\347\343o Aut\364noma}{chapter.28}
-\BOOKMARK [1][-]{section.40}{4.7 Pol\355ticas para sele\347\343o de recursos}{chapter.28}
-\BOOKMARK [0][-]{section*.41}{Refer\352ncias Bibliogr\341ficas}{}
+\BOOKMARK [1][-]{section.25}{3.2 Abordagem dirigida por modelos para defini\347\343o do Intermediador de Servi\347o}{chapter.22}
+\BOOKMARK [0][-]{chapter.26}{4 Metamodelo do Intermediador de Servi\347os}{}
+\BOOKMARK [1][-]{section.29}{4.1 Interface}{chapter.26}
+\BOOKMARK [1][-]{section.31}{4.2 Tratamento de sinais}{chapter.26}
+\BOOKMARK [1][-]{section.32}{4.3 Recursos}{chapter.26}
+\BOOKMARK [1][-]{section.34}{4.4 Manuten\347\343o de estado}{chapter.26}
+\BOOKMARK [1][-]{section.36}{4.5 Computa\347\343o Aut\364noma}{chapter.26}
+\BOOKMARK [1][-]{section.37}{4.6 Pol\355ticas para sele\347\343o de recursos}{chapter.26}
+\BOOKMARK [0][-]{section*.38}{Refer\352ncias Bibliogr\341ficas}{}
