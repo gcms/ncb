@@ -11,6 +11,8 @@ Estas incluem a seleção de recursos apropriados, bem como sua preparação para at
 Além disso, uma camada auto gerenciável é capaz de monitorar seus recursos e adaptar sua configuração interna para atender à essas solicitações.
 Isto possibilita à camada otimizar a utilização de seus recursos, bem como a identificação e recuperação de falhas.
 
+Neste capítulo, o metamodelo em questão será apresentado e 
+
 
 \begin{comment}
 
@@ -231,5 +233,16 @@ A classe \textsf{ChangeRequest} define uma requisição de mudança que deve ser ge
 %Referencia: The plan function can take on many forms, ranging from a single command to a complex workflow. 
 
 \section{Políticas para seleção de recursos}
+
+In the proposed meta-model policies are employed to drive the selection of resources. The class \textsf{PolicyManager} groups abstractions related to the definition of policies and their evaluation. These comprises \textsf{Policy} that identifies a policy, \textsf{PolicyEvaluationPoint} that defines when policy evaluation should be triggered, and \textsf{PolicyEvaluationHandler} that defines how the policy evaluation result should be handled. Besides that, the meta-model also includes auxiliary constructs for establishing links between these main elements.
+
+As mentioned earlier, resources may be annotated with its features and properties.
+A policy specifies a condition over a feature that may be present in resources, and the business value that is associated to the reaching of this condition.
+At runtime, the resource that achieves the highest accumulated business value is selected among the available resources.
+
+
+An evaluation point on is defined by specifying a signal which triggers the evaluation of policies and a policy evaluation handler that will be executed after the evaluation to handle its result. A policy evaluation point is linked to its handler by an instance of \textsf{PolicyEvaluationRequest} that is responsible for defining the parameter mapping between the context of the signal that triggers the evaluation, and that required for the evaluation itself. Finally, a policy evaluation handler defines an implementation class (similar to the a macro action) that may be executed upon the results of the policy evaluation processes.
+%The scope of the policies is implicitly the set of resources associated to the same manager.
+
 
 
