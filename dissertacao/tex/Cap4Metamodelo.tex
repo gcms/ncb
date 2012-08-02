@@ -61,14 +61,14 @@ Para a construção do metamodelo proposto, foi empregado o metamodelo Ecore \cite
 
 O metamodelo projetado se estrutura em torno de uma classe principal, denominada \textsf{Manager}. Uma instância dessa classe, aqui tratado como um gerenciador, define um escopo para o gerenciamento de recursos e agrupa outros elementos que definem as atribuições específicas da camada de intermediação de serviços.
 
-A figura~\ref{fig:metamodelo-principal} ilustra os principais elementos desse metamodelo, onde é possível identificar o \textsf{Manager} que agrupa os seguintes elementos:
-
 \begin{figure}
  \centering
  \includegraphics[width=0.8\textwidth]{./fig/manager}
  \caption{Principais elementos do metamodelo do intermediador de serviços.}
  \label{fig:metamodelo-principal}
 \end{figure}
+
+A figura~\ref{fig:metamodelo-principal} ilustra os principais elementos do metamodelo. Nesta figura é possível identificar a classe \textsf{Manager}, e os seguntes elementos que o compõem:
 
 \begin{itemize}
 
@@ -90,9 +90,8 @@ Uma vez construída uma instância da classe \textsf{Manager}, esta pode ser utili
 % Ref: Design concepts & considerations: http://en.wikipedia.org/wiki/Software_design
 A construção de uma camada de intermediação de serviços se dá a partir da indicação de qual será o seu gerenciador principal, que por sua vez pode empregar outros gerenciadores como recursos subjacentes.
 
-
-As seções seguintes descrevem em detalhes as (aspectos/assuntos/temas/áreas/partes) do metamodelo identificados acima.
-
+As seções seguintes descrevem em detalhes as (aspectos/assuntos/temas/áreas/partes) do metamodelo identificados acima. Como observado anteriormente, a abordagem proposta se baseia nas soluções empregadas no desenvolvimento da CVM. Portanto, as abstrações existentes no metamodelo também guardam semelhanças com as empregadas pela camada de intermediação de serviços da CVM\cite{ncb}.
+% com as empregadas pela camada de intermediação de serviços da CVM = com o trabalho existente na NCB
 
 %% Como resolver a sobrecarga de nomes? e.g. classe no metamodelo e classe da implementação do ambiente de execução?
 \section{Interface}
@@ -116,7 +115,7 @@ A classe \textsf{Interface} é utilizada para descrever a interface de um gerenci
 
 Como mencionado, o comportamento de uma camada de intermediação de serviços é definido pela forma como esta reage às chamadas realizadas pela camada superior e aos eventos sinalizados pelos recursos. O metamodelo proposto disponibiliza construções que permitem definir uma ação a ser realizada como resposta à um determinado sinal.
 
-O tratamento de sinais na camada de intermediação é definido por meio das classes \textsf{Signal}, \textsf{Handler} e \textsf{Action}. Enquanto os sinais a serem tratados por um gerenciador são descritos como parte da interface do gerenciador e dos recursos gerenciados, os demais elementos são diretamente agrupados no gerenciador. A figura~\ref{fig:signalhandling} ilustra como esses elementos estão organizados no metamodelo.
+O tratamento de sinais na camada de intermediação é definido por meio das classes \textsf{Signal}, \textsf{Handler} e \textsf{Action}. Enquanto os sinais a serem tratados por um gerenciador são descritos como parte da interface do gerenciador e dos recursos gerenciados, os demais elementos são diretamente agrupados no gerenciador. A figura~\ref{fig:metamodelo-sinais} ilustra como esses elementos estão organizados no metamodelo.
 
 Uma ação representa uma operação que pode ser executada por um gerenciador, e é definida por meio da classe abstrata \textsf{Action}, que possui as seguintes subclasses:
 
@@ -137,7 +136,7 @@ Uma ação também define um contexto necessário para a sua execução por meio de um
 Um tratador de sinais, representado pela classe \textsf{Handler}, é utilizado para indicar qual ação deve ser tomada quando um determinado sinal é identificado.
 Uma instancia de \textsf{Handler} descreve o sinal a ser tratado, se este tratador está habilitado, e a ação a ser tomada.
 
-Além disso, ao definir um tratador, é necessário descrever como serão atribuídos valores aos parâmetros exigidos por uma ação. Esta ligação entre o contexto no qual um sinal é identificado e o contexto exigido por uma ação é definido pela classe \textsf{ActionExecution}. A figura~\ref{fig:binding} ilustra as classes do metamodelo que estão relacionadas à ligação de contexto.
+Além disso, ao definir um tratador, é necessário descrever como serão atribuídos valores aos parâmetros exigidos por uma ação. Esta ligação entre o contexto no qual um sinal é identificado e o contexto exigido por uma ação é definido pela classe \textsf{ActionExecution}. A figura~\ref{fig:metamodelo-binding} ilustra as classes do metamodelo que estão relacionadas à ligação de contexto.
 
 A classe \textsf{ActionExecution} intermedia a associação entre um tratador e uma ação, e define um conjunto de associações de parâmetros, descritas através classe \textsf{ParameterBinding}. Uma associação de parâmetro define como será atribuído um valor à um parâmetro de uma ação. Um parâmetro pode ser associado à diferentes fontes de valores, que são definidas por meio de subtipos do tipo \textsf{Value}. O metamodelo disponibiliza as seguintes classes para definição de uma fonte de valores:
 
@@ -159,7 +158,7 @@ A utilização dessas construções do metamodelo é melhor ilustrada no capítulo~\re
 
 \section{Recursos}
 
-No metamodelo proposto, os recursos a serem gerenciados por uma camada de intermediação de serviços são descritos por meio de um gerenciador de recursos, definido pelo tipo \textsf{ResourceManager}. Um gerenciador de recursos define as interfaces dos recursos gerenciados, e como estes podem ser obtidos. A figura~\ref{fig:metamodelo-resource} ilustra as classes do metamodelo envolvidas na descrição de recursos.
+No metamodelo proposto, os recursos a serem gerenciados por uma camada de intermediação de serviços são descritos por meio de um gerenciador de recursos, definido pelo tipo \textsf{ResourceManager}. Um gerenciador de recursos define as interfaces dos recursos gerenciados, e como estes podem ser obtidos. A figura~\ref{fig:metamodelo-recursos} ilustra as classes do metamodelo envolvidas na descrição de recursos.
 
 As interfaces dos recursos são descritas através da classe mm \textsf{Interface}, da mesma forma que a interface de um gerenciador da camada.
 A obtenção dos recursos por sua vez, é definida, de acordo com a sua natureza, por classes subtipos de \textsf{ResourceManager}. O metamodelo proposto conta com uma classe denominada \textsf{InstanceResourceManager} que permite a descrição de um conjunto fixo de recursos e suas características. Outras classes que implementam a interface \textsf{ResourceManager} poderiam, por sua vez, possibilitar a obtenção de recursos de formas mais elaboradas como, por exemplo, através de repositórios de objetos distribuídos.
@@ -173,7 +172,7 @@ Além disso, uma instância de \textsf{Instance} também define qual das interfaces
  \centering
  \includegraphics[width=0.5\textwidth]{./fig/resource}
  \caption{Elementos do metamodelo para descrição dos recursos gerenciados pela camada.}
- \label{fig:metamodelo-resource}
+ \label{fig:metamodelo-recursos}
 \end{figure}
 
 
@@ -192,13 +191,13 @@ Para possibilitar essa variabilidade no processamento de sinais, é preciso que a
 
 A classe \textsf{StateManager} do metamodelo tem como função definir os tipos de dados que poderão ser mantidos durante a execução da camada. Os tipos de dados podem ser descritos através de uma estrutura simples baseada em atributos e subtipos. Assim como no modelo relacional de dados, a descrição de um tipo também exige a seleção de um atributo chave que identifique unicamente um registro de um tipo de dados. 
 
-A figura~\ref{fig:metamodelo-state} ilustra as classes envolvidas na definição dos tipos de dados a serem mantidos pela camada durante sua execução. A classe \textsf{State} é utilizada para definir um tipo de dados, que agrupa atributos e subtipos. Cada atributo, por sua vez, é definido por meio da classe \textsf{Property}. Os subtipos por sua vez são definidos a partir da mesma classe \textsf{State}, o que possibilita a definição de tipos de dados compostos.
+A figura~\ref{fig:metamodelo-estado} ilustra as classes envolvidas na definição dos tipos de dados a serem mantidos pela camada durante sua execução. A classe \textsf{State} é utilizada para definir um tipo de dados, que agrupa atributos e subtipos. Cada atributo, por sua vez, é definido por meio da classe \textsf{Property}. Os subtipos por sua vez são definidos a partir da mesma classe \textsf{State}, o que possibilita a definição de tipos de dados compostos.
 
 \begin{figure}
  \centering
  \includegraphics[width=0.5\textwidth]{./fig/state}
  \caption{Elementos do metamodelo para descrição dos tipos de dados mantidos pela camada.}
- \label{fig:metamodelo-state}
+ \label{fig:metamodelo-estado}
 \end{figure}
 
 
@@ -237,6 +236,7 @@ Revisão/descrição breve da arquitetura, do loop MAPE-K, sensores e atuadores.
 %- No meta-modelo proposto, as funções tem seu comportamento descrito a partir dos elementos que elas devem gerar.
 
 As abstrações presentes no metamodelo proposto permitem descrever regras que determinam a geração e transmissão de conhecimento entre as funções MAPE. Desta forma, ao construir uma camada de intermediação de serviços, devem ser descritas regras para identificação de sintomas, solicitações de mudanças e planos de mudança. Em tempo de execução, o monitor utiliza essas regras para identificar a ocorrência de um sintoma. De forma semelhante o analisar e planejador se baseiam nos sintomas identificados e nas solicitações de mudança geradas para realizarem sua tarefa.
+A figura~\ref{fig:metamodelo-autonomo} ilustra as construções associadas a definição do mecanismo autonômico em um intermediador de serviços.
 
 % A classe AutonomicManager agrupa os elementos relacionados à gerenciamento autonomico.
 
@@ -253,6 +253,13 @@ A classe \textsf{ChangeRequest} define uma requisição de mudança que deve ser ge
 %Referencia: The plan function can take on many forms, ranging from a single command to a complex workflow. 
 
 \section{Políticas para seleção de recursos}
+
+No metamodelo em questão, políticas são empregadas com o intuito de direcionar a seleção de recursos.
+A classe \textsf{PolicyManager} agrupa as abstrações relacionadas a definição de políticas e sua avaliação.
+Essas compreendem além da descrição de políticas, a definição do momento onde estas devem ser avaliadas, e como os resultados dessa avaliação devem ser tratados.
+
+A figura~\ref{fig:metamodelo-politicas} demonstra as abstrações relacionadas à utilização de políticas .
+
 
 In the proposed meta-model policies are employed to drive the selection of resources. The class \textsf{PolicyManager} groups abstractions related to the definition of policies and their evaluation. These comprises \textsf{Policy} that identifies a policy, \textsf{PolicyEvaluationPoint} that defines when policy evaluation should be triggered, and \textsf{PolicyEvaluationHandler} that defines how the policy evaluation result should be handled. Besides that, the meta-model also includes auxiliary constructs for establishing links between these main elements.
 
