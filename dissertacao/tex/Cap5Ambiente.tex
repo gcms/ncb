@@ -24,6 +24,8 @@ The provided execution environment was developed in the Java platform and compri
 %- The architecture resembles the  metamodel
 In this section, we describe the implementation of this execution environment, including its main components and how they interact in order to provide the behavior described by the model loaded in it. Though the names employed for describing these components may be the same used for elements of the  metamodel they are not the same. The components described here are part of the actual Java implementation but are related to their homonymous in the  metamodel.
 
+\section{Visão geral do ambiente de execução}
+
 % Describe the overall flow of the execution environment
 Under the implemented execution environment, a broker layer constantly waits for calls from the upper layer or events from resources, that once arrived are enqueued for later processing. In order to process a signal, the appropriate handler is found and executed. In accordance with the model, the handler executes the associated action that may interact with resources and manipulate the state maintained by the layer. Specialized handlers are also set up for handling signals that may activate self-management functions.
 
@@ -61,3 +63,44 @@ The \emph{Autonomic Manager} encapsulates the MAPE functions and may be activate
 If the conditions are met the \emph{Monitor} notifies the \emph{Analyzer} of the symptoms that were detected. Along with the notification it also sends the context in which the conditions for a symptom were evaluated as true such as the source and parameters of signals, and data registers which made the conditions true. Based on the detected symptoms, the \emph{Analyzer} looks up the associated change request defined in the layer model and sends to the planner a change request along with the data from symptoms that triggered this request. Next the \emph{Planner} identifies the change plan associated with the change request and sends it to the \emph{Executor} that obtains the action defined in this plan and executes it.
 
 In a similar fashion, \emph{Policy Manager} is activated by the \emph{Policy Evaluation Signal Handler}. It works by evaluating the set of available resources against the policies and selecting the resource which leads to the highest business value. It then forwards the selected resource to the associated policy evaluation handler that calls the implementation class described in the model.
+
+\section{Tratamento de sinais}
+
+
+
+\section{Recursos}
+
+O gerenciador de recursos, implementado pela classe \textsf{ResourceManager}, é o componente responsável pela manutenção dos recursos gerenciados em tempo de execução.
+
+- inicializa os recursos; e mantém referências para ele em tempo de execução; e disponibiliza uma interface para obtenção dos recursos gerenciados.
+
+- acesso aos recursos é serializado; segue a interação baseada em touchpoints
+
+
+\subsection{Integração com os recursos}
+
+Um conjunto de classes e interfaces é fornecido para a integração dos recursos com o ambiente de execução. Essa biblioteca tem como função viabilizar a interação entre o ambiente de execução e os recursos a serem gerenciados.
+Além disso, essas classes e interfaces, que integram o pacote \textsf{mdvm.sb.adapters}, permitem associar a interface dos recursos, descrita no metamodelo, às suas implementações. A figura~\ref{fig:ambiente-integracao-diagrama} mostra um diagrama de classes do pacote mencionado.
+
+A integração em questão se aplica aos recursos baseados na instanciação de uma implementação, representados no metamodelo pela classe \textsf{Instance}, descrita na seção~\ref{sec:metamodelo-recursos}. Por ser implementado na plataforma Java, o ambiente de execução exige que a implementação do recurso seja nesta plataforma. Apesar disso, é possível que uma implementação atue apenas como um \emph{wrapper} para a real implementação em outra plataforma.
+
+Para que um recurso seja integrado ao ambiente de execução é preciso que um protocolo seja seguido.
+Antes de tudo, o recurso a ser integrado deve implementar a interface \textsf{Manageable}, que identifica que este recurso pode ser gerenciado por uma camada de intermediação de serviços.
+Por meio desta interface,  o recurso tem acesso à um notificador de eventos, representado pelo tipo \textsf{EventNotifier}, que deve ser utilizado para sinalizar eventos ao intermediador de serviços. 
+
+Os eventos a serem sinalizados são representados por meio da classe \textsf{Event}, também disponível no pacote citado. Além dessa classe, a classe \textsf{EventException} pode ser usada para sinalizar a ocorrência de uma exceção no recurso. Ao sinalizar um evento ou exceção, um recurso deve indicar o nome do evento e valores para os seus parâmetros.
+% Descrever no fluxo como exceções são tratadas
+
+Ainda, os métodos que implementam as chamadas providas pelo recurso, precisam ser marcadas com a anotação \textsf{@Call}. Esta anotação tem como função associar uma chamada provida, descrita no metamodelo, ao método que a implementa. Para isso, a anotação indica o nome da chamada provida associada ao método anotado e a ordem como os parâmetros desta chamada devem ser passados à este método. O código ~\ref{cod:ambiente-integracao-impl} demonstra trecho da implementação de um recurso a ser integrado ao ambiente de execução.
+
+Uma vez seguido o protocolo descrito, um intermediador de serviços é capaz de interagir apropriadamente com o recurso, identificando corretamente os eventos gerados, e realizando chamadas aos métodos corretos. Esta interação possibilita que o recurso seja gerenciado por uma camada de intermediação de serviços.
+
+
+\section{Manutenção de estado}
+
+
+\section{Gerenciamento autônomo}
+
+
+\section{Políticas}
+

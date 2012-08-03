@@ -101,7 +101,7 @@ No metamodelo proposto, a interface para utilização de um gerenciador é definida
 A interface de uma camada de intermediação de serviços, por sua vez, é definida pela interface de seu gerenciador principal e, portanto, também interage com a camada superior da forma descrita acima. Além disso, as interfaces para utilização dos recursos gerenciados também é descrita da mesma forma, o que possibilita que um gerenciador seja tratado como um recurso.
 
 A figura~\ref{fig:metamodelo-interface} ilustra as classes do metamodelo relacionadas à descrição de interfaces.
-A classe \textsf{Interface} é utilizada para descrever a interface de um gerenciador ou recurso. Essa classe agrupa um conjunto de chamadas disponibilizadas e eventos que podem ser sinalizados. Chamadas e eventos, denominados sinais, são representados respectivamente através das classes \textsf{Call} e \textsf{Event} que apresentam como característica comum o fato de possuírem um nome e um conjunto de parâmetros, e por isso herdam estes atributos da classe \textsf{Signal}. Os parâmetros de um sinal, por sua vez, são definidos por meio da classe \textsf{Parameter}. 
+A classe \textsf{Interface} é utilizada para descrever a interface de um gerenciador ou recurso. Essa classe agrupa um conjunto de chamadas disponibilizadas e eventos que podem ser sinalizados. Chamadas e eventos, denominados sinais, são representados respectivamente através das classes \textsf{Call} e \textsf{Event} que apresentam como característica comum o fato de possuírem um nome e um conjunto de parâmetros, e por isso herdam estes atributos da classe \textsf{Signal}. Os parâmetros de um sinal, por sua vez, são identificados por um nome, e são definidos por meio da classe \textsf{Parameter}.
 
 \begin{figure}
  \centering
@@ -157,6 +157,7 @@ A classe \textsf{ActionExecution} intermedia a associação entre um tratador e um
 A utilização dessas construções do metamodelo é melhor ilustrada no capítulo~\ref{cap:instancia}, onde elas são utilizadas para construir um modelo que representa a camada de intermediação de serviços presente na CVM.
 
 \section{Recursos}
+\label{sec:metamodelo-recursos}
 
 No metamodelo proposto, os recursos a serem gerenciados por uma camada de intermediação de serviços são descritos por meio de um gerenciador de recursos, definido pelo tipo \textsf{ResourceManager}. Um gerenciador de recursos define as interfaces dos recursos gerenciados, e como estes podem ser obtidos. A figura~\ref{fig:metamodelo-recursos} ilustra as classes do metamodelo envolvidas na descrição de recursos.
 
@@ -201,7 +202,7 @@ A figura~\ref{fig:metamodelo-estado} ilustra as classes envolvidas na definição 
 \end{figure}
 
 
-\section{Computação Autônoma}
+\section{Gerenciamento Autônomo}
 
 %- A camada de intermediação de serviços deve abstrair os detalhes da dinâmica envolvida no gerenciamento dos recursos da camada superior.
 
