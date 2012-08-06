@@ -261,25 +261,10 @@ No metamodelo em questão, políticas são empregadas com o intuito de direcionar a
 A figura~\ref{fig:metamodelo-politicas} demonstra as abstrações relacionadas à utilização de políticas, que se estruturam em torno da classe \textsf{PolicyManager}.
 Os principais elementos da definição de políticas são representados por meio das classes \textsf{Policy}, \textsf{PolicyEvaluationPoint}, e \textsf{PolicyEvaluationHandler}.
 
-A classe \textsf{Policy} representa uma política, que é definida por meio de um nome e uma condição a ser avaliada sobre um recurso. Além disso, uma política define um valor de negócio associado ao cumprimento de sua condição pelo recurso. Durante a execução da camada a seleção de recursos se baseia no valor de negócio acumulado na avaliação das políticas.
+A classe \textsf{Policy} representa uma política, que é definida por meio de um nome e uma condição a ser avaliada sobre um recurso. Além disso, uma política define um valor de negócio associado ao cumprimento da condição pelo recurso. Durante a execução da camada a seleção de recursos se baseia no valor de negócio acumulado na avaliação das políticas.
+
+PolicyContext define o contexto, i.e. conjunto de parametros, necessário para avaliação das políticas.
 
 Um ponto de avaliação de políticas, definido por meio da classe \textsf{PolicyEvaluationPoint}, especifica um sinal que desencadeia a avaliação de políticas. Por meio deste elemento é possível especificar o momento em que as políticas devem ser avaliadas ou reavaliadas em relação aos recursos.
 
-Após a avaliação das políticas, uma ação pode ser necessária
-
-
-
-
-
-In the proposed meta-model policies are employed to drive the selection of resources. The class \textsf{PolicyManager} groups abstractions related to the definition of policies and their evaluation. These comprises \textsf{Policy} that identifies a policy, \textsf{PolicyEvaluationPoint} that defines when policy evaluation should be triggered, and \textsf{PolicyEvaluationHandler} that defines how the policy evaluation result should be handled. Besides that, the meta-model also includes auxiliary constructs for establishing links between these main elements.
-
-As mentioned earlier, resources may be annotated with its features and properties.
-A policy specifies a condition over a feature that may be present in resources, and the business value that is associated to the reaching of this condition.
-At runtime, the resource that achieves the highest accumulated business value is selected among the available resources.
-
-
-An evaluation point on is defined by specifying a signal which triggers the evaluation of policies and a policy evaluation handler that will be executed after the evaluation to handle its result. A policy evaluation point is linked to its handler by an instance of \textsf{PolicyEvaluationRequest} that is responsible for defining the parameter mapping between the context of the signal that triggers the evaluation, and that required for the evaluation itself. Finally, a policy evaluation handler defines an implementation class (similar to the a macro action) that may be executed upon the results of the policy evaluation processes.
-%The scope of the policies is implicitly the set of resources associated to the same manager.
-
-
-
+Um tratador de avaliação de políticas, representado por meio da classe \textsf{PolicyEvaluationHandler}, define a ação a ser tomada sobre os resultados da avaliação de políticas. Um ponto de avaliação de políticas é associado à um tratador de avaliação de políticas por meio de uma requisição de avaliação de políticas. Uma requisição de avaliação de políticas, definida por meio da classe \textsf{PolicyEvaluationRequest}, estabelece o mapeamento entre o contexto do sinal que inicia a avaliação de políticas e o necessário para a avaliação em si.
