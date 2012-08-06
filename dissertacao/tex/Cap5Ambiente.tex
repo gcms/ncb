@@ -66,15 +66,38 @@ In a similar fashion, \emph{Policy Manager} is activated by the \emph{Policy Eva
 
 \section{Tratamento de sinais}
 
+Em uma camada de intermediação de serviços, sinais podem representar chamadas recebidas por meio da interface com a camada superior, ou eventos gerados pelos recursos. Os sinais recebidos por um gerenciador da camada de intermediação são tratados por um gerenciador de tratadores de sinais. Este elemento mantém um registro de tratadores de sinais, e é responsável por identificar qual tratador responderá à um sinal recebido. Um tratador de sinais, por sua vez, é o responsável por realizar a ação esperada da camada quando da recepção de um sinal.
+
+O gerenciador de tratadores de sinais é implementado pela classe \textsf{SignalHandlerManager}, que mantém um registro de tratadores de sinais, que são implementações da interface \textsf{SignalHandler}. 
+Cada sinal recebido pelo gerenciador, é repassado sequencialmente a cada tratador, até que um desses trate apropriadamente o sinal, e indique que este não deve continuar a ser repassado aos tratadores seguintes.
+Isso permite que mais de um tratador receba um sinal, mas que uma vez tratado, sua propagação seja interrompida. A ordem de avaliação dos tratadores é estabelecida de acordo com a sua prioridade, definida no momento em que um tratador é registrado junto ao gerenciador de tratadores de sinais.
+
+A classe \textsf{ActionSignalHandler} é utilizada para definir um tratador de sinais que executa uma ação quando um sinal é identificado. Instâncias dessa classe são registradas durante a inicialização da camada a partir das definições de tratadores existentes no modelo em execução, conforme descrito na seção~\ref{sec:metamodelo-sinais}. Ao receber um sinal, um desses tratador verifica se o sinal é do mesmo tipo do encontrado em sua definição, e executa a ação correspondente.
+
+ActionCaller/ActionInstance
+
+ActionInstance implementations, (MacroAction/CallAction/EventAction/SequenceAction)
+
+Além disso, as classes {AutonomicManagerSignalHandler} e \textsf{PolicyManagerSignalHandler} também implementam a interface \textsf{SignalHandler}. Esses tipos especializados de tratadores direcionam os sinais recebidos, respectivamente, para um gerenciador autônomo e um gerenciador de políticas. Uma instância de cada um desses tratadores é registrada durante a inicialização da camada. Esses tratadores são registrados com prioridade máxima, e interceptam os sinais com o intuito de identificar se esses podem influenciar o auto gerenciamento da camada. Não obstante, esses tratadores não interrompem o processamento de um sinal, permitindo que esse ainda seja repassado a outros tratadores, até que um desses o trate apropriadamente.
 
 
 \section{Recursos}
 
-O gerenciador de recursos, implementado pela classe \textsf{ResourceManager}, é o componente responsável pela manutenção dos recursos gerenciados em tempo de execução.
+Os recursos utilizados por uma camada de intermediação de serviço são mantidos pelo gerenciador de recursos. O gerenciador de recursos mantém um registro dos recursos disponíveis, a partir do qual podem ser obtidos. 
+Além disso, em tempo de execução, a utilização dos recursos é mediada por componentes capazes de interagir com os recursos, traduzindo suas construções naquelas utilizadas pela camada.
 
-- inicializa os recursos; e mantém referências para ele em tempo de execução; e disponibiliza uma interface para obtenção dos recursos gerenciados.
+A classe \textsf{ResourceManager} representa o ponto inicial de acesso aos recursos gerenciados por uma camada de intermediação de serviços. Essa classe mantém um registro de recursos, criados a partir das definições presentes no modelo da camada. A partir dessa classe, é possível obter os recursos registrados, que são representados em tempo de execução pelo tipo \textsf{Resource}. 
 
-- acesso aos recursos é serializado; segue a interação baseada em touchpoints
+A interface \textsf{Resource} possui duas implementações concretas: \textsf{ManagedResource} que media o acesso a recurso ordinário, e \textsf{BrokerManager} que representa um outro intermediador de serviços utilizado como um recurso. A figura~\ref{fig:ambiente-recursos-classes} ilustra um diagrama das principais classes relacionadas ao gerenciamento de recursos em tempo de execução.
+
+A interface \textsf{Resource} é uma extensão das interfaces \textsf{Touchpoint} e \textsf{Executable}. Um \emph{touchpoint} representa uma interface de gerenciamento que disponibiliza uma forma padronizada para sua utilização, independente do tipo de recurso gerenciado \cite{KeepInTouchWithTouchPoints}. Nesta implementação, \textsf{Touchpoint} é herdeira das interfaces \textsf{Effector} e \textsf{Sensor}, e portanto um \emph{touchpoint} provê uma interface padrão para realizar chamadas e detectar eventos em um recurso. Além disso, um recurso também é executável, pois também implementa a interface \textsf{Executable}. Ser executável indica que um recurso, em tempo de execução, possui um fluxo próprio de controle, que nesse caso, é utilizado para serializar a interação entre a camada e o recurso. 
+
+Não obstante, um recurso possui meios para comunicação de sinais prioritários.
+
+
+%- inicializa os recursos; e mantém referências para ele em tempo de execução; e disponibiliza uma interface para obtenção dos recursos gerenciados.
+%- como o resourcemanager pode ser utilizado
+%- acesso aos recursos é serializado; segue a interação baseada em touchpoints
 
 
 \subsection{Integração com os recursos}
@@ -82,7 +105,7 @@ O gerenciador de recursos, implementado pela classe \textsf{ResourceManager}, é 
 Um conjunto de classes e interfaces é fornecido para a integração dos recursos com o ambiente de execução. Essa biblioteca tem como função viabilizar a interação entre o ambiente de execução e os recursos a serem gerenciados.
 Além disso, essas classes e interfaces, que integram o pacote \textsf{mdvm.sb.adapters}, permitem associar a interface dos recursos, descrita no metamodelo, às suas implementações. A figura~\ref{fig:ambiente-integracao-diagrama} mostra um diagrama de classes do pacote mencionado.
 
-A integração em questão se aplica aos recursos baseados na instanciação de uma implementação, representados no metamodelo pela classe \textsf{Instance}, descrita na seção~\ref{sec:metamodelo-recursos}. Por ser implementado na plataforma Java, o ambiente de execução exige que a implementação do recurso seja nesta plataforma. Apesar disso, é possível que uma implementação atue apenas como um \emph{wrapper} para a real implementação em outra plataforma.
+A integração em questão se aplica aos recursos baseados na instanciação de uma implementação, representados no metamodelo pela classe \textsf{Instance}, descrita na seção~\ref{sec:metamodelo-recursos}. Por ser implementado na plataforma Java, o ambiente de execução exige que o recurso também seja implementado nesta plataforma. Apesar disso, é possível utilizar uma implementação que atue apenas como um \emph{wrapper} para a real implementação do recurso, em outra plataforma.
 
 Para que um recurso seja integrado ao ambiente de execução é preciso que um protocolo seja seguido.
 Antes de tudo, o recurso a ser integrado deve implementar a interface \textsf{Manageable}, que identifica que este recurso pode ser gerenciado por uma camada de intermediação de serviços.
@@ -93,11 +116,22 @@ Os eventos a serem sinalizados são representados por meio da classe \textsf{Even
 
 Ainda, os métodos que implementam as chamadas providas pelo recurso, precisam ser marcadas com a anotação \textsf{@Call}. Esta anotação tem como função associar uma chamada provida, descrita no metamodelo, ao método que a implementa. Para isso, a anotação indica o nome da chamada provida associada ao método anotado e a ordem como os parâmetros desta chamada devem ser passados à este método. O código ~\ref{cod:ambiente-integracao-impl} demonstra trecho da implementação de um recurso a ser integrado ao ambiente de execução.
 
-Uma vez seguido o protocolo descrito, um intermediador de serviços é capaz de interagir apropriadamente com o recurso, identificando corretamente os eventos gerados, e realizando chamadas aos métodos corretos. Esta interação possibilita que o recurso seja gerenciado por uma camada de intermediação de serviços.
+Uma vez seguido o protocolo descrito, um intermediador de serviços é capaz de interagir apropriadamente com o recurso, identificando corretamente os eventos gerados, e realizando chamadas aos métodos corretos. Esta interação possibilita que o recurso seja gerenciado por uma camada de intermediação de serviços descrita por meio do metamodelo proposto.
 
 
 \section{Manutenção de estado}
 
+A manutenção do estado da camada, em tempo de execução, é realizada por meio do gerenciador de estado. O gerenciador de estado mantém informações sobre os tipos de dados descritos no modelo e os registros de dados associados à esses tipos. A partir desse gerenciador, é possível pesquisar, criar, modificar e destruir registros de dados. Além disso, o gerenciador de estado monitora alterações efetuadas nesses registros e, se necessário, notifica o gerenciador autônomo.
+
+O gerenciador de estado é implementado por um conjunto de classes que compõem o pacote \textsf{mdvm.sb.state}. A figura...
+
+A principal classe desse pacote, denominada \textsf{StateManager}, mantém um conjunto de gerenciadores específicos para cada tipo de dados. Um gerenciador de tipo de dados é implementado pela classe \textsf{StateTypeManager}, e mantém os registros de dados associadas àquele tipo de dados. Por meio do gerenciador de tipo de dados é possível obter um registro de dados pelo seu identificador, ou realizar uma consulta baseada nos demais atributos. Além disso, o gerenciador de tipo de dados também pode ser usado para criar e destruir registros de dados. 
+
+Os registros de dados são representados em tempo de execução por instâncias da classe \textsf{StateHolder}. Um \textsf{StateHolder} mantém os dados de um registro, e fornece métodos para acesso e manipulação de seus atributos. 
+%Para facilitar a manipulação dos atributos, a interface do StateHolder permite/possibilita que os atributos possam ser tratados como um objeto ou uma coleção de objetos. 
+Esta classe também é a responsável por interceptar a manipulação de um registro com o intuito de identificar mudanças e notificá-las aos componentes interessados.
+
+O uso é ilustrado no capítulo~\ref{cap:instancia}.
 
 \section{Gerenciamento autônomo}
 

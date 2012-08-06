@@ -49,17 +49,17 @@ Este capítulo apresenta o metamodelo proposto para definição de camadas de inter
 %		* descrição dos sinais a serem tratados;
 %	- Este manager pode ser tratado como um recurso por outros managers
 
-\section{Introdução}
+\section{Visão geral}
 
-Como observado anteriormente, a camada de intermediação de serviços provê uma interface uniforme para utilização de um conjunto heterogêneo de recursos subjacentes. Um intermediador de serviços atua interceptando as solicitações recebidas por meio da interface disponibilizada, e determinando quais operações devem ser efetuadas nos recursos. Além disso, um intermediador também intercepta eventos advindos dos recursos por ele monitorados, e determina se este deve ser sinalizado para a camada superior, ou se uma adaptação na camada é necessária.
+Como observado anteriormente, a camada de intermediação de serviços provê uma interface uniforme para utilização de um conjunto heterogêneo de recursos subjacentes. Um intermediador de serviços atua interceptando as solicitações recebidas por meio da interface disponibilizada, e determinando quais operações devem ser efetuadas nos recursos. Além disso, um intermediador também intercepta eventos advindos dos recursos por ele monitorados, e determina se este deve ser sinalizado para a camada superior, se uma adaptação na camada é necessária, ou se alguma outra ação deve ser tomada.
 
-No metamodelo proposto, a definição de um intermediador de serviços se dá pela descrição de como este deve se comportar em resposta a cada uma das possíveis solicitações que podem advir da camada superior, e dos eventos que podem ser gerados pelos recursos gerenciados. Esta abordagem se baseia em uma arquitetura dirigida por eventos \cite{eda}, onde o comportamento é determinado pela forma como os eventos são tratados. Neste trabalho, utilizamos o termo \emph{sinal} para identificar um evento. Um sinal, por sua vez, pode representar tanto uma solicitação recebida ou um evento gerado. 
+No metamodelo proposto, a definição de um intermediador de serviços se dá pela descrição de como este deve se comportar em resposta a cada uma das possíveis solicitações que podem advir da camada superior, e dos eventos que podem ser gerados pelos recursos gerenciados. Esta abordagem se baseia em uma arquitetura dirigida por eventos \cite{eda}, onde o comportamento é determinado pela forma como os eventos são tratados. Neste trabalho, utilizamos o termo \emph{sinal} para identificar de forma generalizada um evento. Portanto, um sinal pode representar tanto uma solicitação recebida quanto um evento gerado.
 
 Além disso, o metamodelo possui abstrações para descrição de outras características indispensáveis em uma camada de intermediação de serviços. Essas abstrações compreendem a definição de recursos, manutenção de estado, auto gerenciamento, e políticas para seleção de recursos.
 
 Para a construção do metamodelo proposto, foi empregado o metamodelo Ecore \cite{ecore}, que integra o Eclipse Modeling Framework (EMF). O EMF Ecore, permite o uso de várias ferramentas que auxiliam na construção, armazenamento e processamento de modelos. Por empregar essa tecnologia, o metamodelo projetado não só usufrui de suas vantagens, mas também está sujeito às suas restrições. 
 
-O metamodelo projetado se estrutura em torno de uma classe principal, denominada \textsf{Manager}. Uma instância dessa classe, aqui tratado como um gerenciador, define um escopo para o gerenciamento de recursos e agrupa outros elementos que definem as atribuições específicas da camada de intermediação de serviços.
+O metamodelo projetado se estrutura em torno de uma classe principal, denominada \textsf{Manager}. Uma instância dessa classe, aqui tratado como um gerenciador de intermediação, define um escopo para o gerenciamento de recursos e agrupa outros elementos que definem as atribuições específicas da camada de intermediação de serviços.
 
 \begin{figure}
  \centering
@@ -68,7 +68,7 @@ O metamodelo projetado se estrutura em torno de uma classe principal, denominada
  \label{fig:metamodelo-principal}
 \end{figure}
 
-A figura~\ref{fig:metamodelo-principal} ilustra os principais elementos do metamodelo. Nesta figura é possível identificar a classe \textsf{Manager}, e os seguntes elementos que o compõem:
+A figura~\ref{fig:metamodelo-principal} ilustra os principais elementos do metamodelo. Nesta figura é possível identificar a classe \textsf{Manager}, e os seguintes elementos que o compõem:
 
 \begin{itemize}
 
@@ -86,11 +86,11 @@ A figura~\ref{fig:metamodelo-principal} ilustra os principais elementos do metam
 
 \end{itemize}
 
-Uma vez construída uma instância da classe \textsf{Manager}, esta pode ser utilizada como um recurso para outra instância de \textsf{Manager}. Isto possibilita a construção de uma hierarquia de gerenciadores que podem ser empregados para sucessivamente prover serviços a partir de outros recursos e gerenciadores de recursos. Além disso, essa característica permite a modularização da camada e a reutilização de gerenciadores de recursos na construção de outros gerenciadores de mais alto nível.
+Uma vez construída uma instância da classe \textsf{Manager}, esta pode ser utilizada como um recurso para outra instância de \textsf{Manager}. Isto possibilita a construção de uma hierarquia de gerenciadores que podem ser empregados sucessivamente para prover serviços a partir de recursos e outros gerenciadores de intermediação. Além disso, essa característica permite a modularização da camada e a reutilização de gerenciadores de intermediação na construção de outros gerenciadores de mais alto nível.
 % Ref: Design concepts & considerations: http://en.wikipedia.org/wiki/Software_design
-A construção de uma camada de intermediação de serviços se dá a partir da indicação de qual será o seu gerenciador principal, que por sua vez pode empregar outros gerenciadores como recursos subjacentes.
+A construção de uma camada de intermediação de serviços, se dá a partir da indicação de qual será o seu gerenciador principal, que por sua vez pode empregar outros gerenciadores como recursos subjacentes.
 
-As seções seguintes descrevem em detalhes as (aspectos/assuntos/temas/áreas/partes) do metamodelo identificados acima. Como observado anteriormente, a abordagem proposta se baseia nas soluções empregadas no desenvolvimento da CVM. Portanto, as abstrações existentes no metamodelo também guardam semelhanças com as empregadas pela camada de intermediação de serviços da CVM\cite{ncb}.
+As seções seguintes descrevem em detalhes as (aspectos/assuntos/temas/áreas/partes) do metamodelo identificados acima. Como observado anteriormente, a abordagem proposta se baseia nas soluções empregadas no desenvolvimento da CVM. Portanto, as abstrações existentes no metamodelo também guardam semelhanças com as empregadas pela camada de intermediação de serviços da CVM \cite{ncb}.
 % com as empregadas pela camada de intermediação de serviços da CVM = com o trabalho existente na NCB
 
 %% Como resolver a sobrecarga de nomes? e.g. classe no metamodelo e classe da implementação do ambiente de execução?
@@ -112,6 +112,7 @@ A classe \textsf{Interface} é utilizada para descrever a interface de um gerenci
 
 
 \section{Tratamento de sinais}
+\label{sec:metamodelo-sinais}
 
 Como mencionado, o comportamento de uma camada de intermediação de serviços é definido pela forma como esta reage às chamadas realizadas pela camada superior e aos eventos sinalizados pelos recursos. O metamodelo proposto disponibiliza construções que permitem definir uma ação a ser realizada como resposta à um determinado sinal.
 
@@ -255,11 +256,19 @@ A classe \textsf{ChangeRequest} define uma requisição de mudança que deve ser ge
 
 \section{Políticas para seleção de recursos}
 
-No metamodelo em questão, políticas são empregadas com o intuito de direcionar a seleção de recursos.
-A classe \textsf{PolicyManager} agrupa as abstrações relacionadas a definição de políticas e sua avaliação.
-Essas compreendem além da descrição de políticas, a definição do momento onde estas devem ser avaliadas, e como os resultados dessa avaliação devem ser tratados.
+No metamodelo em questão, políticas são empregadas com o intuito de direcionar a seleção de recursos. As abstrações contempladas pelo metamodelo compreendem além da descrição de políticas, a definição do momento onde estas devem ser avaliadas, e como os resultados dessa avaliação devem ser tratados.
 
-A figura~\ref{fig:metamodelo-politicas} demonstra as abstrações relacionadas à utilização de políticas .
+A figura~\ref{fig:metamodelo-politicas} demonstra as abstrações relacionadas à utilização de políticas, que se estruturam em torno da classe \textsf{PolicyManager}.
+Os principais elementos da definição de políticas são representados por meio das classes \textsf{Policy}, \textsf{PolicyEvaluationPoint}, e \textsf{PolicyEvaluationHandler}.
+
+A classe \textsf{Policy} representa uma política, que é definida por meio de um nome e uma condição a ser avaliada sobre um recurso. Além disso, uma política define um valor de negócio associado ao cumprimento de sua condição pelo recurso. Durante a execução da camada a seleção de recursos se baseia no valor de negócio acumulado na avaliação das políticas.
+
+Um ponto de avaliação de políticas, definido por meio da classe \textsf{PolicyEvaluationPoint}, especifica um sinal que desencadeia a avaliação de políticas. Por meio deste elemento é possível especificar o momento em que as políticas devem ser avaliadas ou reavaliadas em relação aos recursos.
+
+Após a avaliação das políticas, uma ação pode ser necessária
+
+
+
 
 
 In the proposed meta-model policies are employed to drive the selection of resources. The class \textsf{PolicyManager} groups abstractions related to the definition of policies and their evaluation. These comprises \textsf{Policy} that identifies a policy, \textsf{PolicyEvaluationPoint} that defines when policy evaluation should be triggered, and \textsf{PolicyEvaluationHandler} that defines how the policy evaluation result should be handled. Besides that, the meta-model also includes auxiliary constructs for establishing links between these main elements.
