@@ -114,13 +114,18 @@ Na implementação existente, as expressões podem ser descritas na linguagem Groov
 
 Ao definir uma expressão, o construtor do modelo pode empregar todas as variáveis providas pelo contexto provido. Como observado anteriormente, quando um sinal é tratado o contexto consiste dos parâmetros do sinal e a origem do sinal, acessível por meio da variável \textsf{source}. Além do contexto provido, uma expressão também pode ter acesso ao estado da camada por meio de variáveis com o nome do tipo de dados. Estas variáveis implementam a interface de um dicionário, e permitem a obtenção de um registro de dados pelo seu identificador. O uso da linguagem Groovy também possibilita que consultas mais complexas sejam realizadas para obtenção de registros. O uso dessas expressões é ilustrado no capítulo~\ref{cap:instancia}, onde expressões são utilizadas na construção de um modelo de um intermediador de serviços.
 
-O uso de uma fonte de valor baseada na execução de uma ação, tem como objetivo atribuir à um parâmetro de uma ação, o resultado da execução de outra ação. Essa definição é descrita no modelo por meio do tipo \textsf{ActionExecution}, que define além da ação a ser executada o mapeamento de contexto. 
+O uso de uma fonte de valor baseada na execução de uma ação, tem como objetivo atribuir à um parâmetro de uma ação, o resultado da execução de outra ação. Isso é descrito no modelo por meio do tipo \textsf{ActionExecution}, que define além da ação a ser executada o mapeamento de contexto.
 No ambiente de execução implementado todas as fontes de valores são avaliadas antes da execução de uma ação e, assim sendo, as fontes do tipo \textsf{ActionExecution} são previamente processadas, e só então os valores, obtidos com execução das ações, são passados como argumentos para ação que trata o sinal em avaliação. 
 % eager evaluation
 A avaliação de uma fonte de valor desse tipo se dá da mesma forma que as demais ações, por meio de um acionador de ação.
 
 %\subsection{Ações}
 
+Em tempo de execução, uma ação é representada por um objeto do tipo \textsf{ActionInstance}, uma interface que possui como implementações as classes \textsf{CallActionInstance}, \textsf{EventActionInstance}, e \textsf{SequenceActionInstance}. Além disso, uma subinterface, chamada \textsf{MacroActionInstance} representa uma ação implementada por uma macro. A figura~\ref{fig:ambiente-acoes} mostra a hierarquia do tipo \textsf{ActionInstance}.
+
+Esses são os objetos que efetivamente são executados pelo acionador de ação após o mapeamento de parâmetros. A lógica implementada pelas classes \textsf{CallActionInstance} é direta, e consiste em enviar uma chamada à um recurso ou ao gerenciador de intermediação, conforme definido no modelo. A classe \textsf{EventActionInstance} atua de forma similar, e tem como intuito permitir que a camada gere um evento para camadas superiores. Em ambos os casos, os parâmetros recebidos pela ação são diretamente utilizados como parâmetros para a chamada ou evento.
+
+A classe \textsf{SequenceActionInstance}, por sua vez, encapsula uma série de acionadores de chamadas, que são utilizados para executar, em ordem, cada uma das ações que o compõem, conforme definido no modelo. Ao fim da execução, o resultado da última ação executada é utilizado como resultado da ação como um todo.
 
 
 %Além disso, as classes {AutonomicManagerSignalHandler} e \textsf{PolicyManagerSignalHandler} também implementam a interface \textsf{SignalHandler}. Esses tipos especializados de tratadores direcionam os sinais recebidos, respectivamente, para um gerenciador autônomo e um gerenciador de políticas. Uma instância de cada um desses tratadores é registrada durante a inicialização da camada. Esses tratadores são registrados com prioridade máxima, e interceptam os sinais com o intuito de identificar se esses podem influenciar o auto gerenciamento da camada. Não obstante, esses tratadores não interrompem o processamento de um sinal, permitindo que esse ainda seja repassado a outros tratadores, até que um desses o trate apropriadamente.
@@ -180,7 +185,12 @@ O uso é ilustrado no capítulo~\ref{cap:instancia}.
 
 \section{Gerenciamento autônomo}
 
-A implementação do auto gerenciamento da camada se baseia na arquitetura de computação autonômica proposta pela IBM. O ambiente de execução inclui um conjunto de classes que implementam as funções de monitoramento, análise, planejamento e execução, que fazem parte dessa arquitetura. Além dessas funções, um outro conjunto de classes é utilizado para representar o conhecimento trocado entre essas funções em tempo de execução, incluindo ocorrências de sintomas, requisições de mudança, e planos de mudança. A figura~\ref{fig:ambiente-autonomo} ilustra as classes que compõem a implementação do mecanismo autônomo.
+A implementação do auto gerenciamento da camada se baseia na arquitetura de computação autonômica proposta pela IBM \cite{ibmac}. O ambiente de execução inclui um conjunto de classes que implementam as funções de monitoramento, análise, planejamento e execução, que fazem parte dessa arquitetura. Além dessas funções, um outro conjunto de classes é utilizado para representar o conhecimento trocado entre essas funções em tempo de execução, incluindo ocorrências de sintomas, requisições de mudança, e planos de mudança. A figura~\ref{fig:ambiente-autonomo} ilustra as classes que compõem a implementação do mecanismo autônomo.
+
+Em tempo de execução, o mecanismo autônomo é ativado pelo gerenciador autônomo, implementado pela classe \textsf{AutonomicManager}. O gerenciador autônomo, implementa a interface \textsf{SignalHandler} de forma a interceptar os sinais recebidos pela camada. Apesar disso, o gerenciador autônomo não impede que o sinal continue sendo tratado pelos demais tratadores regularmente. Um sinal intereceptado pelo gerenciador autônomo é encaminhado ao seu monitor, que avalia se algum síntoma pode ser identificado, e encaminha uma ocorrência para o analisador. O analisador por sua vez, identifica qual a mudança a associada ao síntoma e envia uma solicitação de mudança para o planejador. Ao receber uma solicitação de mudança, o planejador determina qual o plano para efetuar a mudança solicitada, e o encaminha ao executor. Este último, por fim, identifica a ação associada ao plano e a executa.
+
+
+\subsection{Monitor}
 
 
 
