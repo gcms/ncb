@@ -151,6 +151,7 @@ Não obstante, um recurso possui meios para comunicação de sinais prioritários.
 
 
 \subsection{Integração com os recursos}
+\label{sec:ambiente-integracaorecursos}
 
 Um conjunto de classes e interfaces é fornecido para a integração dos recursos com o ambiente de execução. Essa biblioteca tem como função viabilizar a interação entre o ambiente de execução e os recursos a serem gerenciados.
 Além disso, essas classes e interfaces, que integram o pacote \textsf{mdvm.sb.adapters}, permitem associar a interface dos recursos, descrita no metamodelo, às suas implementações. A figura~\ref{fig:ambiente-integracao-diagrama} mostra um diagrama de classes do pacote mencionado.
@@ -187,13 +188,35 @@ O uso é ilustrado no capítulo~\ref{cap:instancia}.
 
 A implementação do auto gerenciamento da camada se baseia na arquitetura de computação autonômica proposta pela IBM \cite{ibmac}. O ambiente de execução inclui um conjunto de classes que implementam as funções de monitoramento, análise, planejamento e execução, que fazem parte dessa arquitetura. Além dessas funções, um outro conjunto de classes é utilizado para representar o conhecimento trocado entre essas funções em tempo de execução, incluindo ocorrências de sintomas, requisições de mudança, e planos de mudança. A figura~\ref{fig:ambiente-autonomo} ilustra as classes que compõem a implementação do mecanismo autônomo.
 
-Em tempo de execução, o mecanismo autônomo é ativado pelo gerenciador autônomo, implementado pela classe \textsf{AutonomicManager}. O gerenciador autônomo, implementa a interface \textsf{SignalHandler} de forma a interceptar os sinais recebidos pela camada. Apesar disso, o gerenciador autônomo não impede que o sinal continue sendo tratado pelos demais tratadores regularmente. Um sinal intereceptado pelo gerenciador autônomo é encaminhado ao seu monitor, que avalia se algum síntoma pode ser identificado, e encaminha uma ocorrência para o analisador. O analisador por sua vez, identifica qual a mudança a associada ao síntoma e envia uma solicitação de mudança para o planejador. Ao receber uma solicitação de mudança, o planejador determina qual o plano para efetuar a mudança solicitada, e o encaminha ao executor. Este último, por fim, identifica a ação associada ao plano e a executa.
+Em tempo de execução, o mecanismo autônomo é ativado pelo gerenciador autônomo, implementado pela classe \textsf{AutonomicManager}. O gerenciador autônomo, implementa a interface \textsf{SignalHandler} de forma a interceptar os sinais recebidos pela camada. Apesar disso, o gerenciador autônomo não impede que o sinal continue sendo tratado pelos demais tratadores regularmente. Um sinal intereceptado pelo gerenciador autônomo é encaminhado ao seu monitor, que avalia se algum sintoma pode ser identificado, e encaminha uma ocorrência para o analisador. O analisador por sua vez, identifica qual a mudança a associada ao sintoma e envia uma solicitação de mudança para o planejador. Ao receber uma solicitação de mudança, o planejador determina qual o plano para efetuar a mudança solicitada, e o encaminha ao executor. Este último, por fim, identifica a ação associada ao plano e a executa.
 
 
 \subsection{Monitor}
 
+Ao receber um sinal, o monitor verifica se algum sintoma, definido no modelo do intermediador, depende deste evento, e reavalia as condições desse sintoma. Caso as condições que determinam o sintoma sejam verdadeiras, uma ocorrência de sintoma, representada pela classe \textsf{SymptomOcurrence}, é encaminhada para o analisador. Uma ocorrência de sintoma carrega consigo informações sobre os sinais e registros de dados que culminaram na detecção do sintoma.
+
+As condições de um sintoma são definidas por meio de expressões. Assim como nas fontes de valor, as expressões para a definição de uma condição também são descritas em Groovy. A linguagem Groovy possui uma semântica bem definida para coerção de objetos em um tipo booleano, que é empregada na avaliação de uma condição.
+
+O contexto para avaliação das condições é definido no modelo por meio da construção \textsf{Binding}, e pode envolver sinais e tipos de dados, conforme descrito na seção~\ref{sec:metamodelo-autonomo}. O nome empregado na definição de um elemento do contexto de um sintoma, representa uma variável que pode ser utilizada em uma expressão para representar o objeto correspondente em tempo de execução.
+Quando uma variável é associada à um sinal, essa variável dá acesso à um objeto que apresenta como propriedades os parâmetros do sinal detectado, e a origem desse sinal. De forma similar, uma variável associada à um tipo de dados permite obter atributos de um registro de dados desse tipo.
+
+Durante a execução da camada, vários sinais de um mesmo tipo podem ser gerados por diferentes recursos. Além disso, diversos registros de dados de um mesmo tipo podem existir em tempo de execução. Portanto, um mesmo sintoma pode ser detectado em diferentes contextos, gerando várias ocorrências do mesmo sintoma. Ao avaliar os sintomas, o monitor identifica quais combinações de ocorrências de um sinal e registros de dados tornam as expressões de condição verdadeiras, e gera uma ocorrência de sintoma para cada uma.
+
+Apesar das condições de um sintoma poderem envolver diversos sinais, esses geralmente não ocorrem em um mesmo instante. O monitor implementado, assume que um sinal indica uma mudança de estado, e mantém um registro com a última ocorrência de cada tipo de sinal gerado por cada recurso.
+Esse registro, implementado pela classe \textsf{SignalRegistry}, permite que sintomas que dependem de diversos sinais possam ser identificados. 
 
 
+\subsection{Analisador}
+
+Após a detecção de um sintoma pelo monitor, uma ocorrência de sintoma é repassada ao analisador. O analisador identifica a mudança necessária, de acordo com o definido no modelo e cria uma requisição de mudança. A requisição de mudança é representada em tempo de execução pela classe \textsf{ChangeRequestInstance} que carrega consigo além de informações sobre a mudança requisitada a ocorrência de sintoma que gerou a requisição. A implementação do analisador, por meio da classe \textsf{Analyzer}, é bastante simples pois a associação entre sintoma e requisição de mudança é estabelecida de forma direta no modelo.
+
+\subsection{Planejador}
+
+O planejador é implementado pela classe \textsf{Planner}, e possui uma implementação bem similar ao analisador. O planejador recebe uma requisição de mudança e identifica o plano de mudança apropriado. Após identificado o plano, a classe \textsf{ChangePlanInstance} é instanciada com informações do tipo de plano e da requisição de mudança recebida.
+
+\subsection{Executor}
+
+O executor é a última função do ciclo autônomo, e tem como função executar a ação definida no plano de mudança recebido. Ao receber um plano de mudança, o executor obtém a ação definida no plano e cria um acionador para esta ação. O plano de mudança recebido é utilizado como provedor de contexto para a execução da ação. Esse por sua vez engloba o contexto da solicitação de mudança e dos sintomas que geraram a mudança. Isso permite que a ação tenha seus argumentos associados ao contexto que desencadeou na sua execução.
 
 \section{Políticas}
 

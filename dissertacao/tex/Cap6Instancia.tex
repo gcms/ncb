@@ -15,14 +15,18 @@ Uma vez autenticado, o usuário pode enviar e receber esquemas de comunicação por
 
 Após a negociação de esquemas, uma sessão de comunicação pode ser criada por meio da operação \textsf{CreateSession}. Em seguida, a camada superior pode configurar a sessão de comunicação, determinando seus participantes por meio da operação \textsf{AddParty}, e selecionando o tipo de mídia a ser utilizado através da operação \textsf{EnableMedium}.
 
+\begin{comment}
+colocar um exemplo dessa "conversação"
+\end{comment}
+
 Durante sua execução, a camada NCB aguarda que chamadas sejam realizadas pela camada superior às operações disponíveis por meio de sua interface. 
 O processamento de algumas operações, como \textsf{LoginAll} e \textsf{SendSchema}, independe da existência de uma sessão de comunicação, e assim que processadas, geram chamadas correspondentes para os \emph{frameworks} de comunicação. 
 As operações \textsf{CreateSession}, e \textsf{AddParty}, por sua vez, apenas mantêm informações sobre a sessão na camada, até que seja solicitado o estabelecimento da conexão por meio da chamada \textsf{EnableMedium}. A partir desse momento, de acordo com a quantidade de participantes, e tipo de mídia solicitado, a camada seleciona o \emph{framework} mais apropriado. Só então as operações necessárias para estabelecer a comunicação, são efetivamente executadas no \emph{framework} selecionado. 
 
-Além de executar as operações solicitadas por meio de sua interface, a camada NCB também interage com os \textsf{frameworks} de comunicação gerenciados. Por meio da interface empregada para a interação com os \emph{frameworks} de comunicação, a NCB identifica eventos gerados por esses recursos e efetua chamadas às suas operações.
-A tabela~\ref{tab:instancia-interface-framework}, demonstra a interface empregada para a interação dos gerenciados com a camada NCB. 
+Além de executar as operações solicitadas por meio de sua interface, a camada NCB também interage com os \emph{frameworks} de comunicação gerenciados. Por meio da interface empregada para a interação com os \emph{frameworks} de comunicação, a NCB identifica eventos gerados por esses recursos e efetua chamadas às suas operações.
+A tabela~\ref{tab:instancia-interface-framework}, demonstra a interface empregada para a interação dos recursos gerenciados com a camada NCB. 
 A camada NCB monitora constantemente os eventos gerados por um \textsf{framework} de comunicação, podendo estes serem tratados pela camada, ou encaminhados às camadas superiores.
-Eventos como \textsf{SchemaFailed}, e \textsf{LoginException} são diretamente repassados à camada superior, pois a camada NCB não têm conhecimento suficiente para tratá-los. O evento \textsf{MediumFailed}, por sua vez, inicia o processo de seleção e configuração de outro \emph{framework} de comunicação que seja capaz de atender a comunicação interrompida.
+Eventos como \textsf{SchemaFailed}, e \textsf{LoginFailed} são diretamente repassados à camada superior, pois a camada NCB não têm conhecimento suficiente para tratá-los. O evento \textsf{MediumFailed}, por sua vez, inicia o processo de seleção e configuração de um outro \emph{framework} de comunicação que seja capaz de atender a comunicação interrompida.
 
 As seções seguintes demonstram como o comportamento descrito acima pode ser modelado em conformidade com o metamodelo proposto. A modelagem em questão se baseia na análise da implementação existente da camada NCB.
 
@@ -38,7 +42,18 @@ Ao longo das subseções seguintes, os modelos são descritos por meio de uma notaç
 
 Para implementar a funcionalidade presente na NCB foram descritos três recursos no modelo da camada. Estes recursos representam os \emph{frameworks} de comunicação Skype, Smack e Asterisk. A figura ~\ref{} descreve o gerenciador de recursos descrito no modelo da NCB, onde os recursos mencionados são registrados. A interface utilizada pelos recursos é omitida nessa figura, mas corresponde à interface descrita na tabela~\ref{tab:instancia-interface-framework}.
 
-Cada um dos \emph{frameworks} é implementado por meio de uma classe na plataforma Java, de acordo com o protocolo especificado na seção~\ref{}. O código~\ref{} ilustra um trecho do código da implementação da classe que representa o \emph{framework} Skype.
+Cada um dos \emph{frameworks} é implementado por meio de uma classe na plataforma Java, de acordo com o protocolo especificado na seção~\ref{sec:ambiente-integracaorecursos}. O código~\ref{cod:instancia-recursos} ilustra um trecho do código da implementação da classe que representa o \emph{framework} Skype.
+
+\begin{center}
+ \begin{minipage}{0.7\textwidth}
+  \begin{codigo}[H]
+   \small
+   \VerbatimInput{./prog/recursos.hutn}
+   \caption{Recursos}
+   \label{cod:instancia-recursos}
+  \end{codigo}
+ \end{minipage}
+\end{center}
 
 \subsection{Tipos de dados}
 
