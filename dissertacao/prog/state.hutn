@@ -1,0 +1,8 @@
+StateManager {
+  types: State Connection {
+    attributes: Attribute session
+    attributes: Attribute medium
+    attributes: Attribute participants
+    attributes: Attribute framework
+  }
+}

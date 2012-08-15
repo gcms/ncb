@@ -1,33 +1,20 @@
 InstanceResourceManager {
-  iface: Interface "FrameworkInterface" {
-    provides: Call Login
-    provides: Call SendSchema {
-      parameters: received
-      parameters: schema
+  instances: Instance Skype {
+    features: Feature Audio {
+      attributes: Attribute Enabled {
+        value: true
+      }
+      attributes: Attribute NumberOfUsers {
+        value: 2
+      }
     }
-    provides: Call CreateSession {
-      parameters: session
+    features: Feature Video {
+      attributes: Attribute Enabled {
+        value: true
+      }
+      attributes: Attribute NumberOfUsers {
+        value: 2
+      }
     }
-    provides: Call AddParty {
-      parameters: session
-      parameters: party
-    }
-    provides: Call EnableMedium {
-      parameters: session
-      parameters: medium
-    }
-    signals: LoginFailed {
-      parameters: framework
-    }
-    signals: Event SchemaReceived {
-      parameters: schema
-      parameters: sender
-    }
-    signals: Event SchemaFailed {
-      parameters: schema
-    }
-    signals: Event FrameworkNotFound
-  }
-  instances: Skype {
   }
 }

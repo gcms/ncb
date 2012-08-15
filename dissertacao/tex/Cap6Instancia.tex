@@ -1,5 +1,5 @@
 
-\chapter{Modelagem de um Intermediador de Comunicação}
+\chapter{Construção de um Intermediador de Comunicação}
 \label{cap:instancia}
 
 Este capítulo demonstra como o metamodelo proposto e o ambiente de execução fornecido, podem ser utilizados para construir e executar uma camada de intermediação de serviços. Para isto, construímos um modelo, em conformidade com o metamodelo proposto, que descreve o comportamento presente na camada NCB da CVM. Iniciamos este capítulo com uma breve descrição do comportamento da camada NCB, seguido por sua modelagem utilizando as abstrações descritas no capítulo~\ref{cap:metamodelo}. Ao fim do capítulo, descrevemos como o modelo construído foi avaliado, e os resultados obtidos.
@@ -9,6 +9,30 @@ Este capítulo demonstra como o metamodelo proposto e o ambiente de execução forn
 Como mostrado na seção~\ref{sec:background-cvm}, a camada de Intermediação de Comunicação em Rede (\emph{Network Communication Broker}, NCB), é responsável por prover uma interface que abstrai da camada superior os detalhes envolvidos na utilização dos \emph{frameworks} de comunicação, como Skype, Smack, Asterisk, etc. 
 A partir da análise do domínio de comunicação e de \emph{frameworks} de comunicação existentes \cite{foda}, foi definido em trabalhos anteriores \cite{Andrew}, um conjunto de operações, independentes de tecnologia, capaz de prover o nível de abstração esperado dessa camada. Esse conjunto de operações, que compõe a interface da camada NCB,  representa o ponto de partida para a construção de um modelo que defina um comportamento equivalente ao da camada NCB.
 A tabela~\ref{tab:instancia-interface-ncb} lista as operações e eventos que integram a interface da camada NCB.
+
+\begin{table*}[h]
+\centering
+\caption{Interface da camada NCB}
+\label{tab:instancia-interface-ncb} 
+\begin{tabular}{|l|}
+\hline	\emph{\textbf{Calls}} \\ 
+\hline	LoginAll()\\ 
+\hline	LogoutAll()\\ 
+\hline 	SendSchema(receivers, schema)\\
+\hline 	CreateSession(session)\\
+\hline 	DestroySession(session)\\
+\hline 	AddParty(session, participant)\\
+\hline 	RemoveParty(session, participant)\\
+\hline 	EnableMedium(session, medium)\\
+\hline 	EnableMediumReceiver(session, medium)\\
+\hline 	DisableMedium(session, medium)\\
+\hline	\emph{\textbf{Events}} \\ 
+\hline	LoginFailed(framework)\\
+\hline	SchemaReceived(sender, schema)\\
+\hline	SchemaFailed(receiver, schema)\\
+\hline 
+\end{tabular} 
+\end{table*}
 
 Para estabelecer uma sessão de comunicação por meio da NCB, as operações disponíveis em sua interface são utilizadas de acordo com um protocolo. Inicialmente, é preciso que o usuário esteja autenticado na camada, o que é feito por meio da operação \textsf{LoginAll}. 
 Uma vez autenticado, o usuário pode enviar e receber esquemas de comunicação por meio da operação \textsf{SendSchema} e do evento \textsf{SchemaReceived}. A troca de esquemas é dirigida pelas camadas superiores e antecede o estabelecimento da comunicação em si, cabendo a camada NCB efetuar a transmissão e recepção de esquemas.
@@ -36,19 +60,19 @@ As seções seguintes demonstram como o comportamento descrito acima pode ser mode
 Conforme descrito no capítulo~\ref{cap:metamodelo}, a definição de uma camada de intermediação de serviços, utilizando o metamodelo proposto, se estrutura em torno de um gerenciador da camada, representado por meio da classe \textsf{Manager}.
 Na modelagem da camada NCB foi utilizado apenas um gerenciador de intermediação, e portanto sua interface define a interface da camada NCB, que contém as operações e eventos mencionados na seção anterior.
 
-Ao longo das subseções seguintes, os modelos são descritos por meio de uma notação para descrição de modelos de forma textual e compreensível. Essa notação, denominada \emph{Human Usable Textual Notation} (HUTN) \cite{hutn} é padronizada pela OMG, e apresenta vantagens na descrição de modelos mais detalhados, cuja representação gráfica pode exigir muito espaço.
+Ao longo das subseções seguintes, os modelos são descritos por meio de diagrams UML e, quando necessário, por uma notação para descrição de modelos de forma textual e compreensível. Essa notação, denominada \emph{Human Usable Textual Notation} (HUTN) \cite{hutn} também é padronizada pela OMG, e apresenta vantagens na descrição de modelos mais detalhados, cuja representação gráfica pode exigir muito espaço.
 
 \subsection{Recursos}
 
 Para implementar a funcionalidade presente na NCB foram descritos três recursos no modelo da camada. Estes recursos representam os \emph{frameworks} de comunicação Skype, Smack e Asterisk. A figura ~\ref{} descreve o gerenciador de recursos descrito no modelo da NCB, onde os recursos mencionados são registrados. A interface utilizada pelos recursos é omitida nessa figura, mas corresponde à interface descrita na tabela~\ref{tab:instancia-interface-framework}.
 
-Cada um dos \emph{frameworks} é implementado por meio de uma classe na plataforma Java, de acordo com o protocolo especificado na seção~\ref{sec:ambiente-integracaorecursos}. O código~\ref{cod:instancia-recursos} ilustra um trecho do código da implementação da classe que representa o \emph{framework} Skype.
+Cada um dos \emph{frameworks} é implementado por meio de uma classe na plataforma Java, de acordo com o protocolo especificado na seção~\ref{sec:ambiente-integracaorecursos}. O código~\ref{cod:instancia-skypeadapter} ilustra um trecho do código da implementação da classe que representa o \emph{framework} Skype.
 
 \begin{center}
  \begin{minipage}{0.7\textwidth}
   \begin{codigo}[H]
    \small
-   \VerbatimInput{./prog/recursos.hutn}
+   \VerbatimInput{./prog/skypeadapter.java}
    \caption{Recursos}
    \label{cod:instancia-recursos}
   \end{codigo}
@@ -57,13 +81,18 @@ Cada um dos \emph{frameworks} é implementado por meio de uma classe na plataform
 
 \subsection{Tipos de dados}
 
-Na modelagem da camada NCB, foi descrito apenas um tipo de dados para armazenar dados de uma determinada sessão de comunicação. O tipo de dados definido, denominado \textsf{Connection}, possui quatro atributos que representam respectivamente o identificador da sessão, a lista de participantes, o tipo de mídia da comunicação, e o \emph{framework} de comunicação empregado na sessão de comunicação. Ainda, a sessão de comunicação é definida como o atributo chave desse tipo de dados.
+Na modelagem da camada NCB, foi descrito apenas um tipo de dados para armazenar dados de uma determinada sessão de comunicação. O tipo de dados definido, denominado \textsf{Connection}, possui quatro atributos que representam respectivamente o identificador da sessão, a lista de participantes, o tipo de mídia da comunicação, e o \emph{framework} de comunicação empregado na sessão de comunicação. Ainda, a sessão de comunicação é definida como o atributo chave desse tipo de dados. O diagrama da figura~\ref{fig:instancia-estado} ilustra a parte do modelo que descreve esse tipo de dados.
 
 \subsection{Tratadores e ações}
 
-Para especificar o comportamento da camada em reação aos sinais por ela identificados foram definidas as seguintes ações:
+Para especificar o comportamento da camada em reação aos sinais por ela identificados foram definidos $x$ tratadores de sinal, que executam $y$ ações também definidas no modelo. A tabela~\ref{tab:instancia-tratadores} lista os tratadores que compõem a camada, e as ações associadas.
 
-Macro actions
+
+Além de estabelecer uma associação entre um sinal e uma ação, um tratador também define como os parâmetros de um sinal são mapeados para os parâmetros uma ação. O código~\ref{cod:instancia-sinal-acao} detalha a definição de um tratador para o sinal \textsf{sinal}, e a ação \textsf{ação}, responsável por tratar o sinal.
+
+codigo
+
+Como é possível observar, a ação empregada no exemplo é baseada na execução de uma implementação que executa a ação. O código~\ref{cod:instancia-macro} demonstra como essa ação é implementada. É possível identificar que a ação faz uso de dados mantidos pela camada e dos recursos para realizar sua tarefa.
 
 \subsection{Gerenciamento autônomo}
 

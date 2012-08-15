@@ -1,0 +1,19 @@
+Call EnableMedium {
+  parameters: Parameter session
+  parameters: Parameter medium
+}
+
+CallAction EnqueueEnableMedium {
+  parameters: Parameter session
+  parameters: Parameter medium
+
+  call: EnableMedium
+  bindings: ParameterBinding {
+    parameter: EnableMedium.session
+    value: ParameterValue EnqueueEnableMedium.session
+  }
+  bindings: ParameterBinding {
+    parameter: Medium.medium
+    value: ParameterValue EnqueueEnableMedium.medium
+  }
+}
