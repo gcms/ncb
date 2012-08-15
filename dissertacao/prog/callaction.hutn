@@ -1,19 +1,33 @@
-Call EnableMedium {
-  parameters: Parameter session
-  parameters: Parameter medium
-}
-
-CallAction EnqueueEnableMedium {
-  parameters: Parameter session
-  parameters: Parameter medium
-
-  call: EnableMedium
-  bindings: ParameterBinding {
-    parameter: EnableMedium.session
-    value: ParameterValue EnqueueEnableMedium.session
+InstanceResourceManager {
+  iface: Interface "FrameworkInterface" {
+    provides: Call Login
+    provides: Call SendSchema {
+      parameters: received
+      parameters: schema
+    }
+    provides: Call CreateSession {
+      parameters: session
+    }
+    provides: Call AddParty {
+      parameters: session
+      parameters: party
+    }
+    provides: Call EnableMedium {
+      parameters: session
+      parameters: medium
+    }
+    signals: LoginFailed {
+      parameters: framework
+    }
+    signals: Event SchemaReceived {
+      parameters: schema
+      parameters: sender
+    }
+    signals: Event SchemaFailed {
+      parameters: schema
+    }
+    signals: Event FrameworkNotFound
   }
-  bindings: ParameterBinding {
-    parameter: Medium.medium
-    value: ParameterValue EnqueueEnableMedium.medium
+  instances: Skype {
   }
 }
