@@ -1,0 +1,19 @@
+Handler {
+  enabled: true
+  signal: Call EnableMedium
+  action: ActionExecution {
+    action: MacroAction Medium
+    bindings: ParameterBinding {
+      parameter: Parameter Medium.session
+      value: ParameterValue EnableMedium.session
+    }
+    bindings: ParameterBinding {
+      parameter: Parameter Medium.medium
+      value: ParameterValue EnableMedium.medium
+    }
+    bindings: ParameterBinding {
+      parameter: Parameter Medium.action
+      value: FixedValue "enable"
+    }
+  }
+}

@@ -96,6 +96,14 @@ Como é possível observar, a ação empregada no exemplo é baseada na execução de u
 
 \subsection{Gerenciamento autônomo}
 
+As construções de gerenciamento autônomo da camada NCB tem como intuito identificar falhas nos \emph{frameworks} de comunicação e tomar uma ação para que um novo \emph{framework} seja selecionado. A definição do gerenciamento autônomo no modelo da camada NCB é descrito no código~\ref{}.
+
+codigo
+
+O modelo em questão define um sintoma chamado \textsf{FrameworkFailed} que representa uma falha em um \emph{framework} em condição. A expressão que define a condição desse sintoma verifica não só se ouve uma falha em um \emph{framework}, mas também se existe alguma sessão de comunicação que emprega o recurso que falhou. Associado ao sintoma temos uma requisição de mudança chamada \textsf{ChangeFramework} que liga o sintoma à um plano de mudança. O plano de mudança definido, por sua vez, indica qual a ação será executada, e os argumentos utilizados na execução dessa ação.
+
+{framework}
+
 \subsection{Políticas}
 
 \section{Avaliação}
