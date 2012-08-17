@@ -2,7 +2,12 @@
 \chapter{Construção dirigida por modelos de máquinas virtuais específicas de domínio}
 \label{cap:abordagem}
 
-Este capítulo descreve a abordagem proposta por este trabalho para a construção dirigida por modelos de máquinas virtuais capazes de executar aplicações descritas através de modelos de alto nível. A seção ~\ref{sec:visao-geral-2} descreve de forma geral a abordagem proposta e o cenário onde ela se posiciona. A seção ~\ref{sec:sb}, por sua vez, detalha parte do escopo da abordagem proposta.
+Como já introduzido, para tornar possível o emprego de modelos de alto nível descritos por usuários para a construção e adaptação de aplicações é necessário construir linguagens específicas de domínio, e mecanismos capazes de interpretá-las em tempo de execução. Através de metamodelos é possível descrever alguns dos principais elementos de uma DSML: sua sintaxe e semântica estática. No entanto, a descrição da semântica dinâmica 
+
+Enquanto a sintaxe e semântica estática de uma DSML é comumente descrita através de um metamodelo,  formas sua semântica dinâmica é comumente incorporada ao mecanismo de execução \cite{chapter, dsmlReview}.
+
+Este capítulo descreve a abordagem proposta por este trabalho para a construção dirigida por modelos de máquinas virtuais capazes de executar aplicações descritas através de modelos de alto nível.
+A seção ~\ref{sec:visao-geral-2} descreve de forma geral a abordagem proposta e o cenário onde ela se posiciona. A seção ~\ref{sec:sb}, por sua vez, detalha a parte do escopo da abordagem proposta que é tratado neste trabalho.
 
 %Retomar a motivação introduzida no primeiro capítulo com mais detalhes (i.e. voltar nos precedentes e descrever melhor o cenário onde o problema a ser tratado se localiza)
 
@@ -16,13 +21,13 @@ Este capítulo descreve a abordagem proposta por este trabalho para a construção 
 \label{sec:visao-geral-2}
 
 %O desenvolvimento de aplicações que utilizam uma variedade de recursos heterogêneos para prover uma funcionalidade única ao usuário (ler tese Andrew, parte 3 ou papers CVM) é muito trabalhoso.
-
-Aplicações que integram diversos recursos com o intuito de prover uma funcionalidade de alto nível de forma transparente ao usuário precisam ser capazes de tratar adequadamente a seleção, configuração, adaptação e gerenciamento dos recursos disponíveis. O desenvolvimento deste tipo de aplicação, utilizando abordagens tradicionais de programação exige a codificação (em linguagem de propósito geral) do comportamento desejado para todos estes aspectos, além dos requisitos específicos do domínio de negócio da aplicação.
+ 
+Aplicações que integram diversos recursos com o intuito de prover uma funcionalidade de alto nível de forma transparente ao usuário precisam ser capazes de se auto gerenciar, tratando a adequadamente a seleção, configuração, monitoramento, e utilização de recursos subjacentes. 
+O desenvolvimento deste tipo de aplicação, utilizando abordagens tradicionais de programação exige que todos esses aspectos, além de outros específicos de domínio sejam codificados em cada nova aplicação, geralmente por meio de uma linguagem de programação de propósito geral.
 % aspectos não diretamente relacionados ao domínio e o uso de linguagem de baixo-nível resultam em complexidade para traduzir os requisitos em código
 
 
 %O emprego de técnicas de MDE (criação de transformadores ou interpretadores capazes de processar uma linguagem de domínio específico) permite especificar um serviço de alto nível a partir de seus requisitos, e realizá-los automaticamente. Como exemplo temos a CVM.
-
 O emprego de técnicas de MDE possibilita reduzir significativamente a complexidade envolvida na construção de aplicações com estas características. A concepção de uma linguagem de modelagem específica de domínio e mecanismos capazes de processá-la possibilita que aplicações dentro de um dado domínio sejam descritas a partir de modelos de alto nível baseados em conceitos próprios do domínio em questão.
 
 %Isto só é possível, pois estamos tratando de um domínio específico (comunicação), e portanto o conhecimento deste domínio está incorporado à linguagem (CML) [procurar referencia] e à plataforma responsável por sua realização (CVM) [procurar referencia].
@@ -82,12 +87,12 @@ Na abordagem proposta, as camadas desta arquitetura são definidas através de mod
 
 \end{itemize}
 
-\begin{figure}
- \centering
- \includegraphics[width=0.40\textwidth]{./fig/uvm}
- \caption{Arquitetura proposta para esta categoria de Máquinas Virtuais centradas no Usuário.}
- \label{fig:uvm}
-\end{figure}
+%\begin{figure}
+% \centering
+% \includegraphics[width=0.40\textwidth]{./fig/uvm}
+% \caption{Arquitetura proposta para esta categoria de Máquinas Virtuais centradas no Usuário.}
+% \label{fig:uvm}
+%\end{figure}
 
 Ao imitar a arquitetura da CVM, nos aproveitamos do conhecimento adquirido em relação à separação de responsabilidades necessárias para a realização de serviços no domínio técnico identificado. No entanto, apesar de apresentar a mesma estrutura, a arquitetura proposta se difere por ser independente do domínio de negócio.
 Além disso, na abordagem proposta, cada camada é descrita através de um modelo. Este modelo, por sua vez, é construído em conformidade com um meta-modelo da camada que contém elementos associados às responsabilidades da camada.
