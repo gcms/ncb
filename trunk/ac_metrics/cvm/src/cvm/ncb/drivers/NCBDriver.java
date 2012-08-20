@@ -60,7 +60,7 @@ public class NCBDriver implements UsesEventListener {
     }
 
     public void twoWay(NCBManager manager, String medium) {
-        manager.sendSchema("101 ", " Yali", "101 " + medium + " Yali Andrew", null);
+        manager.sendSchema(" Yali", "101 " + medium + " Yali Andrew", null);
         manager.addParty("101", "Yali");
         manager.enableMedium("101", medium);
     }

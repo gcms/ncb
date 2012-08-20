@@ -22,6 +22,10 @@ public class PolicyRequest implements ContextProvider {
         return params;
     }
 
+    public Object getVariable(String name) {
+        return getParams().get(name);
+    }
+
     public PolicyContext getPolicyContext() {
         return createPolicyContext(this, request.getHandler().getEvaluation());
     }

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sb.base:Manager xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sb.base="http://www.inf.ufg.br/mestrado/sb/base" xsi:schemaLocation="http://www.inf.ufg.br/mestrado/sb/base base.ecore">
+      <actions xsi:type="sb.base:MacroAction" name="loginAll" impl="cvm.ncb.oem.pe.actions.LoginAction"/>
+  <actions xsi:type="sb.base:MacroAction" name="logoutAll" impl="cvm.ncb.oem.pe.actions.LogoutAction"/>
+  <actions xsi:type="sb.base:MacroAction" name="sendSchema" impl="cvm.ncb.oem.pe.actions.SendSchemaAction">
+    <parameters name="receivers"/>
+    <parameters name="controlSchema"/>
+    <parameters name="dataSchema"/>
+  </actions>
+  <actions xsi:type="sb.base:MacroAction" name="medium" impl="cvm.ncb.oem.pe.actions.MediumAction">
+    <parameters name="session"/>
+    <parameters name="medium"/>
+  </actions>
+  <actions xsi:type="sb.base:MacroAction" name="addParticipant" impl="cvm.ncb.oem.pe.actions.AddParticipantAction">
+    <parameters name="session"/>
+    <parameters name="participant"/>
+  </actions>
+  <provides name="createSession">
+    <parameters name="session"/>
+  </provides>
+  <provides name="loginAll"/>
+  <provides name="logoutAll"/>
+  <provides name="sendSchema">
+    <parameters name="receivers"/>
+    <parameters name="controlSchema"/>
+    <parameters name="dataSchema"/>
+  </provides>
+  <provides name="addAParticipant">
+    <parameters name="session"/>
+    <parameters name="participant"/>
+  </provides>
+  <provides name="removeAParticipant">
+    <parameters name="session"/>
+    <parameters name="participant"/>
+  </provides>
+  <provides name="enableMedium">
+    <parameters name="session"/>
+    <parameters name="medium"/>
+  </provides>
+  <provides name="enableMediumReceiver">
+    <parameters name="session"/>
+    <parameters name="medium"/>
+  </provides>
+  <provides name="disableMedium">
+    <parameters name="session"/>
+    <parameters name="medium"/>
+  </provides>
+  <handlers signal="//@provides.1">
+    <action action="//@actions.0"/>
+  </handlers>
+  <handlers signal="//@provides.2">
+    <action action="//@actions.1"/>
+  </handlers>
+  <handlers signal="//@provides.3">
+    <action action="//@actions.2">
+      <bindings parameter="//@actions.2/@parameters.0">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@provides.3/@parameters.0"/>
+      </bindings>
+      <bindings parameter="//@actions.2/@parameters.1">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@provides.3/@parameters.1"/>
+      </bindings>
+      <bindings parameter="//@actions.2/@parameters.2">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@provides.3/@parameters.2"/>
+      </bindings>
+    </action>
+  </handlers>
+  <handlers signal="//@provides.6">
+    <action action="//@actions.3">
+      <bindings parameter="//@actions.3/@parameters.0">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@provides.6/@parameters.0"/>
+      </bindings>
+      <bindings parameter="//@actions.3/@parameters.1">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@provides.6/@parameters.1"/>
+      </bindings>
+    </action>
+  </handlers>
+  <handlers signal="//@provides.7">
+    <action action="//@actions.3">
+      <bindings parameter="//@actions.3/@parameters.0">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@provides.7/@parameters.0"/>
+      </bindings>
+      <bindings parameter="//@actions.3/@parameters.1">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@provides.7/@parameters.1"/>
+      </bindings>
+    </action>
+  </handlers>
+  <handlers signal="//@provides.8">
+    <action action="//@actions.3">
+      <bindings parameter="//@actions.3/@parameters.0">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@provides.8/@parameters.0"/>
+      </bindings>
+      <bindings parameter="//@actions.3/@parameters.1">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@provides.8/@parameters.1"/>
+      </bindings>
+    </action>
+  </handlers>
+  <handlers signal="//@provides.4">
+    <action action="//@actions.4">
+      <bindings parameter="//@actions.4/@parameters.0">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@provides.4/@parameters.0"/>
+      </bindings>
+      <bindings parameter="//@actions.4/@parameters.1">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@provides.4/@parameters.1"/>
+      </bindings>
+    </action>
+  </handlers>
+  </sb.base:Manager>
+  

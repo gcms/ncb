@@ -85,9 +85,8 @@ public class NCBManager extends ManagerFacade {
     /**
      * Queues command, actual executable command is prefixed with x_
      */
-    public void sendSchema(String sID, String listReceiver, String controlXCML, String dataXCML) {
+    public void sendSchema(String listReceiver, String controlXCML, String dataXCML) {
         Map<String, Object> params = new LinkedHashMap<String, Object>();
-        params.put("session", sID);
         params.put("receivers", listReceiver);
         params.put("controlSchema", controlXCML);
         params.put("dataSchema", dataXCML);

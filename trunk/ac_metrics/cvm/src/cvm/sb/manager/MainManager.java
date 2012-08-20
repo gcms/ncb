@@ -2,15 +2,12 @@ package cvm.sb.manager;
 
 import cvm.sb.expression.ValueEvaluator;
 import cvm.sb.policy.metadata.Metadata;
-import cvm.sb.resource.AbstractTouchpoint;
-import cvm.sb.resource.EventListener;
-import cvm.sb.resource.ResourceManager;
-import cvm.sb.resource.Touchpoint;
+import cvm.sb.resource.*;
 import cvm.sb.state.StateManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class MainManager extends AbstractTouchpoint implements EventListener {
+public class MainManager extends AbstractTouchpoint implements EventListener, Executable {
     private static Log log = LogFactory.getLog(MainManager.class);
 
     private SignalHandlerManager signalHandlerManager;
@@ -76,11 +73,15 @@ public class MainManager extends AbstractTouchpoint implements EventListener {
         if (result != null)
             return result.getResult();
 
-        if (getEventListener() != null)
-            getEventListener().notify(signal);
+        sendEvent(signal);
         log.warn("Signal [" + signal + "] not handled!");
 
         return null;
+    }
+
+    public void sendEvent(SignalInstance signal) {
+        if (getEventListener() != null)
+            getEventListener().notify(signal);        
     }
 
     public void throwEvent(SignalInstance e) {

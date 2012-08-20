@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sb.base:Manager xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sb.base="http://www.inf.ufg.br/mestrado/sb/base" xsi:schemaLocation="http://www.inf.ufg.br/mestrado/sb/base base.ecore">
+    <iface>
+    <provides name="loginAll"/>
+    <provides name="logoutAll"/>
+    <provides name="sendSchema">
+      <parameters name="session"/>
+      <parameters name="receivers"/>
+      <parameters name="controlSchema"/>
+      <parameters name="dataSchema"/>
+    </provides>
+    <provides name="addAParticipant">
+      <parameters name="session"/>
+      <parameters name="participant"/>
+    </provides>
+    <provides name="removeAParticipant">
+      <parameters name="session"/>
+      <parameters name="participant"/>
+    </provides>
+    <provides name="enableMedium">
+      <parameters name="session"/>
+      <parameters name="medium"/>
+    </provides>
+    <provides name="enableMediumReceiver">
+      <parameters name="session"/>
+      <parameters name="medium"/>
+    </provides>
+    <provides name="disableMedium">
+      <parameters name="session"/>
+      <parameters name="medium"/>
+    </provides>
+  </iface>
+  <actions xsi:type="sb.base:MacroAction" name="DisableFramework" impl="cvm.ncb.oem.pe.actions.DisableFrameworkAction">
+    <parameters name="framework"/>
+  </actions>
+  <actions xsi:type="sb.base:MacroAction" name="ReenableMedium" impl="cvm.ncb.oem.pe.actions.ReenableMediumAction">
+    <parameters name="medium"/>
+    <parameters name="framework"/>
+  </actions>
+  <actions xsi:type="sb.base:MacroAction" name="LoginAll" impl="cvm.ncb.oem.pe.actions.LoginAction"/>
+  <actions xsi:type="sb.base:MacroAction" name="LogoutAll" impl="cvm.ncb.oem.pe.actions.LogoutAction"/>
+  <actions xsi:type="sb.base:MacroAction" name="AddParticipant" impl="cvm.ncb.oem.pe.actions.AddParticipantAction">
+    <parameters name="session"/>
+    <parameters name="participant"/>
+  </actions>
+  <actions xsi:type="sb.base:MacroAction" name="RemoveParticipant" impl="cvm.ncb.oem.pe.actions.RemoveParticipantAction">
+    <parameters name="session"/>
+    <parameters name="participant"/>
+  </actions>
+  <actions xsi:type="sb.base:MacroAction" name="Medium" impl="cvm.ncb.oem.pe.actions.MediumAction">
+    <parameters name="session"/>
+    <parameters name="medium"/>
+    <parameters name="signal"/>
+  </actions>
+  <actions xsi:type="sb.base:MacroAction" name="SendSchema" impl="cvm.ncb.oem.pe.actions.SendSchemaAction">
+    <parameters name="receivers"/>
+    <parameters name="controlSchema"/>
+    <parameters name="dataSchema"/>
+  </actions>
+  <handlers signal="//@resourceManager/@iface/@signals.0">
+    <action action="//@actions.0">
+      <bindings parameter="//@actions.0/@parameters.0">
+        <value xsi:type="sb.base:SignalSource"/>
+      </bindings>
+    </action>
+  </handlers>
+  <handlers signal="//@resourceManager/@iface/@signals.1" enabled="false">
+    <action action="//@actions.1">
+      <bindings parameter="//@actions.1/@parameters.0">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@resourceManager/@iface/@signals.1/@parameters.0"/>
+      </bindings>
+      <bindings parameter="//@actions.1/@parameters.1">
+        <value xsi:type="sb.base:SignalSource"/>
+      </bindings>
+    </action>
+  </handlers>
+  <handlers signal="//@iface/@provides.0">
+    <action action="//@actions.2"/>
+  </handlers>
+  <handlers signal="//@iface/@provides.1">
+    <action action="//@actions.3"/>
+  </handlers>
+  <handlers signal="//@iface/@provides.2">
+    <action action="//@actions.7">
+      <bindings parameter="//@actions.7/@parameters.0">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@iface/@provides.2/@parameters.1"/>
+      </bindings>
+      <bindings parameter="//@actions.7/@parameters.1">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@iface/@provides.2/@parameters.2"/>
+      </bindings>
+      <bindings parameter="//@actions.7/@parameters.2">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@iface/@provides.2/@parameters.3"/>
+      </bindings>
+    </action>
+  </handlers>
+  <handlers signal="//@iface/@provides.3">
+    <action action="//@actions.4">
+      <bindings parameter="//@actions.4/@parameters.0">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@iface/@provides.3/@parameters.0"/>
+      </bindings>
+      <bindings parameter="//@actions.4/@parameters.1">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@iface/@provides.3/@parameters.1"/>
+      </bindings>
+    </action>
+  </handlers>
+  <handlers signal="//@iface/@provides.4">
+    <action action="//@actions.5">
+      <bindings parameter="//@actions.5/@parameters.0">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@iface/@provides.4/@parameters.0"/>
+      </bindings>
+      <bindings parameter="//@actions.5/@parameters.1">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@iface/@provides.4/@parameters.1"/>
+      </bindings>
+    </action>
+  </handlers>
+  <handlers signal="//@iface/@provides.5">
+    <action action="//@actions.6">
+      <bindings parameter="//@actions.6/@parameters.0">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@iface/@provides.5/@parameters.0"/>
+      </bindings>
+      <bindings parameter="//@actions.6/@parameters.1">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@iface/@provides.5/@parameters.1"/>
+      </bindings>
+      <bindings parameter="//@actions.6/@parameters.2">
+        <value xsi:type="sb.base:ExpressionValue" value="&quot;enableMedium&quot;"/>
+      </bindings>
+    </action>
+  </handlers>
+  <handlers signal="//@iface/@provides.6">
+    <action action="//@actions.6">
+      <bindings parameter="//@actions.6/@parameters.0">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@iface/@provides.6/@parameters.0"/>
+      </bindings>
+      <bindings parameter="//@actions.6/@parameters.1">
+        <value xsi:type="sb.base:ParameterValue" parameter="//@iface/@provides.6/@parameters.1"/>
+      </bindings>
+      <bindings parameter="//@actions.6/@parameters.2">
+        <value xsi:type="sb.base:ExpressionValue" value="&quot;enableMediumReceiver&quot;"/>
+      </bindings>
+    </action>
+  </handlers> 
+</sb.base:Manager>

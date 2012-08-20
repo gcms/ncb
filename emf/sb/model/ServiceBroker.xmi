@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sb.base:ServiceBroker xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sb.base="http://www.inf.ufg.br/mestrado/sb/base" xsi:schemaLocation="http://www.inf.ufg.br/mestrado/sb/base base.ecore"/>

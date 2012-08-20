@@ -5,7 +5,7 @@ import sb.base.InstanceResourceManager
 import sb.base.ResourceManager
 
 class ResourceManagerFactory {
-    ManagedObjectFactory objectFactory = new ManagedObjectFactory()
+    ManagedResourceFactory objectFactory = new ManagedResourceFactory()
 
     public cvm.sb.resource.ResourceManager createObjectManager(ResourceManager resourceManager) {
         doCreateObjectManager(resourceManager)

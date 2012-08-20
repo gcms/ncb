@@ -21,9 +21,11 @@ public class ChangeRequestInstance implements ContextProvider {
     }
 
     public Map<String, Object> getParams() {
-        Map<String, Object> params = new LinkedHashMap<String, Object>(symptom.getParams());
-        params.put("symptom", symptom);
-        return params;
+        return symptom.getParams();
+    }
+
+    public Object getVariable(String name) {
+        return getParams().get(name);
     }
 
 }

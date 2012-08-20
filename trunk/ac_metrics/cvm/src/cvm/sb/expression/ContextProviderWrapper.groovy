@@ -4,14 +4,18 @@ class ContextProviderWrapper {
     public static Map wrap(Map context) {
         Map wrapped = [:]
         context.each { String k, Object v ->
-            if (v instanceof ContextProvider)
-                wrapped[k] = new ContextProviderWrapper(v)
-            else if (v instanceof Map)
-                wrapped[k] = wrap(v)
-            else
-                wrapped[k] = v
+            wrapped[k] = wrap(v)
         }
         wrapped
+    }
+
+    public static Object wrap(Object v) {
+        if (v instanceof ContextProvider)
+            return new ContextProviderWrapper(v)
+        else if (v instanceof Map)
+            return wrap(v)
+        else
+            return v
     }
 
     public ContextProvider context
@@ -26,7 +30,7 @@ class ContextProviderWrapper {
     }
 
     private Object getValue(String name) {
-        context.getParams().get(name) ?: context."${name}"
+        context.getVariable(name) ?: context."${name}"
     }
 
     public String toString() {

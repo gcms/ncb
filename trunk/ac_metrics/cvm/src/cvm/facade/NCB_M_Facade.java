@@ -1,9 +1,9 @@
 package cvm.facade;
 
+import cvm.sb.emf.ManagedResourceFactory;
 import util.CVM_Debug;
 import cvm.ncb.handlers.EventManager;
 import cvm.ncb.manager.NCBManager;
-import cvm.sb.emf.ManagedObjectFactory;
 
 /**
  * Facade into the NCB_Manager package.
@@ -17,7 +17,7 @@ public class NCB_M_Facade {
 
     private NCB_M_Facade() {
         EventManager eventManager = new EventManager();
-        ManagedObjectFactory mof = new ManagedObjectFactory();
+        ManagedResourceFactory mof = new ManagedResourceFactory();
         m_ncbManager = null;//new NCBManager(new ResourceManager(), eventManager);
     }
 
@@ -154,7 +154,7 @@ public class NCB_M_Facade {
      */
     public boolean sendSchema(String sID, String senderID, String listReceiver, String control_xcml, String data_xcml) {
         CVM_Debug.getInstance().printDebugMessage("NCB_M_Facade : NCB sendSchema called with sID:\"" + sID + "\" and senderID:\"" + senderID + "\" and receiverID:\"" + listReceiver + "\" and Control_XCML:\"" + control_xcml + "\" and Data_XCML:\"" + data_xcml + "\".");
-        m_ncbManager.sendSchema(sID, listReceiver, control_xcml, data_xcml);
+        m_ncbManager.sendSchema(listReceiver, control_xcml, data_xcml);
         return true;
     }
 

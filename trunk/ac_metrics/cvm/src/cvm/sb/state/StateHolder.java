@@ -67,4 +67,8 @@ public class StateHolder implements ContextProvider {
     public String toString() {
         return state.getName() + "(" + getId() + ")";
     }
+
+    public Object getVariable(String name) {
+        return getParams().get(name);
+    }
 }

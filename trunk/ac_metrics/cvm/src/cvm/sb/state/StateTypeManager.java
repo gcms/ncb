@@ -49,4 +49,6 @@ public class StateTypeManager {
     public Collection<StateHolder> getAll() {
         return objects;
     }
+
+    
 }

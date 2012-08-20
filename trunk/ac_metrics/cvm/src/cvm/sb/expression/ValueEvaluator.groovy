@@ -30,21 +30,33 @@ class ValueEvaluator {
     }
 
     private static Object evaluate(ContextProvider context, ParameterValue value) {
-        context.getParams().get(value.parameter.name)
+        context.getVariable(value.parameter.name)
     }
 
     private static Object evaluate(ContextProvider context, SignalSource value) {
-        context.getParams().get("source")
+        context.getVariable("source")
     }
 
     private static Object evaluate(ContextProvider context, ExpressionValue value) {
-        Map params = context.params
+        CombinedContextProvider params = new CombinedContextProvider(context)
         stateManager.types.each { StateTypeManager typeManager ->
             params[typeManager.name] = new StateTypeManagerContext(typeManager)
         }
 
-        new GroovyShell(new groovy.lang.Binding(ContextProviderWrapper.wrap(params))).evaluate(value.value)
+        new GroovyShell(new ContextProviderBinding(context: params)).evaluate(value.value)
     }
+}
+
+class ContextProviderBinding extends groovy.lang.Binding {
+  ContextProvider context
+
+  public Object getParam(String name) {
+    context.getVariable(name)
+  }
+
+  public Object getVariable(String name) {
+    ContextProviderWrapper.wrap(getParam(name))
+  }
 }
 
 class StateTypeManagerContext extends AbstractMap {

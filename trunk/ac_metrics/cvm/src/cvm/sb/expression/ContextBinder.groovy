@@ -49,9 +49,9 @@ class ContextBinder {
 
     private Collection<ContextProvider> doGetBindable(Signal bindable) {
         Collection<ContextProvider> result = new LinkedHashSet<ContextProvider>();
-        SignalInstance instance = signalLogger.getSignalInstance(bindable.getName());
-        if (instance != null)
-            result.add(instance);
+        for (SignalInstance instance : signalLogger.getSignalInstances(bindable.getName())) {
+          result.add(instance);
+        }
 
         return result;
     }

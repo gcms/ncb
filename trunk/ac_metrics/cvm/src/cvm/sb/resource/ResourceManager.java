@@ -7,7 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class ResourceManager implements Sensor {
+public class ResourceManager implements Sensor, Executable {
     private Set<Resource> objects = new LinkedHashSet<Resource>();
 
     public synchronized void addObject(Resource obj) {

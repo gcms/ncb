@@ -1,13 +1,13 @@
 package cvm.sb.emf
 
 
-import cvm.sb.manager.ActionSignalHandler
+import cvm.sb.manager.actions.ActionSignalHandler
 import cvm.sb.manager.SignalHandler
 import cvm.sb.manager.SignalHandlerManager
-import cvm.sb.manager.ActionCaller
-import cvm.sb.manager.ActionInstance
-import cvm.sb.manager.EnqueueCallActionInstance
-import cvm.sb.manager.SequenceActionInstance
+import cvm.sb.manager.actions.ActionCaller
+import cvm.sb.manager.actions.ActionInstance
+import cvm.sb.manager.actions.CallActionInstance
+import cvm.sb.manager.actions.SequenceActionInstance
 import sb.base.Handler
 import sb.base.common.*
 
@@ -36,7 +36,7 @@ class HandlerFactory {
     }
 
     private ActionInstance createActionInstance(EnqueueCall action) {
-        new EnqueueCallActionInstance(action)
+        new CallActionInstance(action)
     }
 
     private ActionInstance createActionInstance(SequenceAction action) {

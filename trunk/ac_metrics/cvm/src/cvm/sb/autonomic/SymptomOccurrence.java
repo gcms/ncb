@@ -22,4 +22,8 @@ public class SymptomOccurrence implements ContextProvider {
         return values;
     }
 
+    public Object getVariable(String name) {
+        return getParams().get(name);
+    }
+
 }

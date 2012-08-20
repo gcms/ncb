@@ -20,6 +20,9 @@ class NCBManagerTests extends GroovyTestCase {
     private ResourceManager resourceManager
 
     void setUp() {
+        println "WAITING..."
+        Thread.sleep(60000)
+        println "START!"
         Manager managerDef = EMFLoader.loadFirst(Manager)
 
         eventManager = new EventManager()
@@ -46,7 +49,7 @@ class NCBManagerTests extends GroovyTestCase {
 //        manager.login("Andrew", "password");
 //        manager.createSession("101");
 //        manager.addParty("101", "Yali");
-//        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+//        manager.sendSchema(" Yali", "101 " + "Audio" + " Yali Andrew", null);
 //        manager.enableMedium("101", "Audio");
 //
 //
@@ -58,7 +61,7 @@ class NCBManagerTests extends GroovyTestCase {
         manager.login("Andrew", "password");
         manager.createSession("101");
         manager.addParty("101", "Yali");
-        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+        manager.sendSchema(" Yali", "101 " + "Audio" + " Yali Andrew", null);
         manager.enableMedium("101", "Audio");
         waitThreadsFinish(1000)
 
@@ -83,7 +86,7 @@ class NCBManagerTests extends GroovyTestCase {
         manager.login("Andrew", "password");
         manager.createSession("101");
         manager.addParty("101", "Yali");
-        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+        manager.sendSchema(" Yali", "101 " + "Audio" + " Yali Andrew", null);
         manager.enableMedium("101", "Audio");
         waitThreadsFinish(2000)
 
@@ -115,7 +118,7 @@ class NCBManagerTests extends GroovyTestCase {
         NCBManager manager = new NCBManager(mainManager)
         manager.login("Andrew", "password");
         manager.createSession("101");
-        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+        manager.sendSchema(" Yali", "101 " + "Audio" + " Yali Andrew", null);
         manager.addParty("101", "Yali");
         manager.enableMedium("101", "Audio");
 
@@ -133,7 +136,7 @@ class NCBManagerTests extends GroovyTestCase {
         NCBManager manager = new NCBManager(mainManager)
         manager.login("Andrew", "password");
         manager.createSession("101");
-        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+        manager.sendSchema("Yali", "101 Audio Yali Andrew", null);
         manager.addParty("101", "Yali");
         manager.enableMedium("101", "Audio");
 
@@ -198,7 +201,7 @@ class NCBManagerTests extends GroovyTestCase {
 
         manager.login("Andrew", "password");
         manager.createSession("101");
-        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+        manager.sendSchema(" Yali", "101 " + "Audio" + " Yali Andrew", null);
         manager.addParty("101", "Yali");
         manager.enableMedium("101", "Audio");
 
@@ -231,7 +234,7 @@ class NCBManagerTests extends GroovyTestCase {
         manager.login("Andrew", "password");
         manager.createSession("101");
         manager.addParty("101", "Yali");
-        manager.sendSchema("101 ", " Yali", "101 " + "Audio" + " Yali Andrew", null);
+        manager.sendSchema(" Yali", "101 " + "Audio" + " Yali Andrew", null);
         manager.enableMedium("101", "Audio");
         waitThreadsFinish(1000)
 
@@ -257,6 +260,42 @@ class NCBManagerTests extends GroovyTestCase {
         assertEquals("addParticipant(101, Tariq)", calls2.remove(0))
         assertEquals("enableMedium(101, Video)", calls2.remove(0))
         assertEquals("logout()", calls2.remove(0))
+    }
+
+
+
+  void testThreeWay() {
+        NCBManager manager = new NCBManager(mainManager)
+        manager.login("Andrew", "password");
+        manager.createSession("101");
+
+        manager.addParty("101", "Yali");
+        manager.addParty("101", "Tariq");
+
+        manager.sendSchema("Yali Tariq", "101 Audio Yali Tariq Andrew", null);
+
+        manager.enableMedium("101", "Audio");
+        waitThreadsFinish(1000)
+
+        manager.logout("Andrew")
+        waitThreadsFinish(1000)
+
+        List calls = MockAdapter.instance.calls
+        assertEquals("login()", calls.remove(0))
+        assertEquals("sendSchema(101 Audio Yali Tariq Andrew, Yali)", calls.remove(0))
+        assertEquals("sendSchema(101 Audio Yali Tariq Andrew, Tariq)", calls.remove(0))
+//        assertEquals("createSession(101)", calls.remove(0))
+        assertEquals("createSession(101)", calls.remove(0))
+        assertEquals("addParticipant(101, Yali)", calls.remove(0))
+        assertEquals("addParticipant(101, Tariq)", calls.remove(0))
+//        assertEquals("addParticipant(101, Yali)", calls.remove(0))
+        assertEquals("enableMedium(101, Audio)", calls.remove(0))
+        assertEquals("logout()", calls.remove(0))
+
+        List calls2 = Mock2Adapter.instance.calls
+        assertEquals("login()", calls2.remove(0))
+        assertEquals("sendSchema(101 Audio Yali Tariq Andrew, Yali)", calls2.remove(0))
+        assertEquals("sendSchema(101 Audio Yali Tariq Andrew, Tariq)", calls2.remove(0))        
     }
 
     private void waitThreadsFinish(long time) {
