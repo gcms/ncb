@@ -106,7 +106,7 @@ A classe \textsf{Interface} é utilizada para descrever a interface de um gerenci
 
 \begin{figure}
  \centering
- \includegraphics[width=0.5\textwidth]{./fig/interface}
+ \includegraphics[width=0.48\textwidth]{./fig/interface}
  \caption{Elementos do metamodelo para descrição de interfaces.}
  \label{fig:metamodelo-interface}
 \end{figure}
@@ -121,12 +121,12 @@ O tratamento de sinais na camada de intermediação é definido por meio das classe
 
 \begin{figure}
  \centering
- \includegraphics[width=1\textwidth]{./fig/sinais}
+ \includegraphics[width=0.85\textwidth]{./fig/sinais}
  \caption{Principais elementos do metamodelo relacionados ao tratamento de sinais .}
  \label{fig:metamodelo-sinais}
 \end{figure}
 
-Uma ação representa uma operação que pode ser executada por um gerenciador, e é definida por meio da classe abstrata Action, que possui as seguintes subclasses:
+Uma ação representa uma operação que pode ser executada por um gerenciador, e é definida por meio da classe abstrata \textsf{Action}, que possui as seguintes subclasses:
 
 \begin{itemize}
 
@@ -140,15 +140,15 @@ Uma ação representa uma operação que pode ser executada por um gerenciador, e é 
 
 \end{itemize}
 
-Uma ação também define um contexto necessário para a sua execução por meio de um conjunto de parâmetros. Os parâmetros de uma ação, descritos através da classe \textsf{ActionParameter}, representam o conjunto de dados necessários para a execução daquela ação.
+Uma ação também define um contexto necessário para a sua execução por meio de um conjunto de parâmetros. Os parâmetros de uma ação, descritos através da classe \textsf{ActionParameter}, representam as informações necessários para a execução da operação definida pela ação. 
 
 Um tratador de sinais, representado pela classe \textsf{Handler}, é utilizado para indicar qual ação deve ser tomada quando um determinado sinal é identificado.
 Uma instancia de \textsf{Handler} descreve o sinal a ser tratado, se este tratador está habilitado, e a ação a ser tomada.
 
-Além disso, ao definir um tratador, é necessário descrever como serão atribuídos valores aos parâmetros exigidos por uma ação. Esta ligação entre o contexto no qual um sinal é identificado e o contexto exigido por uma ação é definido pela classe \textsf{ActionExecution}. A figura~\ref{fig:metamodelo-binding} ilustra as classes do metamodelo que estão relacionadas à ligação de contexto.
+Além disso, ao definir um tratador, é necessário descrever como serão atribuídos valores aos parâmetros de uma ação. Esta ligação entre o contexto no qual um sinal é identificado e o contexto exigido por uma ação, é definido pela classe \textsf{ActionExecution}. A figura~\ref{fig:metamodelo-binding} ilustra as classes do metamodelo que estão relacionadas à ligação de contexto.
 
 
-A classe \textsf{ActionExecution} intermedia a associação entre um tratador e uma ação, e define um conjunto de associações de parâmetros, descritas através classe \textsf{ParameterBinding}. Uma associação de parâmetro define como será atribuído um valor à um parâmetro de uma ação. Um parâmetro pode ser associado à diferentes fontes de valores, que são definidas por meio de subtipos do tipo \textsf{Value}. O metamodelo disponibiliza as seguintes classes para definição de uma fonte de valores:
+A classe \textsf{ActionExecution} intermedia a associação entre um tratador de sinal e uma ação, e define um conjunto de associações de parâmetros, descritas através classe \textsf{ParameterBinding}. Uma associação de parâmetro define como será atribuído um valor à um parâmetro de uma ação. Um parâmetro pode ser associado à diferentes fontes de valores, que são definidas por meio de subtipos do tipo \textsf{Value}. O metamodelo disponibiliza as seguintes classes para definição de uma fonte de valores:
 
 \begin{itemize}
 
@@ -164,7 +164,6 @@ A classe \textsf{ActionExecution} intermedia a associação entre um tratador e um
 
 \end{itemize}
 
-
 \begin{figure}
  \centering
  \includegraphics[width=1\textwidth]{./fig/binding}
@@ -173,6 +172,7 @@ A classe \textsf{ActionExecution} intermedia a associação entre um tratador e um
 \end{figure}
 
 
+Além de possibilitarem a definição de ações e tratadores de sinal, as construções descritas nesta seção permitem que ações sejam reutilizadas na composição de ações mais complexas, favorecendo a modularização do tratamento de sinais.
 A utilização dessas construções do metamodelo é melhor ilustrada no capítulo~\ref{cap:instancia}, onde são utilizadas para construir um modelo que representa a camada de intermediação de serviços presente na CVM.
 
 \section{Recursos}
@@ -180,17 +180,18 @@ A utilização dessas construções do metamodelo é melhor ilustrada no capítulo~\re
 
 No metamodelo proposto, os recursos a serem gerenciados por uma camada de intermediação de serviços são descritos por meio de um gerenciador de recursos, definido pelo tipo \textsf{ResourceManager}. Um gerenciador de recursos define as interfaces dos recursos gerenciados, e como estes podem ser obtidos. A figura~\ref{fig:metamodelo-recursos} ilustra as classes do metamodelo envolvidas na descrição de recursos.
 
-As interfaces dos recursos são descritas através da classe mm \textsf{Interface}, da mesma forma que a interface de um gerenciador da camada.
+As interfaces dos recursos são descritas através da classe \textsf{Interface}, da mesma forma que a interface de um gerenciador da camada.
 A obtenção dos recursos por sua vez, é definida, de acordo com a sua natureza, por meio de classes que são subtipos de \textsf{ResourceManager}. O metamodelo proposto conta com uma classe denominada \textsf{InstanceResourceManager} que permite a descrição de um conjunto fixo de recursos e suas características. Outras classes que implementam a interface \textsf{ResourceManager} poderiam, por sua vez, possibilitar a obtenção de recursos de formas mais elaboradas como, por exemplo, através de repositórios de objetos distribuídos.
 % ??? Ponto de questionamento: que outras formas de se obter?
 
-Uma instância da classe \textsf{InstanceResourceManager} agrupa um conjunto de objetos do tipo mm \textsf{Instance}. A classe \textsf{Instance}, por sua vez, representa um recurso que pode ser obtido diretamente a partir da instanciação de uma implementação do recurso.
+Uma instância da classe \textsf{InstanceResourceManager} agrupa um conjunto de objetos do tipo \textsf{Instance}. A classe \textsf{Instance}, por sua vez, representa um recurso que pode ser obtido diretamente a partir da instanciação de uma implementação do recurso.
+
 A classe \textsf{Instance} define a classe que implementa o recurso, e  que será instanciada em tempo de execução.
 Além disso, uma instância de \textsf{Instance} também define qual das interfaces descritas pelo \textsf{ResourceManager} correspondente é a interface do recurso. Por fim, a classe \textsf{Instance} implementa a interface \textsf{Annotable}, o que permite que metadados sejam associados aos recursos. Esses metadados podem ser posteriormente utilizados para definição de políticas de seleção de recursos.
 
 \begin{figure}
  \centering
- \includegraphics[width=0.85\textwidth]{./fig/resource}
+ \includegraphics[width=0.88\textwidth]{./fig/resource}
  \caption{Elementos do metamodelo para descrição dos recursos gerenciados pela camada.}
  \label{fig:metamodelo-recursos}
 \end{figure}
@@ -203,18 +204,18 @@ Além disso, uma instância de \textsf{Instance} também define qual das interfaces
 
 \section{Manutenção de estado}
 
-Muitas vezes, o processamento de um determinado sinal pela camada de intermediação de serviços pode depender de fatores que não estão diretamente ao sinal.
-A ocorrência de um evento, parâmetros advindos de uma chamada recebida anteriormente, resultados do processamento de outros sinais, entre outros, são informações que podem determinar como um dado sinal deve ser processado.
+Muitas vezes, o processamento de um determinado sinal pela camada de intermediação de serviços pode depender de fatores que não estão diretamente àquele sinal.
+A ocorrência de um evento, parâmetros advindos de uma chamada recebida anteriormente, resultados do processamento de outros sinais, entre outros, são informações que podem determinar como um determinado sinal deve ser processado.
 
 Para possibilitar essa variabilidade no processamento de sinais, é preciso que a camada de intermediação de serviços seja capaz de manter dados entre sucessivas ocorrências de sinais. As construções relacionadas a manutenção de estado, presentes no metamodelo proposto, têm como intuito possibilitar a definição de quais informações precisam ser mantidos pela camada.
 
-A classe \textsf{StateManager} do metamodelo tem como função definir os tipos de dados que poderão ser mantidos durante a execução da camada. Os tipos de dados podem ser descritos através de uma estrutura simples baseada em atributos e subtipos. Assim como no modelo relacional de dados, a descrição de um tipo também exige a seleção de um atributo chave que identifique unicamente um registro de um tipo de dados. 
+A classe \textsf{StateManager} do metamodelo tem como função definir os tipos de dados que poderão ser mantidos durante a execução da camada. Os tipos de dados podem ser descritos através de uma estrutura simples, baseada em atributos e subtipos. Assim como no modelo relacional de dados, a descrição de um tipo também exige a escolha de um atributo chave que identifique unicamente um registro de um tipo de dados. 
 
 A figura~\ref{fig:metamodelo-estado} ilustra as classes envolvidas na definição dos tipos de dados a serem mantidos pela camada durante sua execução. A classe \textsf{State} é utilizada para definir um tipo de dados, que agrupa atributos e subtipos. Cada atributo, por sua vez, é definido por meio da classe \textsf{Property}. Os subtipos por sua vez são definidos a partir da mesma classe \textsf{State}, o que possibilita a definição de tipos de dados compostos.
 
 \begin{figure}
  \centering
- \includegraphics[width=0.45\textwidth]{./fig/state}
+ \includegraphics[width=0.5\textwidth]{./fig/state}
  \caption{Elementos do metamodelo para descrição dos tipos de dados mantidos pela camada.}
  \label{fig:metamodelo-estado}
 \end{figure}
@@ -246,22 +247,29 @@ Apesar disso, essas abstrações não são apropriadas para a descrição de situações
 %- O metamodelo dispõe de abstrações baseadas na arquitetura de computação autonômica da IBM para descrever o comportamento autonomo.
 Com o intuito de facilitar a definição de como se dará o auto gerenciamento da camada, o metamodelo proposto incorpora um conjunto de abstrações baseadas na arquitetura de computação autônoma proposta pela IBM \cite{ibmac}.
 
-Revisão/descrição breve da arquitetura, do loop MAPE-K, sensores e atuadores.
+Como observado no capítulo~\ref{cap:referencial}, o principal bloco de construção da arquitetura de computação autônoma é o gerenciador autônomo. O gerenciador autônomo implementa as funções MAPE, que permitem monitorar informações sobre recursos gerenciados, analisar essas informações e identificar se uma mudança é necessária. Em caso afirmativo, o gerenciador autônomo ainda cria um plano para realizar a mudança e em seguida o executa.
+Ao serem executadas, essas funções podem fazer uso de um conhecimento compartilhado. A interação entre essas funções também dirigida pela troca de conhecimentos, que representam sintomas, solicitações de mudança e planos de mudança respectivamente.
+
+\begin{comment}
+Fiquei em dúvida se devo colocar algo mais detalhado aqui, porque estou assumindo que neste ponto a arquitetura de computação autônoma já foi descrita no capítulo 2.
+
+\end{comment}
+
 %- Em tal arquitetura o gerenciamento se dá através de um control loop MAPE-K
 % Explicar MAPE e Knowledge, que inclui os sintomas, change requests, change plans
 
-%The Autonomic Computing Architectural Blueprint (see Resources for a link) describes an autonomic manager as: an implementation that automates some management function and externalizes this function according to the behavior defined by management interfaces. The autonomic manager is a component that implements the control loop ... For a system component to be self-managing, it must have an automated method to collect the details it needs from the system; to analyze those details to determine if something needs to change; to create a plan, or sequence of actions, that specifies the necessary changes; and to perform those actions. When these functions can be automated, an intelligent control loop is formed.
+%The Autonomic Computing Architectural Blueprint (see Resources for a link) describes an autonomic manager as: an implementation that automates some management function and externalizes this function according to the behavior defined by management interfaces. 
+%The autonomic manager is a component that implements the control loop ... For a system component to be self-managing, it must have an automated method to collect the details it needs from the system; to analyze those details to determine if something needs to change; to create a plan, or sequence of actions, that specifies the necessary changes; and to perform those actions. When these functions can be automated, an intelligent control loop is formed.
 
 
 %- No meta-modelo proposto, as funções tem seu comportamento descrito a partir dos elementos que elas devem gerar.
 
-As abstrações presentes no metamodelo proposto permitem descrever regras que determinam a geração e propagação de conhecimento entre as funções MAPE. Desta forma, ao construir uma camada de intermediação de serviços, devem ser descritas regras para identificação de sintomas, solicitações de mudanças e planos de mudança. Em tempo de execução, o monitor utiliza essas regras para identificar a ocorrência de um sintoma. De forma semelhante o analisar e planejador se baseiam nos sintomas identificados e nas solicitações de mudança geradas para realizarem sua tarefa.
-A figura~\ref{fig:metamodelo-autonomo} ilustra as construções associadas a definição do mecanismo autonômico em um intermediador de serviços.
-
+As abstrações presentes no metamodelo proposto permitem descrever regras que determinam a geração e propagação de conhecimento entre as funções MAPE. Desta forma, ao construir uma camada de intermediação de serviços, devem ser descritas regras para identificação de sintomas, solicitações de mudanças e planos de mudança. Em tempo de execução, o monitor utiliza essas regras para identificar a ocorrência de um sintoma. De forma semelhante o analisador e planejador se baseiam nos sintomas identificados e nas solicitações de mudança geradas para realizarem sua tarefa.
+A figura~\ref{fig:metamodelo-autonomo} ilustra as construções associadas a definição do mecanismo autônomo em um intermediador de serviços.
 
 \begin{figure}
  \centering
- \includegraphics[width=0.65\textwidth]{./fig/autonomo}
+ \includegraphics[width=0.7\textwidth]{./fig/autonomo}
  \caption{Elementos do metamodelo para descrição do comportamento autônomo.}
  \label{fig:metamodelo-autonomo}
 \end{figure}
@@ -275,24 +283,48 @@ As condições agrupadas pela classe \textsf{Symptom} são descritas a partir de ex
 
 % TODO: separar symptons devem monitorar só os recursos e change request deve relacionar symptons com calls and state
 
-A classe \textsf{ChangeRequest} define uma requisição de mudança que deve ser gerada quando um determinado sintoma é identificado. Associado à uma requisição de mudança podemos ter um plano de mudança definido por instâncias da classe \textsf{ChangePlan}. Um plano de mudança pode assumir diversas formas, desde um complexo \emph{workflow} envolvendo várias atividades até um simples comando \cite{ibmac}. 
+A classe \textsf{ChangeRequest} define uma requisição de mudança que deve ser gerada quando um determinado sintoma é identificado. Associado à uma requisição de mudança podemos ter um plano de mudança definido por instâncias da classe \textsf{ChangePlan}. Um plano de mudança pode assumir diversas formas, desde um complexo \emph{workflow} envolvendo várias atividades até um simples comando. % \cite{ibmac} 
 No metamodelo proposto, um plano de mudança define uma ação a ser executada. Uma ação, por sua vez, pode ser definida por meio dos tipos de ações disponíveis e suas combinações, conforme descrito na seção \ref{sec:metamodelo-sinais}.
 
 % Enquanto a função de planejamento pode empregar algoritmos complexos que geram dinâmicamente planos  de mudança que podem envolver um workflow completo de execução, no trabalho em questão optamos por uma abordagem simples, onde um plano é diretamente associado a uma solicitação de mudança
 
 %Referencia: The plan function can take on many forms, ranging from a single command to a complex workflow. 
 
+\begin{comment}
+É possível estabelecer um relacionamento entre a arquitetura de computação autônoma como um todo e o metamodelo. Ao mencionar a arquitetura de computação autônoma como um todo me refiro à todas as suas camadas (ManagedResources, Touchpoints, TouchpointsAutonomicManagers, OrchestratingAutonomicManagers, ManualManagers). Não sei se seria interessante colocar isso, e onde colocar, mas fazendo uma comparação entre a arquitetura de AC da IBM e o metamodelo podemos considerar o seguinte:
+
+- ManagedResources são descritos no metamodelo por meio do ResourceManager.
+
+- Touchpoints representam uma interface comum para interação com os recursos e são descritos por meio da Interface (que inclui Calls/Signals)
+
+- TouchpointAutonomicManagers são descritos por meio das contruções dessa seção
+
+- O conceito de OrchestratingAutonomicManagers pode ser descrito no metamodelo proposto por meio do uso de um gerenciador como um recurso para outro gerenciador.
+\end{comment}
+
 \section{Políticas para seleção de recursos}
 
 No metamodelo em questão, políticas são empregadas com o intuito de direcionar a seleção de recursos. As abstrações contempladas pelo metamodelo compreendem além da descrição de políticas, a definição do momento onde estas devem ser avaliadas, e como os resultados dessa avaliação devem ser tratados.
 
 A figura~\ref{fig:metamodelo-politicas} demonstra as abstrações relacionadas à utilização de políticas, que se estruturam em torno da classe \textsf{PolicyManager}.
-Os principais elementos da definição de políticas são representados por meio das classes \textsf{Policy}, \textsf{PolicyEvaluationPoint}, e \textsf{PolicyEvaluationHandler}.
+Os principais elementos da definição de políticas são representados por meio das classes \textsf{Policy}, \textsf{PolicyEvaluationContext}, \textsf{PolicyEvaluationPoint}, e \textsf{PolicyEvaluationHandler}.
 
-A classe \textsf{Policy} representa uma política, que é definida por meio de um nome e uma condição a ser avaliada sobre um recurso. Além disso, uma política define um valor de negócio associado ao cumprimento da condição pelo recurso. Durante a execução da camada a seleção de recursos se baseia no valor de negócio acumulado na avaliação das políticas.
 
-PolicyContext define o contexto, i.e. conjunto de parametros, necessário para avaliação das políticas.
 
-Um ponto de avaliação de políticas, definido por meio da classe \textsf{PolicyEvaluationPoint}, especifica um sinal que desencadeia a avaliação de políticas. Por meio deste elemento é possível especificar o momento em que as políticas devem ser avaliadas ou reavaliadas em relação aos recursos.
+\begin{figure}
+ \centering
+ \includegraphics[width=0.8\textwidth]{./fig/policy}
+ \caption{Elementos do metamodelo para descrição de políticas.}
+ \label{fig:metamodelo-politicas}
+\end{figure}
 
-Um tratador de avaliação de políticas, representado por meio da classe \textsf{PolicyEvaluationHandler}, define a ação a ser tomada sobre os resultados da avaliação de políticas. Um ponto de avaliação de políticas é associado à um tratador de avaliação de políticas por meio de uma requisição de avaliação de políticas. Uma requisição de avaliação de políticas, definida por meio da classe \textsf{PolicyEvaluationRequest}, estabelece o mapeamento entre o contexto do sinal que inicia a avaliação de políticas e o necessário para a avaliação em si.
+
+A classe \textsf{Policy} representa uma política, que é definida por meio de um nome e uma condição a ser avaliada sobre um recurso. Uma política também define um valor de negócio atribuído aos recursos capazes de satisfazer a condição definida. Durante a avaliação das políticas, a seleção de recursos se baseia no seu valor de negócio acumulado de acordo com a avaliação das políticas definidas.
+
+As políticas são agrupadas por contextos de avaliação de políticas, definidos por meio da classe \textsf{PolicyEvaluationContext}. Um contexto de avaliação define os parâmetros necessários para avaliação das políticas que o integram.
+Assim, as condições que definem uma política, definidas por expressões, podem envolver metadados definidos sobre os recursos e parâmetros definidos no contexto de avaliação.
+
+Um ponto de avaliação de políticas, definido por meio da classe \textsf{PolicyEvaluationPoint}, especifica um sinal que desencadeia a avaliação de um conjunto de políticas. Por meio deste elemento é possível especificar o momento em que as políticas devem ser avaliadas ou reavaliadas em relação aos recursos.
+Além disso, um ponto de avaliação de políticas também é responsável por definir como o contexto do sinal é mapeado para o contexto de avaliação de políticas. Esse mapeamento é realizado da mesma forma utilizada na definição de tratadores de sinais, empregando associações de parâmetros descritas por meio da classe \textsf{ParameterBinding}.
+
+Um tratador de avaliação de políticas, representado por meio da classe \textsf{PolicyEvaluationHandler}, define uma ação a ser executada após a avaliação de políticas. Esse tratador tem como intuito definir como o resultado da avaliação de políticas será utilizado. Um tratador de avaliação de políticas está relacionado à um contexto de avaliação e será acionado sempre que as políticas nesse contexto forem reavaliadas.
