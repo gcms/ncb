@@ -116,7 +116,8 @@ De forma similar uma fonte de valor de origem do sinal (\textsf{SignalSource}) r
 Enquanto os tipos de fontes de valores citados acima tem o seu comportamento implementado de forma relativamente simples e direta, a implementação de fontes de valor baseadas em expressões, e em chamadas à outras ações, é um pouco mais complexa.
 Os tipos de fontes de valores discutidos logo acima envolvem no máximo uma variável do contexto provido, enquanto o uso de expressões permite que várias variáveis do contexto provido sejam empregadas para se obter um valor único, que será então passado como um argumento à uma ação.
 
-Na implementação existente, as expressões podem ser descritas na linguagem Groovy \cite{groovyExpr}. Groovy é uma linguagem dinâmica para a plataforma Java que apresenta várias construções que facilitam seu emprego para a descrição de expressões. A linguagem permite o emprego de uma sintaxe simplificada para o acesso à propriedades, utilização de estruturas de dados, e definição de expressões \emph{lambda} \cite{proglang}. Além disso, essa linguagem pode ser considerada um superconjunto da linguagem Java, pois as construções Java também são construções válidas em Groovy.
+Na implementação existente, as expressões podem ser descritas na linguagem Groovy \cite{groovyExpr}. Groovy é uma linguagem dinâmica para a plataforma Java que apresenta várias construções que facilitam seu emprego para a descrição de expressões. A linguagem permite o emprego de uma sintaxe simplificada para o acesso à propriedades, utilização de estruturas de dados, e definição de expressões \emph{lambda}. Além disso, essa linguagem pode ser considerada um superconjunto da linguagem Java, pois as construções Java também são construções válidas em Groovy.
+%  lambda \cite{proglang}
 
 Ao definir uma expressão, o construtor do modelo pode empregar todas as variáveis providas pelo contexto provido. Como observado anteriormente, quando um sinal é tratado o contexto consiste dos parâmetros do sinal e a origem do sinal. Além do contexto provido, uma expressão também pode ter acesso ao estado da camada por meio de variáveis com o nome do tipo de dados. Estas variáveis dão acesso à objetos que implementam a interface de um dicionário, e permitem a obtenção de um registro de dados de um determinado tipo a partir de seu identificador único. O uso da linguagem Groovy também possibilita que consultas mais complexas sejam realizadas para obtenção de registros. O uso dessas expressões é ilustrado no capítulo~\ref{cap:instancia}, onde expressões são utilizadas na construção de um modelo de um intermediador de serviços.
 
@@ -141,16 +142,17 @@ De forma geral, um tratador de sinais baseado em uma ação (\textsf{ActionSignalH
 
 \section{Recursos}
 
-Os recursos utilizados por uma camada de intermediação de serviço são mantidos pelo gerenciador de recursos. O gerenciador de recursos mantém um registro dos recursos disponíveis, a partir do qual podem ser obtidos. 
-Além disso, em tempo de execução, a utilização dos recursos é mediada por componentes capazes de interagir com os recursos, traduzindo suas construções naquelas utilizadas pela camada.
+Os recursos disponíveis para o uso de uma camada de intermediação de serviço são mantidos em tempo de execução pelo gerenciador de recursos. O gerenciador de recursos mantém um registro dos recursos disponíveis, e provê meios para sua obtenção e manipulação.
+Além disso, a utilização de recursos em tempo de execução, é mediada por componentes capazes de interagir com os recursos, traduzindo suas construções naquelas utilizadas pela camada.
 
 A classe \textsf{ResourceManager} representa o ponto inicial de acesso aos recursos gerenciados por uma camada de intermediação de serviços. Essa classe mantém um registro de recursos, criados a partir das definições presentes no modelo da camada. A partir dessa classe, é possível obter os recursos registrados, que são representados em tempo de execução pelo tipo \textsf{Resource}. 
 
-A interface \textsf{Resource} possui duas implementações concretas: \textsf{ManagedResource} que media o acesso a recurso ordinário, e \textsf{BrokerManager} que representa um outro intermediador de serviços utilizado como um recurso. A figura~\ref{fig:ambiente-recursos-classes} ilustra um diagrama das principais classes relacionadas ao gerenciamento de recursos em tempo de execução.
+A interface \textsf{Resource} possui duas implementações concretas: \textsf{ManagedResource}, que media o acesso a um recurso ordinário; e \textsf{BrokerManager}, que representa um outro intermediador de serviços sendo utilizado como um recurso. A figura~\ref{fig:ambiente-recursos-classes} ilustra um diagrama das principais classes relacionadas ao gerenciamento de recursos em tempo de execução.
 
-A interface \textsf{Resource} é uma extensão das interfaces \textsf{Touchpoint} e \textsf{Executable}. Um \emph{touchpoint} representa uma interface de gerenciamento que disponibiliza uma forma padronizada para sua utilização, independente do tipo de recurso gerenciado \cite{KeepInTouchWithTouchPoints}. Nesta implementação, \textsf{Touchpoint} é herdeira das interfaces \textsf{Effector} e \textsf{Sensor}, e portanto um \emph{touchpoint} provê uma interface padrão para realizar chamadas e detectar eventos em um recurso. Além disso, um recurso também é executável, pois também implementa a interface \textsf{Executable}. Ser executável indica que um recurso, em tempo de execução, possui um fluxo próprio de controle, que nesse caso, é utilizado para serializar a interação entre a camada e o recurso. 
+A interface \textsf{Resource} é uma extensão das interfaces \textsf{Touchpoint} e \textsf{Executable}. Um \emph{touchpoint} representa uma interface de gerenciamento que disponibiliza uma forma padronizada para sua utilização, independente do tipo de recurso gerenciado. Nesta implementação, \textsf{Touchpoint} é herdeira das interfaces \textsf{Effector} e \textsf{Sensor}, e portanto um \emph{touchpoint} provê uma interface padrão para realizar chamadas e detectar eventos em um recurso. Além disso, um recurso também é executável, pois também implementa a interface \textsf{Executable}. Ser executável indica que um recurso, em tempo de execução, possui um fluxo próprio de controle, que nesse caso, é utilizado para serializar a interação entre a camada e o recurso. 
+%  ... do tipo de recurso gerenciado \cite{KeepInTouchWithTouchPoints}
 
-Não obstante, um recurso possui meios para comunicação de sinais prioritários.
+%Não obstante, um recurso possui meios para comunicação de sinais prioritários.
 
 
 %- inicializa os recursos; e mantém referências para ele em tempo de execução; e disponibiliza uma interface para obtenção dos recursos gerenciados.
@@ -162,7 +164,7 @@ Não obstante, um recurso possui meios para comunicação de sinais prioritários.
 \label{sec:ambiente-integracaorecursos}
 
 Um conjunto de classes e interfaces é fornecido para a integração dos recursos com o ambiente de execução. Essa biblioteca tem como função viabilizar a interação entre o ambiente de execução e os recursos a serem gerenciados.
-Além disso, essas classes e interfaces, que integram o pacote \textsf{mdvm.sb.adapters}, permitem associar a interface dos recursos, descrita no metamodelo, às suas implementações. A figura~\ref{fig:ambiente-integracao-diagrama} mostra um diagrama de classes do pacote mencionado.
+Esses elementos, que integram o pacote \textsf{mdvm.sb.adapters}, permitem associar a interface dos recursos, descrita no metamodelo, às suas implementações. A figura~\ref{fig:ambiente-integracao-diagrama} mostra um diagrama de classes do pacote mencionado.
 
 A integração em questão se aplica aos recursos baseados na instanciação de uma implementação, representados no metamodelo pela classe \textsf{Instance}, descrita na seção~\ref{sec:metamodelo-recursos}. Por ser implementado na plataforma Java, o ambiente de execução exige que o recurso também seja implementado nesta plataforma. Apesar disso, é possível utilizar uma implementação que atue apenas como um \emph{wrapper} para a real implementação do recurso, em outra plataforma.
 
@@ -184,19 +186,17 @@ A manutenção do estado da camada, em tempo de execução, é realizada por meio do 
 
 O gerenciador de estado é implementado por um conjunto de classes que compõem o pacote \textsf{mdvm.sb.state}. A figura...
 
-A principal classe desse pacote, denominada \textsf{StateManager}, mantém um conjunto de gerenciadores específicos para cada tipo de dados. Um gerenciador de tipo de dados é implementado pela classe \textsf{StateTypeManager}, e mantém os registros de dados associadas àquele tipo de dados. Por meio do gerenciador de tipo de dados é possível obter um registro de dados pelo seu identificador, ou realizar uma consulta baseada nos demais atributos. Além disso, o gerenciador de tipo de dados também pode ser usado para criar e destruir registros de dados. 
+A principal classe desse pacote, denominada \textsf{StateManager}, mantém um conjunto de gerenciadores específicos para cada tipo de dados descrito no modelo em execução. Um gerenciador de tipo de dados é implementado pela classe \textsf{StateTypeManager}, e mantém os registros de dados de um determinado tipo de dados. Por meio do gerenciador de tipo de dados é possível obter um registro de dados pelo seu identificador, ou realizar uma consulta baseada nos seus demais atributos. Além disso, o gerenciador de tipo de dados também pode ser usado para criar e destruir registros de dados. 
 
 Os registros de dados são representados em tempo de execução por instâncias da classe \textsf{StateHolder}. Um \textsf{StateHolder} mantém os dados de um registro, e fornece métodos para acesso e manipulação de seus atributos. 
 %Para facilitar a manipulação dos atributos, a interface do StateHolder permite/possibilita que os atributos possam ser tratados como um objeto ou uma coleção de objetos. 
 Esta classe também é a responsável por interceptar a manipulação de um registro com o intuito de identificar mudanças e notificá-las aos componentes interessados.
 
-O uso é ilustrado no capítulo~\ref{cap:instancia}.
-
 \section{Gerenciamento autônomo}
 
 A implementação do auto gerenciamento da camada se baseia na arquitetura de computação autonômica proposta pela IBM \cite{ibmac}. O ambiente de execução inclui um conjunto de classes que implementam as funções de monitoramento, análise, planejamento e execução, que fazem parte dessa arquitetura. Além dessas funções, um outro conjunto de classes é utilizado para representar o conhecimento trocado entre essas funções em tempo de execução, incluindo ocorrências de sintomas, requisições de mudança, e planos de mudança. A figura~\ref{fig:ambiente-autonomo} ilustra as classes que compõem a implementação do mecanismo autônomo.
 
-Em tempo de execução, o mecanismo autônomo é ativado pelo gerenciador autônomo, implementado pela classe \textsf{AutonomicManager}. O gerenciador autônomo, implementa a interface \textsf{SignalHandler} de forma a interceptar os sinais recebidos pela camada. Apesar disso, o gerenciador autônomo não impede que o sinal continue sendo tratado pelos demais tratadores regularmente. Um sinal intereceptado pelo gerenciador autônomo é encaminhado ao seu monitor, que avalia se algum sintoma pode ser identificado, e encaminha uma ocorrência para o analisador. O analisador por sua vez, identifica qual a mudança a associada ao sintoma e envia uma solicitação de mudança para o planejador. Ao receber uma solicitação de mudança, o planejador determina qual o plano para efetuar a mudança solicitada, e o encaminha ao executor. Este último, por fim, identifica a ação associada ao plano e a executa.
+Em tempo de execução, o mecanismo autônomo é ativado pelo gerenciador autônomo, implementado pela classe \textsf{AutonomicManager}. O gerenciador autônomo, implementa a interface \textsf{SignalHandler} de forma a interceptar os sinais recebidos pela camada. Apesar disso, o gerenciador autônomo não impede que o sinal continue sendo tratado pelos demais tratadores regularmente. Um sinal intereceptado pelo gerenciador autônomo é encaminhado ao seu monitor, que avalia se algum sintoma pode ser identificado, e encaminha uma ocorrência para o analisador. O analisador por sua vez, identifica qual a mudança a associada ao sintoma e envia uma solicitação de mudança para o planejador. Ao receber uma solicitação de mudança, o planejador determina qual o plano para efetuar a mudança solicitada, e o encaminha ao executor. Este último, por fim, executa a ação definida pelo plano e a executa.
 
 
 \subsection{Monitor}
@@ -206,6 +206,7 @@ Ao receber um sinal, o monitor verifica se algum sintoma, definido no modelo do 
 As condições de um sintoma são definidas por meio de expressões. Assim como nas fontes de valor, as expressões para a definição de uma condição também são descritas em Groovy. A linguagem Groovy possui uma semântica bem definida para coerção de objetos em um tipo booleano, que é empregada na avaliação de uma condição.
 
 O contexto para avaliação das condições é definido no modelo por meio da construção \textsf{Binding}, e pode envolver sinais e tipos de dados, conforme descrito na seção~\ref{sec:metamodelo-autonomo}. O nome empregado na definição de um elemento do contexto de um sintoma, representa uma variável que pode ser utilizada em uma expressão para representar o objeto correspondente em tempo de execução.
+
 Quando uma variável é associada à um sinal, essa variável dá acesso à um objeto que apresenta como propriedades os parâmetros do sinal detectado, e a origem desse sinal. De forma similar, uma variável associada à um tipo de dados permite obter atributos de um registro de dados desse tipo.
 
 Durante a execução da camada, vários sinais de um mesmo tipo podem ser gerados por diferentes recursos. Além disso, diversos registros de dados de um mesmo tipo podem existir em tempo de execução. Portanto, um mesmo sintoma pode ser detectado em diferentes contextos, gerando várias ocorrências do mesmo sintoma. Ao avaliar os sintomas, o monitor identifica quais combinações de ocorrências de um sinal e registros de dados tornam as expressões de condição verdadeiras, e gera uma ocorrência de sintoma para cada uma.
