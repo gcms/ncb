@@ -67,7 +67,7 @@ Esses aspectos, que englobam tarefas como transformações de modelos, negociação 
 Tendo em vista estas necessidades, propomos uma arquitetura genérica para a definição dessa categoria de máquinas virtuais dirigidas por modelos centrados no usuário.
 % baseado na experiencia obtida na CVM (ver uma boa forma de dizer isso)
 Assim como a CVM, tal arquitetura também se baseia em camadas com responsabilidades bem definidas. 
-Na abordagem proposta, as camadas desta arquitetura são definidas através de modelos cujas construções estão relacionadas às responsabilidades relativas à cada camada. A Figura \ref{fig:uvm} ilustra esta arquitetura de Máquinas Virtuais centradas no Usuário (\emph{User-centric Virtual Machine} - UVM) onde temos as seguintes camadas:
+Na abordagem proposta, as camadas desta arquitetura são definidas através de modelos cujas construções estão relacionadas às responsabilidades relativas à cada camada. A Figura \ref{fig:uvm} ilustra esta arquitetura de Máquinas Virtuais dirigidas por modelos onde temos as seguintes camadas:
 
 %\begin{comment}
 %A nomenclatura é simplesmente uma mudança da nomenclatura da CVM removendo o termo "Communication".
@@ -81,9 +81,9 @@ Na abordagem proposta, as camadas desta arquitetura são definidas através de mod
 
 \item Mecanismo de Síntese (\emph{Synthesis Engine} - SE), que possui como principal responsabilidade a transformação de um modelo declarativo fornecido pela UI em uma representação algorítmica a ser executada pela camada inferior;
 
-\item \emph{Middleware} Centrado no Usuário (\emph{User-centric middleware} - UM), que além de executar as requisições geradas pelo Mecanismo de Síntese,  também gerencia os serviços providos pela máquina virtual e as tarefas em execução. Essa também é a camada responsável pela aplicação de restrições de segurança, qualidade de serviço, entre outras específicas do domínio de negócio. 
+\item \emph{Middleware}, que além de executar as requisições geradas pelo Mecanismo de Síntese,  também gerencia os serviços providos pela máquina virtual e as tarefas em execução. Essa também é a camada responsável pela aplicação de restrições de segurança, qualidade de serviço, entre outras específicas do domínio de negócio. 
 
-\item Intermediador de Serviço (\emph{Service Broker} - SB), que é a camada responsável pelo gerenciamento dos recursos. Assim sendo, essa camada tem como objetivo prover uma interface de acesso aos recursos de forma independente da tecnologia empregada por estes, provendo um serviço transparente à camada UM.
+\item Intermediador de Serviço (\emph{Service Broker} - SB), que é a camada responsável pelo gerenciamento dos recursos. Assim sendo, essa camada tem como objetivo prover uma interface de acesso aos recursos de forma independente da tecnologia empregada por estes, provendo um serviço transparente à camada de \emph{middleware}.
 
 \end{itemize}
 
@@ -107,7 +107,7 @@ Assim sendo, a abordagem dirigida por modelos é empregada para a definição e man
 
 O Intermediador de Serviço é a camada da arquitetura proposta que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para prover o serviço solicitado. Cabe à esta camada disponibilizar uma interface de serviços que abstraia as especificidades dos recursos gerenciados para a camada superior. Além disso, o SB deve possuir capacidade de auto gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
 
-Como uma interface de serviços, o SB se comunica com o UM através de chamadas que podem ser invocadas e eventos que podem ser gerados sinalizando alguma situação. Assim sendo, ao definirmos o comportamento dessa camada, precisamos descrever como serão tratadas as chamadas realizadas pela camada superior, e em que situações serão gerados determinados eventos. Mas além disso, também precisamos descrever como outras tarefas serão realizadas, incluindo o monitoramento e seleção de recursos, manutenção de informações, adaptação da camada, entre outros.
+Como uma interface de serviços, o SB se comunica com o \emph{middleware} através de chamadas que podem ser invocadas e eventos que podem ser gerados sinalizando alguma situação. Assim sendo, ao definirmos o comportamento dessa camada, precisamos descrever como serão tratadas as chamadas realizadas pela camada superior, e em que situações serão gerados determinados eventos. Mas além disso, também precisamos descrever como outras tarefas serão realizadas, incluindo o monitoramento e seleção de recursos, manutenção de informações, adaptação da camada, entre outros.
 
 Com isto em mente, neste trabalho, construímos um meta-modelo que possibilita a modelagem do comportamento necessário para atender as responsabilidades definidas para a camada de intermediação de serviço da arquitetura proposta. O meta-modelo em questão contempla a descrição dos seguintes  aspectos envolvidos no cumprimento destas responsabilidades:
 
