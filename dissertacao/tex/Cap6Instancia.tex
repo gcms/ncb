@@ -7,7 +7,7 @@ Este capítulo demonstra como o metamodelo proposto e o ambiente de execução forn
 \section{Visão geral}
 
 Como mostrado na seção~\ref{sec:background-cvm}, a camada de Intermediação de Comunicação em Rede (\emph{Network Communication Broker}, NCB), é responsável por prover uma interface que abstrai da camada superior os detalhes envolvidos na utilização dos \emph{frameworks} de comunicação, como Skype, Smack, Asterisk, etc. 
-A partir da análise do domínio de comunicação e de \emph{frameworks} de comunicação existentes \cite{foda}, foi definido em trabalhos anteriores \cite{Andrew}, um conjunto de operações, independentes de tecnologia, capaz de prover o nível de abstração esperado dessa camada. Esse conjunto de operações, que compõe a interface da camada NCB,  representa o ponto de partida para a construção de um modelo que defina um comportamento equivalente ao da camada NCB.
+A partir da análise do domínio de comunicação e de \emph{frameworks} de comunicação existentes \cite{foda}, foi identificado em trabalhos anteriores \cite{Andrew}, um conjunto de operações, independentes de tecnologia, capaz de prover o nível de abstração esperado dessa camada. Esse conjunto de operações, que compõe a interface da camada NCB,  representa o ponto de partida para a construção de um modelo que defina um comportamento equivalente ao da camada NCB.
 A tabela~\ref{tab:instancia-interface-ncb} lista as operações e eventos que integram a interface da camada NCB.
 
 \begin{table*}[h]
@@ -52,6 +52,31 @@ A tabela~\ref{tab:instancia-interface-framework}, demonstra a interface empregad
 A camada NCB monitora constantemente os eventos gerados por um \textsf{framework} de comunicação, podendo estes serem tratados pela camada, ou encaminhados às camadas superiores.
 Eventos como \textsf{SchemaFailed}, e \textsf{LoginFailed} são diretamente repassados à camada superior, pois a camada NCB não têm conhecimento suficiente para tratá-los. O evento \textsf{MediumFailed}, por sua vez, inicia o processo de seleção e configuração de um outro \emph{framework} de comunicação que seja capaz de atender a comunicação interrompida.
 
+\begin{table*}[h]
+\centering
+\caption{Interface dos \emph{frameworks} de comunicação.}
+\label{tab:instancia-interface-framework} 
+\begin{tabular}{|l|}
+\hline	\emph{\textbf{Calls}} \\ 
+\hline	Login()\\ 
+\hline	Logout()\\ 
+\hline 	SendSchema(receivers, schema)\\
+\hline 	CreateSession(session)\\
+\hline 	DestroySession(session)\\
+\hline 	AddParty(session, participant)\\
+\hline 	RemoveParty(session, participant)\\
+\hline 	EnableMedium(session, medium)\\
+\hline 	EnableMediumReceiver(session, medium)\\
+\hline 	DisableMedium(session, medium)\\
+\hline	\emph{\textbf{Events}} \\ 
+\hline	LoginFailed()\\
+\hline	SchemaReceived(sender, schema)\\
+\hline	SchemaFailed(receiver, schema)\\
+\hline	MediumFailed(medium) \\
+\hline 
+\end{tabular} 
+\end{table*}
+
 As seções seguintes demonstram como o comportamento descrito acima pode ser modelado em conformidade com o metamodelo proposto. A modelagem em questão se baseia na análise da implementação existente da camada NCB.
 
 \section{Modelagem}
@@ -64,7 +89,7 @@ Ao longo das subseções seguintes, os modelos são descritos por meio de diagrams 
 
 \subsection{Recursos}
 
-Para implementar a funcionalidade presente na NCB foram descritos três recursos no modelo da camada. Estes recursos representam os \emph{frameworks} de comunicação Skype, Smack e Asterisk. A figura ~\ref{} descreve o gerenciador de recursos descrito no modelo da NCB, onde os recursos mencionados são registrados. A interface utilizada pelos recursos é omitida nessa figura, mas corresponde à interface descrita na tabela~\ref{tab:instancia-interface-framework}.
+Para implementar a funcionalidade presente na NCB foram descritos três recursos no modelo da camada. Estes recursos representam os \emph{frameworks} de comunicação Skype, Smack e Asterisk. A figura ~\ref{} ilustra o gerenciador de recursos descrito no modelo da NCB, onde os recursos mencionados são registrados. A interface utilizada pelos recursos é omitida nessa figura, mas corresponde à interface descrita na tabela~\ref{tab:instancia-interface-framework}.
 
 Cada um dos \emph{frameworks} é implementado por meio de uma classe na plataforma Java, de acordo com o protocolo especificado na seção~\ref{sec:ambiente-integracaorecursos}. O código~\ref{cod:instancia-skypeadapter} ilustra um trecho do código da implementação da classe que representa o \emph{framework} Skype.
 
