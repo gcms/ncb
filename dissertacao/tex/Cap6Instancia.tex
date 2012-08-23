@@ -6,8 +6,8 @@ Este capítulo demonstra como o metamodelo proposto e o ambiente de execução forn
 
 \section{Visão geral}
 
-Como mostrado na seção~\ref{sec:background-cvm}, a camada de Intermediação de Comunicação em Rede (\emph{Network Communication Broker}, NCB), é responsável por prover uma interface que abstrai da camada superior os detalhes envolvidos na utilização dos \emph{frameworks} de comunicação, como Skype, Smack, Asterisk, etc. 
-A partir da análise do domínio de comunicação e de \emph{frameworks} de comunicação existentes \cite{foda}, foi identificado em trabalhos anteriores \cite{Andrew}, um conjunto de operações, independentes de tecnologia, capaz de prover o nível de abstração esperado dessa camada. Esse conjunto de operações, que compõe a interface da camada NCB,  representa o ponto de partida para a construção de um modelo que defina um comportamento equivalente ao da camada NCB.
+Como mostrado na seção~\ref{sec:referencial-cvm}, a camada de Intermediação de Comunicação em Rede (\emph{Network Communication Broker}, NCB), é responsável por prover uma interface que abstrai da camada superior os detalhes envolvidos na utilização dos \emph{frameworks} de comunicação, como Skype, Smack, Asterisk, etc. 
+A partir da análise do domínio de comunicação e de \emph{frameworks} de comunicação existentes, foi identificado em trabalhos anteriores \cite{foda}, um conjunto de operações, independentes de tecnologia, capaz de prover o nível de abstração esperado dessa camada. Esse conjunto de operações, que compõe a interface da camada NCB,  representa o ponto de partida para a construção de um modelo que defina um comportamento equivalente ao da camada NCB.
 A tabela~\ref{tab:instancia-interface-ncb} lista as operações e eventos que integram a interface da camada NCB.
 
 \begin{table*}[h]
@@ -77,7 +77,7 @@ Eventos como \textsf{SchemaFailed}, e \textsf{LoginFailed} são diretamente repas
 \end{tabular} 
 \end{table*}
 
-As seções seguintes demonstram como o comportamento descrito acima pode ser modelado em conformidade com o metamodelo proposto. A modelagem em questão se baseia na análise da implementação existente da camada NCB.
+As seções seguintes demonstram como o comportamento descrito acima pode ser modelado em conformidade com o metamodelo proposto. A modelagem em questão se baseia na análise da implementação existente da camada NCB \cite{Andrew}.
 
 \section{Modelagem}
 
@@ -91,7 +91,8 @@ Ao longo das subseções seguintes, os modelos são descritos por meio de diagrams 
 
 Para implementar a funcionalidade presente na NCB foram descritos três recursos no modelo da camada. Estes recursos representam os \emph{frameworks} de comunicação Skype, Smack e Asterisk. A figura ~\ref{} ilustra o gerenciador de recursos descrito no modelo da NCB, onde os recursos mencionados são registrados. A interface utilizada pelos recursos é omitida nessa figura, mas corresponde à interface descrita na tabela~\ref{tab:instancia-interface-framework}.
 
-Cada um dos \emph{frameworks} é implementado por meio de uma classe na plataforma Java, de acordo com o protocolo especificado na seção~\ref{sec:ambiente-integracaorecursos}. O código~\ref{cod:instancia-skypeadapter} ilustra um trecho do código da implementação da classe que representa o \emph{framework} Skype.
+Cada um dos \emph{frameworks} é implementado por meio de uma classe na plataforma Java, de acordo com o protocolo especificado na seção~\ref{sec:ambiente-integracaorecursos}.
+%O código~\ref{cod:instancia-skypeadapter} ilustra um trecho do código da implementação da classe que representa o \emph{framework} Skype.
 
 %\begin{center}
 % \begin{minipage}{0.7\textwidth}
@@ -104,16 +105,16 @@ Cada um dos \emph{frameworks} é implementado por meio de uma classe na plataform
 % \end{minipage}
 %\end{center}
 
-\subsection{Tipos de dados}
+\subsection{Estado}
 
-Na modelagem da camada NCB, foi descrito apenas um tipo de dados para armazenar dados de uma determinada sessão de comunicação. O tipo de dados definido, denominado \textsf{Connection}, possui quatro atributos que representam respectivamente o identificador da sessão, a lista de participantes, o tipo de mídia da comunicação, e o \emph{framework} de comunicação empregado na sessão de comunicação. Ainda, a sessão de comunicação é definida como o atributo chave desse tipo de dados. O diagrama da figura~\ref{fig:instancia-estado} ilustra a parte do modelo que descreve esse tipo de dados.
+Na modelagem da camada NCB, foi descrito apenas um tipo de dados, que é utilizado para manter informações das sessões de comunicação em andamento. O tipo de dados definido, denominado \textsf{Connection}, possui quatro atributos que representam respectivamente o identificador da sessão, a lista de participantes, o tipo de mídia da comunicação, e o \emph{framework} de comunicação empregado na sessão de comunicação. Ainda, a sessão de comunicação é definida como o atributo chave desse tipo de dados. O diagrama da figura~\ref{fig:instancia-estado} ilustra a parte do modelo da camada que descreve esse tipo de dados.
 
 \subsection{Tratadores e ações}
 
 Para especificar o comportamento da camada em reação aos sinais por ela identificados foram definidos $x$ tratadores de sinal, que executam $y$ ações também definidas no modelo. A tabela~\ref{tab:instancia-tratadores} lista os tratadores que compõem a camada, e as ações associadas.
 
 
-Além de estabelecer uma associação entre um sinal e uma ação, um tratador também define como os parâmetros de um sinal são mapeados para os parâmetros uma ação. O código~\ref{cod:instancia-sinal-acao} detalha a definição de um tratador para o sinal \textsf{sinal}, e a ação \textsf{ação}, responsável por tratar o sinal.
+Além de estabelecer uma associação entre um sinal e uma ação, um tratador também define como os parâmetros de um sinal são mapeados para os parâmetros de uma ação. O código~\ref{cod:instancia-sinal-acao} detalha a definição de um tratador para o sinal \textsf{sinal}, e a ação \textsf{ação}, responsável por tratar o sinal.
 
 codigo
 
