@@ -111,24 +111,76 @@ Na modelagem da camada NCB, foi descrito apenas um tipo de dados, que é utilizad
 
 \subsection{Tratadores e ações}
 
-Para especificar o comportamento da camada em reação aos sinais por ela identificados foram definidos $x$ tratadores de sinal, que executam $y$ ações também definidas no modelo. A tabela~\ref{tab:instancia-tratadores} lista os tratadores que compõem a camada, e as ações associadas.
+Para especificar o comportamento da camada em reação aos sinais por ela identificados foram definidos tratadores para todas as chamadas advindas da camada superior e um dos eventos gerados pelos recursos. A tabela~\ref{tab:instancia-tratadores} lista os tratadores definidos, estabelecendo a relação entre sinal e a ação utilizada para tratá-lo.
+
+\begin{table*}[h]
+\centering
+\caption{Tratadores que integram a definição da camada NCB.}
+\label{tab:instancia-tratadores} 
+\begin{tabular}{|l|l|}
+\hline Call LoginAll & CallAction LoginAllAction \\
+\hline Call LogoutAll & CallAction LogoutAllAction \\
+\hline Call SendSchema & MacroAction SendSchemaAction  \\
+\hline Call CreateSession & MacroAction CreateSessionAction \\
+\hline Call DestroySession & MacroAction DestroySessionAction \\
+\hline Call AddParty & MacroAction AddPartyAction \\
+\hline Call RemoveParty & MacroAction RemovePartyAction \\
+\hline Call EnableMedium & MacroAction MediumAction \\
+\hline Call EnableMediumReceiver & MacroAction MediumAction \\
+\hline Call DisableMedium & MacroAction MediumAction \\
+\hline Event LoginFailed & EventAction GenerateLoginFailedEvent \\
+\hline 
+\end{tabular} 
+\end{table*}
+
+Além de estabelecer uma associação entre um sinal e uma ação, um tratador também define como os parâmetros de um sinal são mapeados para os parâmetros de uma ação. O código~\ref{cod:instancia-sinal-acao} detalha a definição de um tratador do sinal \textsf{EnableMedium} e a ação \textsf{MediumAction}, utilizada para tratá-lo.
+
+\begin{center}
+ \begin{minipage}{1\textwidth}
+  \begin{codigo}[H]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/handler.hutn}
+   \caption{Tratador para a chamada \textsf{EnableMedium}}
+   \label{cod:instancia-sinal-acao}
+  \end{codigo}
+ \end{minipage}
+\end{center}
 
 
-Além de estabelecer uma associação entre um sinal e uma ação, um tratador também define como os parâmetros de um sinal são mapeados para os parâmetros de uma ação. O código~\ref{cod:instancia-sinal-acao} detalha a definição de um tratador para o sinal \textsf{sinal}, e a ação \textsf{ação}, responsável por tratar o sinal.
+A ação empregada no exemplo é baseada em uma macro, diretamente implementada na plataforma do ambiente de execução. O código~\ref{cod:instancia-macro} demonstra como essa ação é implementada, onde é possível identificar que a ação faz uso de dados mantidos pela camada para identificar qual \emph{framework} de comunicação está sendo utilizado por uma determinada sessão de comunicação.
 
-codigo
+\begin{center}
+ \begin{minipage}{1\textwidth}
+  \begin{codigo}[H]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/MediumActionInstance.java}
+   \caption{Implementação da ação \textsf{MediumAction}}
+   \label{cod:instancia-macro}
+  \end{codigo}
+ \end{minipage}
+\end{center}
 
-Como é possível observar, a ação empregada no exemplo é baseada na execução de uma implementação que executa a ação. O código~\ref{cod:instancia-macro} demonstra como essa ação é implementada. É possível identificar que a ação faz uso de dados mantidos pela camada e dos recursos para realizar sua tarefa.
+\begin{comment}
+Mostrar exemplos de outros tipos de ações no apêndice?
+\end{comment}
+
 
 \subsection{Gerenciamento autônomo}
 
-As construções de gerenciamento autônomo da camada NCB tem como intuito identificar falhas nos \emph{frameworks} de comunicação e tomar uma ação para que um novo \emph{framework} seja selecionado. A definição do gerenciamento autônomo no modelo da camada NCB é descrito no código~\ref{}.
+As construções de gerenciamento autônomo da camada NCB tem como intuito identificar falhas nos \emph{frameworks} de comunicação e tomar uma ação para que um novo \emph{framework} seja selecionado. A definição do gerenciamento autônomo no modelo da camada NCB é descrito no código~\ref{cod:instancia-autonomo}.
 
-codigo
+\begin{center}
+ \begin{minipage}{1\textwidth}
+  \begin{codigo}[H]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/autonomic.hutn}
+   \caption{Definição dos elementos de gerenciamento autônomo da NCB.} 
+   \label{cod:instancia-autonomo}
+  \end{codigo}
+ \end{minipage}
+\end{center}
 
-O modelo em questão define um sintoma chamado \textsf{FrameworkFailed} que representa uma falha em um \emph{framework} em condição. A expressão que define a condição desse sintoma verifica não só se ouve uma falha em um \emph{framework}, mas também se existe alguma sessão de comunicação que emprega o recurso que falhou. Associado ao sintoma temos uma requisição de mudança chamada \textsf{ChangeFramework} que liga o sintoma à um plano de mudança. O plano de mudança definido, por sua vez, indica qual a ação será executada, e os argumentos utilizados na execução dessa ação.
-
-{framework}
+O modelo em questão define um sintoma chamado \textsf{FrameworkFailed}, que representa uma falha em um \emph{framework}. A expressão que define a condição desse sintoma verifica não só se ouve uma falha em um \emph{framework}, mas também se existe alguma sessão de comunicação utilizando o recurso que falhou. Associado ao sintoma temos uma requisição de mudança chamada \textsf{ChangeFramework} que liga o sintoma à um plano de mudança. O plano de mudança definido, por sua vez, indica que a ação \textsf{ChangeFramework} deve ser executada, e os argumentos utilizados na execução dessa ação.
 
 \subsection{Políticas}
 
