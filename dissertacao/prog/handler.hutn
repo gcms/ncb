@@ -18,7 +18,7 @@ Handler {
   }
 }
 MacroAction MediumAction {
-  impl: cvm.ncb.macros.MediumActionInstance
+  impl: cvm.ncb.macros.MediumAction
   parameters: ActionParameter session
   parameters: ActionParameter medium
   parameters: ActionParameter action

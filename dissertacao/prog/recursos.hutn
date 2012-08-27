@@ -1,5 +1,6 @@
 InstanceResourceManager {
   instances: Instance Skype {
+    impl: "cvm.ncb.adapters.SkypeAdapter"
     features: Feature Audio {
       attributes: Attribute Enabled {
         value: true
@@ -14,6 +15,36 @@ InstanceResourceManager {
       }
       attributes: Attribute NumberOfUsers {
         value: 2
+      }
+    }
+  }
+  instances: Instance Smack {
+    impl: "cvm.ncb.adapters.SmackAdapter"
+    features: Feature Audio {
+      attributes: Attribute Enabled {
+        value: true
+      }
+      attributes: Attribute NumberOfUsers {
+        value: 2
+      }
+    }
+    features: Feature Video {
+      attributes: Attribute Enabled {
+        value: true
+      }
+      attributes: Attribute NumberOfUsers {
+        value: 4
+      }
+    }
+  }
+  instances: Instance Asterisk {
+    impl: "cvm.ncb.adapters.SIPAdapter"
+    features: Feature Audio {
+      attributes: Attribute Enabled {
+        value: true
+      }
+      attributes: Attribute NumberOfUsers {
+        value: 8
       }
     }
   }

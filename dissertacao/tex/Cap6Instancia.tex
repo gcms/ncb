@@ -5,6 +5,7 @@
 Este capítulo demonstra como o metamodelo proposto e o ambiente de execução fornecido, podem ser utilizados para construir e executar uma camada de intermediação de serviços. Para isto, construímos um modelo, em conformidade com o metamodelo proposto, que descreve o comportamento presente na camada NCB da CVM. Iniciamos este capítulo com uma breve descrição do comportamento da camada NCB, seguido por sua modelagem utilizando as abstrações descritas no capítulo~\ref{cap:metamodelo}. Ao fim do capítulo, descrevemos como o modelo construído foi avaliado, e os resultados obtidos.
 
 \section{Visão geral}
+\label{sec:instancia-visao-geral}
 
 Como mostrado na seção~\ref{sec:referencial-cvm}, a camada de Intermediação de Comunicação em Rede (\emph{Network Communication Broker}, NCB), é responsável por prover uma interface que abstrai da camada superior os detalhes envolvidos na utilização dos \emph{frameworks} de comunicação, como Skype, Smack, Asterisk, etc. 
 A partir da análise do domínio de comunicação e de \emph{frameworks} de comunicação existentes, foi identificado em trabalhos anteriores \cite{foda}, um conjunto de operações, independentes de tecnologia, capaz de prover o nível de abstração esperado dessa camada. Esse conjunto de operações, que compõe a interface da camada NCB,  representa o ponto de partida para a construção de um modelo que defina um comportamento equivalente ao da camada NCB.
@@ -30,6 +31,7 @@ A tabela~\ref{tab:instancia-interface-ncb} lista as operações e eventos que inte
 \hline	LoginFailed(framework)\\
 \hline	SchemaReceived(sender, schema)\\
 \hline	SchemaFailed(receiver, schema)\\
+\hline	SessionFailed(session)\\
 \hline 
 \end{tabular} 
 \end{table*}
@@ -82,23 +84,31 @@ As seções seguintes demonstram como o comportamento descrito acima pode ser mode
 \section{Modelagem}
 
 
-Conforme descrito no capítulo~\ref{cap:metamodelo}, a definição de uma camada de intermediação de serviços, utilizando o metamodelo proposto, se estrutura em torno de um gerenciador da camada, representado por meio da classe \textsf{Manager}.
+Conforme descrito no capítulo~\ref{cap:metamodelo}, a definição de uma camada de intermediação de serviços, utilizando o metamodelo proposto, se estrutura em torno de um gerenciador da camada, representado no metamodelo pela classe \textsf{Manager}.
 Na modelagem da camada NCB foi utilizado apenas um gerenciador de intermediação, e portanto sua interface define a interface da camada NCB, que contém as operações e eventos mencionados na seção anterior.
 
-Ao longo das subseções seguintes, os modelos são descritos por meio de diagrams UML e, quando necessário, por uma notação para descrição de modelos de forma textual e compreensível. Essa notação, denominada \emph{Human Usable Textual Notation} (HUTN) \cite{hutn} também é padronizada pela OMG, e apresenta vantagens na descrição de modelos mais detalhados, cuja representação gráfica pode exigir muito espaço.
+Ao longo das subseções seguintes, as partes que integram o modelo da camada NCB são descritos por meio de diagramas UML e, quando necessário, por uma notação para descrição de modelos de forma textual e compreensível. Essa notação, denominada \emph{Human Usable Textual Notation} (HUTN) \cite{hutn} também é padronizada pela OMG, e apresenta vantagens na descrição de modelos mais detalhados, cuja representação gráfica pode exigir muito espaço.
 
 \subsection{Recursos}
 
-Para implementar a funcionalidade presente na NCB foram descritos três recursos no modelo da camada. Estes recursos representam os \emph{frameworks} de comunicação Skype, Smack e Asterisk. A figura ~\ref{} ilustra o gerenciador de recursos descrito no modelo da NCB, onde os recursos mencionados são registrados. A interface utilizada pelos recursos é omitida nessa figura, mas corresponde à interface descrita na tabela~\ref{tab:instancia-interface-framework}.
+Para implementar a funcionalidade presente na NCB foram descritos três recursos no modelo da camada. Estes recursos representam os \emph{frameworks} de comunicação Skype, Smack e Asterisk. A figura~\ref{fig:instancia-recursos} ilustra o gerenciador de recursos descrito no modelo da NCB, onde os recursos mencionados são registrados. A interface utilizada pelos recursos é omitida nessa figura, mas corresponde à interface descrita na tabela~\ref{tab:instancia-interface-framework}.
+
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.9\textwidth]{./fig/instancia-recursos}
+ \caption{Definição dos \emph{frameworks} de comunicação empregados pela camada NCB.}
+ \label{fig:instancia-recursos}
+\end{figure}
 
 Cada um dos \emph{frameworks} é implementado por meio de uma classe na plataforma Java, de acordo com o protocolo especificado na seção~\ref{sec:ambiente-integracaorecursos}.
 %O código~\ref{cod:instancia-skypeadapter} ilustra um trecho do código da implementação da classe que representa o \emph{framework} Skype.
 
 %\begin{center}
-% \begin{minipage}{0.7\textwidth}
+% \begin{minipage}{1\textwidth}
 %  \begin{codigo}[H]
 %   \small
-%   \VerbatimInput{./prog/skypeadapter.java}
+%   \VerbatimInput{./prog/recursos.hutn}
 %   \caption{Recursos}
 %   \label{cod:instancia-recursos}
 %  \end{codigo}
@@ -108,6 +118,14 @@ Cada um dos \emph{frameworks} é implementado por meio de uma classe na plataform
 \subsection{Estado}
 
 Na modelagem da camada NCB, foi descrito apenas um tipo de dados, que é utilizado para manter informações das sessões de comunicação em andamento. O tipo de dados definido, denominado \textsf{Connection}, possui quatro atributos que representam respectivamente o identificador da sessão, a lista de participantes, o tipo de mídia da comunicação, e o \emph{framework} de comunicação empregado na sessão de comunicação. Ainda, a sessão de comunicação é definida como o atributo chave desse tipo de dados. O diagrama da figura~\ref{fig:instancia-estado} ilustra a parte do modelo da camada que descreve esse tipo de dados.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{./fig/instancia-estado}
+ \caption{Definição dos tipos de dados empregados pela camada NCB.}
+ \label{fig:instancia-estado}
+\end{figure}
+
 
 \subsection{Tratadores e ações}
 
@@ -135,30 +153,30 @@ Para especificar o comportamento da camada em reação aos sinais por ela identifi
 
 Além de estabelecer uma associação entre um sinal e uma ação, um tratador também define como os parâmetros de um sinal são mapeados para os parâmetros de uma ação. O código~\ref{cod:instancia-sinal-acao} detalha a definição de um tratador do sinal \textsf{EnableMedium} e a ação \textsf{MediumAction}, utilizada para tratá-lo.
 
-\begin{center}
- \begin{minipage}{1\textwidth}
-  \begin{codigo}[H]
+%\begin{center}
+% \begin{minipage}{1\textwidth}
+  \begin{codigo}[h]
    \small
    \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/handler.hutn}
    \caption{Tratador para a chamada \textsf{EnableMedium}}
    \label{cod:instancia-sinal-acao}
   \end{codigo}
- \end{minipage}
-\end{center}
+% \end{minipage}
+%\end{center}
 
 
 A ação empregada no exemplo é baseada em uma macro, diretamente implementada na plataforma do ambiente de execução. O código~\ref{cod:instancia-macro} demonstra como essa ação é implementada, onde é possível identificar que a ação faz uso de dados mantidos pela camada para identificar qual \emph{framework} de comunicação está sendo utilizado por uma determinada sessão de comunicação.
 
-\begin{center}
- \begin{minipage}{1\textwidth}
-  \begin{codigo}[H]
+%\begin{center}
+% \begin{minipage}{1\textwidth}
+  \begin{codigo}[h]
    \small
    \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/MediumActionInstance.java}
    \caption{Implementação da ação \textsf{MediumAction}}
    \label{cod:instancia-macro}
   \end{codigo}
- \end{minipage}
-\end{center}
+% \end{minipage}
+%\end{center}
 
 \begin{comment}
 Mostrar exemplos de outros tipos de ações no apêndice?
@@ -169,38 +187,138 @@ Mostrar exemplos de outros tipos de ações no apêndice?
 
 As construções de gerenciamento autônomo da camada NCB tem como intuito identificar falhas nos \emph{frameworks} de comunicação e tomar uma ação para que um novo \emph{framework} seja selecionado. A definição do gerenciamento autônomo no modelo da camada NCB é descrito no código~\ref{cod:instancia-autonomo}.
 
-\begin{center}
- \begin{minipage}{1\textwidth}
-  \begin{codigo}[H]
+%\begin{center}
+% \begin{minipage}{1\textwidth}
+  \begin{codigo}[h]
    \small
    \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/autonomic.hutn}
    \caption{Definição dos elementos de gerenciamento autônomo da NCB.} 
    \label{cod:instancia-autonomo}
   \end{codigo}
- \end{minipage}
-\end{center}
+% \end{minipage}
+%\end{center}
 
 O modelo em questão define um sintoma chamado \textsf{FrameworkFailed}, que representa uma falha em um \emph{framework}. A expressão que define a condição desse sintoma verifica não só se ouve uma falha em um \emph{framework}, mas também se existe alguma sessão de comunicação utilizando o recurso que falhou. Associado ao sintoma temos uma requisição de mudança chamada \textsf{ChangeFramework} que liga o sintoma à um plano de mudança. O plano de mudança definido, por sua vez, indica que a ação \textsf{ChangeFramework} deve ser executada, e os argumentos utilizados na execução dessa ação.
 
 \subsection{Políticas}
 
+Conforme descrito na seção~\ref{sec:instancia-visao-geral}, durante a configuração de uma sessão de comunicação a camada NCB simplesmente mantém informações a respeito da sessão, aguardando uma solicitação para que a comunicação seja estabelecida. A sessão comunicação é efetivamente estabelecida por meio das chamadas \textsf{EnableMedium} e \textsf{EnableMediumReceiver}, que indicam que a transmissão do tipo de mídia definido deve ser iniciada. No entanto, antes de iniciar essa transmissão é preciso definir qual \emph{framework} de comunicação será utilizado.
+
+A avaliação de políticas na camada NCB tem como intuito selecionar um \emph{framework} de comunicação que melhor atenda às necessidades de uma sessão de comunicação. Assim sendo, a avaliação de políticas é realizada imediatamente antes do estabelecimento de uma conexão, momento em que os requisitos da sessão já foram descritos.
+
+Para definir este comportamento, de acordo com o metamodelo proposto, foram definidos como pontos de avaliação de políticas as chamadas \textsf{EnableMedium}, e \textsf{EnableMediumReceiver}. Ao definir estas chamadas como pontos de avaliação de políticas, o ambiente de execução é capaz de interceptar essas chamadas e realizar a avaliação de políticas antes que essas chamadas sejam tratadas por suas respectivas ações. O código~\ref{cod:instancia-politicas} demonstra parte do modelo que descreve esse comportamento na camada NCB. O trecho em questão ilustra um contexto de avaliação de políticas, incluindo algumas das políticas que o compõem, um ponto de avaliação, e um tratador de avaliação.
+%A descrição completa desses elementos se encontra no apêndice
+
+%\begin{center}
+% \begin{minipage}{1\textwidth}
+  \begin{codigo}[h]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/policy.hutn}
+   \caption{Definição dos elementos de avaliação de políticas da NCB.} 
+   \label{cod:instancia-autonomo}
+  \end{codigo}
+% \end{minipage}
+%\end{center}
+
+
 \section{Avaliação}
 
+Uma vez construído um modelo que representa a camada NCB, sua execução junto ao ambiente fornecido foi avaliada em comparação à implementação existente da NCB, que integra a CVM. Para realizar essa avaliação foi elaborado um conjunto de cenários de comunicação, que descrevem uma sequência de interações válidas advindas da camada UCM ou dos \emph{frameworks} de comunicação. A partir da execução desses cenários em ambas implementações da NCB foi possível avaliar o modelo construído em relação à implementação já existente.
+
+Para conduzir essa avaliação, configuramos a implementação existente da NCB com um conjunto de recursos que simulam o comportamento esperado de um \emph{framework} de comunicação, e executamos os cenários elaborados. A partir dessa execução foi possível obter as interações geradas pela NCB em cada um dos cenários propostos. Essa informações foram então utilizadas na construção de testes automatizados, capazes de simular os cenários elaborados em uma camada de intermediação de serviços, e verificar se o seu comportamento foi o mesmo obtido na execução com a camada NCB existente.
+
+Os cenários elaborados para esta avaliação são brevemente descritos abaixo. 
+
+\begin{itemize}
+
+% testInitOk
+\item \textbf{Cenário 1}. Uma sessão de comunicação por meio de audio é estabelecida entre dois participantes.
+
+% testTwoMediaSameFw
+\item \textbf{Cenário 2}. Comunicação de audio é inicialmente estabelecida entre dois participantes. Em seguida é solicitado a inclusão de vídeo na comunicação, o que é feito diretamente pois o \emph{framework} em uso dispõe dessa capacidade.
+
+% testTwoMedia
+\item \textbf{Cenário 3}. Comunicação de audio é inicialmente estabelecida entre dois participantes. Após solicitação para que também seja estabelecida a comunicação por meio de vídeo, outro \emph{framework} é selecionado, e sua substituição é realizada de forma transparente pela camada NCB.
+
+% testFrameworkChange
+\item \textbf{Cenário 4}. Após estabelecer uma comunicação de audio entre dois participantes, ocorre uma falha no  \emph{framework} em uso. A camada NCB deve efetuar a sua substituição por outro \emph{framework} capaz de realizar a comunicação.
+
+% testFailedFramework
+\item \textbf{Cenário 5}. Após estabelecer uma comunicação de audio entre dois participantes, ocorre uma falha em todos os  \emph{frameworks} disponíveis. A camada NCB deve notificar a falha à camada superior.
+
+\item % testWaitingCall
+\textbf{Cenário 6}. Após receber um esquema de outro participante, uma comunicação de audio é estabelecida entre dois participantes. Um evento é gerado para a camada superior indicando o recebimento do esquema, essa por sua vez, é que determina que a camada NCB deve aceitar essa comunicação.
+
+% testLoginFailed
+\item \textbf{Cenário 7}. Ocorre uma falha durante a autenticação com um dos \emph{frameworks} de comunicação. Um evento deve ser gerado para a camada superior.
+
+% testThreeParties
+\item \textbf{Cenário 8}. Comunicação entre três participantes, onde uma comunicação de audio é estabelecida entre três participantes.
+
+\end{itemize}
+
+Cada cenário descreve um conjunto de interações com a camada e verifica se esta se comportou de acordo com o esperado. A tabela~\ref{tab:scenario} demonstra a interação realizada com a camada para o cenário 4, e como a camada deve interagir com os recursos simulados. A primeira coluna mostra a sequência de chamadas realizadas para a camada NCB, e as demais colunas mostram as chamadas realizadas pela NCB aos recursos simulados. Neste cenário, a comunicação é inicialmente estabelecida através do \emph{Framework} 1, que é substituído pelo \emph{Framework} 2 após a simulação de uma falha no \emph{Framework} 1. A camada NCB automaticamente finaliza a comunicação estabelecida utilizando o \emph{Framework} 1, e a reestabelece no \emph{Framework} 2.
+
+\begin{table}\scriptsize
+\centering
+\caption{Execução do cenário 4}
+\begin{tabular}{|l|l|l|} \hline
+
+NCB & \emph{Framework} 1 & \emph{Framework} 2\\ \hline
+
+\parbox{0.3\textwidth}{
+LoginAll() \\
+SendSchema("Yali", \emph{schema}) \\
+CreateSession("101")\\
+AddParty("101", "Yali") \\
+EnableMedium("101", "Audio"); \\
+\emph{SimulateFailure(Framework 1, "Audio")}}
+&
+\parbox{0.3\textwidth}{
+Login() \\
+SendSchema("Yali", \emph{schema}) \\
+CreateSession("101") \\
+AddParty("101", "Yali") \\
+EnableMedium("101", "Audio") \\
+DestroySession("101") }
+&
+\parbox{0.3\textwidth}{
+Login() \\
+SendSchema("Yali", \emph{schema}) \\
+CreateSession("101") \\
+AddParty("101", "Yali") \\
+EnableMedium("101", "Audio") \\}
+\\
+\hline\end{tabular}
+\label{tab:scenario}
+\end{table}
 
 
-% Present the NCB instance (model) . Describe its use: how it is instantiated (i.e., put to run in the form of an execution engine) and how it interprets a user-derived model at runtime (describe the model that is seen by the NCB layer, i.e., based on the commands available at its interface with the UCM layer).
-In order to demonstrate the usage of the proposed  metamodel along with the provided execution environment, we designed a model that describes the behavior present in the NCB layer of the CVM. The existing CVM implementation of NCB was analyzed and used as a reference for the construction of this model. In order to verify its accuracy we designed a set of automated test scenarios that simulate requests from the middleware layer.
-These tests were executed both in the existing NCB implementation, and in the modeled NCB loaded in the execution engine, leading to same expected results. 
-%[Refers to Andrew's NCB implementation] 
-
-%\begin{figure*}
-% \centering
-% \includegraphics[width=0.9\textwidth]{instance}
-% \caption{Instance of the broker layer  metamodel that describes a Network Communication Broker for the CVM}
-% \label{fig:instance}
-%\end{figure*}
 
 
-Figure ~\ref{fig:instance} shows an object diagram that illustrates a reduced part of the model designed. This diagram omits some relationships and objects due to space limitations. In this diagram, It is possible to outline how the main elements of the  metamodel are instantiated.
+Os testes construídos a partir desses cenários foram utilizados durante toda a construção do modelo descrito na seção anterior, para validar sua  conformidade com a implementação existente da NCB. Após a construção do modelo e sua validação, esses cenários foram novamente executados em ambas as implementações com o intuito de mensurar, e comparar a performance de ambas implementações.
 
+Foram realizadas 100 (cem) execuções de cada cenário e em seguida calculados seu tempo médio de execução e o desvio padrão. Os resultados, expostos na tabela~\ref{tab:instancia-tempo}, demonstram que o tempo de execução médio da versão da NCB descrita por meio de um modelo é bem superior ao obtido na versão original. Como esperado, isso se deve em parte ao \emph{overhead} envolvido na carga de um modelo durante a inicialização da camada. Mas além disso, outras operações necessárias para o funcionamento da camada modelada, como a avaliação de expressões, mapeamento de parâmetros, e interação com os recursos por meio de reflexão exigem mais do processamento que a versão original, onde essas operações são desnecessárias.
 
+\begin{table*}[h]
+\centering
+\caption{Tempo de execução dos cenários descritos nas implementações da camada NCB (em ms).}
+\label{tab:instancia-tempo} 
+\begin{tabular}{p{2cm}|r|r|r|r|}
+\cline{2-5}
+ & \multicolumn{2}{|c|}{NCB original} & \multicolumn{2}{|c|}{NCB modelada} \\
+% \hline
+ \cline{2-5}
+% \multicolumn{1}{|l|}{Cenárioo} & Média & Desvio Padrão & Média & Desvio Padrão \\
+ & \multicolumn{1}{|p{2cm}|}{\centering Tempo médio (ms)} & \multicolumn{1}{|p{2cm}|}{\centering Desvio Padrão} & \multicolumn{1}{|p{2cm}|}{\centering Tempo médio (ms)}  &  \multicolumn{1}{|p{2cm}|}{\centering Desvio Padrão}  \\
+ \hline
+\multicolumn{1}{|l|}{Cenário 1} & $1445,91$ & $105,24$ & $3006,92$ &$614,56$ \\ \hline
+\multicolumn{1}{|l|}{Cenário 2} & $1351,70$ & $57,94$ & $2839,12$ & $118,40$ \\ \hline
+\multicolumn{1}{|l|}{Cenário 3} & $1434,29$ & $89,81$ & $3005,04$ & $295,41$ \\ \hline
+\multicolumn{1}{|l|}{Cenário 4} & $1369,29$ & $51,60$ & $3058,53$ & $149,70$ \\ \hline
+\multicolumn{1}{|l|}{Cenário 5} & $1900,78$ & $62,43$ & $3316,11$ & $119,30$ \\ \hline
+\multicolumn{1}{|l|}{Cenário 6} & $1257,97$ & $46,70$ & $2802,38$ & $110,81$ \\ \hline
+\multicolumn{1}{|l|}{Cenário 7} & $1326,91$ & $70,51$ & $2798,55$ & $119,53$ \\ \hline
+\multicolumn{1}{|l|}{Cenário 8} & $1297,95$ & $56,25$ & $2795,56$ & $128,46$ \\ \hline
+\end{tabular} 
+\end{table*}

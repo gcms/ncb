@@ -1,0 +1,29 @@
+PolicyManager {
+  context: PolicyEvaluationContext General {
+    parameters: Parameter session
+    parameters: Parameter medium
+    parameters: Parameter numOfParticipants
+    policies: Policy Audio01 {
+      businessValue: 100
+      condition: Condition {
+        expression: "Audio.Enabled"
+      }
+    }
+    policies: Policy Audio02 {
+      businessValue: 96
+      condition: Condition {
+        expression: "numOfParticipants <= Audio.NumberOfUsers"
+      }
+    }
+  }
+  points: PolicyEvaluationPoint {
+    signal: Call EnableMedium
+    bindings: /* ... */
+  }
+  handlers: PolicyEvaluationHandler {
+    action: ActionExecution {
+      action: MacroAction UseFramework
+      bindings: /* ... */
+    }
+  } 
+}

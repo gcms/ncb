@@ -53,12 +53,12 @@ Conforme ilustrado, um modelo de alto nível, descrito em uma DSML é processado p
 
 O \emph{gerenciador de intermediação} é o principal elemento do ambiente, sendo o responsável por controlar o fluxo de execução. O \emph{gerenciador de intermediação} é o componente responsável por realizar, em tempo de execução, o elemento descrito no metamodelo por meio da classe \textsf{Manager}. Portanto, em tempo de execução o contexto de gerenciamento de recursos é definido por um \emph{gerenciador de intermediação}, que pode empregar outros \emph{gerenciadores de intermediação} como recursos.
 
-\begin{figure*}
+\begin{figure}
  \centering
  \includegraphics[width=1\textwidth]{./fig/environment}
  \caption{Ambiente de execução para realização de um intermediador de serviços.}
  \label{fig:ambiente-fluxo}
-\end{figure*}
+\end{figure}
 
 Um \emph{gerenciador de intermediação} serializa o tratamento dos sinais recebidos, que são enfileirados e em seguida processados um a um.  O processamento dos sinais é conduzido pelo \emph{gerenciador de tratadores de sinais} que identifica e executa o \emph{tratador de sinais} apropriado.
 O \emph{gerenciador de tratadores de sinais} mantém um registro de \emph{tratadores de sinais} e procura pelo primeiro que é capaz de tratar o sinal em processamento. 

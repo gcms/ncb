@@ -1,0 +1,5 @@
+MacroAction UseFramework {
+  impl: cvm.ncb.macros.UseFrameworkAction
+  parameters: ActionParameter session
+  parameters: ActionParameter framework
+}
