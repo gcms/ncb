@@ -5,13 +5,126 @@
 \section{Model driven engineering}
 \label{sec:mde}
 
-Visão geral de MDE
+Descrição geral de MDE:
+  - uso de modelos como principais artefatos para construção de software
+  - modelos não só como documentação ou projeto, mas como elementos de primeira classe
+  - processamento automatizado por ferramentas em elementos da plataforma de implementação
+
+The term Model-Driven Engineering is commonly used to describe a set of software engineering approaches that employ models as their primary artifacts. In these approaches, the use of models is not restricted to the documentation or design of software, but may extend throughout the software engineering process.
+%By employing models based on abstractions closer to the problem to be solved, model-driven approaches seek to abstract technical details of the underlying platform, therefore simplifying the engineering of software. To make it feasible, these approaches rely on automated tools for the processing of models into constructs of the implementation platform.
+
+Models are usually described in domain-specific modeling languages, and processed by automated tools into constructs of the implementation platform \cite{Schmidt}. The use of domain-specific models switches the focus of software engineering from implementation technologies to problem-level abstractions.
+Nonetheless, automation in the processing of high-level models into software implementation requires encoding substantial domain-specific knowledge into the language and processing tools
+
+A modeling language is described using a  metamodel, which is itself a model that defines the abstractions available in the domain and how they interrelate. Metamodeling techniques have been standardized by the OMG Meta-Object Facility \cite{Omg_2006}, but there are several tools, such as the Eclipse Modeling Framework \cite{emf}, that provide metamodeling capabilities.
+
+Domain-specific models may be transformed into artifacts of the implementation platform or directly executed by a model interpreter. The use of model interpreters has the potential of facilitating the processing of models at runtime in order to adapt a running application. This usage of models has been proposed as an alternative to deal with the growing complexity of contemporary software \cite{FranceEtAl}.
+
+The use of models at runtime seeks to use better abstractions for manipulating and inspecting a running system. Models at runtime bear a certain resemblance with reflection in which both deal with self-representations of a system that are causally connected. However, models at runtime use representations that are closer to the problem domain, in contrast with reflection, whose representations tend to be based on the implementation platform \cite{Blair2009}.
+
+
+Title: In Search of a Basic Principle for Model Driven Engineering
+
+"One of the possible evolutionary paths is
+called model engineering. This consists in giving ?rst-class
+status to models and model elements, similarly to the ?rst class
+status that was given to objects and classes in the 80s, at the
+beginning of the object technology era. The essential change is
+that models are no longer used only as mere documentation for
+programmers, but can now be directly used to drive software
+production tools."
+
+
+The answer was to provide one language for
+de?ning meta-models, i.e. a meta-meta-model (level M3
+in
+Figure 1). Each meta-model de?nes itself a language for
+describing a speci?c domain of interest (level M2
+ in Figure 1).
+For example UML describes the artifacts of an object-oriented
+software system. Some other meta-models may address
+domains like legacy systems, data warehouses, software process, organization, tests, quality of service, party management,
+etc. Each is important and their numbers keep growing. They
+are de?ned as separate components and many relationships
+exist between them.
+
+
+Until now
+object analysis and design models have mainly been used to
+document software systems. Analysts and designers built models that were provided to programmers only as inspiration
+material to facilitate the production of concrete software. The
+move from this ‘contemplative’ period to a new situation where
+production tools will be model driven has been facilitated by
+the introduction of standards like the XMI (XML Metadata
+Interchange) recommendation [7].
+
+
+A basic principle in object technology (“Everything is an
+object” [P1]) was most helpful in driving the technology in the
+80s, in the direction of simplicity, generality and power of integration. Similarly in model engineering, the basic principle
+“Everything is a model” [P2] has many interesting properties,
+among them the capacity to generate a realistic research agenda. We suggest that this may be most useful in understanding
+many questions about model engineering in general and the
+MDA™ approach in particular.
+
+A model represents this system at level M1
+. This
+model conforms to its meta-model de?ned at level M2
+and the
+meta-model itself  conforms to the meta-meta-model at level
+M3
+. The meta-meta-model conforms to itself. This is very
+similar to the organization of programming languages, as
+already suggested in the right-hand column of Figure 1. A selfrepresentation of the EBNF (Extended Backus-Naur Form)
+notations takes some lines. This notation allows de?ning in?nity of well-formed grammars. A given grammar, for example
+the grammar of the Pascal language, allows de?ning the in?nity
+of syntactically correct Pascal programs. One Pascal program
+is a symbolic representation of the in?nity of its possible executions. The Pascal program, the Pascal grammar, the EBNF
+self-described notation are all examples of symbolic models.
+The execution of the program, on the contrary, is a real phenomenon involving changes of values in electronic memories
+and much more: it is part of the real world.
+
+
+
+
+We suggest that the current software development paradigm, based on object orientation, may have reached
+the point of exhaustion, and we propose a model for its successor
+
+
+Title: On the Unification Power of Models
+
+The software industry remains reliant on the craftsmanship of skilled individuals engaged in labor intensive manual tasks.
+We suggest that the current software development para-digm, based on object orientation, may have reached the point of exhaustion, and we propose a model for its successor.
+
+At the beginning of object technology, what was important was that an object could be an instance of a class and a class could inherit from another class. This may be seen as a minimal definition in support of principle [P1]. We call the two basic relations instanceOf and inheritsFrom. Very differently, what seem to be important now is that a particular view (or aspect) of a system can be captured by a model and that each model is written in the language of its metamodel. This may be seen as a minimal definition in support of principle [P2].
+
+The danger would be to use the old [P1] relations within the new context of MDE, for example by stating that a model in an instanceOf a metamodel2. This point of view often leads to many confusion and does not help in clarifying a complex evolution.
+More generally, there is an over-usage of this instanceOf relation in MDE. Used in different contexts, with different meanings, this may cause additional confusion. Careful distinction between at least three different usages of this relation is suggested in [3] and [8].
+[3] Some Initial Considerations on the Layered Organization of Metamodels
+[8] Ontology-based Layered Semantics for Precise OA&D
+
+The MDE approach has not a unique goal. Among the objectives pursued, one may list the separation from business-neutral descriptions and platform dependent imple-mentations, the identification, precise expression, separation and combination of specific aspects of a system under development with domain-specific languages, the establishment of precise relations between these different languages in a global framework and in particular the possibility to express operational transformations between them 
+
+3 MDE: concepts and goals
+As the notion of object was central to the software development practices of the 80's, the notion of model seems today to focus much attention. The question of defining what a model is, on a practical basis, will probably take as much time and energy to settle as the definition of the notion of an object. We propose in this paper to start from the two basic relations associated to principle [P2].
+
+
+%Model Driven Development: Code Generation or Model Interpretation?
+%http://www.theenterprisearchitect.eu/archive/2010/06/28/model-drivendevelopment-code-generation-or-model-interpretation
+%Domain-specific languages in practice: A user study on the success factors.
+
+
 
 \subsection{Modelos}
 
 \subsubsection{Dimensões de modelagem}
 
 \subsection{Linguagens}
+automation. Arie et al. [73] defines a domain-specific language as:
+A domain-specific language (DSL) is a programming language or executable specification
+language that offers, through appropriate notations and abstractions, expressive
+power focused on, and usually restricted to, a particular problem domain.
+
 
 \subsection{Meta-modelagem}
 
