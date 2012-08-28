@@ -169,7 +169,7 @@
 \RequirePackage{lastpage}
 \RequirePackage{ifpdf} % running on pdfTeX?
 \ifpdf
- \RequirePackage[hyperref,pdftex]{hyperref}
+ \RequirePackage[pdftex]{hyperref}
  \pdfadjustspacing=1    %%% force LaTeX-like character spacing
 \else
  \RequirePackage[dvips,breaklinks]{hyperref}
@@ -213,7 +213,7 @@
 
 %% algorithms
 %% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-\RequirePackage[ruled, algo2e, vlined, portugues, algochapter]{algorithm2e}
+\RequirePackage[ruled, algo2e, vlined, portuguese, algochapter]{algorithm2e}
 \renewcommand{\listofalgorithmes}{\begingroup
  \tocfile{\listalgorithmcfname}{loa}
  \endgroup}

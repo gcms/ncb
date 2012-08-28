@@ -1,0 +1,43 @@
+
+\chapter{Conclusões}
+\label{cap:conclusoes}
+
+\section{Summary/Contribuitions}
+% TODO: MAKE IT CONFORMANT TO THE ABSTRACT/INTRODUCTION/GENERIC ARCHITECTURE
+% TODO: It needs to mention that it is an step towards the use of models for adaptative execution engines
+
+% Summarize the contributions and discuss limitations and future work.
+
+%- Brief review: approach for the construction (and usage) of DSML execution engines for models@rt
+The use of MDE and DSMLs certainly brings benefits to the development and maintenance of complex applications by providing abstractions closer to the application domain. Meanwhile, the development of execution engines for DSMLs still requires substantial effort and is largely based on code-centric approaches.
+
+In this paper we have presented a model-driven approach towards the development and usage of execution engines for DSMLs aimed at the construction of high-level services upon a set of heterogeneous resources.
+This approach relies on a generic architecture that addresses issues involved in the execution of models that are described in these DSMLs and that can be created and changed at runtime.
+Hence we proposed the use of MDE techniques to specialize this architecture into domain-specific execution engines.
+We then designed a  metamodel that captures domain-independent aspects of a broker layer of the proposed architecture and demonstrated its use by modeling a Network Communication Broker for the Communication Virtual Machine.
+By doing so, we look after a way to simplify the development of execution engines for DSMLs, extending the benefits of MDE beyond the construction of applications to the construction of their execution engines.
+
+% NOTE: OTHER PHRASES THAT I THOUGHT ABOUT BEFORE
+% leverages solutions identified in the development of execution engines for communication and microgrid management domains.
+%to propose a generic architecture that addresses issues involved in the execution of models described in these DSMLs and that can be created and changed at runtime. Based on that, we proposed the use of MDE techniques to specialize this architecture into domain-specific execution engines. 
+
+%- Contributions: 
+%Argue in favor of the generality (domain independence) of this approach
+%- Simplify the development of execution engines for DSMLs by extending the use of MDE from the construction of applications to the construction of the execution engine that process a model.
+%- We look after the common aspects involved in the processing of domain-specific models at runtime.
+%- We propose a systematic way of applying the solutions acquired in the experience with the CVM to other domains
+
+
+\section{Future Work}
+
+%- Limitations: 
+%no formal link between DSML  metamodel and the execution engine definition
+%- Future work: extend to other layers; enable changes to the execution engine model at runtime; experiment the concept in other application domains
+
+However, there are several areas that have not been covered by our work and still lack investigation. 
+As future work, we plan to advance in the construction of  metamodels for the description of other layers of the proposed archicture. This task requires identifying domain-independent aspects related to the responsibilities of a layer and creating abstractions that enables the description of the functionality.
+Moreover, we need to evaluate the application of the proposed approach in other application domains and reach a better comprehension of its applicability.
+Further research also needs to be conducted towards the integration between the models of each layer and the  metamodel for the DSML. Other research direction is towards the manipulation of execution engine models at runtime which may bring new unexploited possibilities to adaptation at runtime.
+
+
+
