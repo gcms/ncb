@@ -2,13 +2,107 @@
 \label{cap:referencial}
 
 %% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-\section{Model driven engineering}
+\section{Engenharia dirigida por Modelos}
 \label{sec:mde}
+
+Não esquecer:::
+More than five years after, the situation has much evolved. Separating platform dependent from platform independent aspects is no more seen as the unique goal. The major problem is now the separation and combination of concerns in the construction and maintenance of information systems. Among these concerns, platform dependent and independent aspects remains important in the agenda, but these are more and more considered as a special case of a general problem including for example separation of functional and non-functional requirements. MDA and DSL solutions are now more and more closely related. What MDA is bringing to DSLs is this idea of using a collection of metamodels to capture the various facets of a system under construction or under maintenance. What DSLs is bringing to MDA is that a unique general purpose language, even a very large one like UML 2.0, is not able and will never be able to capture all the needs of the designers, administrators, and users of a given system.
+
+
+The term Model-Driven Engineering is commonly used to describe a set of software engineering approaches that employ models as their primary artifacts. In these approaches, the use of models is not restricted to the documentation or design of software, but may extend throughout the software engineering process.
+%By employing models based on abstractions closer to the problem to be solved, model-driven approaches seek to abstract technical details of the underlying platform, therefore simplifying the engineering of software. To make it feasible, these approaches rely on automated tools for the processing of models into constructs of the implementation platform.
+
+Models are usually described in domain-specific modeling languages, and processed by automated tools into constructs of the implementation platform \cite{Schmidt}. The use of domain-specific models switches the focus of software engineering from implementation technologies to problem-level abstractions.
+Nonetheless, automation in the processing of high-level models into software implementation requires encoding substantial domain-specific knowledge into the language and processing tools
+
+A modeling language is described using a  metamodel, which is itself a model that defines the abstractions available in the domain and how they interrelate. Metamodeling techniques have been standardized by the OMG Meta-Object Facility \cite{Omg_2006}, but there are several tools, such as the Eclipse Modeling Framework \cite{emf}, that provide metamodeling capabilities.
+
+Domain-specific models may be transformed into artifacts of the implementation platform or directly executed by a model interpreter. The use of model interpreters has the potential of facilitating the processing of models at runtime in order to adapt a running application. This usage of models has been proposed as an alternative to deal with the growing complexity of contemporary software \cite{FranceEtAl}.
+
+The use of models at runtime seeks to use better abstractions for manipulating and inspecting a running system. Models at runtime bear a certain resemblance with reflection in which both deal with self-representations of a system that are causally connected. However, models at runtime use representations that are closer to the problem domain, in contrast with reflection, whose representations tend to be based on the implementation platform \cite{Blair2009}.
+
+\subsection{Modelos}
+
+Em abordagens de MDE, um modelo é uma representação abstrata e formal de algum aspecto de um sistema.
+Um modelo descreve um sistema de acordo com uma perspectiva, ignorando informações que não estão relacionadas à sua natureza.
+Um sistema complexo, por sua vez, pode ser descrito por diversos modelos que capturam diferentes aspectos sob variados níveis de abstração. 
+De acordo com o nível de abstração de um modelo, este pode ser construído por desenvolvedores de software, especialistas de domínio, ou até mesmo por usuários finais.
+O uso de modelos formalmente definidos, em acordo com uma linguagem de modelagem, possibilita que os modelos que descrevem um sistema sejam processados automaticamente em elementos associados à implementação do sistema.
+
+modelos podem apresentar representações gráficas ou textuais
+
+
+%De acordo com o nível de abstração de um modelo, este pode ser construído por desenvolvedores de software, especialistas de domínio, ou até mesmo por usuários finais.
+
+% a model of the system is not just a drawing in some design document anymore but a set of formal concepts and elements [39].
+ 
+% In a MDE system, a model is a consistent and complete set of formal elements describing a system that is amenable to analysis 
+
+%Model driven engineering offers the potential for automatic transformation of high-level, abstract application subject matter models into running systems. 
+
+\subsection{Metamodelagem}
+Conforme mencionado na seção anterior, modelos são construídos em conformidade com uma linguagem de modelagem. Assim como outras linguagens formais, uma linguagem de modelagem é definida por sua sintaxe e semântica. 
+A sintaxe de uma linguagem de modelagem pode ainda ser divida em sintaxe concreta, que representa sua notação textual ou gráfica, e sintaxe abstrata que representa os conceitos disponíveis na linguagem e como estes se relacionam. A semântica, por sua vez, também é comumente tratada separadamente como semântica estática, que define critérios para que modelos sejam considerados válidos, e a semântica dinâmica que dá significado aos modelos.
+
+A sintaxe abstrata e semântica estática de uma linguagem de modelagem são comumente formalizadas por meio de um metamodelo. Um metamodelo é um modelo que descreve um conjunto de abstrações e como estas estão relacionadas. As abstrações descritas por um meta-modelo representam as construções que irão compor a linguagem por ele formalizada. Assim sendo, o meta-modelo deve incluir elementos relacionados ao aspecto e nível de abstração da linguagem por ele descrito.
+
+Por também se tratar de um modelo, um meta-modelo também é construído por meio de uma linguagem de modelagem. Esta meta-linguagem, por sua vez, também é definida através de um metamodelo, que neste caso é chamado de meta-metamodelo. 
+
+A construção de modelos e meta-modelos foi padronizada pela OMG por meio de uma arquitetura de metamodelagem denominada \emph{Meta-Object Facility} (MOF). A especificação da MOF descreve uma arquitetura de quatro camadas, ilustrada na figura~\ref{}, onde os elementos em uma determinada camada são definidos como instâncias de elementos da camada imediatamente superior. A camada mais superior, denominada M3, também integra a especificação da MOF, e representa o meta-metamodelo, que pode ser utilizado para a construção de metamodelos. O modelo da camada M3, também denominado de modelo MOF, é formalizada por meio de suas próprias abstrações, tornando desnecessária a existência de um outro nível de metamodelagem.
+
+A partir do modelo da camada M3, é possível construir metamodelos que descrevem a sintaxe abstrata e semântica estática de linguagens de modelagem para diversos fins. Exemplos de linguagens de modelagem definidas a partir do modelo MOF incluem a .... Essas linguagens integram a camada M2 da arquitetura da MOF, e são utilizadas para construir os modelos que integram o nível M1. Os modelos da camada M1, por sua vez, são representações de objetos existentes no nível M0. O significado da camada M0 é controverso, e pode ser considerado como um objeto do mundo real, ou um fenômeno da execução de software, de acordo com a natureza do modelo na camada M1. Além disso, a especificação da MOF ainda define um padrão para representação de modelos no formato XMI (\emph{XML Metadata Interchange}).
+
+O \emph{Eclipse Modeling Framework} (EMF) é um \emph{framework} de modelagem que fornece um conjunto de ferramentas para construção e processamento de modelos. O EMF inclui um metamodelo denominado Ecore, que representa um subconjunto do modelo MOF. O Ecore pode ser utilizado para construir modelos que representam um meta-modelo de uma linguagem. Utilizado dessa forma, o Ecore assume a mesma função do nível M3 da arquitetura da MOF. O desenvolvimento do EMF e Ecore influenciaram a padronização da MOF que atualmente conta com uma versão equivalente ao Ecore, denominada \emph{Essential MOF}.
+
+
+%A sintaxe de uma linguagem é tradicionalmente definida por meio de gramáticas na forma Backus-Naur (BNF), que descrevem regras para derivação de sequências válidas. Apesar de possibilitarem a definição formal de  linguagens, o uso de gramáticas BNF se limita a descrição de linguagens textuais e 
+
+
+
+
+O termo \emph{Model-Driven Engineering} (MDE) é geralmente empregado para identificar um conjunto de abordagens que promovem o uso de modelos como os principais artefatos no processo de engenharia de software \cite{}.
+
+
+%O surgimento de abordagens dirigidas por modelos evoluiu da crescente complexidade 
+%complexidade das aplicações
+%enquanto isso as tecnologias existentes...
+
+O surgimento de abordagens dirigidas por modelo evoluiu a partir da necessidade de lidar com a crescente complexidade encontrada no desenvolvimento de sistemas de software. O avanço nas tecnologias de rede e processamento observado nas últimas décadas possibilitou a construção de aplicações cada vez mais complexas. Apesar disso, as linguagens de programação de terceira geração não evoluíram com a mesma velocidade, sendo que suas  abstrações não se demonstram capazes de ocultar as complexidades envolvidas no desenvolvimento de software atual.
+Abordagens dirigidas por modelos buscam reduzir a lacuna existente entre as tecnologias/plataforma de implementação e a 
+
+%O avanço nas tecnologias de rede e processamento observado nas últimas décadas possibilitou a construção de aplicações cada vez mais complexas, que comumente envolvem elementos de computação distribuída em ambientes heterogêneos que estão em constante mudança. 
+%Além disso, aplicações atuais apresentam cada vez mais requisitos de disponibilidade, segurança, adaptabilidade, entre outros capazes de aumentar significativamente a complexidade de um sistema baseado em software.
+%As abstrações fornecidas por linguagens de programação orientadas a objetos não são capazes de ocultar as complexidades envolvidas no desenvolvimento das aplicações atuais.
+
+Nesse contexto, o uso de modelos surge como um meio de representar de forma abstrata algum aspecto de um sistema, ocultando detalhes desnecessários para sua compreensão. 
+Em abordagens dirigidas por modelos, o uso de modelos não se restringe a representação e compreensão de um sistema, mas também se aplica à sua descrição e construção.
+
+Além de abstratos, os modelos empregados em abordagens de MDE são formais, o que possibilita que sejam processados de forma automatizada. Por meio de linguagens de modelagem mais apropriadas para descrição dos aspectos que compõem um sistema e ferramentas capazes de processá-los, de forma automatizada, em construções da plataforma de implementação, abordagens de MDE buscam ocultar a complexidade envolvida no desenvolvimento de aplicações.
+
+
+%MDE evoluiu da complexidade do software...
+%Abstrações não evoluíram (baseadas em computação)
+
+In a traditional software engineering process, mapping between design and implementation is done by exploiting the expert knowledge of a programmer. In model driven engineering this expert knowledge is not lost in millions of lines of code but instead it is explicitly visible in trans- formation functions.
+
+
+
+
+multiple goals
 
 Descrição geral de MDE:
   - uso de modelos como principais artefatos para construção de software
   - modelos não só como documentação ou projeto, mas como elementos de primeira classe
-  - processamento automatizado por ferramentas em elementos da plataforma de implementação
+  - processamento automatizado de modelos em elementos da plataforma de implementação
+  
+  transformação ou interpretação
+  
+  models@run.time
+  
+  DSL
+  - encoding substantial domain-specific knowledge into the language and its processing tools
+  
+  
 
 The term Model-Driven Engineering is commonly used to describe a set of software engineering approaches that employ models as their primary artifacts. In these approaches, the use of models is not restricted to the documentation or design of software, but may extend throughout the software engineering process.
 %By employing models based on abstractions closer to the problem to be solved, model-driven approaches seek to abstract technical details of the underlying platform, therefore simplifying the engineering of software. To make it feasible, these approaches rely on automated tools for the processing of models into constructs of the implementation platform.
@@ -114,27 +208,29 @@ As the notion of object was central to the software development practices of the
 %Domain-specific languages in practice: A user study on the success factors.
 
 
-
-\subsection{Modelos}
-
-\subsubsection{Dimensões de modelagem}
-
-\subsection{Linguagens}
+\subsection{Linguagens específicas de domínio}
 automation. Arie et al. [73] defines a domain-specific language as:
 A domain-specific language (DSL) is a programming language or executable specification
 language that offers, through appropriate notations and abstractions, expressive
 power focused on, and usually restricted to, a particular problem domain.
 
 
-\subsection{Meta-modelagem}
-
-\subsection{Technical spaces}
-
-MOF/EMF/...
-
-\section{CVM}
+\section{Máquina Virtual de Comunicação}
 \label{sec:referencial-cvm}
-camadas
+
+A Máquina Virtual de Comunicação (\emph{Communication Virtual Machine}, CVM) é uma plataforma dirigida por modelos para formulação, síntese e execução de serviços de comunicação.
+
+
+The Communication Virtual Machine (CVM) is an execution engine designed for the creation and realization of user-centric communication  \cite{Deng20081640}. CVM works by processing models described in a very high-level domain-specific modeling language called Communication Modeling Language (CML). A CML model describes a communication scenario by defining and associating elements of the communication domain such as connections, participants, media types and attached devices.
+
+
+Once a CML model is fed into the CVM, it is capable of realizing the described service automatically. CML models can also be changed at runtime and reprocessed in the CVM, which identifies the differences between the current and previous version of the model and executes the operations needed to meet the new requirements \cite{Wang}.
+
+CVM is built on a layered architecture that lies between the user and the underlying communication frameworks that provide primitive communication services.
+The first layer, called \emph{User Communication Interface} (UCI) provides an interface for interacting with the CVM and an environment for the construction and management of CML models. Models received by the UCI are transformed into an internal XML representation and sent to the \emph{Synthesis Engine} (SE) layer. The primary responsibility of SE is to identify changes in an executing model and synthesize executable communication control scripts. The \emph{User-centric Communication Middleware} (UCM) executes the communication control script and assures that desired policies are enforced. Finally, the \emph{Network Communication Broker} layer provides a technology-independent interface that masks the heterogeneity of the communication frameworks.
+Problem and implementation domains as one challenge faced in the development ofcomplex software. MDSD proposes to reduce this gap through the use of technologyUser / Application (local)CVMUser Comm. Interface for systematic transformations of abstract models that consistently represents the (UCI)problem down to the implementation. The models used would describe the complexSynthesis Engine (SE)system at multiple levels of abstractions with the models becoming a primary artifacts for development instead of just documentation as in traditional methodologies.Deng et al. [16] developed the notion of the Communication Virtual MachNeintweork Comm. Broker (NCB)(CVM), a model-driven paradigm for specifying and realizing user-centric collabo- rative communication. Models are defined using a Communication Modeling LCoamnm-unication Networksguage1 (CML). CML is a domain-specific modeling language used to create models for user-centric communication applications. Unlike many domain-specific languages that generate code before the application is executed, CML models are directly inter-preted by CVM. CVM has a layered architecture and lies between the communication1 http://www.cis.fiu.edu/cml/Control and Dat15User-Centric Comm. Middleware (UCM)
+network and the user (or application). Figure 2.3 shows the layered architecture of the CVM. The key components of the CVM are:User Communication Interface (UCI), provides a modeling environment for users to specify their communication requirements using CML. CML can be used to describe a user communication schema or schema instance, analogous to an object-oriented class and object. In order to realize a communication application two types of communica- tion models are required: a control schema (or instance) that defines the configuration of the connections in a communication, and a data schema (or instance) that defines the media being transferred across a connection. The term media is used to refer to both streaming media e.g., video and data e.g., files. During a communication, schemas are shared with the parties in the connection.Synthesis Engine (SE), implements a set of algorithms responsible for (1) automat- ically synthesizing schema instances into executable communication control scripts, (2) negotiating the schema instances with other participants in the communication, and (3) realizing media transfer between participants in the communication. The se- mantics to support the interpretation of CML models are based on changes to models (schemas) at runtime and defined using state machines [80]. As the state machines for schema negotiation and media transfer are executed the appropriate control scripts are generated for processing in the UCM.User-centric Communication Middleware (UCM), executes the communication con- trol script and manages the delivery of media to participants in the communication, independent of the underlying network configuration. Based on the control script received by the UCM, macros are loaded and executed either synchronously or asyn- chronously. Managing the delivery of media requires the UCM to store data in tempo- rary locations, retrieve data from remote UCMs on-demand, enforce security policies16
+associated with media, among other tasks. Currently, only a skeletal UCM has been implemented in the CVM prototype.Network Communication Broker (NCB), provides a network independent API to the UCM that masks the heterogeneity and complexities of the underlying network to support the realization of the communication services. The NCB interacts with the underlying communication frameworks to ensure that the request from the UCM are realized, including request negotiation between participants, delivery of media and the enforcement of low-level policies.
 
 \section{Reflexão computacional}
 
