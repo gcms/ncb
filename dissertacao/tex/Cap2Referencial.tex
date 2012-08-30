@@ -61,7 +61,14 @@ A construção de modelos e meta-modelos foi padronizada pela OMG por meio de uma 
 
 A partir do modelo da camada M3, é possível construir metamodelos que descrevem a sintaxe abstrata e semântica estática de linguagens de modelagem para diversos fins. Exemplos de linguagens de modelagem definidas a partir do modelo MOF incluem a .... Essas linguagens integram a camada M2 da arquitetura da MOF, e são utilizadas para construir os modelos que integram o nível M1. Os modelos da camada M1, por sua vez, são representações de objetos existentes no nível M0. O significado da camada M0 é controverso, e pode ser considerado como um objeto do mundo real, ou um fenômeno da execução de software, de acordo com a natureza do modelo na camada M1. Além disso, a especificação da MOF ainda define um padrão para representação de modelos no formato XMI (\emph{XML Metadata Interchange}).
 
-O \emph{Eclipse Modeling Framework} (EMF) é um \emph{framework} de modelagem que fornece um conjunto de ferramentas para construção e processamento de modelos. O EMF inclui um metamodelo denominado Ecore, que representa um subconjunto do modelo MOF. O Ecore pode ser utilizado para construir modelos que representam um meta-modelo de uma linguagem. Utilizado dessa forma, o Ecore assume a mesma função do nível M3 da arquitetura da MOF. O desenvolvimento do EMF e Ecore influenciaram a padronização da MOF que atualmente conta com uma versão equivalente ao Ecore, denominada \emph{Essential MOF} (EMOF).
+O \emph{Eclipse Modeling Framework} (EMF) é um \emph{framework} de modelagem que fornece um conjunto de ferramentas para construção e processamento de modelos. O EMF inclui um metamodelo denominado Ecore, que representa um subconjunto do modelo MOF que correspondente às abstrações existentes em linguagens de programação orientadas a objetos. O Ecore pode ser utilizado para construir modelos que representam um meta-modelo de uma linguagem. Utilizado dessa forma, o Ecore assume a mesma função do nível M3 da arquitetura da MOF. O desenvolvimento do EMF e Ecore influenciaram a padronização da MOF 2.0, que passou a contar com um metamodelo equivalente ao Ecore, denominado \emph{Essential MOF} (EMOF).
+
+%EMF Relation to OMG MOF
+
+%For those of you that are familiar with OMG (Object Management Group) MOF (Meta Object Facility), you may be wondering how EMF relates to it. Actually, EMF started out as an implementation of the MOF specification but evolved from there based on the experience we gained from implementing a large set of tools using it. EMF can be thought of as a highly efficient Java implementation of a core subset of the MOF API. However, to avoid any confusion, the MOF-like core meta model in EMF is called Ecore.
+
+%In the current proposal for MOF 2.0, a similar subset of the MOF model, which it calls EMOF (Essential MOF), is separated out. There are small, mostly naming differences between Ecore and EMOF; however, EMF can transparently read and write serializations of EMOF.
+
 
 \begin{comment}
 É necessário mencionar outras interpretações do metamodelo, como de uma ontologia do domínio?
