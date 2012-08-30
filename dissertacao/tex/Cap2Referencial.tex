@@ -1,7 +1,7 @@
 \chapter{Referencial teórico}
 \label{cap:referencial}
 
-%% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 \section{Engenharia dirigida por Modelos}
 \label{sec:mde}
 
@@ -44,18 +44,67 @@ modelos podem apresentar representações gráficas ou textuais
 Conforme mencionado na seção anterior, modelos são construídos em conformidade com uma linguagem de modelagem. Assim como outras linguagens formais, uma linguagem de modelagem é definida por sua sintaxe e semântica. 
 A sintaxe de uma linguagem de modelagem pode ainda ser divida em sintaxe concreta, que representa sua notação textual ou gráfica, e sintaxe abstrata que representa os conceitos disponíveis na linguagem e como estes se relacionam. A semântica, por sua vez, também é comumente tratada separadamente como semântica estática, que define critérios para que modelos sejam considerados válidos, e a semântica dinâmica que dá significado aos modelos.
 
+%A sintaxe de uma linguagem é tradicionalmente definida por meio de gramáticas na forma Backus-Naur (BNF), que descrevem regras para derivação de sequências válidas. Apesar de possibilitarem a definição formal de  linguagens, o uso de gramáticas BNF se limita a descrição de linguagens textuais e 
 A sintaxe abstrata e semântica estática de uma linguagem de modelagem são comumente formalizadas por meio de um metamodelo. Um metamodelo é um modelo que descreve um conjunto de abstrações e como estas estão relacionadas. As abstrações descritas por um meta-modelo representam as construções que irão compor a linguagem por ele formalizada. Assim sendo, o meta-modelo deve incluir elementos relacionados ao aspecto e nível de abstração da linguagem por ele descrito.
 
 Por também se tratar de um modelo, um meta-modelo também é construído por meio de uma linguagem de modelagem. Esta meta-linguagem, por sua vez, também é definida através de um metamodelo, que neste caso é chamado de meta-metamodelo. 
 
-A construção de modelos e meta-modelos foi padronizada pela OMG por meio de uma arquitetura de metamodelagem denominada \emph{Meta-Object Facility} (MOF). A especificação da MOF descreve uma arquitetura de quatro camadas, ilustrada na figura~\ref{}, onde os elementos em uma determinada camada são definidos como instâncias de elementos da camada imediatamente superior. A camada mais superior, denominada M3, também integra a especificação da MOF, e representa o meta-metamodelo, que pode ser utilizado para a construção de metamodelos. O modelo da camada M3, também denominado de modelo MOF, é formalizada por meio de suas próprias abstrações, tornando desnecessária a existência de um outro nível de metamodelagem.
+A construção de modelos e meta-modelos foi padronizada pela OMG por meio de uma arquitetura de metamodelagem denominada \emph{Meta-Object Facility} (MOF) \cite{Omg_2006}. A especificação da MOF descreve uma arquitetura de quatro camadas, ilustrada na figura~\ref{fig:referencial-mof}, onde os elementos em uma determinada camada são definidos como instâncias de elementos da camada imediatamente superior. A camada mais superior, denominada M3, também integra a especificação da MOF, e representa o meta-metamodelo, que pode ser utilizado para a construção de metamodelos. O modelo da camada M3, também denominado de modelo MOF, é formalizada por meio de suas próprias abstrações, tornando desnecessária a existência de um outro nível de metamodelagem.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=1\textwidth]{./fig/mof}
+ \caption{Arquitetura de metamodelagem da MOF.}
+ \label{fig:referencial-mof}
+\end{figure}
+
 
 A partir do modelo da camada M3, é possível construir metamodelos que descrevem a sintaxe abstrata e semântica estática de linguagens de modelagem para diversos fins. Exemplos de linguagens de modelagem definidas a partir do modelo MOF incluem a .... Essas linguagens integram a camada M2 da arquitetura da MOF, e são utilizadas para construir os modelos que integram o nível M1. Os modelos da camada M1, por sua vez, são representações de objetos existentes no nível M0. O significado da camada M0 é controverso, e pode ser considerado como um objeto do mundo real, ou um fenômeno da execução de software, de acordo com a natureza do modelo na camada M1. Além disso, a especificação da MOF ainda define um padrão para representação de modelos no formato XMI (\emph{XML Metadata Interchange}).
 
-O \emph{Eclipse Modeling Framework} (EMF) é um \emph{framework} de modelagem que fornece um conjunto de ferramentas para construção e processamento de modelos. O EMF inclui um metamodelo denominado Ecore, que representa um subconjunto do modelo MOF. O Ecore pode ser utilizado para construir modelos que representam um meta-modelo de uma linguagem. Utilizado dessa forma, o Ecore assume a mesma função do nível M3 da arquitetura da MOF. O desenvolvimento do EMF e Ecore influenciaram a padronização da MOF que atualmente conta com uma versão equivalente ao Ecore, denominada \emph{Essential MOF}.
+O \emph{Eclipse Modeling Framework} (EMF) é um \emph{framework} de modelagem que fornece um conjunto de ferramentas para construção e processamento de modelos. O EMF inclui um metamodelo denominado Ecore, que representa um subconjunto do modelo MOF. O Ecore pode ser utilizado para construir modelos que representam um meta-modelo de uma linguagem. Utilizado dessa forma, o Ecore assume a mesma função do nível M3 da arquitetura da MOF. O desenvolvimento do EMF e Ecore influenciaram a padronização da MOF que atualmente conta com uma versão equivalente ao Ecore, denominada \emph{Essential MOF} (EMOF).
+
+\begin{comment}
+É necessário mencionar outras interpretações do metamodelo, como de uma ontologia do domínio?
+\end{comment}
 
 
-%A sintaxe de uma linguagem é tradicionalmente definida por meio de gramáticas na forma Backus-Naur (BNF), que descrevem regras para derivação de sequências válidas. Apesar de possibilitarem a definição formal de  linguagens, o uso de gramáticas BNF se limita a descrição de linguagens textuais e 
+%Model Driven Development: Code Generation or Model Interpretation?
+%http://www.theenterprisearchitect.eu/archive/2010/06/28/model-drivendevelopment-code-generation-or-model-interpretation
+%Domain-specific languages in practice: A user study on the success factors.
+\subsection{Linguagens específicas de domínio}
+
+Uma linguagem específica de domínio (\emph{Domain-Specific Language}, DSL) é uma linguagem de programação ou especificação, projetada com o objetivo de prover abstrações voltadas para a resolução de problemas um determinado domínio.
+
+Diferente de linguagens de propósito geral, que podem ser empregadas para um grande conjunto de tarefas em variados domínios, linguagens específicas de domínio normalmente estão restritas a um conjunto limitado de tarefas em um determinado domínio. Não obstante, DSLs apresentam um maior poder de expressividade na solução de problemas no seu domínio específico \cite{Mernik:2005:DDL:1118890.1118892, vanDeursen:2000:DLA:352029.352035}.
+
+Os ganhos em expressividade tem como principal benefício o aumento da produtividade na construção de soluções. Além disso, o uso de conceitos e notações apropriadas próximas ao domínio pode permitir que especialistas de domínio, ou até mesmo usuários finais sejam capazes de construir aplicações \cite{endUser}.
+
+Um domínio pode ser considerado como uma área de interesse bem delimitada. Podemos categorizar domínios como técnicos e de negócio \cite{mdsd, DSM}. Domínios técnicos estão diretamente relacionados aos aspectos tecnológicos de um software como persistência, interfaces gráficas, bancos de dados, etc. Domínios de negócio, por sua vez, estão relacionados à atividades econômicas ou profissionais como telecomunicações, sistema bancário, seguros, vendas, entre outros. Apesar disso, essa separação é nebulosa, sendo que a delimitação de um domínio deve ser definida de acordo com o problema a ser resolvido.
+
+A abordagem de engenharia dirigida por modelos fornece um conjunto de princípios e ferramentas para construção de linguagens de modelagem, que se adequam perfeitamente à construção de DSLs \cite{Kurtev:2006:MDF:1176617.1176632}.
+Através do uso de técnicas de metamodelagem  é possível especificar as construções dessas linguagens, que nesse caso são geralmente denominadas linguagens de modelagem específicas de domínio (\emph{Domain-Specific Modeling Languages}, DSMLs).
+
+Ao mesmo tempo, grande parte do sucesso no emprego de abordagens dirigidas por modelos está associada ao emprego de DSMLs, sendo consideradas tecnologias que apresentam grande sinergia \cite{ChallengesSemantics, DSM, Kurtev:2006:MDF:1176617.1176632}. O emprego de abordagens dirigidas por modelos em um domínio específico permite atingir um alto grau de automatização no processamento de modelos.
+%Ao focar em um determinado domínio, é possível construir mecanismos para o processamento de modelos capazes de atingir um alto grau de automatização.
+
+% something that is difficult - if not impossible - to achieve with general purpose languages. For isntance, UML was developed to be able to model all kinds of application domains, but it has not proven to be successfull in truly model-driven development \cite{DSM}
+
+Apesar de metamodelos poderem ser empregados na descrição de DSMLs, sua capacidade limita-se a descrição da sintaxe abstrata e semântica estática. Todavia, a definição da sintaxe concreta é simples, e existem várias ferramentas que permitem descrever sua notação, seja ela textual ou gráfica, e o seu mapeamento para a sintaxe abstrata. 
+A formalização da semântica dinâmica de uma DSML, no entanto, é bem mais complexa, e atualmente não há um método estabelecido como padrão \cite{Kurtev:2006:MDF:1176617.1176632}.
+
+A semântica dinâmica de uma DSML é na maior parte das situações descrita informalmente, por meio de linguagem natural, e codificada na implementação do mecanismo responsável pelo processamento da DSML. A formalização da semântica dinâmica de linguagens de modelagem tem sido objeto de estudos, e tem o potencial de trazer vários benefícios, principalmente associados à geração automática de ferramentas.
+
+There are four main approaches to describing the semantics of languages: translational ? translating from one language to another language with precise semantics; operational ? modeling the operational behavior of language concepts; extensional ? extending the semantics of existing language concepts; and denotational ? modeling the mapping to semantic domain concepts. There are advantages and disadvantages of each approach (Clark et al., 2008). 
+
+Uma das abordagens proeminentes para definição de semântica de DSMLs por meio de tradução é denominada ancoragem semântica \cite{Chen:2005:TSA:1086228.1086236}. Nessa abordagem, a definição da semântica e se dá pelo mapeamento dos elementos da DSML em modelos computacionais, cuja semântica é bem definida, como máquinas de estado abstratas, sistemas de eventos discretos, autômatos, etc. Outra abordagem baseada em tradução emprega regras de reescrita \cite{1240339} que descrevem como os elementos de um modelo podem ser sucessivamente reescritos, até que representem elementos da linguagem alvo.
+
+Outra técnica também empregada na formalização da semântica dinâmica de DSMLs consiste em incorporar comportamento ao metamodelo (\emph{behavior weaving}) \cite{weave}. Estas abordagens propõem uma forma de estender a linguagem de meta-metamodelagem para possibilitar a construção de metamodelos que incorporem a semântica operacional.
+
+% Both approaches can be implemented by code in general-purpose languages
+%There are standardized languages for defining both transformations and operational semantics, but they tend to be generic in a way that sometimes they do not provide greater advantage than the use of a general-purpose language.
+
+
+\subsection{Modelos em tempo de execução}
 
 
 
@@ -195,7 +244,7 @@ At the beginning of object technology, what was important was that an object cou
 The danger would be to use the old [P1] relations within the new context of MDE, for example by stating that a model in an instanceOf a metamodel2. This point of view often leads to many confusion and does not help in clarifying a complex evolution.
 More generally, there is an over-usage of this instanceOf relation in MDE. Used in different contexts, with different meanings, this may cause additional confusion. Careful distinction between at least three different usages of this relation is suggested in [3] and [8].
 [3] Some Initial Considerations on the Layered Organization of Metamodels
-[8] Ontology-based Layered Semantics for Precise OA&D
+[8] Ontology-based Layered Semantics for Precise OA\&D
 
 The MDE approach has not a unique goal. Among the objectives pursued, one may list the separation from business-neutral descriptions and platform dependent imple-mentations, the identification, precise expression, separation and combination of specific aspects of a system under development with domain-specific languages, the establishment of precise relations between these different languages in a global framework and in particular the possibility to express operational transformations between them 
 
@@ -203,34 +252,55 @@ The MDE approach has not a unique goal. Among the objectives pursued, one may li
 As the notion of object was central to the software development practices of the 80's, the notion of model seems today to focus much attention. The question of defining what a model is, on a practical basis, will probably take as much time and energy to settle as the definition of the notion of an object. We propose in this paper to start from the two basic relations associated to principle [P2].
 
 
-%Model Driven Development: Code Generation or Model Interpretation?
-%http://www.theenterprisearchitect.eu/archive/2010/06/28/model-drivendevelopment-code-generation-or-model-interpretation
-%Domain-specific languages in practice: A user study on the success factors.
 
-
-\subsection{Linguagens específicas de domínio}
-automation. Arie et al. [73] defines a domain-specific language as:
-A domain-specific language (DSL) is a programming language or executable specification
-language that offers, through appropriate notations and abstractions, expressive
-power focused on, and usually restricted to, a particular problem domain.
 
 
 \section{Máquina Virtual de Comunicação}
 \label{sec:referencial-cvm}
 
-A Máquina Virtual de Comunicação (\emph{Communication Virtual Machine}, CVM) é uma plataforma dirigida por modelos para formulação, síntese e execução de serviços de comunicação.
+A Máquina Virtual de Comunicação (\emph{Communication Virtual Machine}, CVM) é uma plataforma voltada para a especificação e realização de serviços de comunicação \cite{cvm}. Sendo uma plataforma dirigida por modelos, a CVM funciona por meio do processamento de modelos descritos em uma linguagem de modelagem específica de domínio, denominada Linguagem de Modelagem de Comunicação (\emph{Communication Modeling Language}, CML) \cite{cml}. Diferente de muitas abordagens dirigidas por modelo que se apoiam na geração de código, os modelos CML são diretamente interpretados pela CVM.
+
+A CVM é considerada uma plataforma centrada no usuário devido ao alto-nível dos modelos descritos por meio da CML, que podem ser facilmente construídos por usuários especialistas de domínio, ou até mesmo usuários finais. A CML é uma linguagem declarativa, por meio da qual são descritos os participantes, dados, e tipos de mídia envolvidos em uma comunicação a ser realizada. Informações associadas às tecnologias e dispositivos efetivamente utilizados na realização da comunicação, não são descritos em um modelo CML. A figura~\ref{fig:referencial-cml} ilustra um exemplo de modelo descrito por meio da representação gráfica da CML. O modelo em questão define uma comunicação entre dois participantes por meio de audio em tempo real.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=1\textwidth]{./fig/cml}
+ \caption{Exemplo de modelo CML.}
+ \label{fig:referencial-cml}
+\end{figure}
+
+A partir de um modelo CML, a CVM é capaz de realizar o serviço de comunicação descrito de forma automática, sem a necessidade de intervenção do usuário. Um modelo CML também pode ser modificado ao longo do curso de uma comunicação, sendo a CVM capaz de identificar essas mudanças e adaptar a comunicação em andamento para atender aos novos requisitos definidos. Devido à esta natureza, os modelos em CML podem ser considerados como modelos de desenvolvimento e de tempo de execução \cite{Wang}.
+
+Para tornar isso possível, a CML e a CVM incorporam conhecimento relacionado à realização de serviços de comunicação, permitindo que modelos CML se limitem a descrever os aspectos específicos do serviço a ser realizado.
+A CVM se baseia em uma arquitetura de camadas que encapsulam as tarefas necessárias à realização de um serviço de comunicação. Um modelo CML fornecido pelo usuário (ou aplicação) é sucessivamente processado e transformado pelas camadas da CVM, até que sejam geradas chamadas aos componentes que efetivamente realizam os serviços solicitados. A figura~\ref{fig:referencial-cvm} ilustra as camadas que integram a CVM, descritas logo adiante.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.75\textwidth]{./fig/cvm}
+ \caption{Arquitetura em camadas da CVM.}
+ \label{fig:referencial-cvm}
+\end{figure}
 
 
-The Communication Virtual Machine (CVM) is an execution engine designed for the creation and realization of user-centric communication  \cite{Deng20081640}. CVM works by processing models described in a very high-level domain-specific modeling language called Communication Modeling Language (CML). A CML model describes a communication scenario by defining and associating elements of the communication domain such as connections, participants, media types and attached devices.
+\begin{itemize}
 
+\item Interface de Comunicação com o Usuário (\emph{User Communication Interface}, UCI). A UCI representa uma interface para interação com a CVM, provendo meios para a definição e gerenciamento de modelos em CML. É por meio dessa interface que usuários ou aplicações podem solicitar a realização de uma comunicação descrita por um modelo, e serem notificados de eventos ocorridos durante o seu andamenteo. Além disso, a UCI também conta com um ambiente de modelagem que permite que usuários construam modelos CML por meio de manipulação direta da representação gráfica. 
 
-Once a CML model is fed into the CVM, it is capable of realizing the described service automatically. CML models can also be changed at runtime and reprocessed in the CVM, which identifies the differences between the current and previous version of the model and executes the operations needed to meet the new requirements \cite{Wang}.
+\item Mecanismo de Síntese (\emph{Synthesis Engine}, SE). O mecanismo de síntese é responsável por duas principais tarefas: a negociação de um modelo em CML recebido da UCI com os demais participantes de uma comunicação; e a transformação deste modelo em um \emph{script} de controle da comunicação executável que contém a lógica para o estabelecimento da comunicação. O mecanismo de síntese implementa a semântica operacional da CML \cite{OperSemantic}, sendo o responsável por transformar os modelos declarativos descritos através da CML em \emph{scripts} executáveis pela camada seguinte.
 
-CVM is built on a layered architecture that lies between the user and the underlying communication frameworks that provide primitive communication services.
-The first layer, called \emph{User Communication Interface} (UCI) provides an interface for interacting with the CVM and an environment for the construction and management of CML models. Models received by the UCI are transformed into an internal XML representation and sent to the \emph{Synthesis Engine} (SE) layer. The primary responsibility of SE is to identify changes in an executing model and synthesize executable communication control scripts. The \emph{User-centric Communication Middleware} (UCM) executes the communication control script and assures that desired policies are enforced. Finally, the \emph{Network Communication Broker} layer provides a technology-independent interface that masks the heterogeneity of the communication frameworks.
-Problem and implementation domains as one challenge faced in the development ofcomplex software. MDSD proposes to reduce this gap through the use of technologyUser / Application (local)CVMUser Comm. Interface for systematic transformations of abstract models that consistently represents the (UCI)problem down to the implementation. The models used would describe the complexSynthesis Engine (SE)system at multiple levels of abstractions with the models becoming a primary artifacts for development instead of just documentation as in traditional methodologies.Deng et al. [16] developed the notion of the Communication Virtual MachNeintweork Comm. Broker (NCB)(CVM), a model-driven paradigm for specifying and realizing user-centric collabo- rative communication. Models are defined using a Communication Modeling LCoamnm-unication Networksguage1 (CML). CML is a domain-specific modeling language used to create models for user-centric communication applications. Unlike many domain-specific languages that generate code before the application is executed, CML models are directly inter-preted by CVM. CVM has a layered architecture and lies between the communication1 http://www.cis.fiu.edu/cml/Control and Dat15User-Centric Comm. Middleware (UCM)
-network and the user (or application). Figure 2.3 shows the layered architecture of the CVM. The key components of the CVM are:User Communication Interface (UCI), provides a modeling environment for users to specify their communication requirements using CML. CML can be used to describe a user communication schema or schema instance, analogous to an object-oriented class and object. In order to realize a communication application two types of communica- tion models are required: a control schema (or instance) that defines the configuration of the connections in a communication, and a data schema (or instance) that defines the media being transferred across a connection. The term media is used to refer to both streaming media e.g., video and data e.g., files. During a communication, schemas are shared with the parties in the connection.Synthesis Engine (SE), implements a set of algorithms responsible for (1) automat- ically synthesizing schema instances into executable communication control scripts, (2) negotiating the schema instances with other participants in the communication, and (3) realizing media transfer between participants in the communication. The se- mantics to support the interpretation of CML models are based on changes to models (schemas) at runtime and defined using state machines [80]. As the state machines for schema negotiation and media transfer are executed the appropriate control scripts are generated for processing in the UCM.User-centric Communication Middleware (UCM), executes the communication con- trol script and manages the delivery of media to participants in the communication, independent of the underlying network configuration. Based on the control script received by the UCM, macros are loaded and executed either synchronously or asyn- chronously. Managing the delivery of media requires the UCM to store data in tempo- rary locations, retrieve data from remote UCMs on-demand, enforce security policies16
-associated with media, among other tasks. Currently, only a skeletal UCM has been implemented in the CVM prototype.Network Communication Broker (NCB), provides a network independent API to the UCM that masks the heterogeneity and complexities of the underlying network to support the realization of the communication services. The NCB interacts with the underlying communication frameworks to ensure that the request from the UCM are realized, including request negotiation between participants, delivery of media and the enforcement of low-level policies.
+\item \emph{Middleware} de Comunicação Centrado no Usuário (\emph{User-centric Communication Middleware}, UCM). A camada de \emph{middleware} da CVM, tem como função executar o \emph{script} de comunicação recebido do mecanismo de síntese e coordenar as sessões de comunicação. Além disso, cabe à esta camada garantir que sejam aplicadas as políticas de segurança, qualidade de serviço, entre outras relativas à comunicação.
+
+\item Intermediador de Comunicação em Rede (\emph{Network Communication Broker}, NCB). A camada NCB provê uma interface de comunicação, independente de tecnologia, para uso da camada de \emph{middleware}. O intermediador tem como função blindar a camada superior da heterogeneidade e complexidade envolvidas na interação com os componentes que efetivamente realizam a comunicação. Assim, a NCB recebe requisições da camada UCM e intermedia o acesso aos \emph{frameworks} de comunicação para que realizem a solicitação recebida.
+
+\end{itemize}
+
+\subsection{Intermediador de Comunicação em Rede}
+
+A camada NCB, que integra a CVM, foi projetada com o intuito de fornecer uma interface de serviços de comunicação independente da tecnologia de comunicação empregada, capaz de abstrair da camada superior a heterogeneidade e dinâmica envolvida na utilização de provedores de comunicação \cite{cvm}.  Para isso, o intermediador de comunicação deve ser capaz de se auto-gerenciar, adaptando-se para se adequar à mudanças no ambiente de rede, nos provedores de comunicação, ou nas solicitações advindas da camada de \emph{middleware}.
+
+Apesar de prever o uso de diversos provedores de comunicação, a versão inicialmente desenvolvida da NCB comportava apenas um provedor diretamente incorporado à sua implementação, limitando a qualidade e tipos de serviços de comunicação disponíveis. Em trabalhos seguintes \cite{SelfConfig}, a NCB foi ampliada para possibilitar a integração, e auto-configuração de vários \emph{frameworks} provedores de comunicação como Skype, Smack, Asterisk, etc. Para o auto-gerenciamento da camada foi adotada a arquitetura de computação autônoma proposta pela IBM \cite{ibmac}.
+A NCB também foi posteriormente \cite{UCCAF} estendida para contemplar o uso de políticas como meio de guiar decisões da seleção de \emph{frameworks} de comunicação.
+
 
 \section{Reflexão computacional}
 
