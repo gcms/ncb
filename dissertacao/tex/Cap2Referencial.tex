@@ -5,33 +5,96 @@
 \section{Engenharia dirigida por Modelos}
 \label{sec:mde}
 
-On the Applicability Scope of Model Driven Engineering
 
-In the past two decades alone, the information technology (IT) industry has
-been a driving force of progress. Through the use of distributed networks,
-Web-based services, handheld devices, and cellular phones, companies of
-all sizes and across all industries are delivering sophisticated services that
-fundamentally change the tenor of daily life, from how we shop to how we
-bank to how we communicate.
+O termo \emph{Model-Driven Engineering} (MDE) é geralmente empregado para identificar um conjunto de abordagens que promovem o uso de modelos como os principais artefatos no processo de engenharia de software \cite{mde, mddcs}.
+Nessas abordagens o uso de modelos não se limita à documentação ou compreensão de um sistema de software, mas pode abranger todas as áreas da engenharia de software, incluindo desde o seu desenvolvimento, até sua operação e manutenção.
+
+%O surgimento de abordagens dirigidas por modelos evoluiu da crescente complexidade 
+%complexidade das aplicações
+%enquanto isso as tecnologias existentes...
+
+O emprego de abordagens dirigidas por modelo evoluiu a partir da necessidade de lidar com a crescente complexidade encontrada no desenvolvimento de sistemas de software.
+O avanço nas tecnologias de rede e processamento observado nas últimas décadas possibilitou a construção de aplicações cada vez mais elaboradas,  que comumente envolvem elementos de computação distribuída em ambientes heterogêneos que estão em constante mudança. 
+%Além disso, aplicações atuais apresentam cada vez mais requisitos de disponibilidade, segurança, adaptabilidade, entre outros capazes de aumentar significativamente a complexidade de um sistema baseado em software.
 
 
-Não esquecer:::
-More than five years after, the situation has much evolved. Separating platform dependent from platform independent aspects is no more seen as the unique goal. The major problem is now the separation and combination of concerns in the construction and maintenance of information systems. Among these concerns, platform dependent and independent aspects remains important in the agenda, but these are more and more considered as a special case of a general problem including for example separation of functional and non-functional requirements. MDA and DSL solutions are now more and more closely related. What MDA is bringing to DSLs is this idea of using a collection of metamodels to capture the various facets of a system under construction or under maintenance. What DSLs is bringing to MDA is that a unique general purpose language, even a very large one like UML 2.0, is not able and will never be able to capture all the needs of the designers, administrators, and users of a given system.
+O desenvolvimento dessas aplicações utilizando abordagens tradicionais de desenvolvimento, baseadas na codificação em linguagens de programação exige um grande esforço. 
+Apesar da notável evolução nas linguagens de programação,  suas construções continuam sendo em grande parte baseadas nas capacidades fornecidas pelo ambiente computacional, e assim não guardam relação direta com o problema a ser resolvido. A distância semântica entre o problema a ser resolvido e a plataforma utilizada na sua implementação é considerada como um dos principais fatores que dificultam o desenvolvimento das aplicações atuais \cite{mde, mddcs}. 
+
+\begin{comment}
+
+%MDE evoluiu da complexidade do software...
+%Abstrações não evoluíram (baseadas em computação)
+Versão alternativa, que descreve de uma forma menos relacionada ao uso de domínio específico. A idéia é mencionar que as linguagens de programação não oferecem construções capazes de ocultar a complexidade envolvida no desenvolvimento dessas aplicações, e que o uso de modelos surge como uma alternativa para abstrair essas complexidades, tornando mais fácil a compreensão e construção dessas.
 
 
-The term Model-Driven Engineering is commonly used to describe a set of software engineering approaches that employ models as their primary artifacts. In these approaches, the use of models is not restricted to the documentation or design of software, but may extend throughout the software engineering process.
-%By employing models based on abstractions closer to the problem to be solved, model-driven approaches seek to abstract technical details of the underlying platform, therefore simplifying the engineering of software. To make it feasible, these approaches rely on automated tools for the processing of models into constructs of the implementation platform.
+Apesar disso, as linguagens de programação não evoluíram com a mesma velocidade, e suas abstrações não se demonstraram capazes de ocultar as complexidades envolvidas no desenvolvimento de software atual.
+%Apesar da evolução nas linguagens de programação, suas construções continuam sendo baseadas nas capacidades fornecidas pelo ambiente computacional, e portanto não guardam relação com o problema a ser resolvido.
+%O desenvolvimento de software desse jeito (utilizando abstrações inapropriadas) exige bastante esforço pois é preciso expressar conceitos do problema complexo em construções muito simples, fornecidas pela linguagem, e próximas da implementação.
+Nesse contexto, o uso de modelos surge como um meio de representar de forma abstrata algum aspecto de um sistema, ocultando detalhes desnecessários para sua compreensão. 
 
-Models are usually described in domain-specific modeling languages, and processed by automated tools into constructs of the implementation platform \cite{Schmidt}. The use of domain-specific models switches the focus of software engineering from implementation technologies to problem-level abstractions.
-Nonetheless, automation in the processing of high-level models into software implementation requires encoding substantial domain-specific knowledge into the language and processing tools
+Por meio de linguagens de modelagem mais apropriadas para descrição dos aspectos que compõem um sistema e ferramentas capazes de processá-los, de forma automatizada, em construções da plataforma de implementação, abordagens de MDE buscam ocultar a complexidade envolvida no desenvolvimento de aplicações.
 
-A modeling language is described using a  metamodel, which is itself a model that defines the abstractions available in the domain and how they interrelate. Metamodeling techniques have been standardized by the OMG Meta-Object Facility \cite{Omg_2006}, but there are several tools, such as the Eclipse Modeling Framework \cite{emf}, that provide metamodeling capabilities.
 
-Domain-specific models may be transformed into artifacts of the implementation platform or directly executed by a model interpreter. The use of model interpreters has the potential of facilitating the processing of models at runtime in order to adapt a running application. This usage of models has been proposed as an alternative to deal with the growing complexity of contemporary software \cite{FranceEtAl}.
+\end{comment}
 
-The use of models at runtime seeks to use better abstractions for manipulating and inspecting a running system. Models at runtime bear a certain resemblance with reflection in which both deal with self-representations of a system that are causally connected. However, models at runtime use representations that are closer to the problem domain, in contrast with reflection, whose representations tend to be based on the implementation platform \cite{Blair2009}.
+%In the past two decades alone, the information technology (IT) industry has
+%been a driving force of progress. Through the use of distributed networks,
+%Web-based services, handheld devices, and cellular phones, companies of
+%all sizes and across all industries are delivering sophisticated services that
+%fundamentally change the tenor of daily life, from how we shop to how we
+%bank to how we communicate.
+
+
+Abordagens de MDE visam reduzir essa distância promovendo o uso de abstrações mais próximas ao domínio do problema, que são sistematicamente transformadas em construções do ambiente computacional. Nessas abordagens, modelos são utilizados como um meio de descrever um sistema de software sob diferentes aspectos e níveis de abstração, sendo então processados de forma automatizada em elementos da plataforma de implementação.
+
+%Além de abstratos, os modelos empregados em abordagens de MDE são formais, o que possibilita que sejam processados de forma automatizada. 
+
+A abordagem de arquitetura dirigida por modelos (\emph{Model-Driven Architecture}, MDA) \cite{mda} surgiu com o objetivo de definir funcionalidades do sistema de forma independente da plataforma de implementação, buscando a interoperabilidade e portabilidade do sistema. A MDA pode ser considerada como a primeira iniciativa a propor um conjunto de princípios e padrões para o uso sistematizado de modelos. O termo \emph{Model-Driven Engineering}, cunhado mais recentemente, propõe o uso de modelos de forma mais abrangente, e engloba além de MDA outras iniciativas como \emph{Model-Driven Development} (MDD) \cite{pragMDE, mddesign}, e \emph{Model-Integrated Computing} (MIC) \cite{mic}, entre outras.
+% \cite{scopeMDE}
+
+A maior parte das abordagens de MDD propõem a construção de linguagens de modelagem e transformações capazes de transformar modelos descritos por meio dessas linguagens em artefatos da plataforma de implementação. A abordagem MIC pode ser considerada como uma abordagem de MDD, e propõe a construção de ambientes de desenvolvimento específicos de domínio que compreendem linguagens de modelagem específicas de domínio, transformadores e ferramentas que auxiliam na construção de aplicações naquele domínio. Além disso, várias outras abordagens propõem o uso de modelos para definição de diferentes aspectos como (citar aspectos e citação).
+% mencionar mrt
+
+%The MDE approach has not a unique goal. Among the objectives pursued, one may list the separation from business-neutral descriptions and platform dependent imple-mentations, the identification, precise expression, separation and combination of specific aspects of a system under development with domain-specific languages, the establishment of precise relations between these different languages in a global framework and in particular the possibility to express operational transformations between them 
+
+%More than five years after, the situation has much evolved. Separating platform dependent from platform independent aspects is no more seen as the unique goal. The major problem is now the separation and combination of concerns in the construction and maintenance of information systems. Among these concerns, platform dependent and independent aspects remains important in the agenda, but these are more and more considered as a special case of a general problem including for example separation of functional and non-functional requirements. MDA and DSL solutions are now more and more closely related. What MDA is bringing to DSLs is this idea of using a collection of metamodels to capture the various facets of a system under construction or under maintenance. What DSLs is bringing to MDA is that a unique general purpose language, even a very large one like UML 2.0, is not able and will never be able to capture all the needs of the designers, administrators, and users of a given system.
+
+Apesar de empregarem modelos com diferentes objetivos essas abordagens apresentam várias similaridades, sendo por vezes sobrepostas. 
+A engenharia dirigida por modelos busca sistematizar o uso de modelos, de forma que possam ser empregados com diversos objetivos em todos as atividades da engenharia de software. 
+Sob essa ótica, o princípio básico da engenharia de modelos propõe do uso de modelos como objetos de primeira classe, utilizados na construção de todos os artefatos de software \cite{Unifying}.
+
+%Considering everything as a model in a software  development approach  has  many consequences that we are progressively discovering. This paper has probably shown  only some of them. Besides the advantages of conceptual simplicity, this also leads to clear architecture, efficient implementation, high scalability  and  good  flexibility
+
+Apesar de ser considerada uma abordagem recente de engenharia de software, a engenharia dirigida por modelos se baseia em idéias de várias outras abordagens como linguagens específicas de domínio, programação orientada por linguagens, programação por geração, programação dirigida por domínio, entre outras \cite{Unifying}.
+Nesse contexto, a engenharia dirigida por modelos surge como uma tentativa de sistematizar para o uso de modelos, se apoiando em técnicas e princípios já existentes.
+% sistematizado de várias dessas abordagens, sendo consideradas compatíveis com o princípio \cite{ts,Towards a Basic Theory to Model Model Driven}.
+
+%On the Applicability Scope of Model Driven Engineering
+
+
+%The term Model-Driven Engineering is commonly used to describe a set of software engineering approaches that employ models as their primary artifacts. In these approaches, the use of models is not restricted to the documentation or design of software, but may extend throughout the software engineering process.
+%
+%Models are usually described in domain-specific modeling languages, and processed by automated tools into constructs of the implementation platform \cite{Schmidt}. The use of domain-specific models switches the focus of software engineering from implementation technologies to problem-level abstractions.
+%Nonetheless, automation in the processing of high-level models into software implementation requires encoding substantial domain-specific knowledge into the language and processing tools
+%
+%A modeling language is described using a  metamodel, which is itself a model that defines the abstractions available in the domain and how they interrelate. Metamodeling techniques have been standardized by the OMG Meta-Object Facility \cite{mof241}, but there are several tools, such as the Eclipse Modeling Framework \cite{emf}, that provide metamodeling capabilities.
+%
+%Domain-specific models may be transformed into artifacts of the implementation platform or directly executed by a model interpreter. The use of model interpreters has the potential of facilitating the processing of models at runtime in order to adapt a running application. This usage of models has been proposed as an alternative to deal with the growing complexity of contemporary software \cite{FranceEtAl}.
+%
+%The use of models at runtime seeks to use better abstractions for manipulating and inspecting a running system. Models at runtime bear a certain resemblance with reflection in which both deal with self-representations of a system that are causally connected. However, models at runtime use representations that are closer to the problem domain, in contrast with reflection, whose representations tend to be based on the implementation platform \cite{Blair2009}.
 
 \subsection{Modelos}
+
+Um modelo é uma representação simplificada de algum aspecto de um sistema sob uma determinada perspectiva.
+
+
+"A model is a simplification of a system built with an intended goal in mind. The model should be able to answer questions in place of the actual system." [5].
+
+- abstract but formal, first class entities, visual or textual, abstract differente aspects (even runtime)
+
+- Considering models as first class entities and any software artifact as a model element is one of the basic principles of MDE.
+
 
 Em abordagens de MDE, um modelo é uma representação abstrata e formal de algum aspecto de um sistema.
 Um modelo descreve um sistema de acordo com uma perspectiva, ignorando informações que não estão relacionadas à sua natureza.
@@ -59,7 +122,7 @@ A sintaxe abstrata e semântica estática de uma linguagem de modelagem são comume
 
 Por também se tratar de um modelo, um meta-modelo também é construído por meio de uma linguagem de modelagem. Esta meta-linguagem, por sua vez, também é definida através de um metamodelo, que neste caso é chamado de meta-metamodelo. 
 
-A construção de modelos e meta-modelos foi padronizada pela OMG por meio de uma arquitetura de metamodelagem denominada \emph{Meta-Object Facility} (MOF) \cite{Omg_2006}. A especificação da MOF descreve uma arquitetura de quatro camadas, ilustrada na figura~\ref{fig:referencial-mof}, onde os elementos em uma determinada camada são definidos como instâncias de elementos da camada imediatamente superior. A camada mais superior, denominada M3, também integra a especificação da MOF, e representa o meta-metamodelo, que pode ser utilizado para a construção de metamodelos. O modelo da camada M3, também denominado de modelo MOF, é formalizada por meio de suas próprias abstrações, tornando desnecessária a existência de um outro nível de metamodelagem.
+A construção de modelos e meta-modelos foi padronizada pela OMG por meio de uma arquitetura de metamodelagem denominada \emph{Meta-Object Facility} (MOF) \cite{mof241}. A especificação da MOF descreve uma arquitetura de quatro camadas, ilustrada na figura~\ref{fig:referencial-mof}, onde os elementos em uma determinada camada são definidos como instâncias de elementos da camada imediatamente superior. A camada mais superior, denominada M3, também integra a especificação da MOF, e representa o meta-metamodelo, que pode ser utilizado para a construção de metamodelos. O modelo da camada M3, também denominado de modelo MOF, é formalizada por meio de suas próprias abstrações, tornando desnecessária a existência de um outro nível de metamodelagem.
 
 \begin{figure}
  \centering
@@ -98,7 +161,7 @@ Os ganhos em expressividade tem como principal benefício o aumento da produtivid
 
 Um domínio pode ser considerado como uma área de interesse bem delimitada. Podemos categorizar domínios como técnicos e de negócio \cite{mdsd, DSM}. Domínios técnicos estão diretamente relacionados aos aspectos tecnológicos de um software como persistência, interfaces gráficas, bancos de dados, etc. Domínios de negócio, por sua vez, estão relacionados à atividades econômicas ou profissionais como telecomunicações, sistema bancário, seguros, vendas, entre outros. Apesar disso, essa separação é nebulosa, sendo que a delimitação de um domínio deve ser definida de acordo com o problema a ser resolvido.
 
-A abordagem de engenharia dirigida por modelos fornece um conjunto de princípios e ferramentas para construção de linguagens de modelagem, que se adequam perfeitamente à construção de DSLs \cite{Kurtev:2006:MDF:1176617.1176632}.
+A abordagem de engenharia dirigida por modelos fornece um conjunto de princípios e ferramentas para construção de linguagens de modelagem, que se adequam perfeitamente à construção de DSLs \cite{Kurtev:2006:MDF:1176617.1176632, ts}.
 Através do uso de técnicas de metamodelagem  é possível especificar as construções dessas linguagens, que nesse caso são geralmente denominadas linguagens de modelagem específicas de domínio (\emph{Domain-Specific Modeling Languages}, DSMLs).
 
 Ao mesmo tempo, grande parte do sucesso no emprego de abordagens dirigidas por modelos está associada ao emprego de DSMLs, sendo consideradas tecnologias que apresentam grande sinergia \cite{ChallengesSemantics, DSM, Kurtev:2006:MDF:1176617.1176632}. O emprego de abordagens dirigidas por modelos em um domínio específico permite atingir um alto grau de automatização no processamento de modelos.
@@ -122,154 +185,6 @@ Outra técnica também empregada na formalização da semântica dinâmica de DSMLs co
 
 
 \subsection{Modelos em tempo de execução}
-
-
-
-
-O termo \emph{Model-Driven Engineering} (MDE) é geralmente empregado para identificar um conjunto de abordagens que promovem o uso de modelos como os principais artefatos no processo de engenharia de software \cite{}.
-
-
-%O surgimento de abordagens dirigidas por modelos evoluiu da crescente complexidade 
-%complexidade das aplicações
-%enquanto isso as tecnologias existentes...
-
-O surgimento de abordagens dirigidas por modelo evoluiu a partir da necessidade de lidar com a crescente complexidade encontrada no desenvolvimento de sistemas de software. O avanço nas tecnologias de rede e processamento observado nas últimas décadas possibilitou a construção de aplicações cada vez mais complexas. Apesar disso, as linguagens de programação de terceira geração não evoluíram com a mesma velocidade, sendo que suas  abstrações não se demonstram capazes de ocultar as complexidades envolvidas no desenvolvimento de software atual.
-Abordagens dirigidas por modelos buscam reduzir a lacuna existente entre as tecnologias/plataforma de implementação e a 
-
-%O avanço nas tecnologias de rede e processamento observado nas últimas décadas possibilitou a construção de aplicações cada vez mais complexas, que comumente envolvem elementos de computação distribuída em ambientes heterogêneos que estão em constante mudança. 
-%Além disso, aplicações atuais apresentam cada vez mais requisitos de disponibilidade, segurança, adaptabilidade, entre outros capazes de aumentar significativamente a complexidade de um sistema baseado em software.
-%As abstrações fornecidas por linguagens de programação orientadas a objetos não são capazes de ocultar as complexidades envolvidas no desenvolvimento das aplicações atuais.
-
-Nesse contexto, o uso de modelos surge como um meio de representar de forma abstrata algum aspecto de um sistema, ocultando detalhes desnecessários para sua compreensão. 
-Em abordagens dirigidas por modelos, o uso de modelos não se restringe a representação e compreensão de um sistema, mas também se aplica à sua descrição e construção.
-
-Além de abstratos, os modelos empregados em abordagens de MDE são formais, o que possibilita que sejam processados de forma automatizada. Por meio de linguagens de modelagem mais apropriadas para descrição dos aspectos que compõem um sistema e ferramentas capazes de processá-los, de forma automatizada, em construções da plataforma de implementação, abordagens de MDE buscam ocultar a complexidade envolvida no desenvolvimento de aplicações.
-
-
-%MDE evoluiu da complexidade do software...
-%Abstrações não evoluíram (baseadas em computação)
-
-In a traditional software engineering process, mapping between design and implementation is done by exploiting the expert knowledge of a programmer. In model driven engineering this expert knowledge is not lost in millions of lines of code but instead it is explicitly visible in trans- formation functions.
-
-
-
-
-multiple goals
-
-Descrição geral de MDE:
-  - uso de modelos como principais artefatos para construção de software
-  - modelos não só como documentação ou projeto, mas como elementos de primeira classe
-  - processamento automatizado de modelos em elementos da plataforma de implementação
-  
-  transformação ou interpretação
-  
-  models@run.time
-  
-  DSL
-  - encoding substantial domain-specific knowledge into the language and its processing tools
-  
-  
-
-The term Model-Driven Engineering is commonly used to describe a set of software engineering approaches that employ models as their primary artifacts. In these approaches, the use of models is not restricted to the documentation or design of software, but may extend throughout the software engineering process.
-%By employing models based on abstractions closer to the problem to be solved, model-driven approaches seek to abstract technical details of the underlying platform, therefore simplifying the engineering of software. To make it feasible, these approaches rely on automated tools for the processing of models into constructs of the implementation platform.
-
-Models are usually described in domain-specific modeling languages, and processed by automated tools into constructs of the implementation platform \cite{Schmidt}. The use of domain-specific models switches the focus of software engineering from implementation technologies to problem-level abstractions.
-Nonetheless, automation in the processing of high-level models into software implementation requires encoding substantial domain-specific knowledge into the language and processing tools
-
-A modeling language is described using a  metamodel, which is itself a model that defines the abstractions available in the domain and how they interrelate. Metamodeling techniques have been standardized by the OMG Meta-Object Facility \cite{Omg_2006}, but there are several tools, such as the Eclipse Modeling Framework \cite{emf}, that provide metamodeling capabilities.
-
-Domain-specific models may be transformed into artifacts of the implementation platform or directly executed by a model interpreter. The use of model interpreters has the potential of facilitating the processing of models at runtime in order to adapt a running application. This usage of models has been proposed as an alternative to deal with the growing complexity of contemporary software \cite{FranceEtAl}.
-
-The use of models at runtime seeks to use better abstractions for manipulating and inspecting a running system. Models at runtime bear a certain resemblance with reflection in which both deal with self-representations of a system that are causally connected. However, models at runtime use representations that are closer to the problem domain, in contrast with reflection, whose representations tend to be based on the implementation platform \cite{Blair2009}.
-
-
-Title: In Search of a Basic Principle for Model Driven Engineering
-
-"One of the possible evolutionary paths is
-called model engineering. This consists in giving ?rst-class
-status to models and model elements, similarly to the ?rst class
-status that was given to objects and classes in the 80s, at the
-beginning of the object technology era. The essential change is
-that models are no longer used only as mere documentation for
-programmers, but can now be directly used to drive software
-production tools."
-
-
-The answer was to provide one language for
-de?ning meta-models, i.e. a meta-meta-model (level M3
-in
-Figure 1). Each meta-model de?nes itself a language for
-describing a speci?c domain of interest (level M2
- in Figure 1).
-For example UML describes the artifacts of an object-oriented
-software system. Some other meta-models may address
-domains like legacy systems, data warehouses, software process, organization, tests, quality of service, party management,
-etc. Each is important and their numbers keep growing. They
-are de?ned as separate components and many relationships
-exist between them.
-
-
-Until now
-object analysis and design models have mainly been used to
-document software systems. Analysts and designers built models that were provided to programmers only as inspiration
-material to facilitate the production of concrete software. The
-move from this ‘contemplative’ period to a new situation where
-production tools will be model driven has been facilitated by
-the introduction of standards like the XMI (XML Metadata
-Interchange) recommendation [7].
-
-
-A basic principle in object technology (“Everything is an
-object” [P1]) was most helpful in driving the technology in the
-80s, in the direction of simplicity, generality and power of integration. Similarly in model engineering, the basic principle
-“Everything is a model” [P2] has many interesting properties,
-among them the capacity to generate a realistic research agenda. We suggest that this may be most useful in understanding
-many questions about model engineering in general and the
-MDA™ approach in particular.
-
-A model represents this system at level M1
-. This
-model conforms to its meta-model de?ned at level M2
-and the
-meta-model itself  conforms to the meta-meta-model at level
-M3
-. The meta-meta-model conforms to itself. This is very
-similar to the organization of programming languages, as
-already suggested in the right-hand column of Figure 1. A selfrepresentation of the EBNF (Extended Backus-Naur Form)
-notations takes some lines. This notation allows de?ning in?nity of well-formed grammars. A given grammar, for example
-the grammar of the Pascal language, allows de?ning the in?nity
-of syntactically correct Pascal programs. One Pascal program
-is a symbolic representation of the in?nity of its possible executions. The Pascal program, the Pascal grammar, the EBNF
-self-described notation are all examples of symbolic models.
-The execution of the program, on the contrary, is a real phenomenon involving changes of values in electronic memories
-and much more: it is part of the real world.
-
-
-
-
-We suggest that the current software development paradigm, based on object orientation, may have reached
-the point of exhaustion, and we propose a model for its successor
-
-
-Title: On the Unification Power of Models
-
-The software industry remains reliant on the craftsmanship of skilled individuals engaged in labor intensive manual tasks.
-We suggest that the current software development para-digm, based on object orientation, may have reached the point of exhaustion, and we propose a model for its successor.
-
-At the beginning of object technology, what was important was that an object could be an instance of a class and a class could inherit from another class. This may be seen as a minimal definition in support of principle [P1]. We call the two basic relations instanceOf and inheritsFrom. Very differently, what seem to be important now is that a particular view (or aspect) of a system can be captured by a model and that each model is written in the language of its metamodel. This may be seen as a minimal definition in support of principle [P2].
-
-The danger would be to use the old [P1] relations within the new context of MDE, for example by stating that a model in an instanceOf a metamodel2. This point of view often leads to many confusion and does not help in clarifying a complex evolution.
-More generally, there is an over-usage of this instanceOf relation in MDE. Used in different contexts, with different meanings, this may cause additional confusion. Careful distinction between at least three different usages of this relation is suggested in [3] and [8].
-[3] Some Initial Considerations on the Layered Organization of Metamodels
-[8] Ontology-based Layered Semantics for Precise OA\&D
-
-The MDE approach has not a unique goal. Among the objectives pursued, one may list the separation from business-neutral descriptions and platform dependent imple-mentations, the identification, precise expression, separation and combination of specific aspects of a system under development with domain-specific languages, the establishment of precise relations between these different languages in a global framework and in particular the possibility to express operational transformations between them 
-
-3 MDE: concepts and goals
-As the notion of object was central to the software development practices of the 80's, the notion of model seems today to focus much attention. The question of defining what a model is, on a practical basis, will probably take as much time and energy to settle as the definition of the notion of an object. We propose in this paper to start from the two basic relations associated to principle [P2].
-
-
-
 
 
 \section{Máquina Virtual de Comunicação}
@@ -319,8 +234,72 @@ Apesar de prever o uso de diversos provedores de comunicação, a versão inicialme
 A NCB também foi posteriormente \cite{UCCAF} estendida para contemplar o uso de políticas como meio de guiar decisões da seleção de \emph{frameworks} de comunicação.
 
 
-\section{Reflexão computacional}
+%\section{Reflexão computacional}
 
-\section{Computação autônoma}
+\section{Auto-gerenciamento}
+\subsection{Computação autônoma}
 
-\section{Políticas}
+A crescente complexidade dos sistemas baseados em software modernos tem dificultado não só a sua construção de aplicações, mas também a sua implantação, configuração e operação. A provisão de serviços que atendam às demandas atuais dos usuários muitas vezes exige a construção de aplicações capazes de  integrar vários vários recursos. 
+
+Esses recursos, geralmente heterogêneos podem incluir além de componentes de software, bancos de dados, servidores de aplicações, aplicações legadas, ou até mesmo subsistemas completos. Além disso, com a expansão das tecnologias de rede e Internet, esses recursos podem estar distribuídos em inúmeros dispositivos.
+Nessa situação, até mesmo a implantação e gerenciamento de aplicações pode tornar-se uma atividade intratável até mesmo para especialistas em tecnologia da informação.
+
+As dificuldades relacionadas a integração e gerenciamento desses sistemas complexos levaram ao surgimento de iniciativas \cite{visionAC, HPAdaptiveEnterprise, MicrosoftDynamicSystems} que propõem uma abordagem sistematizada para a construção de sistemas capazes de se auto-gerenciar. O emprego de mecanismos de computação autônoma, proposto pela IBM \cite{visionAC}, visa dotar os sistemas de software de capacidades similares às presentes no sistema nervoso autônomo humano, que controla as funções vitais do organismo de forma inconsciente ao ser humano. De forma análoga, um sistema de computação autônoma é capaz de ajustar sua operação de acordo com mudanças no seu ambiente e nas demandas de usuários.
+
+Conforme essa visão, um sistema autônomo deve possuir as seguintes capacidades de auto-gerenciamento:
+
+\begin{itemize}
+
+\item Auto-configuração: Capacidade de um sistema de automaticamente adaptar para atender mudanças em seu ambiente.
+
+\item Auto-otimização: Capacidade de monitorar os recursos e realizar ajustes para aumentar a sua eficiência.
+
+\item Auto-proteção: Capacidade de identificar e antecipar ataques, tomando as ações necessárias para se proteger desses.
+
+\item Auto-recuperação: Capacidade de identificar problemas como falhas ou mal-funcionamento em recursos e tomar as ações necessárias para garantir a manutenção dos serviços fornecidos.
+
+\end{itemize}
+
+Para realizar essa visão, foi proposto pela IBM\cite{ibmac} uma arquitetura baseada em camadas para a construção de sistemas autônomos. A Figura~\ref{fig:referencial-ac} ilustra essa arquitetura, cujo elemento principal é o gerenciador autônomo. A camada mais inferior contém os recursos a serem gerenciados, que podem ser componentes de hardware ou software, e podem incorporar capacidades de auto-gerenciamento. A camada imediatamente acima representa os componentes de acesso aos recursos, denominados \emph{touchpoints}. Um \emph{touchpoint} representa uma interface padrão para interação com os recursos apresentando o comportamento de sensor e atuador para um ou mais recursos. Enquanto sensores tem como função observar o estado dos recursos gerenciados, atuadores são utilizados para efetuar mudanças nos mesmos.
+
+
+\begin{figure}
+ \centering
+ \includegraphics[width=1\textwidth]{./fig/aclayers}
+ \caption{Arquitetura de computação autônoma.}
+ \label{fig:referencial-ac}
+\end{figure}
+
+O gerenciamento dos recursos é realizado por meio de gerenciadores autônomos e manuais. Gerenciadores autônomos de \emph{touchpoint} atuam diretamente sobre os recursos, interagindo por meio de seus \emph{touchpoints}. Gerenciadores autônomos de orquestração gerenciam outros gerenciadores autônomos, coordenando diferentes grupos de recursos. Por fim, um gerenciador manual fornece uma interface para que um profissional de tecnologia da informação possa intervir manualmente na gerência dos recursos.
+Ao realizarem sua função, os gerenciadores autônomos e manuais podem obter e compartilhar informações, que neste caso são chamadas de conhecimento e mantidas em fontes de conhecimento. Em um sistema autônomo são considerados como conhecimento tipos de dados particulares como sintomas, políticas, solicitações e planos de mudança.
+
+O elemento principal da arquitetura de computação autônoma é o gerenciador autônomo, que implementa um ciclo de controle que implementa as funções de monitoramento, análise, planejamento e execução (MAPE). Essas funções, conjuntamente, são responsáveis por monitorar os recursos e eventualmente tomar a ação apropriada em resposta a alguma mudança. Durante a sua execução essas funções são influenciadas pelos dados mantidos em uma fonte de conhecimento, e interagem por meio da troca de dados como sintomas, solicitações de mudança e plano de mudanças, também tratados como conhecimento.
+
+A Figura~\ref{fig:referencial-ac-am} mostra uma visão conceitual do gerenciador autônomo, onde podem ser identificados os elementos que implementam as funções do ciclo de controle:
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.8\textwidth]{./fig/am}
+ \caption{Gerenciador autônomo.}
+ \label{fig:referencial-ac-am}
+\end{figure}
+
+\begin{itemize}
+
+\item Monitor, que é responsável por coletar, agregar e filtrar informações coletadas de recursos gerenciados por meio de sensores, identificando sintomas relevantes para a análise do estado do recurso.
+
+\item Analisador, que analisa os sintomas gerados pelo monitor e determina se alguma mudança é necessária, gerando uma solicitação de mudança.
+
+\item Planejador, que fornece meios para construção de planos de mudança que determinam quais ações devem ser tomadas em resposta à solicitação de mudança recebida.
+
+\item Executor, que coloca um plano de mudança em prática, interagindo com os atuadores para executar as ações definidas pelo plano.
+
+\end{itemize}
+
+Como ilustrado na parte superior da Figura~\ref{fig:referencial-ac-am}, o gerenciador autônomo também expõe interfaces de um sensor e atuador, permitindo um gerenciador autônomo seja utilizado por um gerenciador autônomo orquestrador. Além disso, políticas podem ser utilizadas para direcionar o comportamento de um gerenciador autônomo, e também são consideradas como conhecimento.
+
+
+A aplicação de abordagens dirigidas por modelos a arquitetura de computação autônomo pode ser muito benéfica. O uso de técnicas de metamodelagem possibilita a formalização da estrutura do conhecimento utilizado para direcionar o comportamento autônomo. Modelos podem ser empregados na representação de políticas, sintomas, solicitações e planos de mudança, além de outros conhecimentos relacionados aos recursos gerenciados. Modelos em tempo de execução também podem ser utilizados como um meio de interagir com a interface de gerenciador manual. 
+
+
+\subsection{Políticas}
