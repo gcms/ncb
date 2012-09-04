@@ -237,18 +237,19 @@ A CVM se baseia em uma arquitetura de camadas que encapsulam as tarefas necessár
 A camada NCB, que integra a CVM, foi projetada com o intuito de fornecer uma interface de serviços de comunicação independente da tecnologia de comunicação empregada, capaz de abstrair da camada superior a heterogeneidade e dinâmica envolvida na utilização de provedores de comunicação \cite{cvm}.  Para isso, o intermediador de comunicação deve ser capaz de se auto-gerenciar, adaptando-se para se adequar à mudanças no ambiente de rede, nos provedores de comunicação, ou nas solicitações advindas da camada de \emph{middleware}.
 
 Apesar de prever o uso de diversos provedores de comunicação, a versão inicialmente desenvolvida da NCB comportava apenas um provedor diretamente incorporado à sua implementação, limitando a qualidade e tipos de serviços de comunicação disponíveis. Em trabalhos seguintes \cite{SelfConfig}, a NCB foi ampliada para possibilitar a integração, e auto-configuração de vários \emph{frameworks} provedores de comunicação como Skype, Smack, Asterisk, etc. Para o auto-gerenciamento da camada foi adotada a arquitetura de computação autônoma proposta pela IBM \cite{ibmac}.
-A NCB também foi posteriormente \cite{UCCAF} estendida para contemplar o uso de políticas como meio de guiar decisões da seleção de \emph{frameworks} de comunicação.
+A NCB também foi posteriormente \cite{UCCAF} ampliada para contemplar o uso de políticas como meio de guiar decisões da seleção de \emph{frameworks} de comunicação.
 
 
 %\section{Reflexão computacional}
 
-\section{Auto-gerenciamento}
+\section{Sistemas auto-gerenciáveis}
 
-para amenizar a coplexidade do gerenciamento...
-self-management architectures
-policies for self-management
+Um sistema auto-gerenciável é aquele capaz de se adaptar de forma automática, com o intuito de atingir os objetivos do sistema. O objetivo do auto-gerenciamento é reduzir a necessidade do uso de controles manuais para manter um sistema de acordo com os seus objetivos quando da ocorrência de mudanças em seu ambiente operacional ou requisitos \cite{selfManSystems}.
 
-CVM emprega computação autônoma e políticas para seleção de frameworks
+A construção de sistemas auto-gerenciáveis apresenta vários desafios cujas soluções envolvem diversas áreas de pesquisa, incluindo computação sensível ao contexto, inteligência artificial, adaptação dinâmica, etc.
+Nesse contexto, arquiteturas de auto-gerenciamento propõem uma forma de integrar soluções para os desafios envolvidos na realização da visão de sistemas auto-gerenciáveis \cite{archSelfMan, selfManSystems}.
+
+Esta seção apresenta um resumo da arquitetura de computação autônoma proposta para construção de sistemas auto-gerenciáveis e do uso de políticas para guiar o gerenciamento de sistemas. Essas tecnologias são empregadas pela CVM e pela abordagem proposta neste trabalho para prover capacidades de auto-gerenciamento.
 
 \subsection{Computação autônoma}
 
@@ -321,15 +322,15 @@ O uso de políticas no gerenciamento de sistemas tem como intuito isolar as regra
 Nesse contexto, políticas são utilizadas como um meio de definir objetivos de alto nível, que direcionam como um sistema deve se comportar. 
 Devido à isto, o uso de políticas está incorporado à várias arquiteturas e abordagens de auto-gerenciamento de sistemas, incluindo a de computação autônoma.
 
-Políticas podem ser utilizadas para definir regras para se atingir diversos objetivos de gerenciamento como escalabilidade, performance, otimização do uso de recursos, flexibilidade, etc \cite{Sloman}. Políticas são definidas por linguagens de definição de políticas que oferecem meios para especificar regras que podem ser mapeadas para ações de gerenciamento de um sistema.
+Políticas podem ser utilizadas para definir regras para se atingir diversos objetivos de gerenciamento como escalabilidade, performance, otimização do uso de recursos, flexibilidade, etc. Políticas são definidas por linguagens de definição de políticas que oferecem meios para especificar regras que podem ser mapeadas para ações de gerenciamento de um sistema.
 O uso de políticas para auto-gerenciamento de sistemas guarda semelhanças com técnicas de MDE, pois se baseia na construção de representações formais de políticas por meio de linguagens, e na sua aplicação de forma automatizada.
 
 Há uma grande diversidade entre as linguagens para definição de políticas, que variam de acordo com os aspectos a serem gerenciados ou o domínio aplicado. Apesar disso, algumas linguagens de políticas buscam oferecer construções mais genéricas que podem ser utilizadas uma gama maior de sistemas. 
 
-A PDL (\emph{Policy Definition Language})  \cite{pdl} considera uma política como um conjunto de regras que determinam o comportamento esperado de um sistema, e propõe a definição de políticas por meio de regras do tipo Evento-Condição-Ação (ECA). Ponder \cite{ponder} é uma linguagem orientada a objetos declarativa para especificação de políticas de segurança baseada em papéis e políticas de gerenciamento de propósito geral. A linguagem Ponder estende as regras do tipo ECA que passam a ser utilizadas na composição de outros tipos mais elaborados de políticas, que incluem obrigações, restrições, delegações, papéis, relacionamentos, etc. PMAC (\emph{Policy Management for Autonomic Computing}) \cite{pmac} é uma plataforma de políticas para o gerenciamento de vários aspectos de sistemas distribuídos de larga escala. Na PMAC, uma política é uma regra que contempla condições, ações, prioridade e papel. A plataforma proposta pela PMAC se integra com a arquitetura de computação autônoma proposta pela IBM, sendo o gerenciador autônomo considerado um gerenciador baseado em políticas, e assim suas funções MAPE operam de acordo com um conjunto de políticas.
+A PDL (\emph{Policy Definition Language})  \cite{pdl} considera uma política como um conjunto de regras que determinam o comportamento esperado de um sistema, e propõe a definição de políticas por meio de regras do tipo Evento-Condição-Ação (ECA). Ponder \cite{ponder} é uma linguagem orientada a objetos declarativa para especificação de políticas de segurança baseada em papéis e políticas de gerenciamento de propósito geral. A linguagem Ponder estende as regras do tipo ECA que passam a ser utilizadas na composição de outros tipos mais elaborados de políticas, que incluem obrigações, restrições, delegações, papéis, relacionamentos, etc. \emph{Policy Management for Autonomic Computing} (PMAC) \cite{pmac} é uma plataforma de políticas para o gerenciamento de vários aspectos de sistemas distribuídos de larga escala. Na PMAC, uma política é uma regra que contempla condições, ações, prioridade e papel. A plataforma proposta pela PMAC se integra com a arquitetura de computação autônoma proposta pela IBM, sendo o gerenciador autônomo considerado um gerenciador baseado em políticas, e assim suas funções MAPE operam de acordo com um conjunto de políticas.
 
 O uso de linguagens de políticas mais específicas ou genéricas é uma questão sujeita a debates, assim como no campo de linguagens de programação. Entranto, sob uma ótica mais abrangente de abordagens de MDE, linguagens de política são necessariamente de propósito específico, e podem ser consideradas como uma linguagem específica de domínio.
-Na implementação da camada NCB da CVM políticas são utilizadas para direcionar a seleção de \emph{frameworks} de comunicação \cite{ncbPolicies}.
+Na implementação da camada NCB da CVM políticas são utilizadas para direcionar a seleção de \emph{frameworks} de comunicação \cite{foda, UCCAF}.
 
 %The approach to policies in this dissertation is in the vein of domain specific specialization, focused more on providing a semantic rich language for specifying domain specific policies. The systematic approach to understand and define policies detailed later in this dissertation can be applied to other domains of interest. The author notes that while an explicit policy specification is described in this dissertation, other policy languages could be used to specify the artifacts of systematic domain analysis.
 %
