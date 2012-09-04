@@ -44,28 +44,28 @@ Para a construção destes modelos são empregadas linguagens especificamente proje
 No entanto, para que o processamento desses modelos seja realizado com um alto grau de automatização é necessário que essas transformações incorporem conhecimento específico de domínio \cite{mddcs}.
 Portanto, para se obter os benefícios previstos pelas abordagens de MDE, é preciso construir linguagens e mecanismos de processamento específicos de domínio para uma determinada classe de aplicações. Essa infraestrutura possibilita que modelos abstratos, descritos diretamente pelos usuários, sejam executados de forma automatizada.
 
-Apesar dessa abordagem trazer um grande benefício para a construção de aplicações em um determinado domínio de negócio, um grande esforço ainda é exigido na construção dos mecanismos de transformação ou plataformas para execução de modelos específicos desse domínio.
-Esses mecanismos são comumente construídos em linguagens de programação de propósito geral, o que exige um grande esforço em sua codificação. Além disso, por incorporarem conhecimento específico de domínio, mecanismos de processamento precisam ser codificados para cada nova linguagem.
+Apesar dessa abordagem trazer um grande benefício para a construção de aplicações em um determinado domínio de negócio, um grande esforço ainda é exigido na construção dos mecanismos de transformação ou plataformas voltadas para a execução de modelos específicos desse domínio.
+Esses mecanismos são comumente construídos em linguagens de programação de propósito geral, o que exige um grande esforço em sua codificação. Além disso, por incorporarem conhecimento específico de domínio, novos mecanismos de processamento precisam ser codificados para cada nova linguagem.
 
 
 A despeito disso, diferentes classes de aplicações em domínios diversos podem apresentar necessidades similares de processamento. O processamento de modelos de alto nível usualmente envolve operações de transformação e negociação de modelos, avaliação de políticas, adaptação em tempo de execução, etc. Logo, a aplicação de uma abordagem dirigida por modelos à construção destes mecanismos específicos de domínio que compartilham características comuns pode trazer  benefícios interessantes. 
 
-Ao se aplicar tal abordagem, é possível estender o uso de modelos para além da descrição de aplicações, possibilitando também a descrição da plataforma para execução dessas aplicações. Além de simplificar a construção dessas plataformas, esta abordagem também facilita sua evolução com o intuito de atender ao surgimento de novos requisitos, à mudanças na plataforma de implementação, ou à evolução da linguagem específica de domínio correspondente.
+Ao se aplicar tal abordagem, é possível ampliar o uso de modelos para além da descrição de aplicações, possibilitando também a descrição da plataforma para execução dessas aplicações. Além de simplificar a construção dessas plataformas, esta abordagem também facilita sua evolução com o intuito de atender ao surgimento de novos requisitos, à mudanças na plataforma de implementação, ou à evolução da linguagem específica de domínio correspondente.
 
 % Talvez seja um padrão de arquitetura, pode também ser visto como uma categoria de plataformas, mas neste momento o discurso está focando nas aplicações. É claro que estas aplicações executam em uma plataforma, e assim sendo as plataformas que tem como intuito facilitar o desenvolvimento deste tipo de aplicação torna-se uma categoria devido à existência da categoria de aplicações.
 Uma categoria interessante de aplicações que podemos destacar está relacionada ao provimento de serviços a partir de um conjunto heterogêneo de recursos. Uma aplicação desta categoria conta com um conjunto de recursos que apresentam diferentes características, e tem como objetivo fornecer um serviço de alto nível ao usuário, capaz de abstrair a complexidade envolvida em sua realização.
-Assim sendo, tais aplicações precisam ser capazes se auto gerenciador, abstraindo do usuário detalhes da escolha, configuração, monitoramento, e utilização de recursos.
+Assim sendo, tais aplicações precisam ser capazes se auto-gerenciar, abstraindo do usuário detalhes da escolha, configuração, monitoramento, e utilização de recursos.
 
 
 %%	- Falar sobre a CVM, um exemplo de máquina virtual capaz de interpretar modelos de alto nível (que podem até mesmo ser criados pelo usuário final) que descrevem um serviço a ser provido (comunicação) e realizá-lo de forma transparente ao usuário.
 
 %A Máquina Virtual de Comunicação (\emph{Communication Virtual Machine} - CVM) é uma plataforma de \emph{middleware} específica de domínio que emprega essa abordagem para possibilitar a criação de serviços de comunicação a partir de modelos de alto nível definidos pelo usuário.
 
-A Máquina Virtual de Comunicação (\emph{Communication Virtual Machine} - CVM) é um exemplo de  plataforma para construção e execução de aplicações que se enquadram nessa categoria. A CVM é uma plataforma de \emph{middleware} específica de domínio que emprega uma abordagem dirigida por modelos para a criação de serviços de comunicação a partir de modelos de alto nível definidos pelo usuário.
+A Máquina Virtual de Comunicação (\emph{Communication Virtual Machine} - CVM) é um exemplo de  plataforma para construção e execução de aplicações que se enquadram nessa categoria \cite{cvm}. A CVM é  uma plataforma voltada para a especificação e realização de serviços de comunicação que emprega uma abordagem dirigida por modelos para a criação de serviços de comunicação a partir de modelos de alto nível definidos pelo usuário.
 
-Como uma plataforma dirigida por modelos, a CVM atua a partir do processamento de modelos descritos em uma linguagem específica de domínio chamada Linguagem de Modelagem de Comunicação (\emph{Communication Modeling Language} - CML) \cite{cvm}. Um modelo em CML descreve um cenário de comunicação, incluindo participantes, tipos de dados, e tipos de mídia de um serviço de comunicação a ser realizado. Detalhes sobre os dispositivos ou tecnologias de comunicação que serão efetivamente utilizados para estabelecer a comunicação não precisam ser descritos em um modelo em CML.
+Como uma plataforma dirigida por modelos, a CVM atua a partir do processamento de modelos descritos em uma linguagem específica de domínio chamada Linguagem de Modelagem de Comunicação (\emph{Communication Modeling Language} - CML). Um modelo em CML descreve um cenário de comunicação, incluindo participantes, tipos de dados, e tipos de mídia de um serviço de comunicação a ser realizado. Detalhes sobre os dispositivos ou tecnologias de comunicação que serão efetivamente utilizados para estabelecer a comunicação não precisam ser descritos em um modelo em CML.
 
-A CVM é considerada uma plataforma de \emph{middleware} de comunicação centrada no usuário devido ao alto nível de abstração de seus modelos, que podem ser facilmente construídos por usuários finais \cite{cml}. A partir de um determinado modelo descrito em CML, a CVM é capaz de fornecer o serviço desejado de forma automatizada. Além disso, um modelo em CML pode ser modificado durante o curso de uma sessão de comunicação, desencadeando adaptações da CVM para atender ao cenário atualizado descrito pelo modelo modificado. Isso qualifica os modelos em CML como modelos de desenvolvimento e de tempo de execução \cite{mrt}.
+A CVM é considerada uma plataforma de comunicação centrada no usuário devido ao alto nível de abstração de seus modelos, que podem ser facilmente construídos por usuários finais \cite{cml}. A partir de um determinado modelo descrito em CML, a CVM é capaz de fornecer o serviço desejado de forma automatizada. Além disso, um modelo em CML pode ser modificado durante o curso de uma sessão de comunicação, desencadeando adaptações da CVM para atender ao cenário atualizado descrito pelo modelo modificado. Isso qualifica os modelos em CML como modelos de desenvolvimento e de tempo de execução \cite{mrt}.
 
 
 %%	- Além de utilizar modelos a CVM implementa um conjunto de mecanismos de transformação, negociação, adaptação, etc (que é o que torna possível a transparência ao usuário)
@@ -75,12 +75,12 @@ Para realizar um serviço de comunicação de forma automatizada e transparente ao 
 Essa mesma estratégia também é empregada na área de micro-grids \cite{microgrid} para possibilitar a construção de aplicações de gerenciamento dos elementos de uma rede elétrica inteligente local diretamente pelos usuários finais. 
 Isto demonstra o potencial dessa estratégia para a construção de plataformas para provimento de serviços descritos por modelos a partir de um conjunto heterogêneo de recursos.
 
-Neste trabalho, nos apoiamos nas soluções empregadas pela CVM para propor uma abordagem dirigida por modelos para o desenvolvimento de plataformas específicas de domínio, voltadas para a construção e execução de aplicações que se enquadram na categoria descrita acima.
+Neste trabalho, nos apoiamos nas soluções empregadas pela CVM para propor uma abordagem dirigida por modelos para o desenvolvimento de máquinas virtuais específicas de domínio, voltadas para a construção e execução de aplicações que se enquadram na categoria descrita acima.
 Ao fazê-lo, buscamos uma forma sistematizada de capturar as soluções empregadas pela CVM, de forma que possam ser reutilizadas em outros domínios de negócio, seguindo uma abordagem baseada em modelos.
 
-Assim sendo, a abordagem proposta prevê o uso de modelos como um meio de construir máquinas virtuais projetadas para a execução de uma determinada linguagem de modelagem específica de domínio. Para realizar a abordagem proposta, prevemos a construção de um metamodelo que permita descrever modelos que representam essas máquinas virtuais. 
-Além disso, ao adotarmos a CVM como referência, propomos a adoção de uma arquitetura baseada em camadas com responsabilidades bem definidas, independentes do domínio de negócio.
-Dentro dessa proposta, o metamodelo para descrição dessas máquinas virtuais deve apresentar construções relativas às responsabilidades identificadas para as camadas que as compõem. 
+Assim sendo, a abordagem proposta prevê o uso de modelos como um meio de construir máquinas virtuais projetadas para a execução de uma determinada linguagem de modelagem específica de domínio. Para realizar a abordagem proposta, prevemos a construção de um metamodelo que permita descrever modelos que representem máquinas virtuais como as descritas.
+Além disso, ao adotarmos a CVM como referência, propomos o emprego de uma arquitetura baseada em camadas com responsabilidades bem definidas, de forma independente do domínio de negócio.
+Dentro dessa proposta, o metamodelo para descrição dessas máquinas virtuais deve apresentar construções relativas às responsabilidades identificadas para as camadas que as compõem. A partir do metamodelo proposto, poderão ser criados modelos que descrevem máquinas virtuais voltadas para a execução de linguagens de modelagem específicas de domínio.
 
 %Neste trabalho propomos uma abordagem dirigida por modelos para o desenvolvimento de plataformas específicas de domínio voltadas para a construção e execução de aplicações que fornecem um serviço descrito por meio de um modelo centrado no usuário a partir de um conjunto heterogêneo de recursos.
 %Essa abordagem, se baseia nas soluções empregadas pela CVM para a execução de aplicações desta categoria. Assim sendo, a abordagem proposta prevê que uma plataforma seja realizada através de uma máquina virtual com uma arquitetura de camadas, semelhante à exibida pela CVM.
@@ -88,9 +88,9 @@ Dentro dessa proposta, o metamodelo para descrição dessas máquinas virtuais deve
 % - cada camada tem um conjunto de responsabilidades que foi identificado
 
 Com o intuito de demonstrar a viabilidade desta abordagem, construímos um metamodelo que permite a construção de uma das camadas da arquitetura proposta. Essa camada, a mais inferior da arquitetura, tem como responsabilidade o gerenciamento dos recursos disponíveis. 
-Denominada \emph{intermediador de serviços}, essa camada deve ser capaz de prover à camada superior uma interface capaz de abstrair a heterogeneidade e os detalhes envolvidos na utilização dos recursos.
+Denominada \emph{intermediador de serviços}, essa camada fornece à camada superior uma interface capaz de abstrair a heterogeneidade e os detalhes envolvidos na utilização dos recursos.
 
-Baseado no metamodelo proposto, construímos um modelo que equivale à implementação existente dessa camada na CVM. Além disso, executamos o modelo construído com o auxílio do ambiente de execução desenvolvido e avaliamos os resultados obtidos em comparação com a implementação da CVM.
+Baseado no metamodelo proposto, construímos um modelo que equivale à implementação existente dessa camada na CVM. Além disso, executamos o modelo construído com o auxílio do ambiente de execução desenvolvido e avaliamos os resultados obtidos nessa execução em comparação com a implementação da CVM.
 
 %A camada de Interface de Comunicação com o Usuário (\emph{User Communication Interface} - UCI) representa uma interface para interação com a CVM, provendo meios para definição e gerenciamento de modelos em CML e notificação de eventos ocorridos na plataforma. O Mecanismo de Síntese (\emph{Synthesis Engine} - SE) por sua vez, é responsável por duas principais tarefas: a negociação de um modelo em CML recebido da UCI com os demais participantes; e a transformação deste modelo em um \emph{script} de controle da comunicação executável que contém a lógica para o estabelecimento da comunicação. Estes \emph{scripts} por sua vez são executados pelo \emph{Middleware} de Comunicação Centrado no Usuário (\emph{User-centric Communication Middleware} - UCM). A UCM é responsável por avaliar o \emph{script} de controle de comunicação fazendo requisições aos serviços disponibilizados pela camada Intermediador de Comunicação em Rede (\emph{Network Communication Broker} - NCB). A NCB por sua vez provê uma interface de comunicação independente de rede e tecnologia  de comunicação. Esta última camada, ainda apresenta capacidade de auto gerenciamento e configuração dinâmica.
 %\cite{cvm}
@@ -134,7 +134,7 @@ Baseado no metamodelo proposto, construímos um modelo que equivale à implementaç
 
 %    - Objetivo geral do trabalho: propor uma abordagem para a construção dirigida por modelos de máquinas virtuais customizadas para prover serviços descritos em modelos de alto nível (user-centric)
     
-O objetivo geral deste trabalho é propor uma abordagem para a construção dirigida por modelos, de máquinas virtuais capazes de prover serviços  a partir de um conjunto heterogêneo de recursos. As máquinas virtuais construídas a partir desta abordagem são projetadas para processarem modelos de alto nível descritos em uma linguagem de modelagem específica de domínio.
+O objetivo geral deste trabalho é propor uma abordagem para a construção dirigida por modelos, de máquinas virtuais capazes de prover serviços  a partir de um conjunto heterogêneo de recursos. As máquinas virtuais construídas a partir desta abordagem são projetadas para processarem modelos de alto-nível descritos em uma linguagem de modelagem específica de domínio, e que podem ser criados e modificados em tempo de execução.
 
 %Tendo em vista os benefícios da aplicação de MDE identificados na seção anterior, o objetivo geral deste trabalho é propor uma abordagem para a construção dirigida por modelos de máquinas virtuais capazes de prover,  a partir de um conjunto heterogêneo de recursos, serviços descritos por meio de modelos de alto nível.
 
@@ -142,15 +142,15 @@ Além disso, com o intuito de demonstrar a viabilidade de tal proposta, este trab
 
 \begin{itemize}
 
-\item Propor uma arquitetura independente de domínio de negócio para máquinas virtuais projetadas para execução de aplicações que fornecem um serviço de alto nível, descrito por um modelo de alto nível, a partir de um conjunto heterogêneo de recursos. 
+\item Propor uma arquitetura independente de domínio de negócio para máquinas virtuais projetadas para execução de aplicações que fornecem um serviço descrito por um modelo de alto nível, a partir de um conjunto heterogêneo de recursos. 
 
 \item Projetar um metamodelo para definição da camada de intermediação de de recursos da arquitetura proposta. % É específico para a CVM?
 
-\item Construir uma instância do meta-modelo proposto que represente a implementação da CVM para esta camada com o objetivo de demonstrar a abordagem proposta.
+\item Construir um modelo em conformidade com o metamodelo proposto que descreva uma camada de intermediação de serviços equivalente à camada de intermediação de comunicação em rede que integra a CVM.
 
-\item Desenvolver um ambiente de execução que possibilite a execução de instâncias do meta-modelo construído.
+\item Desenvolver um ambiente de execução que possibilite a execução de modelos construídos em conformidade com o metamodelo projetado.
 
-\item Avaliar a abordagem proposta
+\item Estabelecer uma comparação entre a camada intermediação de comunicação em rede construída por meio de um modelo e a camada equivalente que integra a CVM.
 
 \end{itemize}
 
@@ -173,20 +173,18 @@ Com o intuito de atingir os objetivos estabelecidos, a seguinte metodologia de p
 
 \begin{itemize}
 
-\item Revisão do estado de arte de abordagens dirigidas por modelo, seu emprego em plataformas de \emph{middleware}, e sua relação com outras abordagens.
-
-\item Estudo das diferentes abordagens dirigidas por modelos, incluindo conceitos e técnicas associadas.
+\item Revisão do estado de arte de abordagens dirigidas por modelo, incluindo sua relação com outras abordagens, conceitos, técnicas e ferramentas associadas.
 
 \item Estudo da plataforma CVM e sua interpretação à luz das abordagens dirigidas por modelo.
 
 %investigação em busca de interpretações da mesma sob a luz dos conceitos de abordagens dirigidas por modelo.	
 \item Refatoração da camada de intermediação de serviços presente na CVM com o intuito de isolar os elementos independentes de domínio.
 
-\item Elaboração de um metamodelo que possibilite a descrição dos elementos específicos de domínio identificados durante a fase anterior.
+\item Elaboração de um metamodelo que forneça abstrações apropriadas para a descrição dos elementos específicos de domínio identificados na fase anterior.
 
 \item Construção de um modelo equivalente à camada de intermediação de serviços da CVM.
 
-\item Avaliação do modelo construído
+\item Avaliação do modelo construído em relação à implementação existente.
 
 
 %\item Proposta de uma abordagem para modelagem comportamental de um serviço cuja a estrutura é descrita através de modelos de alto nível. (ainda não encontrei como explicar isso)
@@ -211,14 +209,33 @@ Com o intuito de atingir os objetivos estabelecidos, a seguinte metodologia de p
 
 \section{Contribuições}
 
+As contribuições desse trabalho incluem:
+
+\begin{enumerate}
+
+\item A proposta de uma abordagem dirigida por modelos para a construção de máquinas virtuais específicas de domínio voltadas para execução de modelos de alto-nível que podem ser criados e modificados em tempo de execução. Tal proposta visa trazer os mesmos benefícios obtidos na construção de aplicações para a construção de suas plataformas de execução, reconhecendo que mesmo sendo específicas de domínio, ainda existem várias similaridades entre essas plataformas.
+
+\item A construção de um metamodelo e um ambiente de execução, que associados permitem construir camadas de intermediação de serviços para máquinas virtuais como as propostas. 
+%Essa contribuição inclui a identificação de funcionalidades associadas ao auto-gerenciamento de recursos, que .
+Essa contribuição, por sua vez, representa uma etapa em direção à realização da abordagem proposta. 
+
+\end{enumerate}
+
 % Reapresentar o que já foi dito como motivação, mas dizendo: "Hey, isto aqui é a contribuição"
 
-Aplicar a abordagem dirigida por modelos à construção da plataforma que executa modelos...
-	Aplicando a arquitetura em camadas...
-	
-	- Proposta de uma forma sistematizada (baseada em modelos) de reutilizar as soluções existentes na CVM (arquitetura em camadas/transformações/negociação) em outros domínios
+%Aplicar a abordagem dirigida por modelos à construção da plataforma que executa modelos...
+%	Aplicando a arquitetura em camadas...
+%	
+%	- Proposta de uma forma sistematizada (baseada em modelos) de reutilizar as soluções existentes na CVM (arquitetura em camadas/transformações/negociação) em outros domínios
 
 \section{Organização da dissertação}
+
+Os capítulos seguintes descrevem além da abordagem proposta e sua implementação, as abordagens e conceitos associados.
+O Capítulo~\ref{cap:referencial} revisa os conceitos associados à abordagem proposta e essenciais para a sua compreensão.
+O Capítulo~\ref{cap:abordagem} descreve a abordagem proposta por essa dissertação descrevendo uma arquitetura genérica para construção de máquinas virtuais e como essa pode ser especializada para domínios específicos.
+O Capítulo~\ref{cap:metamodelo} detalha o metamodelo proposto para construção da camada de intermediação de serviços da arquitetura proposta.
+O Capítulo~\ref{cap:ambiente} detalha a implementação de um ambiente para a execução de camadas de intermediação de serviços descritas por meio do metamodelo proposto, e o Capítulo~\ref{cap:instancia} demonstra como o metamodelo junto ao ambiente proposto podem ser utilizados para construir uma camada de intermediação de serviços para a CVM.
+Por fim, o Capítulo~\ref{cap:conclusoes} resume este trabalho, discutindo suas contribuições, limitações e possíveis trabalhos futuros.
 
 %Este documento mostra como usar o \LaTeX\ com a classe \textsf{inf-ufg} para formatar teses, dissertações, monografias e relatórios de conclusão de curso, segundo o padrão adotado pelo Instituto de Informática da UFG. Este documento e a classe \textsf{inf-ufg} foram, em grande parte, copiados e adaptados da classe \textsf{thesisPUC} e do texto de Thomas Lewiner \cite{Lew2002} que descreve a sua utilização.
 %

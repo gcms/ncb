@@ -86,23 +86,29 @@ Nesse contexto, a engenharia dirigida por modelos surge como uma tentativa de si
 
 \subsection{Modelos}
 
-Um modelo é uma representação simplificada de algum aspecto de um sistema sob uma determinada perspectiva.
+%Um modelo é geralmente como uma representação simplificada de algum aspecto de um sistema. Através de modelos que representam
+
+%Em abordagens de MDE, um modelo é uma representação abstrata de algum aspecto de um sistema.
 
 
-"A model is a simplification of a system built with an intended goal in mind. The model should be able to answer questions in place of the actual system." [5].
+%"A model is a simplification of a system built with an intended goal in mind. The model should be able to answer questions in place of the actual system." [5].
+%- abstract but formal, first class entities, visual or textual, abstract differente aspects (even runtime)
+%- Considering models as first class entities and any software artifact as a model element is one of the basic principles of MDE.
 
-- abstract but formal, first class entities, visual or textual, abstract differente aspects (even runtime)
+Um modelo é geralmente utilizado como um meio de representar simplificadamente algum aspecto de um sistema.
+%, facilitando a compreensão de sistemas mais complexos
+%Em abordagens de MDE, um modelo é uma representação abstrata e formal de algum aspecto de um sistema.
+Um modelo descreve um sistema de acordo com uma perspectiva, ocultando informações que não estão relacionadas à sua natureza. Modelos podem ser empregados para capturar informações sobre um sistema existente, ou para descrever um sistema a ser construído.
+Um sistema complexo, por sua vez, é representado por meio de um conjunto de modelos, que capturam diferentes aspectos sob diversos níveis de abstração. 
 
-- Considering models as first class entities and any software artifact as a model element is one of the basic principles of MDE.
+Em abordagens de MDE, um modelo não é apenas um diagrama ou uma outra representação visual, mas sim uma definição formal dos conceitos a serem representados \cite{WhatModelsMean}. Nessas abordagens, o uso de modelos vai além da análise e projeto de um sistema, podendo ser utilizado em todas as atividades relacionadas à engenharia de software. 
+O emprego de modelos formalmente definidos possibilita que modelos representando visões abstratas de um sistema sejam processados de forma automatizada em artefatos de sua implementação.
+%Nessas abordagens, modelos são representações formais e sem ambiguidades, passíveis de serem processadas de forma automatizada.
 
+Modelos são formalizados por meio de linguagens de modelagem, cujas construções são definidas por um metamodelo. Um metamodelo, que também é um modelo, formaliza os conceitos fornecidos pela linguagem de modelagem, e como estes estão relacionados.
 
-Em abordagens de MDE, um modelo é uma representação abstrata e formal de algum aspecto de um sistema.
-Um modelo descreve um sistema de acordo com uma perspectiva, ignorando informações que não estão relacionadas à sua natureza.
-Um sistema complexo, por sua vez, pode ser descrito por diversos modelos que capturam diferentes aspectos sob variados níveis de abstração. 
-De acordo com o nível de abstração de um modelo, este pode ser construído por desenvolvedores de software, especialistas de domínio, ou até mesmo por usuários finais.
-O uso de modelos formalmente definidos, em acordo com uma linguagem de modelagem, possibilita que os modelos que descrevem um sistema sejam processados automaticamente em elementos associados à implementação do sistema.
+%O emprego de abordagens dirigidas por modelos está geralmente associado ao denvolvimento de sistemas por meio de abstrações de nível mais elevado que o encontrado em linguagens de programação. Para isto, são construídos modelos que descrevem os requisitos, arquitetura,
 
-modelos podem apresentar representações gráficas ou textuais
 
 
 %De acordo com o nível de abstração de um modelo, este pode ser construído por desenvolvedores de software, especialistas de domínio, ou até mesmo por usuários finais.
@@ -237,6 +243,13 @@ A NCB também foi posteriormente \cite{UCCAF} estendida para contemplar o uso de 
 %\section{Reflexão computacional}
 
 \section{Auto-gerenciamento}
+
+para amenizar a coplexidade do gerenciamento...
+self-management architectures
+policies for self-management
+
+CVM emprega computação autônoma e políticas para seleção de frameworks
+
 \subsection{Computação autônoma}
 
 A crescente complexidade dos sistemas baseados em software modernos tem dificultado não só a sua construção de aplicações, mas também a sua implantação, configuração e operação. A provisão de serviços que atendam às demandas atuais dos usuários muitas vezes exige a construção de aplicações capazes de  integrar vários vários recursos. 
@@ -302,4 +315,71 @@ Como ilustrado na parte superior da Figura~\ref{fig:referencial-ac-am}, o gerenc
 A aplicação de abordagens dirigidas por modelos a arquitetura de computação autônomo pode ser muito benéfica. O uso de técnicas de metamodelagem possibilita a formalização da estrutura do conhecimento utilizado para direcionar o comportamento autônomo. Modelos podem ser empregados na representação de políticas, sintomas, solicitações e planos de mudança, além de outros conhecimentos relacionados aos recursos gerenciados. Modelos em tempo de execução também podem ser utilizados como um meio de interagir com a interface de gerenciador manual. 
 
 
-\subsection{Políticas}
+\subsection{Políticas de gerenciamento}
+
+O uso de políticas no gerenciamento de sistemas tem como intuito isolar as regras que controlam o gerenciamento de um sistema de sua funcionalidade \cite{pbm}. Essa separação visa reduzir o esforço exigido na manutenção de sistemas e aumentar a sua flexibilidade e adaptabilidade.
+Nesse contexto, políticas são utilizadas como um meio de definir objetivos de alto nível, que direcionam como um sistema deve se comportar. 
+Devido à isto, o uso de políticas está incorporado à várias arquiteturas e abordagens de auto-gerenciamento de sistemas, incluindo a de computação autônoma.
+
+Políticas podem ser utilizadas para definir regras para se atingir diversos objetivos de gerenciamento como escalabilidade, performance, otimização do uso de recursos, flexibilidade, etc \cite{Sloman}. Políticas são definidas por linguagens de definição de políticas que oferecem meios para especificar regras que podem ser mapeadas para ações de gerenciamento de um sistema.
+O uso de políticas para auto-gerenciamento de sistemas guarda semelhanças com técnicas de MDE, pois se baseia na construção de representações formais de políticas por meio de linguagens, e na sua aplicação de forma automatizada.
+
+Há uma grande diversidade entre as linguagens para definição de políticas, que variam de acordo com os aspectos a serem gerenciados ou o domínio aplicado. Apesar disso, algumas linguagens de políticas buscam oferecer construções mais genéricas que podem ser utilizadas uma gama maior de sistemas. 
+
+A PDL (\emph{Policy Definition Language})  \cite{pdl} considera uma política como um conjunto de regras que determinam o comportamento esperado de um sistema, e propõe a definição de políticas por meio de regras do tipo Evento-Condição-Ação (ECA). Ponder \cite{ponder} é uma linguagem orientada a objetos declarativa para especificação de políticas de segurança baseada em papéis e políticas de gerenciamento de propósito geral. A linguagem Ponder estende as regras do tipo ECA que passam a ser utilizadas na composição de outros tipos mais elaborados de políticas, que incluem obrigações, restrições, delegações, papéis, relacionamentos, etc. PMAC (\emph{Policy Management for Autonomic Computing}) \cite{pmac} é uma plataforma de políticas para o gerenciamento de vários aspectos de sistemas distribuídos de larga escala. Na PMAC, uma política é uma regra que contempla condições, ações, prioridade e papel. A plataforma proposta pela PMAC se integra com a arquitetura de computação autônoma proposta pela IBM, sendo o gerenciador autônomo considerado um gerenciador baseado em políticas, e assim suas funções MAPE operam de acordo com um conjunto de políticas.
+
+O uso de linguagens de políticas mais específicas ou genéricas é uma questão sujeita a debates, assim como no campo de linguagens de programação. Entranto, sob uma ótica mais abrangente de abordagens de MDE, linguagens de política são necessariamente de propósito específico, e podem ser consideradas como uma linguagem específica de domínio.
+Na implementação da camada NCB da CVM políticas são utilizadas para direcionar a seleção de \emph{frameworks} de comunicação \cite{ncbPolicies}.
+
+%The approach to policies in this dissertation is in the vein of domain specific specialization, focused more on providing a semantic rich language for specifying domain specific policies. The systematic approach to understand and define policies detailed later in this dissertation can be applied to other domains of interest. The author notes that while an explicit policy specification is described in this dissertation, other policy languages could be used to specify the artifacts of systematic domain analysis.
+%
+%
+% Policy Management for Autonomic Computing (PMAC) [1], is another policy language for the management of aspects (quality of service (QoS), configuration) of large-scale distributed system. PMAC additionally includes integratable software
+%
+% direcionar o gerenciamento de sistemas por meio da definição objetivos de alto nível, que podem 
+%
+%Policy-Based Management (PBM) is a management paradigm that separates the rules governing the behavior of
+%a system from its functionality. 
+%It promises to reduce maintenance costs of information and communication systems while improving ?exibility and runtime adaptability. 
+%
+%It is today present at the heart of a multitude of management
+%architectures and paradigms including SLA-driven, Business-driven, autonomous, adaptive, and self-* management
+%-----
+%Many different techniques can be used to implement self management. 
+%After detailed investigation, policy based computing has been selected as the core self-management technology.
+%extensivamente aplicada para o auto-gerenciamento
+%
+%D.C. Robinson and M. Sloman [25] view Management policy to be the sets of rules 
+%for achieving the scalable management of a distributed computing system,
+% as well as achieving the sub-objectives of optimizing resource
+%usage, cost, revenue, and performance. 
+%The requirements of scalability, ?exibility, uniformity, and veri?ability are
+%believed to be achievable through policies and management domains
+%25: Domains: a new approach to distributed system management
+%---
+%PDL [56] is a declarative policy de?nition language for information systems management developed by Bell
+%Labs. It de?nes a policy as a collection of general principles specifying the desired behavior of a system. Policies11
+%are formulated using the Event-Condition-Action (ECA) rule paradigm of active databases and are supported by a
+%rich event sub-language for un-interpreted concurrent actions.
+%
+%Policies... policy types
+%The Policy Description Language (PDL) [4] is an 
+%example of the use of statically configured policies. 
+%PDL is used to specify policy agents, which perform 
+%distributed network management tasks [5]. 
+%The Policy Management for Autonomic Computing 
+%(PMAC), [6] from IBM, is an example of a policy 
+%technology that supports open-loop adaptation. An 
+%automated policy management and deployment 
+%application is provided to assist manual policy updates. 
+%A further tool, the Policy Schedule Advisor assists in 
+%refining a policy schedule to ensure efficient execution 
+%on the PMAC middleware [7]. Policyscape [8] also 
+%supports automated policy creation. It provides a set of 
+%building blocks from which more-complex policies can 
+%be created.
+%
+%policies are employed in NCB for... \cite{ncbPolicies}
+%
+%We base our work in the NCB 
+
