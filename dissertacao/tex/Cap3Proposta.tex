@@ -2,12 +2,13 @@
 \chapter{Construção dirigida por modelos de máquinas virtuais específicas de domínio}
 \label{cap:abordagem}
 
-Como introduzido no capítulo anterior, para viabilizar o emprego de modelos de alto nível para a construção e adaptação de aplicações é necessário construir linguagens específicas de domínio e mecanismos capazes de interpretá-las em tempo de execução. Enquanto o emprego de metamodelos permite descrever sintaxe abstrata e semântica estática estática de uma linguagem, sua semântica dinâmica é geralmente incorporada aos mecanismos responsáveis pelo seu processamento. 
+Como introduzido no capítulo anterior, para viabilizar o emprego de modelos de alto nível para a construção e adaptação de aplicações é necessário construir linguagens específicas de domínio e mecanismos capazes de interpretá-las em tempo de execução.
+Enquanto o emprego de metamodelos permite descrever sintaxe abstrata e semântica estática estática de uma linguagem, sua semântica dinâmica é geralmente incorporada aos mecanismos responsáveis pelo seu processamento. 
 Uma máquina virtual é um mecanismo voltado para a execução de modelos definidos por meio de uma determinada linguagem, definindo a semântica operacional da mesma.
 Assim, metamodelos associados à máquinas virtuais podem ser utilizados como um meio para definição de DSMLs e processamento de modelos descritos por meio destas.
 
 \begin{comment}
- Definição de máquina virtual não está de acordo com a comumente adotada, mas de acordo com a da CVM e a empregada nesse trabalho. Talvez seja melhor utilizar outro termo ao invés de máquina virtual, como interpretador ou mecanismo de execução?.
+ Definição de máquina virtual não está de acordo com a comumente adotada, mas está de acordo com a da CVM e a empregada nesse trabalho. Talvez seja melhor utilizar outro termo ao invés de máquina virtual, como interpretador ou mecanismo de execução?.
  \end{comment}
 
 A seção ~\ref{sec:visao-geral-2} descreve de forma geral uma abordagem para a construção dirigida por modelos de máquinas virtuais capazes de realizar serviços descritos através de modelos a partir de modelos de alto-nível.
@@ -23,9 +24,64 @@ A seção ~\ref{sec:sb}, por sua vez, detalha a parte do escopo da abordagem propo
 \section{Visão geral}
 \label{sec:visao-geral-2}
 
+
+We propose the integration of the  metamodel of a DSML with a model that describes its execution engine as a way to create platforms targeted at the development of applications using high-level models that can be created and changed at runtime.
+While there are several standardized tools that employ modeling techniques for the construction of  metamodels, support for the definition of dynamic semantics is still limited.
+%Dada uma DSML previamente definida, podemos definir um execution engine que vai executar instancias dessa DSML
+%Como benefício temos:
+%- Futuras mudanças no execution engine podem ser para atender mudanças na linguagem (e.g. novas construções) ou para atender requisitos de diferentes ambientes
+%ligação entre linguagem e plataforma não é formalizado (mencionar como limitação/future work)
+We expect that by extending the use of MDE techniques to the definition of execution engines we can not only simplify the construction of execution engines, but also make it easier to evolve them to support changes in their DSML or in the implementation platform. 
+%The ability to manipulate the execution engine also enables the modification of the behavior...
+
+%\begin{figure}
+% \centering
+% \includegraphics[width=0.3\textwidth]{overall}
+% \caption{An execution engine described by a model is used to execute DSML application models}
+% \label{fig:overall}
+%\end{figure}
+
+%%Emphasize the separation between the domain-independent aspect of model execution and the definition of the DSML (and how you link a particular execution engine definition to its respective DSML).
+Despite differences in the dynamic semantics of different DSMLs, they quite often rely on a common set of operations regardless of the application domain.
+The processing of runtime models usually requires from the execution engine capabilities for model analysis and negotiation, transformation of models into different representations, as well as for runtime adaptation, among others.
+
+In order to enable the construction and manipulation of models that represent an execution engine, we need a language that captures these commons capabilities. This language needs to be powerful enough to allow the description of execution engines for different application domains, like the ones described above. Still, this language should not be very generic, as this could make model creation and manipulation as difficult as writing code in a general-purpose language.
+Therefore, this language should be made up of constructs related to the domain-independent aspects of execution engines designed for providing high-level services described using a DSML. Thus, such a language can be regarded as a domain-specific language for the technical domain that encompasses the technical aspects involved in the use of a heterogeneous set of resources for the realization of high-level services described in a DSML.
+% MAYBE: procurar referencia que linguagem precisa ser de domínio específico para se tornar realizável
+% ref sobre domíno técnico também, ou mencionado no background
+
+
+%%Discuss the general application of the approach in CVM-like architectures, but limit it to the broker layer for the purposes of scoping the current work.
+%- based on the solutions employed by CVM/MGridVM, i.e. layered architecture with separation of responsibilities; 
+%- a model based way of specializing this generic architecture i.e. employing a  metamodel and instances that specialize
+Our approach builds on the solutions employed in the development of execution engines for communication \cite{Deng20081640} and microgrid energy management \cite{DBLP:conf/seke/AllisonAYC11}. 
+We aim to identify a generic architecture that can be specialized to produce execution engines for any given DSML whose execution semantics belongs to the above described technical domain.
+This architecture is a generalization of the layered architecture of CVM, described in Section \ref{sec:cvm}. Its layers are named \emph{User Interface}, \emph{Synthesis Engine}, \emph{Middleware} and \emph{Broker}.
+
+
+%Fabio:Based on this architecture, we propose the definition of this generic architecture in the form of a metamodel that can be used to construct models that represent the mentioned layers in different application domains.
+
+%Me: Based on this generic architecture, we propose the use of models as a method to define specializations of this generic architecture into domain-specific execution engines. 
+
+Based on this generic architecture, we propose a metamodel that can be used to construct models that represent specializations of this generic architecture into domain-specific execution engines. This metamodel should encompass constructs related to the concerns identified for the mentioned layers.
+
+
+In this paper, we will limit our discussions to the \emph{Broker} layer, which was the primary focus of the initial phase of the work.
+In the proposed architecture, the Broker layer is responsible for the management of the resources that will ultimately be used to realize a requested service.
+This layer provides to the upper layer a uniform interface that abstracts not just the differences between resources, but also all details involved in their setup, monitoring, and selection, among other resource management operations.
+In the next section, we describe a metamodel for the Broker layer that provides abstractions that are directly related to these responsibilities.
+
+%O Intermediador de Serviço é a camada da arquitetura proposta que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para prover o serviço solicitado. Cabe à esta camada disponibilizar uma interface de serviços que abstraia as especificidades dos recursos gerenciados para a camada superior. Além disso, o SB deve possuir capacidade de auto gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
+
+%Como uma interface de serviços, o SB se comunica com o UM através de chamadas que podem ser invocadas e eventos que podem ser gerados sinalizando alguma situação. Assim sendo, ao definirmos o comportamento dessa camada, precisamos descrever como serão tratadas as chamadas realizadas pela camada superior, e em que situações serão gerados determinados eventos. Mas além disso, também precisamos descrever como outras tarefas serão realizadas, incluindo o monitoramento e seleção de recursos, manutenção de informações, adaptação da camada, entre outros.
+
+%Com isto em mente, neste trabalho, construímos um  metamodelo que possibilita a modelagem do comportamento necessário para atender as responsabilidades definidas para a camada de intermediação de serviço da arquitetura proposta. O  metamodelo em questão contempla a descrição dos seguintes  aspectos envolvidos no cumprimento destas responsabilidades:
+
+%------------------
+
 %O desenvolvimento de aplicações que utilizam uma variedade de recursos heterogêneos para prover uma funcionalidade única ao usuário (ler tese Andrew, parte 3 ou papers CVM) é muito trabalhoso.
  
-Aplicações que integram diversos recursos com o intuito de prover uma funcionalidade de alto nível de forma transparente ao usuário precisam ser capazes de se auto gerenciar, tratando a adequadamente a seleção, configuração, monitoramento, e utilização de recursos subjacentes. 
+Aplicações que integram diversos recursos com o intuito de prover uma funcionalidade de alto nível de forma transparente ao usuário precisam ser capazes de se auto-gerenciar, tratando adequadamente a seleção, configuração, monitoramento, e utilização de recursos subjacentes. 
 O desenvolvimento deste tipo de aplicação, utilizando abordagens tradicionais de programação exige que todos esses aspectos, além de outros específicos de domínio sejam codificados em cada nova aplicação, geralmente por meio de uma linguagem de programação de propósito geral.
 % aspectos não diretamente relacionados ao domínio e o uso de linguagem de baixo-nível resultam em complexidade para traduzir os requisitos em código
 
@@ -110,7 +166,7 @@ Assim sendo, a abordagem dirigida por modelos é empregada para a definição e man
 
 % EM ALGUM LUGAR DESSA SEÇÃO: Definir o que é um recurso
 
-O Intermediador de Serviço é a camada da arquitetura proposta que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para prover o serviço solicitado. Cabe à esta camada disponibilizar uma interface de serviços que abstraia as especificidades dos recursos gerenciados para a camada superior. Além disso, o SB deve possuir capacidade de auto gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
+O Intermediador de Serviço é a camada da arquitetura proposta que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para prover o serviço solicitado. Cabe à esta camada disponibilizar uma interface de serviços que abstraia as especificidades dos recursos gerenciados para a camada superior. Além disso, o SB deve possuir capacidade de auto-gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
 
 Como uma interface de serviços, o SB se comunica com o \emph{middleware} através de chamadas que podem ser invocadas e eventos que podem ser gerados sinalizando alguma situação. Assim sendo, ao definirmos o comportamento dessa camada, precisamos descrever como serão tratadas as chamadas realizadas pela camada superior, e em que situações serão gerados determinados eventos. Mas além disso, também precisamos descrever como outras tarefas serão realizadas, incluindo o monitoramento e seleção de recursos, manutenção de informações, adaptação da camada, entre outros.
 
