@@ -53,7 +53,7 @@ Abordagens de MDE visam reduzir essa distância promovendo o uso de abstrações ma
 A abordagem de arquitetura dirigida por modelos (\emph{Model-Driven Architecture}, MDA) \cite{mda} surgiu com o objetivo de definir funcionalidades do sistema de forma independente da plataforma de implementação, buscando a interoperabilidade e portabilidade do sistema. A MDA pode ser considerada como a primeira iniciativa a propor um conjunto de princípios e padrões para o uso sistematizado de modelos. O termo \emph{Model-Driven Engineering}, cunhado mais recentemente, propõe o uso de modelos de forma mais abrangente, e engloba além de MDA outras iniciativas como \emph{Model-Driven Development} (MDD) \cite{pragMDE, mddesign}, e \emph{Model-Integrated Computing} (MIC) \cite{mic}, entre outras.
 % \cite{scopeMDE}
 
-A maior parte das abordagens de MDD propõem a construção de linguagens de modelagem e transformações capazes de transformar modelos descritos por meio dessas linguagens em artefatos da plataforma de implementação. A abordagem MIC pode ser considerada como uma abordagem de MDD, e propõe a construção de ambientes de desenvolvimento específicos de domínio que compreendem linguagens de modelagem específicas de domínio, transformadores e ferramentas que auxiliam na construção de aplicações naquele domínio. Além disso, várias outras abordagens propõem o uso de modelos para definição de diferentes aspectos como (citar aspectos e citação).
+A maior parte das abordagens de MDD propõem a construção de linguagens de modelagem e transformações capazes de transformar modelos descritos por meio dessas linguagens em artefatos da plataforma de implementação. A abordagem MIC pode ser considerada como uma aplicação de MDD, e propõe a construção de ambientes de desenvolvimento específicos de domínio que compreendem linguagens de modelagem específicas de domínio, transformadores e ferramentas que auxiliam na construção de aplicações naquele domínio. Além disso, várias outras abordagens propõem o uso de modelos para definição de diferentes aspectos como (citar aspectos e citação).
 % mencionar mrt
 
 %The MDE approach has not a unique goal. Among the objectives pursued, one may list the separation from business-neutral descriptions and platform dependent imple-mentations, the identification, precise expression, separation and combination of specific aspects of a system under development with domain-specific languages, the establishment of precise relations between these different languages in a global framework and in particular the possibility to express operational transformations between them 
@@ -128,7 +128,7 @@ A sintaxe abstrata e semântica estática de uma linguagem de modelagem são comume
 
 Por também se tratar de um modelo, um meta-modelo também é construído por meio de uma linguagem de modelagem. Esta meta-linguagem, por sua vez, também é definida através de um metamodelo, que neste caso é chamado de meta-metamodelo. 
 
-A construção de modelos e meta-modelos foi padronizada pela OMG por meio de uma arquitetura de metamodelagem denominada \emph{Meta-Object Facility} (MOF) \cite{mof241}. A especificação da MOF descreve uma arquitetura de quatro camadas, ilustrada na figura~\ref{fig:referencial-mof}, onde os elementos em uma determinada camada são definidos como instâncias de elementos da camada imediatamente superior. A camada mais superior, denominada M3, também integra a especificação da MOF, e representa o meta-metamodelo, que pode ser utilizado para a construção de metamodelos. O modelo da camada M3, também denominado de modelo MOF, é formalizada por meio de suas próprias abstrações, tornando desnecessária a existência de um outro nível de metamodelagem.
+A construção de modelos e meta-modelos foi padronizada pela OMG por meio de uma arquitetura de metamodelagem denominada \emph{Meta-Object Facility} (MOF) \cite{mof241}. A especificação da MOF descreve uma arquitetura de quatro camadas, ilustrada na Figura~\ref{fig:referencial-mof}, onde os elementos em uma determinada camada são definidos como instâncias de elementos da camada imediatamente superior. A camada mais superior, denominada M3, também integra a especificação da MOF, e representa o meta-metamodelo, que pode ser utilizado para a construção de metamodelos. O modelo da camada M3, também denominado de modelo MOF, é formalizada por meio de suas próprias abstrações, tornando desnecessária a existência de um outro nível de metamodelagem.
 
 \begin{figure}
  \centering
@@ -138,7 +138,9 @@ A construção de modelos e meta-modelos foi padronizada pela OMG por meio de uma 
 \end{figure}
 
 
-A partir do modelo da camada M3, é possível construir metamodelos que descrevem a sintaxe abstrata e semântica estática de linguagens de modelagem para diversos fins. Exemplos de linguagens de modelagem definidas a partir do modelo MOF incluem a .... Essas linguagens integram a camada M2 da arquitetura da MOF, e são utilizadas para construir os modelos que integram o nível M1. Os modelos da camada M1, por sua vez, são representações de objetos existentes no nível M0. O significado da camada M0 é controverso, e pode ser considerado como um objeto do mundo real, ou um fenômeno da execução de software, de acordo com a natureza do modelo na camada M1. Além disso, a especificação da MOF ainda define um padrão para representação de modelos no formato XMI (\emph{XML Metadata Interchange}).
+A partir do modelo da camada M3, é possível construir metamodelos que descrevem a sintaxe abstrata e semântica estática de linguagens de modelagem para diversos fins. 
+%Exemplos de linguagens de modelagem definidas a partir do modelo MOF incluem a \emph{Unified Modeling Language} (UML), \emph{Common Warehouse Metamodelo} (CWM),
+Essas linguagens integram a camada M2 da arquitetura da MOF, e são utilizadas para construir os modelos que integram o nível M1. Os modelos da camada M1, por sua vez, são representações de objetos existentes no nível M0. O significado da camada M0 é controverso, e pode ser considerado como um objeto do mundo real, ou um fenômeno da execução de software, de acordo com a natureza do modelo na camada M1. Além disso, a especificação da MOF ainda define um padrão para representação de modelos no formato XMI (\emph{XML Metadata Interchange}).
 
 O \emph{Eclipse Modeling Framework} (EMF) é um \emph{framework} de modelagem que fornece um conjunto de ferramentas para construção e processamento de modelos. O EMF inclui um metamodelo denominado Ecore, que representa um subconjunto do modelo MOF que correspondente às abstrações existentes em linguagens de programação orientadas a objetos. O Ecore pode ser utilizado para construir modelos que representam um meta-modelo de uma linguagem. Utilizado dessa forma, o Ecore assume a mesma função do nível M3 da arquitetura da MOF. O desenvolvimento do EMF e Ecore influenciaram a padronização da MOF 2.0, que passou a contar com um metamodelo equivalente ao Ecore, denominado \emph{Essential MOF} (EMOF).
 
@@ -165,7 +167,7 @@ Diferente de linguagens de propósito geral, que podem ser empregadas para um gra
 
 Os ganhos em expressividade tem como principal benefício o aumento da produtividade na construção de soluções. Além disso, o uso de conceitos e notações apropriadas próximas ao domínio pode permitir que especialistas de domínio, ou até mesmo usuários finais sejam capazes de construir aplicações \cite{endUser}.
 
-Um domínio pode ser considerado como uma área de interesse bem delimitada. Podemos categorizar domínios como técnicos e de negócio \cite{mdsd, DSM}. Domínios técnicos estão diretamente relacionados aos aspectos tecnológicos de um software como persistência, interfaces gráficas, bancos de dados, etc. Domínios de negócio, por sua vez, estão relacionados à atividades econômicas ou profissionais como telecomunicações, sistema bancário, seguros, vendas, entre outros. Apesar disso, essa separação é nebulosa, sendo que a delimitação de um domínio deve ser definida de acordo com o problema a ser resolvido.
+Um domínio pode ser considerado como uma área de interesse delimitada. Podemos categorizar domínios como técnicos e de negócio \cite{mdsd, DSM}. Domínios técnicos estão diretamente relacionados aos aspectos tecnológicos de um software como persistência, interfaces gráficas, bancos de dados, etc. Domínios de negócio, por sua vez, estão relacionados à atividades econômicas ou profissionais como telecomunicações, sistema bancário, seguros, vendas, entre outros. Apesar disso, essa separação é nebulosa, sendo que a delimitação de um domínio deve ser definida de acordo com o problema a ser resolvido.
 
 A abordagem de engenharia dirigida por modelos fornece um conjunto de princípios e ferramentas para construção de linguagens de modelagem, que se adequam perfeitamente à construção de DSLs \cite{Kurtev:2006:MDF:1176617.1176632, ts}.
 Através do uso de técnicas de metamodelagem  é possível especificar as construções dessas linguagens, que nesse caso são geralmente denominadas linguagens de modelagem específicas de domínio (\emph{Domain-Specific Modeling Languages}, DSMLs).
@@ -180,7 +182,19 @@ A formalização da semântica dinâmica de uma DSML, no entanto, é bem mais complex
 
 A semântica dinâmica de uma DSML é na maior parte das situações descrita informalmente, por meio de linguagem natural, e codificada na implementação do mecanismo responsável pelo processamento da DSML. A formalização da semântica dinâmica de linguagens de modelagem tem sido objeto de estudos, e tem o potencial de trazer vários benefícios, principalmente associados à geração automática de ferramentas.
 
-There are four main approaches to describing the semantics of languages: translational ? translating from one language to another language with precise semantics; operational ? modeling the operational behavior of language concepts; extensional ? extending the semantics of existing language concepts; and denotational ? modeling the mapping to semantic domain concepts. There are advantages and disadvantages of each approach (Clark et al., 2008). 
+Existem várias	 abordagens para descrição da semântica dinâmica de linguagens de modelagem que apresentam vantagens e desvantagens, entre as quais as principais são \cite{Clark}:
+
+\begin{itemize}
+
+\item Por tradução, onde a semântica da linguagem é definida por meio da tradução de seus conceitos em conceitos de uma outra linguagem cuja semântica já é estabelecida. %A semântica por tradução é formalizada por meio de um mapeamento entre as construções das linguagens.
+
+\item Operacional, que descreve como os modelos descritos por meio da linguagem são processados. A semântica operacional é incorporada ao interpretador ou mecanismo responsável pelo processamento e execução dos modelos.
+
+\item Por extensão, que possibilita a descrição da semântica como uma extensão de uma outra linguagem.
+
+\item Denotacional, que é definida por meio de um mapeamento entre as construções da linguagem e um domínio semântico que engloba elementos matemáticos representando elementos primitivos de semântica.
+
+\end{itemize}
 
 Uma das abordagens proeminentes para definição de semântica de DSMLs por meio de tradução é denominada ancoragem semântica \cite{Chen:2005:TSA:1086228.1086236}. Nessa abordagem, a definição da semântica e se dá pelo mapeamento dos elementos da DSML em modelos computacionais, cuja semântica é bem definida, como máquinas de estado abstratas, sistemas de eventos discretos, autômatos, etc. Outra abordagem baseada em tradução emprega regras de reescrita \cite{1240339} que descrevem como os elementos de um modelo podem ser sucessivamente reescritos, até que representem elementos da linguagem alvo.
 
@@ -198,7 +212,7 @@ Outra técnica também empregada na formalização da semântica dinâmica de DSMLs co
 
 A Máquina Virtual de Comunicação (\emph{Communication Virtual Machine}, CVM) é uma plataforma voltada para a especificação e realização de serviços de comunicação \cite{cvm}. Sendo uma plataforma dirigida por modelos, a CVM funciona por meio do processamento de modelos descritos em uma linguagem de modelagem específica de domínio, denominada Linguagem de Modelagem de Comunicação (\emph{Communication Modeling Language}, CML) \cite{cml}. Diferente de muitas abordagens dirigidas por modelo que se apoiam na geração de código, os modelos CML são diretamente interpretados pela CVM.
 
-A CVM é considerada uma plataforma centrada no usuário devido ao alto-nível dos modelos descritos por meio da CML, que podem ser facilmente construídos por usuários especialistas de domínio, ou até mesmo usuários finais. A CML é uma linguagem declarativa, por meio da qual são descritos os participantes, dados, e tipos de mídia envolvidos em uma comunicação a ser realizada. Informações associadas às tecnologias e dispositivos efetivamente utilizados na realização da comunicação, não são descritos em um modelo CML. A figura~\ref{fig:referencial-cml} ilustra um exemplo de modelo descrito por meio da representação gráfica da CML. O modelo em questão define uma comunicação entre dois participantes por meio de audio em tempo real.
+A CVM é considerada uma plataforma centrada no usuário devido ao alto-nível dos modelos descritos por meio da CML, que podem ser facilmente construídos por usuários especialistas de domínio, ou até mesmo usuários finais. A CML é uma linguagem declarativa, por meio da qual são descritos os participantes, dados, e tipos de mídia envolvidos em uma comunicação a ser realizada. Informações associadas às tecnologias e dispositivos efetivamente utilizados na realização da comunicação, não são descritos em um modelo CML. A Figura~\ref{fig:referencial-cml} ilustra um exemplo de modelo descrito por meio da representação gráfica da CML. O modelo em questão define uma comunicação entre dois participantes por meio de audio em tempo real.
 
 \begin{figure}
  \centering
@@ -210,7 +224,7 @@ A CVM é considerada uma plataforma centrada no usuário devido ao alto-nível dos 
 A partir de um modelo CML, a CVM é capaz de realizar o serviço de comunicação descrito de forma automática, sem a necessidade de intervenção do usuário. Um modelo CML também pode ser modificado ao longo do curso de uma comunicação, sendo a CVM capaz de identificar essas mudanças e adaptar a comunicação em andamento para atender aos novos requisitos definidos. Devido à esta natureza, os modelos em CML podem ser considerados como modelos de desenvolvimento e de tempo de execução \cite{Wang}.
 
 Para tornar isso possível, a CML e a CVM incorporam conhecimento relacionado à realização de serviços de comunicação, permitindo que modelos CML se limitem a descrever os aspectos específicos do serviço a ser realizado.
-A CVM se baseia em uma arquitetura de camadas que encapsulam as tarefas necessárias à realização de um serviço de comunicação. Um modelo CML fornecido pelo usuário (ou aplicação) é sucessivamente processado e transformado pelas camadas da CVM, até que sejam geradas chamadas aos componentes que efetivamente realizam os serviços solicitados. A figura~\ref{fig:referencial-cvm} ilustra as camadas que integram a CVM, descritas logo adiante.
+A CVM se baseia em uma arquitetura de camadas que encapsulam as tarefas necessárias à realização de um serviço de comunicação. Um modelo CML fornecido pelo usuário (ou aplicação) é sucessivamente processado e transformado pelas camadas da CVM, até que sejam geradas chamadas aos componentes que efetivamente realizam os serviços solicitados. A Figura~\ref{fig:referencial-cvm} ilustra as camadas que integram a CVM, descritas logo adiante.
 
 \begin{figure}
  \centering
@@ -293,7 +307,7 @@ A Figura~\ref{fig:referencial-ac-am} mostra uma visão conceitual do gerenciador 
 
 \begin{figure}
  \centering
- \includegraphics[width=0.8\textwidth]{./fig/am}
+ \includegraphics[width=0.7\textwidth]{./fig/am}
  \caption{Gerenciador autônomo.}
  \label{fig:referencial-ac-am}
 \end{figure}

@@ -2,19 +2,22 @@
 \chapter{Construção dirigida por modelos de máquinas virtuais específicas de domínio}
 \label{cap:abordagem}
 
-Como já introduzido, para tornar possível o emprego de modelos de alto nível descritos por usuários para a construção e adaptação de aplicações é necessário construir linguagens específicas de domínio, e mecanismos capazes de interpretá-las em tempo de execução. Através de metamodelos é possível descrever alguns dos principais elementos de uma DSML: sua sintaxe e semântica estática. No entanto, a descrição da semântica dinâmica 
+Como introduzido no capítulo anterior, para viabilizar o emprego de modelos de alto nível para a construção e adaptação de aplicações é necessário construir linguagens específicas de domínio e mecanismos capazes de interpretá-las em tempo de execução. Enquanto o emprego de metamodelos permite descrever sintaxe abstrata e semântica estática estática de uma linguagem, sua semântica dinâmica é geralmente incorporada aos mecanismos responsáveis pelo seu processamento. 
+Uma máquina virtual é um mecanismo voltado para a execução de modelos definidos por meio de uma determinada linguagem, definindo a semântica operacional da mesma.
+Assim, metamodelos associados à máquinas virtuais podem ser utilizados como um meio para definição de DSMLs e processamento de modelos descritos por meio destas.
 
-Enquanto a sintaxe e semântica estática de uma DSML é comumente descrita através de um metamodelo,  formas sua semântica dinâmica é comumente incorporada ao mecanismo de execução \cite{chapter, dsmlReview}.
+\begin{comment}
+ Definição de máquina virtual não está de acordo com a comumente adotada, mas de acordo com a da CVM e a empregada nesse trabalho. Talvez seja melhor utilizar outro termo ao invés de máquina virtual, como interpretador ou mecanismo de execução?.
+ \end{comment}
 
-Este capítulo descreve a abordagem proposta por este trabalho para a construção dirigida por modelos de máquinas virtuais capazes de executar aplicações descritas através de modelos de alto nível.
-A seção ~\ref{sec:visao-geral-2} descreve de forma geral a abordagem proposta e o cenário onde ela se posiciona. A seção ~\ref{sec:sb}, por sua vez, detalha a parte do escopo da abordagem proposta que é tratado neste trabalho.
+A seção ~\ref{sec:visao-geral-2} descreve de forma geral uma abordagem para a construção dirigida por modelos de máquinas virtuais capazes de realizar serviços descritos através de modelos a partir de modelos de alto-nível.
+A seção ~\ref{sec:sb}, por sua vez, detalha a parte do escopo da abordagem proposta que é desenvolvida neste trabalho.
 
 %Retomar a motivação introduzida no primeiro capítulo com mais detalhes (i.e. voltar nos precedentes e descrever melhor o cenário onde o problema a ser tratado se localiza)
 
 %Elaborar um argumento sobre a proposta geral de possibilitar a modelagem da máquina virtual, ou seja dos aspectos comportamentais.
 
 %Descrever bem o objetivo específico, ou seja, o meta-modelo para NCB e os aspectos que serão tratado nesse meta-modelo.
-
 
 
 \section{Visão geral}
@@ -28,11 +31,13 @@ O desenvolvimento deste tipo de aplicação, utilizando abordagens tradicionais de
 
 
 %O emprego de técnicas de MDE (criação de transformadores ou interpretadores capazes de processar uma linguagem de domínio específico) permite especificar um serviço de alto nível a partir de seus requisitos, e realizá-los automaticamente. Como exemplo temos a CVM.
-O emprego de técnicas de MDE possibilita reduzir significativamente a complexidade envolvida na construção de aplicações com estas características. A concepção de uma linguagem de modelagem específica de domínio e mecanismos capazes de processá-la possibilita que aplicações dentro de um dado domínio sejam descritas a partir de modelos de alto nível baseados em conceitos próprios do domínio em questão.
+
+O emprego de técnicas de MDE e DSMLs possibilita reduzir significativamente a complexidade envolvida na construção de aplicações com estas características. 
+A concepção de uma linguagem de modelagem específica de domínio e mecanismos capazes de processá-la possibilita que aplicações dentro de um dado domínio sejam descritas a partir de modelos de alto nível baseados em conceitos próprios do domínio em questão.
 
 %Isto só é possível, pois estamos tratando de um domínio específico (comunicação), e portanto o conhecimento deste domínio está incorporado à linguagem (CML) [procurar referencia] e à plataforma responsável por sua realização (CVM) [procurar referencia].
 
-Para tornar isto possível, o conhecimento do domínio é incorporado à linguagem e aos mecanismos responsáveis pelo seu processamento, tornando desnecessária a descrição desse conhecimento durante a concepção de um modelo que represente uma determinada aplicação.
+Para tornar isto possível, o conhecimento do domínio é incorporado à linguagem e aos mecanismos responsáveis pelo seu processamento, tornando desnecessária a descrição desse conhecimento durante a concepção de um modelo que represente uma determinada aplicação \cite{mddcs}.
 % referencia!!
 A CML, como um exemplo de linguagem de modelagem específica do domínio de comunicação, incorpora em seu projeto elementos diretamente relacionados à descrição de cenários de comunicação entre pessoas. A CVM por sua vez é a plataforma capaz de processar esta linguagem e, para isso, também precisa incorporar todas as operações envolvidas na realização de um serviço de comunicação já apresentadas.
 
