@@ -21,22 +21,22 @@ O avanço nas tecnologias de rede e processamento observado nas últimas décadas p
 O desenvolvimento dessas aplicações utilizando abordagens tradicionais de desenvolvimento, baseadas na codificação em linguagens de programação exige um grande esforço. 
 Apesar da notável evolução nas linguagens de programação,  suas construções continuam sendo em grande parte baseadas nas capacidades fornecidas pelo ambiente computacional, e assim não guardam relação direta com o problema a ser resolvido. A distância semântica entre o problema a ser resolvido e a plataforma utilizada na sua implementação é considerada como um dos principais fatores que dificultam o desenvolvimento das aplicações atuais \cite{mde, mddcs}. 
 
-\begin{comment}
-
-%MDE evoluiu da complexidade do software...
-%Abstrações não evoluíram (baseadas em computação)
-Versão alternativa, que descreve de uma forma menos relacionada ao uso de domínio específico. A idéia é mencionar que as linguagens de programação não oferecem construções capazes de ocultar a complexidade envolvida no desenvolvimento dessas aplicações, e que o uso de modelos surge como uma alternativa para abstrair essas complexidades, tornando mais fácil a compreensão e construção dessas.
-
-
-Apesar disso, as linguagens de programação não evoluíram com a mesma velocidade, e suas abstrações não se demonstraram capazes de ocultar as complexidades envolvidas no desenvolvimento de software atual.
-%Apesar da evolução nas linguagens de programação, suas construções continuam sendo baseadas nas capacidades fornecidas pelo ambiente computacional, e portanto não guardam relação com o problema a ser resolvido.
-%O desenvolvimento de software desse jeito (utilizando abstrações inapropriadas) exige bastante esforço pois é preciso expressar conceitos do problema complexo em construções muito simples, fornecidas pela linguagem, e próximas da implementação.
-Nesse contexto, o uso de modelos surge como um meio de representar de forma abstrata algum aspecto de um sistema, ocultando detalhes desnecessários para sua compreensão. 
-
-Por meio de linguagens de modelagem mais apropriadas para descrição dos aspectos que compõem um sistema e ferramentas capazes de processá-los, de forma automatizada, em construções da plataforma de implementação, abordagens de MDE buscam ocultar a complexidade envolvida no desenvolvimento de aplicações.
-
-
-\end{comment}
+%\begin{comment}
+%
+%%MDE evoluiu da complexidade do software...
+%%Abstrações não evoluíram (baseadas em computação)
+%Versão alternativa, que descreve de uma forma menos relacionada ao uso de domínio específico. A idéia é mencionar que as linguagens de programação não oferecem construções capazes de ocultar a complexidade envolvida no desenvolvimento dessas aplicações, e que o uso de modelos surge como uma alternativa para abstrair essas complexidades, tornando mais fácil a compreensão e construção dessas.
+%
+%
+%Apesar disso, as linguagens de programação não evoluíram com a mesma velocidade, e suas abstrações não se demonstraram capazes de ocultar as complexidades envolvidas no desenvolvimento de software atual.
+%%Apesar da evolução nas linguagens de programação, suas construções continuam sendo baseadas nas capacidades fornecidas pelo ambiente computacional, e portanto não guardam relação com o problema a ser resolvido.
+%%O desenvolvimento de software desse jeito (utilizando abstrações inapropriadas) exige bastante esforço pois é preciso expressar conceitos do problema complexo em construções muito simples, fornecidas pela linguagem, e próximas da implementação.
+%Nesse contexto, o uso de modelos surge como um meio de representar de forma abstrata algum aspecto de um sistema, ocultando detalhes desnecessários para sua compreensão. 
+%
+%Por meio de linguagens de modelagem mais apropriadas para descrição dos aspectos que compõem um sistema e ferramentas capazes de processá-los, de forma automatizada, em construções da plataforma de implementação, abordagens de MDE buscam ocultar a complexidade envolvida no desenvolvimento de aplicações.
+%
+%
+%\end{comment}
 
 %In the past two decades alone, the information technology (IT) industry has
 %been a driving force of progress. Through the use of distributed networks,
@@ -62,7 +62,7 @@ A maior parte das abordagens de MDD propõem a construção de linguagens de modela
 
 Apesar de empregarem modelos com diferentes objetivos essas abordagens apresentam várias similaridades, sendo por vezes sobrepostas. 
 A engenharia dirigida por modelos busca sistematizar o uso de modelos, de forma que possam ser empregados com diversos objetivos em todos as atividades da engenharia de software. 
-Sob essa ótica, o princípio básico da engenharia de modelos propõe do uso de modelos como objetos de primeira classe, utilizados na construção de todos os artefatos de software \cite{Unifying}.
+Sob essa ótica, o princípio básico da engenharia de modelos propõe do uso de modelos como objetos de primeira classe, utilizados na construção de todos os artefatos de software \cite{searchPrinciple, Unifying}.
 
 %Considering everything as a model in a software  development approach  has  many consequences that we are progressively discovering. This paper has probably shown  only some of them. Besides the advantages of conceptual simplicity, this also leads to clear architecture, efficient implementation, high scalability  and  good  flexibility
 
@@ -169,7 +169,7 @@ Os ganhos em expressividade tem como principal benefício o aumento da produtivid
 
 Um domínio pode ser considerado como uma área de interesse delimitada. Podemos categorizar domínios como técnicos e de negócio \cite{mdsd, DSM}. Domínios técnicos estão diretamente relacionados aos aspectos tecnológicos de um software como persistência, interfaces gráficas, bancos de dados, etc. Domínios de negócio, por sua vez, estão relacionados à atividades econômicas ou profissionais como telecomunicações, sistema bancário, seguros, vendas, entre outros. Apesar disso, essa separação é nebulosa, sendo que a delimitação de um domínio deve ser definida de acordo com o problema a ser resolvido.
 
-A abordagem de engenharia dirigida por modelos fornece um conjunto de princípios e ferramentas para construção de linguagens de modelagem, que se adequam perfeitamente à construção de DSLs \cite{Kurtev:2006:MDF:1176617.1176632, ts}.
+A abordagem de engenharia dirigida por modelos fornece um conjunto de princípios e ferramentas para construção de linguagens de modelagem, que se adequam perfeitamente à construção de DSLs \cite{Kurtev:2006:MDF:1176617.1176632, mdetechnical}.
 Através do uso de técnicas de metamodelagem  é possível especificar as construções dessas linguagens, que nesse caso são geralmente denominadas linguagens de modelagem específicas de domínio (\emph{Domain-Specific Modeling Languages}, DSMLs).
 
 Ao mesmo tempo, grande parte do sucesso no emprego de abordagens dirigidas por modelos está associada ao emprego de DSMLs, sendo consideradas tecnologias que apresentam grande sinergia \cite{ChallengesSemantics, DSM, Kurtev:2006:MDF:1176617.1176632}. O emprego de abordagens dirigidas por modelos em um domínio específico permite atingir um alto grau de automatização no processamento de modelos.
@@ -245,6 +245,8 @@ A CVM se baseia em uma arquitetura de camadas que encapsulam as tarefas necessár
 \item Intermediador de Comunicação em Rede (\emph{Network Communication Broker}, NCB). A camada NCB provê uma interface de comunicação, independente de tecnologia, para uso da camada de \emph{middleware}. O intermediador tem como função blindar a camada superior da heterogeneidade e complexidade envolvidas na interação com os componentes que efetivamente realizam a comunicação. Assim, a NCB recebe requisições da camada UCM e intermedia o acesso aos \emph{frameworks} de comunicação para que realizem a solicitação recebida.
 
 \end{itemize}
+
+A Máquina Virtual de Redes Elétricas Locais (\emph{Microgrid Virtual Machine}, MGridVM) \cite{microgrid} também utiliza essa arquitetura para a execução de modelos construídos por usuários, que descrevem requisitos para a utilização de energia elétrica em um ambiente local. A partir desses modelos a MGridVM gerencia a utilização de fontes, cargas e baterias.
 
 \subsection{Intermediador de Comunicação em Rede}
 

@@ -3,8 +3,9 @@
 \begin{abstract}{Model-driven development of Domain-Specific Virtual Machines}
 The combination of domain-specific modeling languages and model-driven engineering techniques hold the promise of a breakthrough in the way applications are developed. 
 By raising the level of abstraction and specializing in building blocks that are familiar in a particular domain, it has the potential to turn domain experts into application developers. 
-Applications are developed as models, which in turn are interpreted at runtime by a specialized execution engine in order to produce the intended behavior. 
-This approach has been successfully applied in different domains, such as communication and smart grid management to execute applications described by models that can be created and changed at runtime.
-However, each time the approach has to be realized in a different domain, substantial re-implementation has to take place in order to put together an execution engine for the respective DSML. 
-In this paper, we present our work towards a generalization of the approach in the form of a  metamodel which captures the domain-independent aspects of runtime model interpretation and allow the definition of domain-specific execution engines. 
+Applications are developed as models, which in turn are interpreted at runtime by a specialized execution engine in order to produce the intended behavior.
+In this approach models are processed by domain-specific virtual machines that embed knowledge about how to execute the models.
+This approach has been successfully applied in different domains, such as communication and smart grid management to execute applications described by models that can be created and changed at runtime. 
+However, each time the approach has to be realized in a different domain, substantial re-implementation has to take place in order to put together a virtual machine for the respective DSML. 
+In this work, we present our work towards a generalization of the approach in the form of a  metamodel which captures the domain-independent aspects of runtime model interpretation and allow the definition of domain-specific virtual machines that provide a high-level service upon a heterogenous set of resources.
 \end{abstract}
