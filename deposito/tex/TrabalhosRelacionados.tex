@@ -1,0 +1,37 @@
+\chapter{Trabalhos relacionados}
+\label{cap:related-work}
+
+Grande parte dos trabalhos relacionados ao uso de modelos para descrição de máquinas virtuais ou interpretadores para DSMLs está diretamente associado definição da semântica dinâmica dessas linguagens. A formalização da semântica de linguagens de modelagem é considerada como uma forma de tornar possível a geração automática de ferramentas como interpretadores, compiladores e depuradores para DSMLs \cite{ChallengesSemantics}.
+
+Uma das formas empregadas para formalização da semântica de DSMLs e subsequente geração de interpretadores consiste em estabelecer um mapeamento entre a sintaxe abstrata da DSML e a sintaxe abstrata de uma outra linguagem com semântica bem definida. Para definição do mapeamento são empregados mecanismos de transformação como ATL \cite{atl} e QVT \cite{qvt}, ou sistemas de reescrita \cite{1240339, domainGT, graphtrans}.
+Entre essas abordagens, o uso de ancoragem semântica \cite{Chen:2005:TSA:1086228.1086236, amma} propõe o mapeamento de elementos da DSML para unidades semânticas definidas por meio de modelos computacionais elementares como máquina de estados finitos, sistemas de eventos discretos, autômatos, entre outros. 
+%A ancoragem semântica pode ser tratada como um meio denotacional para definição de semântica, onde o domínio semântico é composto pelas unidades semânticas
+
+Apesar de permitirem definir formalmente a semântica de DSMLs, as linguagens para descrição de transformações empregadas são bastante genéricas e não guardam relação direta com a semântica específica relacionada ao processamento de modelos em tempo de execução. Não obstante, consideramos que transformações representam um dos elementos envolvidos na descrição da semântica para execução de modelos em tempo de execução, e assim sendo, integram a arquitetura geral proposta neste trabalho.
+
+Outra abordagem utilizada para formalização da semântica dinâmica propõe a sua incorporação ao metamodelo. Conhecida como \emph{behavior weaving}, essa abordagem promove a extensão do meta-metamodelo para que os metamodelos possam incluir semântica. Nessas abordagens a semântica é geralmente definida por meio de meta-linguagens que se assemelham à linguagens de programação de propósito geral. Portanto, apesar de fornecer meios para integração da semântica operacional ao metamodelo, as construções empregadas para descrição dessa semântica não apresentam ganhos de abstração significativos em relação à abordagens tradicionais. Entre os trabalhos que propõem a integração de semântica ao metamodelo podemos destacar a ferramenta Kermeta \cite{Jezequel:2009:MDL:1949925.1949931} que dispõe de uma linguagem de ações orientada a objetos e o ambiente de metamodelagem XMF-Mosaic \cite{xmf} que utiliza a linguagem xOCL (\emph{Executable OCL}).
+
+
+%\cite{Mu:2010:SML:1842752.1842807}
+
+As abordagens para formalização de semântica se caracterizam por empregarem representações genéricas que podem ser utilizadas para descrição de semântica dinâmica para qualquer linguagem de modelagem. Assim, apesar de possibilitarem a formalização da semântica de DSMLs e subsequente geração de ferramentas, o nível de abstração oferecido por essas abordagens é similar ao encontrado em linguagens de programação.
+Enquanto isso, a abordagem proposta neste trabalho propõe o uso de modelos para descrever a semântica de um conjunto delimitado de DSMLs, aquelas voltadas para definição de serviços de alto-nível a serem realizados por meio de um conjunto heterogêneo de recursos.
+
+%Nossa abordagem não pretende ser genérica, mas foca especificamente, facilitando a construção de máquinas virtuais com essas características, nos baseamos nos mesmos princípios pregados para o desenvolvimento de aplicações
+
+
+%% Related work should be in the area of runtime model interpretation and execution engines for DSMLs. Must present them and compare with your approach.
+%
+%Most work related to model-driven development of execution engines for DSMLs is directly associated to the definition of DSML dynamic semantics, as it is usually viewed as a way to enable the automatic generation of tools for DSMLs \cite{ChallengesSemantics}.
+%
+%%- Model Driven Language Engineering with Kermeta. generation of tools (interpreters, compilers, etc) by weaving behavior: action languages close to 3rd generation GPLs
+%Kermeta \cite{Jezequel:2009:MDL:1949925.1949931} promotes weaving behavior into the metamodels as a way to specify operational semantics for a language and thereby to generate interpreters, compilers and other tools for them.
+%%XMF-Mosaic offers similar capabilities through the xOCL action language.
+%It differs from our approach in that semantics described using an action language whose constructions are similar to those found in third generation general-purpose programming languages.
+%
+%The use of graph rewriting and transformations has been proposed in \cite{1240339} as a suitable specification for developing DSML tools. The use of semantic mappings between the metamodel and behavioral semantic units is also proposed in \cite{amma, Chen:2005:TSA:1086228.1086236} as a way to formalize dynamic semantics for DSMLs. Though these approaches can be potentially used to create DSML interpreters, they are not directly focused on interpreters for models that can be created and changed at runtime.
+%
+%%Automatic Generation of Language-based Tools using the LISA system,``Attribute grammars have proved to be very useful in specifying the semantics of programming languages, in automatic construction of compilers/interpreters, and in specifying and generating interactive programming environments [9]. The approach presented in this
+%%ASM and semantic actions, (Semantic actions are similar to the actions in the metamodel)
+%%Other approaches that may be used but that the related work just mentions the transformation into artifacts, i.e. compilers not interpreters
+%%Also, none of the identified approaches are focused on the construction of interpreters for models that can be created and changed at runtime. 

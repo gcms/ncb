@@ -1,0 +1,120 @@
+
+\chapter{Construção dirigida por modelos de máquinas virtuais específicas de domínio}
+\label{cap:abordagem}
+
+Como introduzido no capítulo anterior, para viabilizar o emprego de modelos de alto nível para a construção e adaptação de aplicações é necessário construir linguagens específicas de domínio e mecanismos capazes de interpretá-las em tempo de execução.
+Enquanto o emprego de metamodelos permite descrever sintaxe abstrata e semântica estática estática de uma linguagem, sua semântica dinâmica é geralmente incorporada aos mecanismos responsáveis pelo seu processamento. 
+Uma máquina virtual é um mecanismo voltado para a execução de modelos definidos por meio de uma determinada linguagem, definindo a semântica operacional da mesma.
+Assim, metamodelos associados à máquinas virtuais podem ser utilizados como um meio para definição de DSMLs e processamento de modelos descritos por meio destas.
+
+%\begin{comment}
+% Definição de máquina virtual não está de acordo com a comumente adotada, mas está de acordo com a da CVM e a empregada nesse trabalho. Talvez seja melhor utilizar outro termo ao invés de máquina virtual, como interpretador ou mecanismo de execução?.
+% \end{comment}
+
+A seção ~\ref{sec:visao-geral-2} descreve de forma geral uma abordagem para a construção dirigida por modelos de máquinas virtuais capazes de realizar serviços descritos através de modelos a partir de modelos de alto-nível.
+A seção ~\ref{sec:sb}, por sua vez, detalha a parte do escopo da abordagem proposta que é desenvolvida neste trabalho.
+
+%Retomar a motivação introduzida no primeiro capítulo com mais detalhes (i.e. voltar nos precedentes e descrever melhor o cenário onde o problema a ser tratado se localiza)
+
+%Elaborar um argumento sobre a proposta geral de possibilitar a modelagem da máquina virtual, ou seja dos aspectos comportamentais.
+
+%Descrever bem o objetivo específico, ou seja, o metamodelo para NCB e os aspectos que serão tratado nesse metamodelo.
+
+
+\section{Visão geral}
+\label{sec:visao-geral-2}
+
+A construção de um metamodelo e uma máquina virtual projetados para uma DSML permite definir completamente a sintaxe e semântica da mesma. Enquanto o metamodelo permite descrever a sintaxe e semântica estática da linguagem, sua semântica dinâmica é capturada de forma operacional pela máquina virtual.
+
+O construção de DSMLs de alto-nível, baseadas em construções próximas ao domínio do problema, possibilita que usuários sejam capazes de construir aplicações complexas. Para tornar isso possível, é preciso que o metamodelo da DSML e a máquina virtual capaz de processá-la incorporem grande parte do conhecimento específico de seu domínio. Isto, por sua vez, permite que os modelos descritos através de uma DSML possam se limitar aos requisitos específicos da aplicação por ele descrita, pois as informações relacionadas ao domínio já estão integradas à DSML. Dessa forma, para se obter proveito das técnicas de MDE e DSMLs é preciso que sejam projetados metamodelos e máquinas virtuais específicos para os domínios de aplicação a serem utilizados.
+
+Enquanto existem várias técnicas de modelagem padronizadas para a descrição de metamodelos, a construção de máquinas virtuais para  execução de DSMLs é usualmente realizada por meio da codificação em linguagens de programação de propósito geral. Nesse contexto, o uso de linguagens de programação apresenta as mesmas limitações encontradas para a construção de aplicações complexas, pois oferecem construções muito primitivas que não estão relacionadas ao problema a ser tratado.
+
+A construção de máquinas virtuais para a execução de modelos que podem ser criados e modificados em tempo de execução exibe vários problemas comuns, mesmo que essas máquinas virtuais sejam projetadas para diferentes DSMLs. Análise e transformação de modelos, negociação de modelos, transferência de estado, adaptação dinâmica, entre outros são alguns dos problemas que esse tipo de máquina virtual necessita lidar. A solução desses problemas por meio da codificação em linguagens de programação não só exige bastante esforço, mas também reduz a sua flexibilidade.
+
+Esse contexto sugere a aplicação de técnicas de MDE como um meio de amenizar a complexidade da construção de máquinas virtuais voltadas para execução de modelos. Assim sendo, a mesma abordagem utilizada para a construção de aplicações é utilizada na construção das plataformas para execução dessas aplicações. O uso de modelos nesse contexto visa não apenas simplificar a construção dessas máquinas virtuais, mas também facilitar a sua evolução com o intuito de atender à necessidades de mudança na sintaxe ou semântica das DSMLs por elas processadas.
+
+Neste trabalho, propomos o emprego de uma abordagem dirigida por modelos para a construção de uma categoria específica de máquinas virtuais capazes de executar modelos em tempo de execução.
+Essa categoria, que inclui a CVM \cite{cvm} e MGridVM \cite{microgrid}, contempla máquinas virtuais voltadas para execução DSMLs que descrevem um serviço de alto-nível a ser realizado a partir de um conjunto de heterogêneo de recursos. 
+A realização de serviços descritos por essas DSMLs comumente envolve diversas operações como transformação e negociação de modelos, avaliação de políticas, recuperação de falhas, seleção e configuração de recursos, etc.
+
+Para que máquinas virtuais que exibem essas características possam ser definidas por meio de modelos é preciso uma linguagem de modelagem especialmente projetada para isso.
+No entanto, para que seja vantajoso o emprego de uma linguagem de modelagem para a descrição de uma máquina virtual esta linguagem deve possuir uma abrangência suficiente para que possa ser utilizada em diferentes domínios de negócio. Ao mesmo tempo, tal linguagem não deve ser muito genérica, de forma que não torne a manipulação de modelos tão complexa quanto a codificação em uma linguagem de propósito geral.
+
+Considerando isto, essa linguagem deve conter construções capazes de descrever as operações que independem do domínio de negócio e que estão envolvidas no fornecimento de serviços descritos por modelos a partir de um conjunto heterogêneo de recursos.
+Esses operações, que englobam  transformação e negociação de modelos, avaliação de políticas, recuperação de falhas, seleção e configuração de recursos, entre outros, podem ser tratados como um domínio técnico. Deste modo, tal linguagem pode ser considerada uma linguagem de modelagem específica de um domínio que abrange os aspectos técnicos envolvidos na realização de serviços transparentes de alto nível a partir de um conjunto heterogêneo de recursos.
+
+Neste trabalho propomos que essa linguagem seja elaborada a partir das soluções empregadas no desenvolvimento da CVM e MGridVM. 
+Prevemos que tal linguagem incorpore uma arquitetura genérica para a categoria de máquinas virtuais identificada, que possa ser especializada para produzir máquinas virtuais específicas domínio.
+A arquitetura proposta é uma generalização da arquitetura de camadas empregada pela CVM e MGridVM e inclui as seguintes camadas:
+
+\begin{itemize}
+
+\item  Interface com o Usuário (\emph{User Interface} - UI), que provê uma interface externa para utilização da plataforma. Além disso, esta camada possibilita a definição e gerenciamento de modelos;
+
+\item Mecanismo de Síntese (\emph{Synthesis Engine} - SE), que possui como principal responsabilidade a transformação de um modelo declarativo fornecido pela UI em uma representação algorítmica a ser executada pela camada inferior;
+
+\item \emph{Middleware}, que além de executar as requisições geradas pelo Mecanismo de Síntese,  também gerencia os serviços providos pela máquina virtual e as tarefas em execução. Essa também é a camada responsável pela aplicação de restrições de segurança, qualidade de serviço, entre outras específicas do domínio de negócio. 
+
+\item Intermediador de Serviços (\emph{Service Broker} - SB), que é a camada responsável pelo gerenciamento dos recursos. Assim sendo, essa camada tem como objetivo prover uma interface de acesso aos recursos de forma independente da tecnologia empregada por estes, provendo um serviço transparente à camada de \emph{middleware}.
+
+\end{itemize}
+
+Ao imitar a arquitetura da CVM, nos aproveitamos do conhecimento adquirido em relação à separação de responsabilidades necessárias para a realização de serviços no domínio técnico identificado. No entanto, apesar de apresentar a mesma estrutura, a arquitetura proposta se difere por ser independente do domínio de negócio.
+
+A construção de uma linguagem para modelagem máquinas virtuais, por sua vez, também envolve a construção de um metamodelo que forneça abstrações que possam ser utilizadas para descrever máquinas virtuais de acordo com a arquitetura proposta. Logo, um modelo elaborado a partir desse metamodelo representa uma especialização da arquitetura genérica proposta para um determinado domínio. A Figura~\ref{fig:} ilustra como o metamodelo de uma DSML e um modelo de uma máquina virtual são utilizados para definir uma especialização da arquitetura proposta.
+
+
+Devido ao extenso trabalho envolvido na construção desse metamodelo, neste trabalho construímos um metamodelo que engloba os elementos associados à camada de intermediação de serviços da arquitetura proposta.
+A construção de tal metamodelo representa uma etapa em direção à realização da visão proposta pela abordagem, e tem como objetivo investigar a viabilidade da mesma. Para isso, além do metamodelo também construímos um ambiente de execução que define a semântica operacional da linguagem para modelagem de máquinas virtuais.
+A seção seguinte descreve em mais detalhes a camada de intermediação de serviços, incluindo suas responsabilidades e como estas são exercidas dentro da arquitetura proposta. 
+
+\section{A camada de intermediação de serviços}
+\label{sec:sb}
+
+% EM ALGUM LUGAR DESSA SEÇÃO: Definir o que é um recurso
+
+O intermediador de serviços é a camada da arquitetura proposta que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para realizar os serviços especificados por meio de modelos. Cabe à esta camada disponibilizar uma interface de serviços que abstraia a heterogeneidade dos recursos gerenciados para a camada superior. Além disso, o intermediador deve possuir capacidade de auto-gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
+
+\begin{comment}
+Definir aqui mais claramente o que é um recurso sob a ótica deste trabalho.
+\end{comment}
+
+Como uma interface de serviços, o intermediador se comunica com a camada de \emph{middleware} através de chamadas que podem ser invocadas e eventos que podem ser gerados sinalizando alguma situação. Assim sendo, ao definirmos o comportamento dessa camada, precisamos descrever como serão tratadas as chamadas realizadas pela camada superior, e em que situações serão gerados determinados eventos. Mas além disso, também precisamos descrever como outras tarefas serão realizadas, incluindo o monitoramento e seleção de recursos, manutenção de informações, adaptação da camada, entre outros.
+
+Com isto em mente, neste trabalho construímos um metamodelo que possibilita a modelagem do comportamento necessário para atender as responsabilidades definidas para a camada de intermediação de serviço da arquitetura proposta. O metamodelo em questão contempla a descrição das seguintes tarefas envolvidas no cumprimento destas responsabilidades:
+
+%\begin{comment}
+%A idéia é que cada uma destas responsabilidades seja brevemente explicada nestes tópicos abaixo. No capítulo seguinte que descreve o metamodelo eles serão detalhados.
+%\end{comment}
+
+\begin{itemize}
+
+\item Gerenciamento de recursos. A camada deve atuar como intermediário na utilização dos recursos, interceptando os eventos por eles gerados e controlando o acesso aos recursos.
+
+\item Gerenciamento de estado. A camada deve ser capaz de manter em tempo de execução dados associados aos serviços em provisão, e que podem influenciar o processamento de chamadas e eventos.
+
+\item Auto-gerenciamento. As tarefas de auto-gerenciamento da camada incluem o monitoramento dos recursos e dos dados mantidos pela camada, identificando situações que podem exigir uma mudança. Ao identificar uma mudança a camada deve determinar qual a ação deve ser tomada.
+
+\end{itemize}
+
+Além do metamodelo, também construímos um ambiente de execução para auxiliar na execução de modelos construídos a partir do metamodelo Assim sendo,  esse ambiente implementa a semântica operacional da linguagem para descrição da camada de intermediação de serviço. O ambiente de execução possibilita que um modelo definido a partir do metamodelo proposto seja executado. 
+% mencionar também da semântica estática
+
+Desta forma, o metamodelo e o ambiente de execução construídos permitem que a camada de intermediação de serviço da arquitetura proposta seja definida através de um modelo baseado em construções relacionadas às suas responsabilidades, e possa ser executada e utilizada.
+
+%O Broker de serviços é responsável por ...
+%Assim sendo, ele recebe chamadas da camada de middleware, e executa em diferentes provedores ou retorna eventos. Também monitora os recursos, o que pode gerar adaptações, ou eventos, etc...
+
+%Se aplicarmos os conceitos da proposta a esta camada, temos que: a linguagem processada pela camada é a sua interface exposta à camada Middleware. Ou seja, um modelo descrito nessa linguagem é uma sequencia de chamadas à interface da camada SB.
+%(outras considerações relacionadas a aplicação da abordagem a uma parte restrita, lembrar que a linguagem não é complexa e que não é descrita a partir de um metamodelo pois não será utilizada diretamente pelo usuário, mas pela camada superior, que também será definida em conformidade com um outro futuro metamodelo comportamental)
+
+%Assim sendo, para definirmos o comportamento através de modelos, precisamos de uma linguagem que possibilite descrever como serão tratadas as chamadas realizadas pela camada Middleware. Mas além disso, para definir o comportamento, precisamos descrever como serão monitorados os recursos, e como e quando serão realizadas adaptações na organização interna da camada.
+
+%Portanto, neste trabalho construímos um metamodelo que permite descrever os seguintes aspectos necessários a realização das responsabilidades da camada SB: x, y, z
+%Além disso,t ambém construímos um ambiente de execução que possibilita execução deste modelo.
+%Desta forma:
+%   - metamodelo define a sintaxe-abstrata e semantica estatica
+%   - ambiente de execução dá a semântica dinâmica (operacional)
+
+%A partir do ambiente de execução e uma instância do metamodelo obtemos uma camada de SB para um determinado domínio.

@@ -1,0 +1,113 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww20560\viewh10000\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\b\fs24 \cf0 Grammars, graphs and generic environment generators. \
+
+\b0 Much of the concepts \
+behind our work take their roots in the seminal work conducted in the late sixties on \
+grammars and graphs and in the early eighties in the field of generic environment \
+generators (such as Centaur [2]) that, when given the formal specification of a \
+programming language (syntax and semantics), produce a language-specific \
+environment. \
+\
+The generic environment generators sub-category has recently received \
+significant industrial interest; this includes approaches such as Xactium [4], or \
+Software Factories [7]. Among these efforts, it is Xactium which comes closer to our \
+work. The major differences include the fact that we use aspect composition to \
+generate the meta-meta level while preserving a clean separation of concerns, and that \
+we have a fully static type system. \
+\
+\
+
+\b Model-driven environments
+\b0 . There are several ongoing efforts to promote the \
+convergence of open-source model-driven environments, for instance: Modelware \
+(http://www.modelware-ist.org/), TopCaseD (http://www.laas.fr/SPIP/spip-topcased/ \
+) and TopModL [9], and our work takes place in this context. \
+
+\b Generative programming and  domain-specific languages.
+\b0   Generative \
+programming aims at modeling and implementing system families in such a way that \
+a given system can be automatically generated from a specification written in a \
+domain-specific language. This includes multi-purpose model-aware languages such \
+as Xion [10] or MTL [19], or model transformation languages such as QVT [13]. \
+We share the vision of generative programming, and we use models to generate \
+fully executable code which can be compiled. The Xion and MTL languages have had \
+a direct impact on our work.  \
+QVT is different as it addresses mappings between models. QVT works on \
+structures, by specifying how one structure is mapped into another one; for instance \
+translating a UML class diagram into a RDBMS schema. QVT is not suitable for the \
+definition of the behavior of metamodels. \
+
+\b Meta-CASE systems.
+\b0  Meta-CASE systems, such as MetaEdit [16], Dome [6] or \
+EMF [3], provide customized software engineering environments, separately from the \
+main software components. The major difference with meta-CASE systems is that we \
+remove the M3 level by the promotion process. \
+\
+\
+\
+The \uc0\u64257 rst approach (translational semantics) consists in de\u64257 ning a mapping (enacted by the use of model transformation engines) from the abstract syntax of the\
+underlying language to the abstract syntax of another language which is supposed\
+to be formally de\uc0\u64257 ned (i.e., for which a mapping to a semantic domain is de\u64257 ned).\
+This translational semantics has been used, for example, in (Chen et al, 2005, 2007)\
+where a semantic anchoring to well-established formal models of computation (such\
+as \uc0\u64257 nite state machines, data \u64258 ow, and discrete event systems) built upon AsmL\
+(ASML, 2001) is proposed, by using the transformation language GME/GReAT (Graph Rewriting And Transformation language) (Balasubramanian et al, 2006). The solution they propose to the semantic anchoring offers up prede\uc0\u64257 ned and well-de\u64257 ned\
+sets of semantic units for future (conventional) anchoring efforts. However, we see\
+two main disadvantages in this approach: \uc0\u64257 rst, it requires well understood and safe\
+behavioural language units and it is not clear how to specify the language semantics\
+from scratch when these language units do not yet exist; second, in heterogeneous\
+systems, specifying the language semantics as composition of some selected primary\
+semantic units for basic behavioural categories (Chen et al, 2007) is not always possible, since there may exist complex behaviours which are not easily reducible to a\
+combination of existing ones.\
+Still concerning the translational category, two other experiments have to be mentioned: the semantics of the AMMA/ATL transformation language (Di Ruscio et al,\
+2006b) and SPL, a DSL for telephony services, (Di Ruscio et al, 2006a) have been\
+speci\uc0\u64257 ed in XASM (Anlauff, 2000), an open source ASM dialect. A direct mapping\
+from the AMMA meta-language KM3 to an XASM metamodel is used to represent\
+metamodels in terms of ASM universes and functions, and this ASM model is taken\
+as basis for the semantics speci\uc0\u64257 cation of the ATL metamodelled language. However,\
+this mapping is neither formally de\uc0\u64257 ned nor the ATL transformation code which implements it have been made available in the ATL transformations Zoo or as ATL use\
+case (Jouault et al, 2006); only the Atlantic XASM Zoo (XASM Zoo, 2006), a mirror\
+\
+\
+\
+The second approach consists in (weaving behaviour) into metamodels, i.e. specifying an executable semantics directly on the abstract syntax of the language by\
+promoting meta-languages for the semantics speci\uc0\u64257 cation. Meta-programming languages like Kermeta (Muller et al, 2005), xOCL (eXecutable OCL) of the XMFMosaic metamodelling framework (XMF Mosaic, 2007), or also the approach in\
+(Scheidgen and Fischer, 2007), belong to this category. Inspired from the UML action semantics (AS, 2001; UML 2.1.2, 2009; fUML, 2008), they all use a minimal\
+set of executable primitives (create/delete object, slot update, conditional operators,\
+loops, local variables declarations, call expressions, etc.) to de\uc0\u64257 ne the behaviour of\
+metamodels by attaching behaviour to classes operations\
+1\
+. Such action languages can be imperative or object-oriented. \
+Although, they aim to be pragmatic, extensible and modi\uc0\u64257 able, some of them suffer from the same shortcomings of traditional\
+UML-based action languages, i.e. they are a simpli\uc0\u64257 ed version of real programming\
+languages, and therefore a description written in one of such action languages has\
+the same complexity of one (a program) written in a conventional programming language. \
+\
+Action languages that fall in this category, such as the xOCL language in the\
+XMF toolkit (XMF Mosaic, 2007) and the OMG QVT standard (QVT, 2008), may\
+be ef\uc0\u64257 ciently employed (like ordinary programming languages) in model repositories\
+and meta-programming environments for model management purposes to implement\
+and execute queries, views, transformations, etc., on and between models, rather than\
+used to specify the execution semantics of formalisms represented by metamodels.\
+\
+The adoption of more abstract action languages is desirable to reduce model complexity. Moreover, not all action semantics proposals are powerful enough to specify\
+the model of computation (MoC) underlying the language being modelled and to provide such a speci\uc0\u64257 cation with a clear formal semantics. As shown in Sect. 10 when\
+we illustrate the weaving technique of our ASM-based framework, the ASMs formalism itself can be also intended as an action language but with a concise and powerful\
+set of action schemes provided by different ASM rule constructors.\
+\
+\
+The third approach (semantic domain modelling) suggests de\uc0\u64257 ning a metamodel\
+even for the \'93semantic domain\'94 \'96 i.e. to express also concepts of the run-time execution environment \'96, and then using well-formedness OCL rules to map elements of\
+the language metamodel into elements of the semantic domain metamodel. It is used,\
+for example, by the OMG task forces for the CMOF Abstract Semantics \'96 see Chapter\
+15 in (MOF, 2006) \'96 and for the OCL (OCL, 2006). A similar technique, also used for\
+the OCL semantics, involves set theory to formulate the semantic domain in terms of\
+an object model (a formalization of UML class diagrams, not of the OCL metamodel)\
+and system states for the evaluation of OCL expressions. This last was originally proposed in (Richters, 2001), and then used also in (Flake and M\'fcller, 2004) where new\
+components to the object model and system states have been introduced and the ASM\
+formalism was used to formalize the evaluation of OCL constraints.}

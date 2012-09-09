@@ -1,0 +1,34 @@
+AutonomicManager {
+  identifies: Symptom FrameworkFailed {
+    bindings: Binding event {
+      bindable: Event MediumFailed
+    }
+    bindings: Binding conn {
+      bindable: State Connection
+    }
+    conditions: Condition {
+      expression: "event.source == conn.framework && event.medium == conn.medium"
+    }
+  }
+  requests: ChangeRequest ChangeFramework {
+    basedOn: Symptom FrameworkFailed
+  }
+  plans: ChangePlan Plan1 {
+    basedOn: ChangeRequest ChangeFramework
+    action: ActionExecution {
+      action: SequenceAction ChangeFramework
+      bindings: ParameterBinding {
+        parameter: Parameter ChangeFramework.session
+        value: ExpressionValue "conn.session"
+      }
+      bindings: ParameterBinding {
+        parameter: Parameter ChangeFramework.medium
+        value: ExpressionValue "event.medium"
+      }
+      bindings: ParameterBinding {
+        parameter: Parameter ChangeFramework.framework
+        value: ExpressionValue "event.source"
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+Handler {
+  enabled: true
+  signal: Call EnableMedium
+  action: ActionExecution {
+    action: MacroAction MediumAction
+    bindings: ParameterBinding {
+      parameter: Parameter MediumAction.session
+      value: ParameterValue EnableMedium.session
+    }
+    bindings: ParameterBinding {
+      parameter: Parameter MediumAction.medium
+      value: ParameterValue EnableMedium.medium
+    }
+    bindings: ParameterBinding {
+      parameter: Parameter MediumAction.action
+      value: FixedValue "enable"
+    }
+  }
+}
+MacroAction MediumAction {
+  impl: cvm.ncb.macros.MediumAction
+  parameters: ActionParameter session
+  parameters: ActionParameter medium
+  parameters: ActionParameter action
+}

@@ -1,0 +1,75 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 Layer\
+\
+provides:\
+	LoginAll()\
+	LogoutAll()\
+	SendSchema(receivers, schema)\
+	CreateSession(session)\
+	DestroySession(session)\
+	AddParty(session, participant)\
+	RemoveParty(session, participant)\
+	EnableMedium(session, medium)\
+	EnableMediumReceiver(session, medium)\
+	DisableMedium(session, medium)\
+	\
+\
+signals:\
+	LoginFailed(framework)\
+	SchemaReceived(sender, schema)\
+	SchemaFailed(receiver, schema)\
+\
+\
+CallAction LoginAllAction \{\
+  call: Call Login\
+  target: Expression "Resource.all.findAll \{ it.available \}"\
+\}\
+\
+CallAction LogoutAllAction \{\
+  call: Call Logout\
+  target: Expression "Resource.all.findAll \{ it.available \}"\
+\}\
+\
+MacroAction SendSchemaAction \{\
+  impl: "cvm.ncb.actions.SendSchemaActionImpl"\
+\
+  parameters: Parameter receivers\
+  parameters: Parameter schema\
+\}\
+\
+MacroAction CreateSession\
+MacroAction DestroySession\
+\
+MacroAction AddParty\
+MacroAction RemoveParty\
+\
+MacroAction Medium\
+\
+EventAction LoginFailed\
+===============\
+\
+\
+Resource\
+\
+provides:\
+	Login()\
+	Logout()\
+	SendSchema(receiver, schema)\
+	CreateSession(session)\
+	DestroySession(session)\
+	AddParty(session, participant)\
+	RemoveParty(session, participant)\
+	EnableMedium(session, medium)\
+	EnableMediumReceiver(session, medium)\
+	DisableMedium(session, medium)\
+\
+signals:\
+	LoginFailed()\
+	SchemaReceived(sender, schema)\
+	SchemaFailed(receiver, schema)\
+	MediumFailed(medium)}

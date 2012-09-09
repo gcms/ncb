@@ -1,0 +1,112 @@
+% Exemplo de dissertação do INF-UFG com texto em portugues formatado com LaTeX
+\documentclass[dissertacao,nocolorlinks]{inf-ufg}
+% Opções da classe inf-ufg (ao usar mais de uma, separe por vírgulas)
+%   [tese]         -> Tese de doutorado.
+%   [dissertacao]  -> Dissertação de mestrado (padrão).
+%   [monografia]   -> Monografia de especialização.
+%   [relatorio]    -> Relatório final de graduação.
+%   [abnt]         -> Usa o estilo "abnt-alf" de citação bibliográfica.
+%   [nocolorlinks] -> Os links de navegação no texto ficam na cor preta.
+%                     Use esta opção para gerar o arquivo para impressão
+%                     da versão final do seu texto!!!
+
+%----------------------------------------------------- INICIO DO DOCUMENTO %
+\begin{document}
+
+%------------------------------------------ AUTOR, TÍTULO E DATA DE DEFESA %
+\autor{Gustavo Cipriano Mota Sousa} % (José da Silva)
+\autorR{Sousa, Gustavo Cipriano Mota} % (da Silva, José)
+
+\titulo{Desenvolvimento dirigido por modelos de máquinas virtuais específicas de domínio}
+%\subtitulo{\textless Subtítulo do Trabalho\textgreater}
+
+\cidade{Goiânia} % Nome da cidade em foi desenvolvido o trabalho
+\dia{08} %
+\mes{10} % Data da apresentação/defesa do trabalho
+\ano{2012} % Formato numérico: \dia{01}, \mes{01} e \ano{2009}
+
+%-------------------------------------------------------------- ORIENTADOR %
+\orientador{Fábio Moreira Costa}
+\orientadorR{Costa, Fábio Moreira}
+% Use os comandos a seguir se for Orientadora e nao Orientador.
+%\orientadora{\textless Nome da Orientadora\textgreater}
+%\orientadoraR{\textless Nome Reverso da Orientadora\textgreater}
+
+%\coorientador{\textless Nome do Co-orientador\textgreater}
+%\coorientadorR{\textless Nome Reverso do Co-orientador\textgreater}
+% Use os comandos a seguir se for Co-orientadora e nao Coorientador.
+%\coorientadora{\textless Nome da Co-orientadora\textgreater}
+%\coorientadoraR{\textless Nome Reverso da Co-orientadora\textgreater}
+
+%-------------------------------------------------- INSTITUIÇÃO E PROGRAMA %
+\universidade{Universidade Federal de Goiás} % {Universidade Federal de Goiás}
+\uni{UFG}         % UFG
+\unidade{Instituto de Informática} %Instituto de Informática
+%\departamento{\textless Nome do Departamento\textgreater} %Unidades com mais de um depto.
+
+%\universidadeco{\textless Nome da Universidade do Co-orientador\textgreater}
+%\unico{\textless Sigla da Universidade do Co-orientador\textgreater}
+%\unidadeco{\textless Nome da Unidade Acadêmica do Co-orientador\textgreater}
+
+\programa{Ciência da Computação} % Computação
+\concentracao{Sistemas Distribuídos}
+
+%-------------------------------------------------- ELEMENTOS PRÉ-TEXTUAIS %
+\capa    % Gera o modelo da capa externa do trabalho
+\publica % Gera a autorização para publicação em formato eletrônico
+\rosto   % Primeira folha interna do trabalho
+
+\input{./pre/pre_aprovacao}
+\input{./pre/pre_direitos}
+%\input{./pre/pre_dedicatoria}
+\input{./pre/pre_agradecimentos}
+%\input{./pre/pre_epigrafe}
+\input{./pre/pre_resumo}
+\input{./pre/pre_abstract}
+
+%\tabelas[figtabalgcod]
+\tabelas[figtabcod]
+%Opções:
+%nada [] -> Gera apenas o sumário
+%fig     -> Gera o sumário e a lista de figuras
+%tab     -> Sumário e lista de tabelas
+%alg     -> Sumário e lista de algoritmos
+%cod     -> Sumário e lista de códigos de programas
+%
+% Pode-se usar qualquer combinação dessas opções.
+% Por exemplo:
+%  figtab       -> Sumário e listas de figuras e tabelas
+%  figtabcod    -> Sumário e listas de figuras, tabelas e
+%                  códigos de programas
+%  figtabalg    -> Sumário e listas de figuras, tabelas e algoritmos
+%  figtabalgcod -> Sumário e listas de figuras, tabelas, algoritmos e
+%                  códigos de programas
+
+%--------------------------------------------------------------- CAPÍTULOS %
+\input{./tex/Cap1Introducao}
+\input{./tex/Cap2Referencial}
+\input{./tex/Cap3Proposta}
+\input{./tex/Cap4Metamodelo}
+\input{./tex/Cap5Ambiente}
+\input{./tex/Cap6Instancia}
+%\input{./tex/TrabalhosRelacionados}
+\input{./tex/Cap7Conclusoes}
+
+%------------------------------------------------------------ BIBLIOGRAFIA %
+\cleardoublepage
+%\nocite{*} %%% Retire esta linha para gerar a bibliografia com apenas as
+           %%% referências usadas no seu texto!
+\arial
+\bibliography{./bib/modelo-tese} %%% Nomes dos seus arquivos .bib
+\label{ref-bib}
+
+%--------------------------------------------------------------- APÊNDICES %
+\apendices
+
+%\input{./pos/Apendice1}
+
+\end{document}
+
+%------------------------------------------------------------------------- %
+%        F I M   D O  A R Q U I V O :  m o d e l o - t e s e . t e x       %
+%------------------------------------------------------------------------- %
