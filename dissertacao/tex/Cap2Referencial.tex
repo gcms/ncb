@@ -1,15 +1,13 @@
 \chapter{Referencial teórico}
 \label{cap:referencial}
 
-\begin{comment}
-Introduzir o capítulo
-\end{comment}
+Neste capítulo revemos os conceitos sobre os quais o presente trabalho é desenvolvido. Na seção~\ref{sec:mde} tratamos dos princípios de abordagens de engenharia de software dirigida por modelos, suas técnicas e fundamentos associados. A seção~\ref{sec:referencial-cvm} fornece uma visão geral da máquina virtual de comunicação descrevendo seu comportamento e sua arquitetura. Por fim, a seção~\ref{sec:referencial-selfman} descreve a arquitetura de computação autônoma e políticas como tecnologias para a construção de sistemas auto-gerenciáveis.
 
 \section{Engenharia dirigida por Modelos}
 \label{sec:mde}
 
 
-O termo \emph{Model-Driven Engineering} (MDE) é geralmente empregado para identificar um conjunto de abordagens que promovem o uso de modelos como os principais artefatos no processo de engenharia de software \cite{mde, mddcs}.
+O termo \emph{Model-Driven Engineering} (MDE) é geralmente empregado para identificar o conjunto de abordagens que promovem o uso de modelos como os principais artefatos no processo de engenharia de software \cite{mde, mddcs}.
 Nessas abordagens o uso de modelos não se limita à documentação ou compreensão de um sistema de software, mas pode abranger todas as áreas da engenharia de software, incluindo desde o seu desenvolvimento, até sua operação e manutenção.
 
 %O surgimento de abordagens dirigidas por modelos evoluiu da crescente complexidade 
@@ -21,7 +19,7 @@ O avanço nas tecnologias de rede e processamento observado nas últimas décadas p
 %Além disso, aplicações atuais apresentam cada vez mais requisitos de disponibilidade, segurança, adaptabilidade, entre outros capazes de aumentar significativamente a complexidade de um sistema baseado em software.
 
 
-O desenvolvimento dessas aplicações utilizando abordagens tradicionais de desenvolvimento, baseadas na codificação em linguagens de programação exige um grande esforço. 
+O desenvolvimento dessas aplicações utilizando abordagens tradicionais de desenvolvimento, baseadas na codificação em linguagens de programação, exige um grande esforço. 
 Apesar da notável evolução nas linguagens de programação,  suas construções continuam sendo em grande parte baseadas nas capacidades fornecidas pelo ambiente computacional, e assim não guardam relação direta com o problema a ser resolvido. A distância semântica entre o problema a ser resolvido e a plataforma utilizada na sua implementação é considerada como um dos principais fatores que dificultam o desenvolvimento das aplicações atuais \cite{mde, mddcs}. 
 
 %\begin{comment}
@@ -70,7 +68,7 @@ Sob essa ótica, o princípio básico da engenharia de modelos propõe do uso de mod
 %Considering everything as a model in a software  development approach  has  many consequences that we are progressively discovering. This paper has probably shown  only some of them. Besides the advantages of conceptual simplicity, this also leads to clear architecture, efficient implementation, high scalability  and  good  flexibility
 
 Apesar de ser considerada uma abordagem recente de engenharia de software, a engenharia dirigida por modelos se baseia em idéias de várias outras abordagens como linguagens específicas de domínio, programação orientada por linguagens, programação por geração, programação dirigida por domínio, entre outras \cite{Unifying}.
-Nesse contexto, a engenharia dirigida por modelos surge como uma tentativa de sistematizar para o uso de modelos, se apoiando em técnicas e princípios já existentes.
+Nesse contexto, a engenharia dirigida por modelos surge como uma tentativa de sistematizar o uso de modelos, se apoiando em técnicas e princípios já existentes.
 % sistematizado de várias dessas abordagens, sendo consideradas compatíveis com o princípio \cite{ts,Towards a Basic Theory to Model Model Driven}.
 
 %On the Applicability Scope of Model Driven Engineering
@@ -134,11 +132,11 @@ A sintaxe abstrata e semântica estática de uma linguagem de modelagem são comume
 
 Por também se tratar de um modelo, um meta-modelo também é construído por meio de uma linguagem de modelagem. Esta meta-linguagem, por sua vez, também é definida através de um metamodelo, que neste caso é chamado de meta-metamodelo. 
 
-A construção de modelos e meta-modelos foi padronizada pela OMG por meio de uma arquitetura de metamodelagem denominada \emph{Meta-Object Facility} (MOF) \cite{mof241}. A especificação da MOF descreve uma arquitetura de quatro camadas, ilustrada na Figura~\ref{fig:referencial-mof}, onde os elementos em uma determinada camada são definidos como instâncias de elementos da camada imediatamente superior. A camada mais superior, denominada M3, também integra a especificação da MOF, e representa o meta-metamodelo, que pode ser utilizado para a construção de metamodelos. O modelo da camada M3, também denominado de modelo MOF, é formalizada por meio de suas próprias abstrações, tornando desnecessária a existência de um outro nível de metamodelagem.
+A construção de modelos e meta-modelos foi padronizada pela OMG por meio de uma arquitetura de metamodelagem denominada \emph{Meta-Object Facility} (MOF) \cite{mof241}. A especificação da MOF descreve uma arquitetura de quatro camadas, ilustrada na Figura~\ref{fig:referencial-mof}, onde os elementos em uma determinada camada são definidos como instâncias de elementos da camada imediatamente superior. A camada mais superior, denominada M3, também integra a especificação da MOF, e representa o meta-metamodelo, que pode ser utilizado para a construção de metamodelos. O modelo da camada M3, também denominado de modelo MOF, é formalizada por meio de suas próprias abstrações, o que elimina a necessidade de um outro nível de metamodelagem.
 
 \begin{figure}
  \centering
- \includegraphics[width=1\textwidth]{./fig/mof}
+ \includegraphics[width=0.75\textwidth]{./fig/mof}
  \caption{Arquitetura de metamodelagem da MOF.}
  \label{fig:referencial-mof}
 \end{figure}
@@ -213,12 +211,25 @@ Outra técnica também empregada na formalização da semântica dinâmica de DSMLs co
 \subsection{Modelos em tempo de execução}
 
 
+Modelos tem sido empregados com sucesso como um meio para lidar com a complexidade envolvida no gerenciamento de sistemas em tempo de execução.
+O gerenciamento de sistemas que precisam ser monitorados, adaptados e evoluídos durante sua execução é realizado por meio da inspeção e manipulação de estruturas que representam o sistema em tempo de execução.
+No entanto, a representação de um sistema em execução se baseia nas construções da sua plataforma de execução, e não guarda qualquer ligação com as questões que são relevantes ao sistema em execução.
+
+Nesse cenário, o uso de modelos em tempo de execução tem como intuito prover representações mais apropriadas dos elementos de um sistema em execução, ocultando a complexidade de sua plataforma de execução. Assim, os modelos atuam como interfaces que podem ser utilizadas por agentes para monitorar e manipular sistemas em execução.
+De acordo com essa visão, os modelos são o meio pelo qual desenvolvedores ou outros agentes podem compreender, configurar, modificar e interagir com o comportamento e estrutura de um sistema em execução  \cite{mddcs}.
+
+
+Modelos de tempo de execução estão diretamente relacionados à reflexão computacional, visto que ambos buscam definir representações que refletem um sistema em execução e que possuem uma relação de causalidade com o mesmo.
+No entanto, diferente da reflexão cujas representações estão associadas à plataforma de execução do sistema, modelos em tempo de execução empregam representações mais próximas ao problema \cite{mrt}. 
+Assim como na reflexão computacional, modelos em tempo de execução podem ser empregados para capturar a estrutura ou comportamento de um sistema em execução, ou ainda, podem capturar outras facetas do sistema relacionadas ao domínio do problema.
+
+
 \section{Máquina Virtual de Comunicação}
 \label{sec:referencial-cvm}
 
 A Máquina Virtual de Comunicação (\emph{Communication Virtual Machine}, CVM) é uma plataforma voltada para a especificação e realização de serviços de comunicação \cite{cvm}. Sendo uma plataforma dirigida por modelos, a CVM funciona por meio do processamento de modelos descritos em uma linguagem de modelagem específica de domínio, denominada Linguagem de Modelagem de Comunicação (\emph{Communication Modeling Language}, CML) \cite{cml}. Diferente de muitas abordagens dirigidas por modelo que se apoiam na geração de código, os modelos CML são diretamente interpretados pela CVM.
 
-A CVM é considerada uma plataforma centrada no usuário devido ao alto-nível dos modelos descritos por meio da CML, que podem ser facilmente construídos por usuários especialistas de domínio, ou até mesmo usuários finais. A CML é uma linguagem declarativa, por meio da qual são descritos os participantes, dados, e tipos de mídia envolvidos em uma comunicação a ser realizada. Informações associadas às tecnologias e dispositivos efetivamente utilizados na realização da comunicação, não são descritos em um modelo CML. A Figura~\ref{fig:referencial-cml} ilustra um exemplo de modelo descrito por meio da representação gráfica da CML. O modelo em questão define uma comunicação entre dois participantes por meio de audio em tempo real.
+A CVM é considerada uma plataforma centrada no usuário devido ao alto-nível dos modelos descritos por meio da CML, que podem ser facilmente construídos por usuários especialistas de domínio, ou até mesmo usuários finais. A CML é uma linguagem declarativa, por meio da qual são descritos os participantes, dados, e tipos de mídia envolvidos em uma comunicação a ser realizada. Informações associadas às tecnologias e dispositivos efetivamente utilizados na realização da comunicação, não são descritos em um modelo CML. A Figura~\ref{fig:referencial-cml} ilustra um exemplo de modelo descrito por meio da representação gráfica da CML. O modelo em questão define uma comunicação entre dois participantes por meio de áudio em tempo real.
 
 \begin{figure}
  \centering
@@ -258,13 +269,12 @@ A Máquina Virtual de Redes Elétricas Locais (\emph{Microgrid Virtual Machine}, M
 
 A camada NCB, que integra a CVM, foi projetada com o intuito de fornecer uma interface de serviços de comunicação independente da tecnologia de comunicação empregada, capaz de abstrair da camada superior a heterogeneidade e dinâmica envolvida na utilização de provedores de comunicação \cite{cvm}.  Para isso, o intermediador de comunicação deve ser capaz de se auto-gerenciar, adaptando-se para se adequar à mudanças no ambiente de rede, nos provedores de comunicação, ou nas solicitações advindas da camada de \emph{middleware}.
 
-Apesar de prever o uso de diversos provedores de comunicação, a versão inicialmente desenvolvida da NCB comportava apenas um provedor diretamente incorporado à sua implementação, limitando a qualidade e tipos de serviços de comunicação disponíveis. Em trabalhos seguintes \cite{SelfConfig}, a NCB foi ampliada para possibilitar a integração, e auto-configuração de vários \emph{frameworks} provedores de comunicação como Skype, Smack, Asterisk, etc. Para o auto-gerenciamento da camada foi adotada a arquitetura de computação autônoma proposta pela IBM \cite{ibmac}.
-A NCB também foi posteriormente \cite{UCCAF} ampliada para contemplar o uso de políticas como meio de guiar decisões da seleção de \emph{frameworks} de comunicação.
-
+Apesar de prever o uso de diversos provedores de comunicação, a versão inicialmente desenvolvida da NCB comportava apenas um provedor diretamente incorporado à sua implementação, limitando a qualidade e tipos de serviços de comunicação disponíveis. Em trabalhos seguintes \cite{SelfConfig}, a NCB foi ampliada para possibilitar a integração, e auto-configuração de vários \emph{frameworks} provedores de comunicação como Skype, Smack, Asterisk, etc. Para o auto-gerenciamento da camada foi adotada a arquitetura de computação autônoma, e proposto o uso de políticas como meio de guiar decisões da seleção de \emph{frameworks} de comunicação \cite{UCCAF} .
 
 %\section{Reflexão computacional}
 
 \section{Sistemas auto-gerenciáveis}
+\label{sec:referencial-selfman}
 
 Um sistema auto-gerenciável é aquele capaz de se adaptar de forma automática, com o intuito de atingir os objetivos do sistema. O objetivo do auto-gerenciamento é reduzir a necessidade do uso de controles manuais para manter um sistema de acordo com os seus objetivos quando da ocorrência de mudanças em seu ambiente operacional ou requisitos \cite{selfManSystems}.
 
@@ -296,29 +306,33 @@ Conforme essa visão, um sistema autônomo deve possuir as seguintes capacidades d
 
 \end{itemize}
 
-Para realizar essa visão, foi proposto pela IBM\cite{ibmac} uma arquitetura baseada em camadas para a construção de sistemas autônomos. A Figura~\ref{fig:referencial-ac} ilustra essa arquitetura, cujo elemento principal é o gerenciador autônomo. A camada mais inferior contém os recursos a serem gerenciados, que podem ser componentes de hardware ou software, e podem incorporar capacidades de auto-gerenciamento. A camada imediatamente acima representa os componentes de acesso aos recursos, denominados \emph{touchpoints}. Um \emph{touchpoint} representa uma interface padrão para interação com os recursos apresentando o comportamento de sensor e atuador para um ou mais recursos. Enquanto sensores tem como função observar o estado dos recursos gerenciados, atuadores são utilizados para efetuar mudanças nos mesmos.
+Para realizar essa visão, foi proposta uma arquitetura baseada em camadas para a construção de sistemas autônomos  \cite{ibmac} . A Figura~\ref{fig:referencial-ac} ilustra essa arquitetura, cujo elemento principal é o gerenciador autônomo. A camada mais inferior contém os recursos a serem gerenciados, que podem ser componentes de hardware ou software, e podem incorporar capacidades de auto-gerenciamento. A camada imediatamente acima representa os componentes de acesso aos recursos, denominados \emph{touchpoints}. Um \emph{touchpoint} representa uma interface padrão para interação com os recursos apresentando o comportamento de sensor e atuador para um ou mais recursos. Enquanto sensores tem como função observar o estado dos recursos gerenciados, atuadores são utilizados para efetuar mudanças nos mesmos.
 
 
-\begin{figure}
- \centering
- \includegraphics[width=1\textwidth]{./fig/aclayers}
- \caption{Arquitetura de computação autônoma.}
- \label{fig:referencial-ac}
-\end{figure}
+%\begin{figure}
+% \centering
+% \includegraphics[width=1\textwidth]{./fig/aclayers}
+% \caption{Arquitetura de computação autônoma.}
+% \label{fig:referencial-ac}
+%\end{figure}
 
-O gerenciamento dos recursos é realizado por meio de gerenciadores autônomos e manuais. Gerenciadores autônomos de \emph{touchpoint} atuam diretamente sobre os recursos, interagindo por meio de seus \emph{touchpoints}. Gerenciadores autônomos de orquestração gerenciam outros gerenciadores autônomos, coordenando diferentes grupos de recursos. Por fim, um gerenciador manual fornece uma interface para que um profissional de tecnologia da informação possa intervir manualmente na gerência dos recursos.
+O gerenciamento dos recursos é realizado por meio de gerenciadores autônomos e manuais. Gerenciadores autônomos de \emph{touchpoint} atuam diretamente sobre os recursos, interagindo por meio de seus \emph{touchpoints}. Gerenciadores autônomos de orquestração gerenciam outros gerenciadores autônomos, coordenando diferentes grupos de recursos ou diferentes tarefas de gerenciamento. Por fim, um gerenciador manual fornece uma interface para que um profissional de tecnologia da informação possa intervir manualmente na gerência dos recursos.
 Ao realizarem sua função, os gerenciadores autônomos e manuais podem obter e compartilhar informações, que neste caso são chamadas de conhecimento e mantidas em fontes de conhecimento. Em um sistema autônomo são considerados como conhecimento tipos de dados particulares como sintomas, políticas, solicitações e planos de mudança.
 
 O elemento principal da arquitetura de computação autônoma é o gerenciador autônomo, que implementa um ciclo de controle que implementa as funções de monitoramento, análise, planejamento e execução (MAPE). Essas funções, conjuntamente, são responsáveis por monitorar os recursos e eventualmente tomar a ação apropriada em resposta a alguma mudança. Durante a sua execução essas funções são influenciadas pelos dados mantidos em uma fonte de conhecimento, e interagem por meio da troca de dados como sintomas, solicitações de mudança e plano de mudanças, também tratados como conhecimento.
 
 A Figura~\ref{fig:referencial-ac-am} mostra uma visão conceitual do gerenciador autônomo, onde podem ser identificados os elementos que implementam as funções do ciclo de controle:
 
+%\begin{figure}
+% \centering
+% \includegraphics[width=0.7\textwidth]{./fig/am}
+% \caption{Gerenciador autônomo.}
+% \label{fig:referencial-ac-am}
+%\end{figure}
+
 \begin{figure}
- \centering
- \includegraphics[width=0.7\textwidth]{./fig/am}
- \caption{Gerenciador autônomo.}
- \label{fig:referencial-ac-am}
-\end{figure}
+\centering\subfigure[] {	\includegraphics[width=0.35\textwidth]{./fig/arch-autonomic}	\label{fig:referencial-ac} } \qquad\subfigure[] {\includegraphics[width=0.5\textwidth]{./fig/am}\label{fig:referencial-ac-am} }\caption{{\subref{fig:referencial-ac}} Arquitetura de computação autônoma \\ {\subref{fig:referencial-ac-am}} Gerenciador autônomo.}\label{fig:subfiguras} \end{figure}
+
 
 \begin{itemize}
 

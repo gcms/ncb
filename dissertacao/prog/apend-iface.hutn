@@ -1,0 +1,45 @@
+  iface: Interface layer {
+    provides: Call LoginAll
+    provides: Call LogoutAll
+    provides: Call SendSchema {
+      parameters: Parameter receivers
+      parameters: Parameter schema
+    }
+    provides: Call CreateSession {
+      parameters: Parameter session
+    }
+    provides: Call DestroySession {
+      parameters: Parameter session
+    }
+    provides: Call AddParty {
+      parameters: Parameter session
+      parameters: Parameter participant
+    }
+    provides: Call RemoveParty {
+      parameters: Parameter session
+      parameters: Parameter participant
+    }
+    provides: Call EnableMedium {
+      parameters: Parameter session
+      parameters: Parameter medium
+    }
+    provides: Call EnableMediumReceiver {
+      parameters: Parameter session
+      parameters: Parameter medium
+    }
+    provides: Call DisableMedium {
+      parameters: Parameter session
+      parameters: Parameter medium
+    }
+    signals: Event LoginFailed {
+      parameters: Parameter framework
+    }
+    signals: Event SchemaReceived {
+      parameters: Parameter sender
+      parameters: Parameter schema
+    }
+    signals: Event SchemaFailed {
+      parameters: Parameter receiver
+      parameters: Parameter schema
+    }
+  }

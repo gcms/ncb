@@ -215,7 +215,7 @@ Para definir este comportamento, de acordo com o metamodelo proposto, foram defi
    \small
    \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/policy.hutn}
    \caption{Definição dos elementos de avaliação de políticas da NCB.} 
-   \label{cod:instancia-autonomo}
+   \label{cod:instancia-politicas}
   \end{codigo}
 % \end{minipage}
 %\end{center}
@@ -233,28 +233,28 @@ Os cenários elaborados para esta avaliação são brevemente descritos abaixo.
 \begin{itemize}
 
 % testInitOk
-\item \textbf{Cenário 1}. Uma sessão de comunicação por meio de audio é estabelecida entre dois participantes.
+\item \textbf{Cenário 1}. Uma sessão de comunicação por meio de áudio é estabelecida entre dois participantes.
 
 % testTwoMediaSameFw
-\item \textbf{Cenário 2}. Comunicação de audio é inicialmente estabelecida entre dois participantes. Em seguida é solicitado a inclusão de vídeo na comunicação, o que é feito diretamente pois o \emph{framework} em uso dispõe dessa capacidade.
+\item \textbf{Cenário 2}. Comunicação de áudio é inicialmente estabelecida entre dois participantes. Em seguida é solicitado a inclusão de vídeo na comunicação, o que é feito diretamente pois o \emph{framework} em uso dispõe dessa capacidade.
 
 % testTwoMedia
-\item \textbf{Cenário 3}. Comunicação de audio é inicialmente estabelecida entre dois participantes. Após solicitação para que também seja estabelecida a comunicação por meio de vídeo, outro \emph{framework} é selecionado, e sua substituição é realizada de forma transparente pela camada NCB.
+\item \textbf{Cenário 3}. Comunicação de áudio é inicialmente estabelecida entre dois participantes. Após solicitação para que também seja estabelecida a comunicação por meio de vídeo, outro \emph{framework} é selecionado, e sua substituição é realizada de forma transparente pela camada NCB.
 
 % testFrameworkChange
-\item \textbf{Cenário 4}. Após estabelecer uma comunicação de audio entre dois participantes, ocorre uma falha no  \emph{framework} em uso. A camada NCB deve efetuar a sua substituição por outro \emph{framework} capaz de realizar a comunicação.
+\item \textbf{Cenário 4}. Após estabelecer uma comunicação de áudio entre dois participantes, ocorre uma falha no  \emph{framework} em uso. A camada NCB deve efetuar a sua substituição por outro \emph{framework} capaz de realizar a comunicação.
 
 % testFailedFramework
-\item \textbf{Cenário 5}. Após estabelecer uma comunicação de audio entre dois participantes, ocorre uma falha em todos os  \emph{frameworks} disponíveis. A camada NCB deve notificar a falha à camada superior.
+\item \textbf{Cenário 5}. Após estabelecer uma comunicação de áudio entre dois participantes, ocorre uma falha em todos os  \emph{frameworks} disponíveis. A camada NCB deve notificar a falha à camada superior.
 
 \item % testWaitingCall
-\textbf{Cenário 6}. Após receber um esquema de outro participante, uma comunicação de audio é estabelecida entre dois participantes. Um evento é gerado para a camada superior indicando o recebimento do esquema, essa por sua vez, é que determina que a camada NCB deve aceitar essa comunicação.
+\textbf{Cenário 6}. Após receber um esquema de outro participante, uma comunicação de áudio é estabelecida entre dois participantes. Um evento é gerado para a camada superior indicando o recebimento do esquema, essa por sua vez, é que determina que a camada NCB deve aceitar essa comunicação.
 
 % testLoginFailed
 \item \textbf{Cenário 7}. Ocorre uma falha durante a autenticação com um dos \emph{frameworks} de comunicação. Um evento deve ser gerado para a camada superior.
 
 % testThreeParties
-\item \textbf{Cenário 8}. Comunicação entre três participantes, onde uma comunicação de audio é estabelecida entre três participantes.
+\item \textbf{Cenário 8}. Comunicação entre três participantes, onde uma comunicação de áudio é estabelecida entre três participantes.
 
 \end{itemize}
 

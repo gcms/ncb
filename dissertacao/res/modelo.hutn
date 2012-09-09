@@ -1,0 +1,518 @@
+Manager ncb {
+  iface: Interface layer {
+    provides: Call LoginAll
+    provides: Call LogoutAll
+    provides: Call SendSchema {
+      parameters: Parameter receivers
+      parameters: Parameter schema
+    }
+    provides: Call CreateSession {
+      parameters: Parameter session
+    }
+    provides: Call DestroySession {
+      parameters: Parameter session
+    }
+    provides: Call AddParty {
+      parameters: Parameter session
+      parameters: Parameter participant
+    }
+    provides: Call RemoveParty {
+      parameters: Parameter session
+      parameters: Parameter participant
+    }
+    provides: Call EnableMedium {
+      parameters: Parameter session
+      parameters: Parameter medium
+    }
+    provides: Call EnableMediumReceiver {
+      parameters: Parameter session
+      parameters: Parameter medium
+    }
+    provides: Call DisableMedium {
+      parameters: Parameter session
+      parameters: Parameter medium
+    }
+    signals: Event LoginFailed {
+      parameters: Parameter framework
+    }
+    signals: Event SchemaReceived {
+      parameters: Parameter sender
+      parameters: Parameter schema
+    }
+    signals: Event SchemaFailed {
+      parameters: Parameter receiver
+      parameters: Parameter schema
+    }
+  }
+  resourceManager: InstanceResourceManager {
+    ifaces: Interface resource {
+      provides: Call Login
+      provides: Call Logout
+      provides: Call SendSchema {
+        parameters: receiver
+        parameters: schema
+      }
+      provides: Call CreateSession {
+        parameters: session
+      }
+      provides: Call DestroySession {
+        parameters: session
+      }
+      provides: Call AddParty {
+        parameters: session
+        parameters: participant
+      }
+      provides: Call RemoveParty {
+        parameters: session
+        parameters: participant
+      }
+      provides: Call EnableMedium {
+        parameters: session
+        parameters: medium
+      }
+      provides: Call EnableMediumReceiver {
+        parameters: session
+        parameters: medium
+      }
+      provides: Call DisableMedium {
+        parameters: session
+        parameters: medium
+      }
+      signals: Event LoginFailed
+      signals: Event SchemaReceived {
+        parameters: sender
+        parameters: schema
+      }
+      signals: Event SchemaFailed {
+        parameters: receiver
+        parameters: schema
+      }
+      signals: Event MediumFailed {
+        parameters: medium
+      }
+    }
+    instances: Instance Skype {
+      impl: "cvm.ncb.adapters.SkypeAdapter"
+      iface: Interface resource
+      features: Feature Audio {
+        attributes: Attribute Enabled {
+          value: true
+        }
+        attributes: Attribute NumberOfUsers {
+          value: 2
+        }
+      }
+      features: Feature Video {
+        attributes: Attribute Enabled {
+          value: true
+        }
+        attributes: Attribute NumberOfUsers {
+          value: 2
+        }
+      }
+    }
+    instances: Instance Smack {
+      impl: "cvm.ncb.adapters.SmackAdapter"
+      iface: Interface resource
+      features: Feature Audio {
+        attributes: Attribute Enabled {
+          value: true
+        }
+        attributes: Attribute NumberOfUsers {
+          value: 2
+        }
+      }
+      features: Feature Video {
+        attributes: Attribute Enabled {
+          value: true
+        }
+        attributes: Attribute NumberOfUsers {
+          value: 4
+        }
+      }
+    }
+    instances: Instance Asterisk {
+      impl: "cvm.ncb.adapters.SIPAdapter"
+      iface: Interface resource
+      features: Feature Audio {
+        attributes: Attribute Enabled {
+          value: true
+        }
+        attributes: Attribute NumberOfUsers {
+          value: 8
+        }
+      }
+    }
+  }
+  stateManager: StateManager {
+    stateTypes: State Connection {
+      properties: Property session
+      properties: Property medium
+      properties: Property participants
+      properties: Property framework
+      key: Property session
+    }
+  }
+  actions: CallAction LoginAllAction {
+    call: Call resource.Login
+    target: Expression "Resource.all.findAll { it.available }"
+  }
+  actions: CallAction LogoutAllAction {
+    call: Call resource.Logout
+    target: Expression "Resource.all.findAll { it.available }"
+  }
+  actions: MacroAction SendSchemaAction {
+    impl: "cvm.ncb.actions.SendSchemaActionImpl"
+    parameters: ActionParameter receivers
+    parameters: ActionParameter schema
+  }
+  actions: MacroAction CreateSessionAction {
+    impl: "cvm.ncb.actions.CreateSessionActionImpl"
+    parameters: ActionParameter session
+  }
+  actions: MacroAction DestroySessionAction {
+    impl: "cvm.ncb.actions.DestroySessionActionImpl"
+    parameters: ActionParameter session
+  }
+  actions: MacroAction AddPartyAction {
+    impl: "cvm.ncb.actions.AddPartyActionImpl"
+    parameters: ActionParameter session
+    parameters: ActionParameter participant
+  }
+  actions: MacroAction RemovePartyAction {
+    impl: "cvm.ncb.actions.RemovePartyActionImpl"
+    parameters: ActionParameter session
+    parameters: ActionParameter participant
+  }
+  actions: MacroAction MediumAction {
+    impl: "cvm.ncb.actions.MediumActionImpl"
+    parameters: ActionParameter session
+    parameters: ActionParameter medium
+    parameters: ActionParameter action
+  }
+  actions: EventAction GenerateLoginFailedEvent {
+    event: layer.LoginFailed
+    parameters: ActionParameter framework
+  }
+  actions: MacroAction DisableFramework {
+    impl: "cvm.ncb.actions.DisableFrameworkImpl"
+    parameters: ActionParameter framework
+  }
+  actions: CallAction EnqueueEnableMedium {
+    call: layer.EnableMedium
+    parameters: ActionParameter session
+    parameters: ActionParameter medium
+    bindings: ParameterBinding {
+      parameter: Parameter layer.EnableMedium.session
+      value: ParameterValue EnqueueEnableMedium.session
+    }
+    bindings: ParameterBinding {
+      parameter: Parameter layer.EnableMedium.medium
+      value: ParameterValue EnqueueEnableMedium.medium
+    }
+  }
+  actions: MacroAction UseFramework {
+    impl: "cvm.ncb.macros.UseFrameworkAction"
+    parameters: ActionParameter session 
+    parameters: ActionParameter framework
+  }
+
+  actions: SequenceAction ChangeFramework {
+    parameters: ActionParameter framework
+    parameters: ActionParameter session
+    parameters: ActionParameter medium
+  
+    actions: ActionExecution {
+      action: MacroAction DisableFramework
+      bindings: ParameterBinding {
+        parameter: ActionParameter DisableFramework.framework
+        value: ParameterValue ChangeFramework.framework
+      }
+    }
+    actions: ActionExecution {
+      action: CallAction EnqueueEnableMedium
+      bindings: ParameterBinding {
+        parameter: ActionParameter EnqueueEnableMedium.session
+        value: ParameterValue ChangeFramework.session
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter EnqueueEnableMedium.medium
+        value: ParameterValue ChangeFramework.medium
+      }
+    }
+  }
+  handlers: Handler {
+    signal: Call layer.LoginAll
+    action: ActionExecution {
+      action: CallAction LoginAllAction
+    }
+  }
+  handlers: Handler {
+    signal: Call layer.LogoutAll
+    action: ActionExecution {
+      action: CallAction LogoutAllAction
+    }
+  }
+  handlers: Handler {
+    signal: Call layer.SendSchema
+    action: ActionExecution {
+      action: MacroAction SendSchemaAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter SendSchemaAction.receivers
+        value: ParameterValue layer.SendSchema.receivers
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter SendSchemaAction.schema
+        value: ParameterValue layer.SendSchema.schema
+      }
+    }
+  }
+  handlers: Handler {
+    signal: Call layer.CreateSession
+    action: ActionExecution {
+      action: MacroAction CreateSessionAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter CreateSessionAction.session
+        value: ParameterValue layer.CreateSession.session
+      }
+    }
+  }
+  handlers: Handler {
+    signal: Call layer.DestroySession
+    action: ActionExecution {
+      action: MacroAction DestroySessionAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter DestroySessionAction.session
+        value: ParameterValue layer.DestroySession.session
+      }
+    }
+  }
+  handlers: Handler {
+    signal: Call layer.AddParty
+    action: ActionExecution {
+      action: MacroAction AddPartyAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter AddPartyAction.session
+        value: ParameterValue layer.AddParty.session
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter AddPartyAction.participant
+        value: ParameterValue layer.AddParty.participant
+      }
+    }
+  }
+  handlers: Handler {
+    signal: Call layer.RemoveParty
+    action: ActionExecution {
+      action: MacroAction RemovePar    instances: Instance Skype {
+      impl: "cvm.ncb.adapters.SkypeAdapter"
+      features: Feature Audio {
+        attributes: Attribute Enabled {
+          value: true
+        }
+        attributes: Attribute NumberOfUsers {
+          value: 2
+        }
+      }
+      features: Feature Video {
+        attributes: Attribute Enabled {
+          value: true
+        }
+        attributes: Attribute NumberOfUsers {
+          value: 2
+        }
+      }
+    }
+    instances: Instance Smack {
+      impl: "cvm.ncb.adapters.SmackAdapter"
+      features: Feature Audio {
+        attributes: Attribute Enabled {
+          value: true
+        }
+        attributes: Attribute NumberOfUsers {
+          value: 2
+        }
+      }
+      features: Feature Video {
+        attributes: Attribute Enabled {
+          value: true
+        }
+        attributes: Attribute NumberOfUsers {
+          value: 4
+        }
+      }
+    }
+    instances: Instance Asterisk {
+      impl: "cvm.ncb.adapters.SIPAdapter"
+      features: Feature Audio {
+        attributes: Attribute Enabled {
+          value: true
+        }
+        attributes: Attribute NumberOfUsers {
+          value: 8
+        }
+      }
+    }
+tyAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter RemovePartyAction.session
+        value: ParameterValue layer.RemoveParty.session
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter RemovePartyAction.participant
+        value: ParameterValue layer.RemoveParty.participant
+      }
+    }
+  }
+  handlers: Handler {
+    signal: Call layer.EnableMedium
+    action: ActionExecution {
+      action: MacroAction MediumAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.session
+        value: ParameterValue layer.EnableMedium.session
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.medium
+        value: ParameterValue layer.EnableMedium.medium
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.action
+        value: FixedValue "enable"
+      }
+    }
+  }
+  handlers: Handler {
+    signal: Call layer.EnableMediumReceiver
+    action: ActionExecution {
+      action: MacroAction MediumAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.session
+        value: ParameterValue layer.EnableMediumReceiver.session
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.medium
+        value: ParameterValue layer.EnableMediumReceiver.medium
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.action
+        value: FixedValue "receive"
+      }
+    }
+  }
+  handlers: Handler {
+    signal: Call layer.DisableMedium
+    action: ActionExecution {
+      action: MacroAction MediumAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.session
+        value: ParameterValue layer.DisableMedium.session
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.medium
+        value: ParameterValue layer.DisableMedium.medium
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.action
+        value: FixedValue "disable"
+      }
+    }
+  }
+  handlers: Handler {
+    signal: Event resource.LoginFailed
+    action: ActionExecution {
+      action: EventAction GenerateLoginFailedEvent
+      bindings: ParameterBinding {
+        parameter: ActionParameter GenerateLoginFailedEvent.framework
+        value: SourceValue
+      }
+    }
+  }
+  handlers: Handler {
+    signal: Event resource.MediumFailed
+    action: ActionExecution {
+      action: NoAction /* handled by autonomic manager, stops propagation */
+    }
+  }
+  autonomicManager: AutonomicManager {
+    identifies: Symptom FrameworkFailed {
+      bindings: Binding event {
+        bindable: Event resource.MediumFailed
+      }
+      bindings: Binding conn {
+        bindable: State Connection
+      }
+      conditions: Condition {
+        expression: "event.source == conn.framework && event.medium == conn.medium"
+      }
+    }
+    requests: ChangeRequest ChangeFramework {
+      basedOn: Symptom FrameworkFailed
+    }
+    plans: ChangePlan Plan1 {
+      basedOn: ChangeRequest ChangeFramework
+      action: ActionExecution {
+        action: SequenceAction ChangeFramework
+        bindings: ParameterBinding {
+          parameter: ActionParameter ChangeFramework.session
+          value: ExpressionValue "conn.session"
+        }
+        bindings: ParameterBinding {
+          parameter: ActionParameter ChangeFramework.medium
+          value: ExpressionValue "event.medium"
+        }
+        bindings: ParameterBinding {
+          parameter: ActionParameter ChangeFramework.framework
+          value: ExpressionValue "event.source"
+        }
+      }
+    }
+  }
+  policyManager: PolicyManager {
+    context: PolicyEvaluationContext General {
+      parameters: Parameter session
+      parameters: Parameter medium
+      parameters: Parameter numOfParticipants
+      policies: Policy Audio01 {
+        businessValue: 100
+        condition: Condition {
+          expression: "Audio.Enabled"
+        }
+      }
+      policies: Policy Audio02 {
+        businessValue: 96
+        condition: Condition {
+          expression: "numOfParticipants <= Audio.NumberOfUsers"
+        }
+      }
+    }
+    points: PolicyEvaluationPoint {
+      signal: Call layer.EnableMedium
+      bindings: ParameterBinding {
+        parameter: Parameter General.session
+        value: ParameterValue layer.EnableMedium.session
+      }
+      bindings: ParameterBinding {
+        parameter: Parameter General.medium
+        value: ParameterValue layer.EnableMedium.medium
+      }
+      bindings: ParameterBinding {
+        parameter: Parameter General.numOfParticipants
+        value: ExpressionValue "Connection[session].participants.size()"
+      }
+    }
+    handlers: PolicyEvaluationHandler {
+      action: ActionExecution {
+        action: MacroAction UseFramework
+        bindings: ParameterBinding {
+          parameter: ActionParameter UseFramework.session
+          value: ParameterValue General.session
+        }
+        bindings: ParameterBinding {
+          parameter: ActionParameter UseFramework.framework
+          value: ExpressionValue "resources.first()"
+        }
+      }
+    } 
+  }
+}
