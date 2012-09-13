@@ -4,7 +4,7 @@ public class SmackAdapter implements Manageable {
         this.eventNotifier = eventNotifier;
     }
 
-    @Call(name = "sendSchema", parameters = {"schema", "participant"})
+    @Call(name = "SendSchema", parameters = {"schema", "participant"})
     public void sendSchema(String schema, String participant) {
         if (!isOnline(participant))
             return;

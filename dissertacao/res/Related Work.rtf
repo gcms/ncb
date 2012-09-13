@@ -47,23 +47,29 @@ definition of the behavior of metamodels. \
 EMF [3], provide customized software engineering environments, separately from the \
 main software components. The major difference with meta-CASE systems is that we \
 remove the M3 level by the promotion process. \
-\
+---\
 \
 \
 The \uc0\u64257 rst approach (translational semantics) consists in de\u64257 ning a mapping (enacted by the use of model transformation engines) from the abstract syntax of the\
 underlying language to the abstract syntax of another language which is supposed\
 to be formally de\uc0\u64257 ned (i.e., for which a mapping to a semantic domain is de\u64257 ned).\
+\
 This translational semantics has been used, for example, in (Chen et al, 2005, 2007)\
 where a semantic anchoring to well-established formal models of computation (such\
-as \uc0\u64257 nite state machines, data \u64258 ow, and discrete event systems) built upon AsmL\
-(ASML, 2001) is proposed, by using the transformation language GME/GReAT (Graph Rewriting And Transformation language) (Balasubramanian et al, 2006). The solution they propose to the semantic anchoring offers up prede\uc0\u64257 ned and well-de\u64257 ned\
+as \uc0\u64257 nite state machines, data \u64258 ow, and discrete event systems) built upon AsmL (ASML, 2001) is proposed, by using the transformation language \
+GME/GReAT (Graph Rewriting And Transformation language) (Balasubramanian et al, 2006). \
+\
+The solution they propose to the semantic anchoring offers up prede\uc0\u64257 ned and well-de\u64257 ned\
 sets of semantic units for future (conventional) anchoring efforts. However, we see\
 two main disadvantages in this approach: \uc0\u64257 rst, it requires well understood and safe\
 behavioural language units and it is not clear how to specify the language semantics\
-from scratch when these language units do not yet exist; second, in heterogeneous\
+from scratch when these language units do not yet exist; \
+\
+second, in heterogeneous\
 systems, specifying the language semantics as composition of some selected primary\
 semantic units for basic behavioural categories (Chen et al, 2007) is not always possible, since there may exist complex behaviours which are not easily reducible to a\
 combination of existing ones.\
+\
 Still concerning the translational category, two other experiments have to be mentioned: the semantics of the AMMA/ATL transformation language (Di Ruscio et al,\
 2006b) and SPL, a DSL for telephony services, (Di Ruscio et al, 2006a) have been\
 speci\uc0\u64257 ed in XASM (Anlauff, 2000), an open source ASM dialect. A direct mapping\
@@ -73,7 +79,7 @@ as basis for the semantics speci\uc0\u64257 cation of the ATL metamodelled langu
 this mapping is neither formally de\uc0\u64257 ned nor the ATL transformation code which implements it have been made available in the ATL transformations Zoo or as ATL use\
 case (Jouault et al, 2006); only the Atlantic XASM Zoo (XASM Zoo, 2006), a mirror\
 \
-\
+-----\
 \
 The second approach consists in (weaving behaviour) into metamodels, i.e. specifying an executable semantics directly on the abstract syntax of the language by\
 promoting meta-languages for the semantics speci\uc0\u64257 cation. Meta-programming languages like Kermeta (Muller et al, 2005), xOCL (eXecutable OCL) of the XMFMosaic metamodelling framework (XMF Mosaic, 2007), or also the approach in\
@@ -101,9 +107,12 @@ we illustrate the weaving technique of our ASM-based framework, the ASMs formali
 set of action schemes provided by different ASM rule constructors.\
 \
 \
+----\
 The third approach (semantic domain modelling) suggests de\uc0\u64257 ning a metamodel\
 even for the \'93semantic domain\'94 \'96 i.e. to express also concepts of the run-time execution environment \'96, and then using well-formedness OCL rules to map elements of\
-the language metamodel into elements of the semantic domain metamodel. It is used,\
+the language metamodel into elements of the semantic domain metamodel. \
+\
+It is used,\
 for example, by the OMG task forces for the CMOF Abstract Semantics \'96 see Chapter\
 15 in (MOF, 2006) \'96 and for the OCL (OCL, 2006). A similar technique, also used for\
 the OCL semantics, involves set theory to formulate the semantic domain in terms of\

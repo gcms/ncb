@@ -284,6 +284,7 @@ Nesse contexto, arquiteturas de auto-gerenciamento propõem uma forma de integrar
 Esta seção apresenta um resumo da arquitetura de computação autônoma proposta para construção de sistemas auto-gerenciáveis e do uso de políticas para guiar o gerenciamento de sistemas. Essas tecnologias são empregadas pela CVM e pela abordagem proposta neste trabalho para prover capacidades de auto-gerenciamento.
 
 \subsection{Computação autônoma}
+\label{sec:referencial-autonomic}
 
 A crescente complexidade dos sistemas baseados em software modernos tem dificultado não só a sua construção de aplicações, mas também a sua implantação, configuração e operação. A provisão de serviços que atendam às demandas atuais dos usuários muitas vezes exige a construção de aplicações capazes de  integrar vários vários recursos. 
 
@@ -331,7 +332,15 @@ A Figura~\ref{fig:referencial-ac-am} mostra uma visão conceitual do gerenciador 
 %\end{figure}
 
 \begin{figure}
-\centering\subfigure[] {	\includegraphics[width=0.35\textwidth]{./fig/arch-autonomic}	\label{fig:referencial-ac} } \qquad\subfigure[] {\includegraphics[width=0.5\textwidth]{./fig/am}\label{fig:referencial-ac-am} }\caption{{\subref{fig:referencial-ac}} Arquitetura de computação autônoma \\ {\subref{fig:referencial-ac-am}} Gerenciador autônomo.}\label{fig:subfiguras} \end{figure}
+\centering
+\subfigure[] {
+	\includegraphics[width=0.35\textwidth]{./fig/arch-autonomic}
+	\label{fig:referencial-ac} } \qquad
+\subfigure[] {
+\includegraphics[width=0.5\textwidth]{./fig/am}
+\label{fig:referencial-ac-am} }
+\caption{{\subref{fig:referencial-ac}} Arquitetura de computação autônoma \\ {\subref{fig:referencial-ac-am}} Gerenciador autônomo.}
+\label{fig:subfiguras} \end{figure}
 
 
 \begin{itemize}
