@@ -31,7 +31,7 @@ O ambiente de execução, desenvolvido na plataforma Java, inclui componentes para
 
 %In this section, we describe the implementation of this execution environment, including its main components and how they interact in order to provide the behavior described by the model loaded in it. Though the names employed for describing these components may be the same used for elements of the  metamodel they are not the same. The components described here are part of the actual Java implementation but are related to their homonymous in the  metamodel.
 
-Neste capítulo descrevemos a implementação do ambiente de execução fornecido, incluindo seus principais componentes, e como estes interagem para prover o comportamento descrito pelo modelo carregado. Na primeira seção descrevemos uma visão geral do ambiente de execução, incluindo o fluxo geral de processamento de sinais e os componentes envolvidos. As seções seguintes descrevem em detalhes a implementação de componentes específicos do ambiente.
+Neste capítulo descrevemos a implementação do ambiente de execução fornecido, incluindo seus principais componentes, e como estes interagem para prover o comportamento descrito pelo modelo carregado. Na primeira seção apresentamos uma visão geral do ambiente de execução, incluindo o fluxo geral de processamento de sinais e os componentes envolvidos. As seções seguintes descrevem em detalhes a implementação de componentes específicos do ambiente.
 
 \section{Visão geral}
 
@@ -42,16 +42,16 @@ Antes de iniciar a execução de uma camada de intermediação de serviços, as estru
 %Under the implemented execution environment, a broker layer constantly waits for calls from the upper layer or events from resources, that once arrived are enqueued for later processing. In order to process a signal, the appropriate handler is found and executed. In accordance with the model, the handler executes the associated action that may interact with resources and manipulate the state maintained by the layer. Specialized handlers are also set up for handling signals that may activate self-management functions.
 
 
-No ambiente de execução desenvolvido, um intermediador de serviços está constantemente à espera de chamadas oriundas da camada superior ou eventos gerados pelos recursos. 
-Uma vez identificados, esses sinais são enfileirados, para em seguida serem processados. Para processar um sinal, o intermediador procura por um tratador de sinais apropriado, e encaminha o sinal à este tratador. De acordo com o definido no modelo em execução, o tratador executa a ação associada ao sinal, que pode interagir com os recursos disponíveis ou manipular o estado mantido pela camada.
+No ambiente de execução desenvolvido, um intermediador de serviços está constantemente à espera de chamadas oriundas da camada superior ou de eventos gerados pelos recursos subjacentes. 
+Uma vez identificados, esses sinais são enfileirados, para em seguida serem processados. Para processar um sinal, o intermediador procura por um tratador de sinais apropriado, e encaminha o sinal a este tratador. De acordo com o modelo em execução, o tratador executa a ação associada ao sinal, podendo interagir com os recursos disponíveis ou manipular o estado mantido pela camada.
 
-A figura~\ref{fig:ambiente-fluxo} ilustra os principais componentes que integram uma camada intermediação de serviços em tempo de execução.
+A Figura~\ref{fig:ambiente-fluxo} ilustra os principais componentes que integram uma camada intermediação de serviços em tempo de execução.
 %Apesar de apresentarem os mesmos nomes presentes no metamodelo, esses componentes não representam os mesmos elementos.
-Os elementos discutidos neste capítulo são parte da implementação responsável por realizar um modelo que descreve um intermediador de serviços.
+Os elementos discutidos neste capítulo constituem a implementação responsável por realizar um modelo que descreve um intermediador de serviços.
 Conforme ilustrado, um modelo de alto nível, descrito em uma DSML é processado pelas camadas superiores da máquina virtual, sendo sucessivamente transformado até chegar à camada de intermediação. Na camada de intermediação, o modelo é recebido como uma sequência de chamadas. Para simplificar a utilização do intermediador de serviços pela camada superior, o ambiente de execução provê uma fachada que permite que a camada superior execute chamadas, e receba notificações de eventos.
 % fachada \cite{designpattern} 
 
-O \emph{gerenciador de intermediação} é o principal elemento do ambiente, sendo o responsável por controlar o fluxo de execução. O \emph{gerenciador de intermediação} é o componente responsável por realizar, em tempo de execução, o elemento descrito no metamodelo por meio da classe \textsf{Manager}. Portanto, em tempo de execução o contexto de gerenciamento de recursos é definido por um \emph{gerenciador de intermediação}, que pode empregar outros \emph{gerenciadores de intermediação} como recursos.
+O \emph{gerenciador de intermediação} é o principal elemento do ambiente, sendo o responsável por controlar o fluxo de execução. O \emph{gerenciador de intermediação} é o componente responsável por realizar, em tempo de execução, o elemento do metamodelo descrito pela classe \textsf{Manager}. Portanto, em tempo de execução, o contexto de gerenciamento de recursos é definido por um \emph{gerenciador de intermediação}, que pode empregar outros \emph{gerenciadores de intermediação} como recursos subjacentes.
 
 \begin{figure}
  \centering
@@ -60,30 +60,32 @@ O \emph{gerenciador de intermediação} é o principal elemento do ambiente, sendo 
  \label{fig:ambiente-fluxo}
 \end{figure}
 
-Um \emph{gerenciador de intermediação} serializa o tratamento dos sinais recebidos, que são enfileirados e em seguida processados um a um.  O processamento dos sinais é conduzido pelo \emph{gerenciador de tratadores de sinais} que identifica e executa o \emph{tratador de sinais} apropriado.
-O \emph{gerenciador de tratadores de sinais} mantém um registro de \emph{tratadores de sinais} e procura pelo primeiro que é capaz de tratar o sinal em processamento. 
-Os \emph{tratadores de sinais} registrados são inicializados de acordo com as definições de tratadores e ações definidos no modelo em execução.
+Um \emph{gerenciador de intermediação} serializa o tratamento dos sinais recebidos, que são enfileirados e em seguida processados um a um.  O processamento dos sinais é conduzido pelo \emph{gerenciador de tratadores de sinais}, que identifica e executa o \emph{tratador de sinais} apropriado.
+%O \emph{gerenciador de tratadores de sinais} mantém um registro de \emph{tratadores de sinais} e procura pelo primeiro que é capaz de tratar o sinal em processamento. 
+%Os \emph{tratadores de sinais} registrados são inicializados de acordo com as definições de tratadores e ações definidos no modelo em execução.
+O \emph{gerenciador de tratadores de sinais} mantém um registro de \emph{tratadores de sinais} que são inicializados de acordo com as definições de tratadores e ações existentes no modelo em execução.
 
-Uma vez identificado o \emph{tratador de sinais} apropriado, a \emph{ação} correspondente é executada. Como ilustrado na figura~\ref{fig:ambiente-fluxo}, uma \emph{ação} pode interagir com os recursos por meio do \emph{gerenciador de recursos}, manipular o estado da camada por meio do \emph{gerenciador de estado}, ou gerar eventos para camada superior por meio do \emph{gerenciador de intermediação}.
+Uma vez identificado o \emph{tratador de sinais} apropriado, a \emph{ação} correspondente é executada. Como ilustrado na Figura~\ref{fig:ambiente-fluxo}, uma \emph{ação} pode interagir com os recursos por meio do \emph{gerenciador de recursos}, manipular o estado da camada por meio do \emph{gerenciador de estado}, ou gerar eventos para camada superior por meio do \emph{gerenciador de intermediação}.
 
-Além desses, outros tratadores especializados também são registrados com o objetivo identificar sinais que podem ser de interesse para as funções de auto gerenciamento da camada. Esses tratadores interceptam os sinais recebidos e os direcionam para o \emph{gerenciador autônomo} e o \emph{gerenciador de avaliação de políticas}, respectivamente.
+Além desses, outros tratadores especializados também são registrados com o objetivo identificar sinais que podem ser de interesse para as funções de auto-gerenciamento da camada. Esses tratadores interceptam os sinais recebidos e os direcionam para o \emph{gerenciador autônomo} e o \emph{gerenciador de avaliação de políticas}, respectivamente.
 
 O \emph{gerenciador de recursos} mantém referências para os recursos disponíveis para uso da camada, e disponibiliza uma interface para obtenção desses recursos. Além disso, esse gerenciador notifica o \emph{gerenciador de intermediação} sobre eventos gerados pelos recursos.
 O \emph{gerenciador de estado} disponibiliza uma interface para manipulação de dados, e notifica o \emph{gerenciador autônomo} sobre alterações, que podem disparar o mecanismo de auto gerenciamento da camada.
 
 O \emph{gerenciador autônomo} encapsula as funções MAPE do ciclo de gerenciamento autônomo, que são ativadas pelo \emph{tratador de sinais} correspondente, ou pelo \emph{gerenciador de estado}. A análise dos sinais identificados ou de mudanças no estado da camada pode levar o \emph{gerenciador autônomo} a executar uma \emph{ação}.
 
-De forma similar, o \emph{gerenciador de avaliação de políticas} é ativado pelo \emph{tratador de sinais de políticas}, e inicia a reavaliação das políticas em relação aos recursos disponíveis. Após a avaliação dos recursos em relação às políticas, uma ação é executada para efetuar chamadas aos recursos ou mudanças nos dados mantidos pelo intermediador.
+De forma similar, o \emph{gerenciador de avaliação de políticas} é ativado pelo \emph{tratador de sinais de políticas}, iniciando o processo de avaliação das políticas em relação aos recursos disponíveis.
+Após a avaliação, uma ação é executada para efetuar chamadas aos recursos ou mudanças nos dados mantidos pelo intermediador, aplicando os resultados da avaliação de políticas.
 
 \section{Tratamento de sinais}
 \label{sec:ambiente-sinais}
 
-Em uma camada de intermediação de serviços, sinais podem representar chamadas recebidas por meio da interface com a camada superior, ou eventos gerados pelos recursos. Os sinais recebidos por um gerenciador da camada de intermediação são tratados por um gerenciador de tratadores de sinais. Este elemento mantém um registro de tratadores de sinais, e é responsável por identificar qual tratador responderá à um sinal recebido. Um tratador de sinais, por sua vez, é o responsável por realizar a ação esperada da camada quando da recepção de um sinal.
+Em uma camada de intermediação de serviços, sinais podem representar chamadas recebidas por meio da interface com a camada superior, ou eventos gerados pelos recursos subjacentes. Os sinais recebidos por um gerenciador da camada de intermediação são tratados por um gerenciador de tratadores de sinais. Este elemento mantém um registro de tratadores de sinais, e é responsável por identificar qual tratador responderá à um sinal recebido. Um tratador de sinais, por sua vez, é o responsável por realizar a ação esperada da camada quando da recepção de um sinal.
 
 %\subsection{Tratadores de sinais}
 
 O gerenciador de tratadores de sinais é implementado pela classe \textsf{SignalHandlerManager}, que mantém um registro de tratadores de sinais. Um tratador de sinais é representado em tempo de execução pelo tipo \textsf{SignalHandler}.
-A figura~\ref{fig:ambiente-sinal} ilustra os tipos associados ao tratamento de sinais. 
+A Figura~\ref{fig:ambiente-sinal} ilustra os tipos associados ao tratamento de sinais. 
 
 \begin{figure}
  \centering
