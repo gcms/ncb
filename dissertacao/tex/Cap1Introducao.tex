@@ -54,14 +54,15 @@ Ao se aplicar tal abordagem, é possível ampliar o uso de modelos para além da de
 
 % Talvez seja um padrão de arquitetura, pode também ser visto como uma categoria de plataformas, mas neste momento o discurso está focando nas aplicações. É claro que estas aplicações executam em uma plataforma, e assim sendo as plataformas que tem como intuito facilitar o desenvolvimento deste tipo de aplicação torna-se uma categoria devido à existência da categoria de aplicações.
 Uma categoria interessante de aplicações que podemos destacar está relacionada ao provimento de serviços a partir de um conjunto heterogêneo de recursos. Uma aplicação desta categoria conta com um conjunto de recursos que apresentam diferentes características, e tem como objetivo fornecer um serviço de alto nível ao usuário, capaz de abstrair a complexidade envolvida em sua realização.
-Assim sendo, tais aplicações precisam ser capazes se auto-gerenciar, abstraindo do usuário detalhes da escolha, configuração, monitoramento, e utilização de recursos.
+Assim sendo, tais aplicações precisam ser capazes de se auto-gerenciar, abstraindo do usuário detalhes da escolha, configuração, monitoramento, e utilização de recursos.
 
 
 %%	- Falar sobre a CVM, um exemplo de máquina virtual capaz de interpretar modelos de alto nível (que podem até mesmo ser criados pelo usuário final) que descrevem um serviço a ser provido (comunicação) e realizá-lo de forma transparente ao usuário.
 
 %A Máquina Virtual de Comunicação (\emph{Communication Virtual Machine} - CVM) é uma plataforma de \emph{middleware} específica de domínio que emprega essa abordagem para possibilitar a criação de serviços de comunicação a partir de modelos de alto nível definidos pelo usuário.
 
-A Máquina Virtual de Comunicação (\emph{Communication Virtual Machine} - CVM) é um exemplo de  plataforma para construção e execução de aplicações que se enquadram nessa categoria \cite{cvm}. A CVM é  uma plataforma voltada para a especificação e realização de serviços de comunicação que emprega uma abordagem dirigida por modelos para a criação de serviços de comunicação a partir de modelos de alto nível definidos pelo usuário.
+A Máquina Virtual de Comunicação (\emph{Communication Virtual Machine} - CVM) é um exemplo de  plataforma para construção e execução de aplicações que se enquadram nessa categoria \cite{cvm}. A CVM é  uma plataforma voltada para a especificação e realização de serviços de comunicação que emprega uma abordagem dirigida por modelos para a construção de serviços de comunicação.
+% a partir de modelos de alto nível definidos pelo usuário.
 
 Como uma plataforma dirigida por modelos, a CVM atua a partir do processamento de modelos descritos em uma linguagem específica de domínio chamada Linguagem de Modelagem de Comunicação (\emph{Communication Modeling Language} - CML). Um modelo em CML descreve um cenário de comunicação, incluindo participantes, tipos de dados, e tipos de mídia de um serviço de comunicação a ser realizado. Detalhes sobre os dispositivos ou tecnologias de comunicação que serão efetivamente utilizados para estabelecer a comunicação não precisam ser descritos em um modelo em CML.
 
@@ -70,7 +71,7 @@ A CVM é considerada uma plataforma de comunicação centrada no usuário devido ao 
 
 %%	- Além de utilizar modelos a CVM implementa um conjunto de mecanismos de transformação, negociação, adaptação, etc (que é o que torna possível a transparência ao usuário)
 
-Para realizar um serviço de comunicação de forma automatizada e transparente ao usuário a CVM precisa realizar diversas operações desde transformações e negociação de modelos até a seleção e gerenciamento de provedores de comunicação. A CVM conta com uma arquitetura em camadas que possuem responsabilidades bem definidas e encapsulam os principais aspectos envolvidos na realização da comunicação.%  \cite{cvm}.
+Para realizar um serviço de comunicação de forma automatizada e transparente ao usuário, a CVM precisa realizar diversas operações desde transformações e negociação de modelos até a seleção e gerenciamento de provedores de comunicação. A CVM conta com uma arquitetura em camadas que possuem responsabilidades bem definidas e encapsulam os principais aspectos envolvidos na realização da comunicação.%  \cite{cvm}.
 
 Essa mesma estratégia também é empregada na área de micro-grids \cite{microgrid} para possibilitar a construção de aplicações de gerenciamento dos elementos de uma rede elétrica inteligente local diretamente pelos usuários finais. 
 Isto demonstra o potencial dessa estratégia para a construção de plataformas para provimento de serviços descritos por modelos a partir de um conjunto heterogêneo de recursos.

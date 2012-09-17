@@ -158,9 +158,9 @@ A avaliação de uma fonte de valor desse tipo é realizada da mesma forma que a ex
 
 %\subsection{Ações}
 
-Em tempo de execução, uma ação é representada por um objeto do tipo \textsf{ActionInstance}, uma interface é implementada pelas classes \textsf{CallActionInstance}, \textsf{EventActionInstance}, e \textsf{SequenceActionInstance}. Além disso, uma subinterface, chamada \textsf{MacroActionInstance} representa uma ação implementada por uma macro. A Figura~\ref{fig:ambiente-acao} mostra a hierarquia do tipo \textsf{ActionInstance}.
+Em tempo de execução, uma ação é representada por um objeto do tipo \textsf{ActionInstance}, uma interface é implementada pelas classes \textsf{CallActionInstance}, \textsf{EventActionInstance}, e \textsf{SequenceActionInstance}. Além disso, uma subinterface, chamada \textsf{MacroActionInstance} representa uma ação implementada por uma macro. A Figura~\ref{fig:ambiente-acao} mostra a hierarquia do tipo \textsf{ActionInstance}, que são os objetos que efetivamente são executados pelo acionador de ação após o mapeamento de parâmetros. Além disso, esses elementos estão diretamente associados aos tipos de ações existentes no metamodelo, descritos na seção~\ref{sec:metamodelo-sinais}.
 
-Esses são os objetos que efetivamente são executados pelo acionador de ação após o mapeamento de parâmetros. A lógica implementada pela classe \textsf{CallActionInstance} é direta, e consiste em enviar uma chamada a um recurso ou ao gerenciador de intermediação, conforme definido no modelo. A classe \textsf{EventActionInstance} atua de forma similar, e tem como intuito permitir que a camada gere um evento para camadas superiores. Em ambos os casos, os parâmetros recebidos pela ação são diretamente utilizados como parâmetros para a chamada ou evento.
+A lógica implementada pela classe \textsf{CallActionInstance} é direta, e consiste em enviar uma chamada a um recurso ou ao gerenciador de intermediação, conforme definido no modelo. A classe \textsf{EventActionInstance} atua de forma similar, e tem como intuito permitir que a camada gere um evento para camadas superiores. Em ambos os casos, os parâmetros recebidos pela ação são diretamente utilizados como parâmetros para a chamada ou evento.
 
 A classe \textsf{SequenceActionInstance}, por sua vez, encapsula uma série de acionadores de chamadas, que são utilizados para executar, em ordem, cada uma das ações que o compõem, conforme definido no modelo. Ao fim da execução, o resultado da última ação executada é utilizado como resultado da ação como um todo.
 
@@ -316,9 +316,9 @@ Ao identificar um sinal que define um ponto de avaliação de políticas, o gerenci
 
 Uma requisição de avaliação de políticas é encaminhada ao avaliador de políticas, implementado pela classe \textsf{PolicyEvaluator}. O avaliador de políticas avalia as condições de cada política em relação a cada recurso e identifica o valor total de negócio associado a cada recurso, de acordo com o resultado da avaliação. Os resultados da avaliação são representados por meio da classe \textsf{PolicyEvaluationResult}, que registra os valores de negócio associados a cada recurso. Além disso, o resultado da avaliação de políticas ainda engloba o contexto da requisição de avaliação que gerou estes resultados.
 
-Após a avaliação de políticas, o gerenciador de avaliação identifica os tratadores de avaliação de políticas associados ao grupo de políticas avaliadas. Conforme demonstrado na seção~\ref{sec:metamodelo-politicas}, um tratador de avaliação define uma ação a ser executada após a avaliação de políticas. Ao executar essa ação, o gerenciador de avaliação de políticas utiliza o resultado da avaliação de políticas como provedor de contexto.
+Após a avaliação de políticas, o gerenciador de avaliação identifica os tratadores de avaliação de políticas associados ao grupo de políticas avaliadas. Conforme descrito na seção~\ref{sec:metamodelo-politicas}, um tratador de avaliação define uma ação a ser executada após a avaliação de políticas. Ao executar essa ação, o gerenciador de avaliação de políticas utiliza o resultado da avaliação de políticas como provedor de contexto.
 
 
-
-
-
+O ambiente de execução apresentado neste capítulo foi construído com o intuito de possibilitar a execução de modelos descritos em conformidade com o metamodelo descrito no Capítulo~\ref{cap:metamodelo}. 
+Os componentes que aqui foram apresentados tem como função realizar o comportamento de uma camada de intermediação de serviços descrita por meio de um modelo, incorporando a semântica operacional do metamodelo.
+Assim, a partir de um modelo associado ao ambiente de execução, temos uma camada de intermediação de serviços executável, capaz de interagir em tempo de execução com a camada superior e os recursos subjacentes.

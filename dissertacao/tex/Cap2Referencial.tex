@@ -63,7 +63,7 @@ A maior parte das abordagens de MDD propõem a construção de linguagens de modela
 
 Apesar de empregarem modelos com diferentes objetivos essas abordagens apresentam várias similaridades, sendo por vezes sobrepostas. 
 A engenharia dirigida por modelos busca sistematizar o uso de modelos, de forma que possam ser empregados com diversos objetivos em todos as atividades da engenharia de software. 
-Sob essa ótica, o princípio básico da engenharia de modelos propõe do uso de modelos como objetos de primeira classe, utilizados na construção de todos os artefatos de software \cite{searchPrinciple, Unifying}.
+Sob essa ótica, o princípio básico da engenharia de modelos propõe o uso de modelos como objetos de primeira classe, utilizados na construção de todos os artefatos de software \cite{searchPrinciple, Unifying}.
 
 %Considering everything as a model in a software  development approach  has  many consequences that we are progressively discovering. This paper has probably shown  only some of them. Besides the advantages of conceptual simplicity, this also leads to clear architecture, efficient implementation, high scalability  and  good  flexibility
 
@@ -86,9 +86,9 @@ Nesse contexto, a engenharia dirigida por modelos surge como uma tentativa de si
 %The use of models at runtime seeks to use better abstractions for manipulating and inspecting a running system. Models at runtime bear a certain resemblance with reflection in which both deal with self-representations of a system that are causally connected. However, models at runtime use representations that are closer to the problem domain, in contrast with reflection, whose representations tend to be based on the implementation platform \cite{Blair2009}.
 
 \subsection{Modelos}
-\begin{comment}
-Talvez integrar essa subseção ao conteúdo anterior.
-\end{comment}
+%\begin{comment}
+%Talvez integrar essa subseção ao conteúdo anterior.
+%\end{comment}
 
 %Um modelo é geralmente como uma representação simplificada de algum aspecto de um sistema. Através de modelos que representam
 
@@ -106,7 +106,7 @@ Um modelo descreve um sistema de acordo com uma perspectiva, ocultando informaçõ
 Um sistema complexo, por sua vez, é representado por meio de um conjunto de modelos, que capturam diferentes aspectos sob diversos níveis de abstração. 
 
 Em abordagens de MDE, um modelo não é apenas um diagrama ou uma outra representação visual, mas sim uma definição formal dos conceitos a serem representados \cite{WhatModelsMean}. Nessas abordagens, o uso de modelos vai além da análise e projeto de um sistema, podendo ser utilizado em todas as atividades relacionadas à engenharia de software. 
-O emprego de modelos formalmente definidos possibilita que modelos representando visões abstratas de um sistema sejam processados de forma automatizada em artefatos de sua implementação.
+O emprego de modelos formalmente definidos possibilita que modelos representando visões abstratas de um sistema sejam processados de forma automatizada em artefatos de implementação.
 %Nessas abordagens, modelos são representações formais e sem ambiguidades, passíveis de serem processadas de forma automatizada.
 
 Modelos são formalizados por meio de linguagens de modelagem, cujas construções são definidas por um metamodelo. Um metamodelo, que também é um modelo, formaliza os conceitos fornecidos pela linguagem de modelagem, e como estes estão relacionados.
@@ -128,11 +128,13 @@ Conforme mencionado na seção anterior, modelos são construídos em conformidade c
 A sintaxe de uma linguagem de modelagem pode ainda ser divida em sintaxe concreta, que representa sua notação textual ou gráfica, e sintaxe abstrata que representa os conceitos disponíveis na linguagem e como estes se relacionam. A semântica, por sua vez, também é comumente tratada separadamente como semântica estática, que define critérios para que modelos sejam considerados válidos, e a semântica dinâmica que dá significado aos modelos.
 
 %A sintaxe de uma linguagem é tradicionalmente definida por meio de gramáticas na forma Backus-Naur (BNF), que descrevem regras para derivação de sequências válidas. Apesar de possibilitarem a definição formal de  linguagens, o uso de gramáticas BNF se limita a descrição de linguagens textuais e 
-A sintaxe abstrata e semântica estática de uma linguagem de modelagem são comumente formalizadas por meio de um metamodelo. Um metamodelo é um modelo que descreve um conjunto de abstrações e como estas estão relacionadas. As abstrações descritas por um meta-modelo representam as construções que irão compor a linguagem por ele formalizada. Assim sendo, o meta-modelo deve incluir elementos relacionados ao aspecto e nível de abstração da linguagem por ele descrito.
+A sintaxe abstrata e a semântica estática de uma linguagem de modelagem são comumente formalizadas por meio de um metamodelo. Um metamodelo é um modelo que descreve um conjunto de abstrações e como estas estão relacionadas. As abstrações descritas por um meta-modelo representam as construções que irão compor a linguagem por ele formalizada. Assim sendo, o meta-modelo deve incluir elementos relacionados ao aspecto e nível de abstração da linguagem por ele descrito.
 
-Por também se tratar de um modelo, um meta-modelo também é construído por meio de uma linguagem de modelagem. Esta meta-linguagem, por sua vez, também é definida através de um metamodelo, que neste caso é chamado de meta-metamodelo. 
+Por se tratar de um modelo, um meta-modelo também é construído por meio de uma linguagem de modelagem. Esta meta-linguagem, por sua vez, também é definida através de um metamodelo, que neste caso é chamado de meta-metamodelo. 
 
-A construção de modelos e meta-modelos foi padronizada pela OMG por meio de uma arquitetura de metamodelagem denominada \emph{Meta-Object Facility} (MOF) \cite{mof241}. A especificação da MOF descreve uma arquitetura de quatro camadas, ilustrada na Figura~\ref{fig:referencial-mof}, onde os elementos em uma determinada camada são definidos como instâncias de elementos da camada imediatamente superior. A camada mais superior, denominada M3, também integra a especificação da MOF, e representa o meta-metamodelo, que pode ser utilizado para a construção de metamodelos. O modelo da camada M3, também denominado de modelo MOF, é formalizada por meio de suas próprias abstrações, o que elimina a necessidade de um outro nível de metamodelagem.
+A construção de modelos e meta-modelos foi padronizada pelo OMG (\emph{Object Management Group}) por meio de uma arquitetura de metamodelagem denominada \emph{Meta-Object Facility} (MOF) \cite{mof241}. A especificação da MOF descreve uma arquitetura de quatro camadas, ilustrada na Figura~\ref{fig:referencial-mof}, onde os elementos em uma determinada camada são definidos como instâncias de elementos da camada imediatamente superior. 
+A camada mais superior, denominada M3, também integra a especificação da MOF, e representa o meta-metamodelo, que pode ser utilizado para a construção de metamodelos.
+O modelo da camada M3, também denominado de modelo MOF, é formalizado por meio de suas próprias abstrações, o que elimina a necessidade de um outro nível de metamodelagem.
 
 \begin{figure}
  \centering
@@ -143,7 +145,7 @@ A construção de modelos e meta-modelos foi padronizada pela OMG por meio de uma 
 
 
 A partir do modelo da camada M3, é possível construir metamodelos que descrevem a sintaxe abstrata e semântica estática de linguagens de modelagem para diversos fins. 
-%Exemplos de linguagens de modelagem definidas a partir do modelo MOF incluem a \emph{Unified Modeling Language} (UML), \emph{Common Warehouse Metamodelo} (CWM),
+Exemplos de linguagens de modelagem definidas a partir do modelo MOF incluem a \emph{Unified Modeling Language} (UML) e \emph{Common Warehouse Metamodel} (CWM), também padronizadas pelo OMG.
 Essas linguagens integram a camada M2 da arquitetura da MOF, e são utilizadas para construir os modelos que integram o nível M1. Os modelos da camada M1, por sua vez, são representações de objetos existentes no nível M0. O significado da camada M0 é controverso, e pode ser considerado como um objeto do mundo real, ou um fenômeno da execução de software, de acordo com a natureza do modelo na camada M1. Além disso, a especificação da MOF ainda define um padrão para representação de modelos no formato XMI (\emph{XML Metadata Interchange}).
 
 O \emph{Eclipse Modeling Framework} (EMF) é um \emph{framework} de modelagem que fornece um conjunto de ferramentas para construção e processamento de modelos. O EMF inclui um metamodelo denominado Ecore, que representa um subconjunto do modelo MOF que correspondente às abstrações existentes em linguagens de programação orientadas a objetos. O Ecore pode ser utilizado para construir modelos que representam um meta-modelo de uma linguagem. Utilizado dessa forma, o Ecore assume a mesma função do nível M3 da arquitetura da MOF. O desenvolvimento do EMF e Ecore influenciaram a padronização da MOF 2.0, que passou a contar com um metamodelo equivalente ao Ecore, denominado \emph{Essential MOF} (EMOF).
@@ -155,9 +157,9 @@ O \emph{Eclipse Modeling Framework} (EMF) é um \emph{framework} de modelagem que
 %In the current proposal for MOF 2.0, a similar subset of the MOF model, which it calls EMOF (Essential MOF), is separated out. There are small, mostly naming differences between Ecore and EMOF; however, EMF can transparently read and write serializations of EMOF.
 
 
-\begin{comment}
-É necessário mencionar outras interpretações do metamodelo, como de uma ontologia do domínio?
-\end{comment}
+%\begin{comment}
+%É necessário mencionar outras interpretações do metamodelo, como de uma ontologia do domínio?
+%\end{comment}
 
 
 %Model Driven Development: Code Generation or Model Interpretation?

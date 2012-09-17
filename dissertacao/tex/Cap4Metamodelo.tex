@@ -112,7 +112,8 @@ As seções seguintes descrevem em detalhes as partes do metamodelo identificadas 
 
 \section{Interface}
 
-No metamodelo proposto, a interface para utilização de um gerenciador de intermediação é definida por meio de \emph{chamadas} que podem ser realizadas ao gerenciador e \emph{eventos} que podem ser sinalizados pelo mesmo. Este tipo de interface segue a mesma abordagem empregada pela CVM para comunicação entre camadas \cite{cvm}. Dessa forma, a utilização de um gerenciador se dá através da realização de chamadas e tratamento de eventos gerados.
+No metamodelo proposto, a interface para utilização de um gerenciador de intermediação é definida por meio de \emph{chamadas} que podem ser realizadas ao gerenciador e \emph{eventos} que podem ser sinalizados pelo mesmo. 
+Este tipo de interface segue a mesma abordagem empregada pela CVM para comunicação entre camadas \cite{cvm}. Dessa forma, a utilização de um gerenciador se dá através da realização de chamadas e tratamento de eventos gerados.
 
 A interface de uma camada de intermediação de serviços é definida pela interface do gerenciador principal em uma hierarquia de gerenciadores. Assim sendo, a interação da camada de intermediação de serviços com as camadas superiores ocorre da mesma forma descrita acima. Além disso, as interfaces para utilização dos recursos gerenciados também é descrita da mesma forma, o que possibilita que um gerenciador de intermediação seja tratado como um recurso para outros gerenciadores.
 
@@ -347,6 +348,4 @@ Além disso, um ponto de avaliação de políticas também é responsável por definir 
 
 Um tratador de avaliação de políticas, representado por meio da classe \textsf{PolicyEvaluationHandler}, define uma ação a ser executada após a avaliação de políticas. Esse tratador tem como função definir como o resultado da avaliação de políticas será utilizado. Um tratador de avaliação de políticas está relacionado a um contexto de avaliação e será acionado sempre que as políticas nesse contexto forem reavaliadas.
 
-\begin{comment}
-Resumir o capítulo
-\end{comment}
+O metamodelo descrito neste capítulo fornece um conjunto de abstrações para a construção de modelos que descrevem uma camada de intermediação de serviços que se enquadra na arquitetura proposta para construção de máquinas virtuais. No Capítulo~\ref{cap:ambiente}, apresentamos o ambiente de execução desenvolvido para possibilitar a execução de modelos construídos em conformidade com o metamodelo descrito neste capítulo. O Capítulo~\ref{cap:instancia}, por sua vez, demonstra como o metamodelo aqui descrito pode ser empregado na construção de um modelo que descreve uma camada de intermediação de serviços equivalente à camada NCB que integra a CVM.

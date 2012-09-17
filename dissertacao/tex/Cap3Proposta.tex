@@ -3,9 +3,9 @@
 \label{cap:abordagem}
 
 Como introduzido no capítulo anterior, para viabilizar o emprego de modelos de alto nível para a construção e adaptação de aplicações é necessário construir linguagens específicas de domínio e mecanismos capazes de interpretá-las em tempo de execução.
-Enquanto o emprego de metamodelos permite descrever sintaxe abstrata e semântica estática estática de uma linguagem, sua semântica dinâmica é geralmente incorporada aos mecanismos responsáveis pelo seu processamento. 
-Uma máquina virtual é um mecanismo voltado para a execução de modelos definidos por meio de uma determinada linguagem, definindo a semântica operacional da mesma.
-Assim, metamodelos associados à máquinas virtuais podem ser utilizados como um meio para definição de DSMLs e processamento de modelos descritos por meio destas.
+Enquanto o emprego de metamodelos permite descrever a sintaxe abstrata e a semântica estática estática de uma linguagem, sua semântica dinâmica é geralmente incorporada aos mecanismos responsáveis pelo seu processamento. 
+Uma máquina virtual, por sua vez, é um mecanismo voltado para a execução de modelos definidos por meio de uma determinada linguagem, e assim sendo, incorpora a semântica operacional da linguagem.
+Assim, metamodelos associados a máquinas virtuais podem ser utilizados como um meio para definição de DSMLs e processamento de modelos descritos por meio dessas.
 
 %\begin{comment}
 % Definição de máquina virtual não está de acordo com a comumente adotada, mas está de acordo com a da CVM e a empregada nesse trabalho. Talvez seja melhor utilizar outro termo ao invés de máquina virtual, como interpretador ou mecanismo de execução?.
@@ -24,28 +24,46 @@ A seção ~\ref{sec:sb}, por sua vez, detalha a parte do escopo da abordagem propo
 \section{Visão geral}
 \label{sec:visao-geral-2}
 
-A construção de um metamodelo e uma máquina virtual projetados para uma DSML permite definir completamente a sintaxe e semântica da mesma. Enquanto o metamodelo permite descrever a sintaxe e semântica estática da linguagem, sua semântica dinâmica é capturada de forma operacional pela máquina virtual.
+A construção de um metamodelo e uma máquina virtual projetados para uma DSML permite definir completamente a sintaxe e semântica da mesma. Enquanto o metamodelo descreve a sintaxe e semântica estática da linguagem, sua semântica dinâmica é capturada de forma operacional pela máquina virtual.
 
-O construção de DSMLs de alto-nível, baseadas em construções próximas ao domínio do problema, possibilita que usuários sejam capazes de construir aplicações complexas. Para tornar isso possível, é preciso que o metamodelo da DSML e a máquina virtual capaz de processá-la incorporem grande parte do conhecimento específico de seu domínio. Isto, por sua vez, permite que os modelos descritos através de uma DSML possam se limitar aos requisitos específicos da aplicação por ele descrita, pois as informações relacionadas ao domínio já estão integradas à DSML. Dessa forma, para se obter proveito das técnicas de MDE e DSMLs é preciso que sejam projetados metamodelos e máquinas virtuais específicos para os domínios de aplicação a serem utilizados.
+A construção de DSMLs de alto nível, baseadas em construções próximas ao domínio do problema, possibilita que usuários sejam capazes de construir aplicações complexas. 
+Para tornar isso possível, é preciso que o metamodelo da DSML e a máquina virtual capaz de processá-la incorporem grande parte do conhecimento específico de seu domínio.
+Isto, por sua vez, permite que os modelos descritos através de uma DSML possam se limitar aos requisitos específicos da aplicação por ele descrita, pois as informações relacionadas ao domínio já estão integradas à DSML.
+Dessa forma, para se obter proveito das técnicas de MDE e DSMLs é preciso que sejam projetados metamodelos e máquinas virtuais específicos para os domínios de aplicação a serem utilizados.
 
-Enquanto existem várias técnicas de modelagem padronizadas para a descrição de metamodelos, a construção de máquinas virtuais para  execução de DSMLs é usualmente realizada por meio da codificação em linguagens de programação de propósito geral. Nesse contexto, o uso de linguagens de programação apresenta as mesmas limitações encontradas para a construção de aplicações complexas, pois oferecem construções muito primitivas que não estão relacionadas ao problema a ser tratado.
+Enquanto existem várias técnicas de modelagem padronizadas para a descrição de metamodelos, a construção de máquinas virtuais para  execução de DSMLs é usualmente realizada por meio da codificação em linguagens de programação de propósito geral. Nesse contexto, o uso de linguagens de programação apresenta as mesmas limitações encontradas para a construção de aplicações complexas, pois oferecem construções muito primitivas que não estão relacionadas aos problemas encontrados na construção de máquinas virtuais para processamento de modelos.
 
 A construção de máquinas virtuais para a execução de modelos que podem ser criados e modificados em tempo de execução exibe vários problemas comuns, mesmo que essas máquinas virtuais sejam projetadas para diferentes DSMLs. Análise e transformação de modelos, negociação de modelos, transferência de estado, adaptação dinâmica, entre outros são alguns dos problemas que esse tipo de máquina virtual necessita lidar. A solução desses problemas por meio da codificação em linguagens de programação não só exige bastante esforço, mas também reduz a sua flexibilidade.
 
 Esse contexto sugere a aplicação de técnicas de MDE como um meio de amenizar a complexidade da construção de máquinas virtuais voltadas para execução de modelos. Assim sendo, a mesma abordagem utilizada para a construção de aplicações é utilizada na construção das plataformas para execução dessas aplicações. O uso de modelos nesse contexto visa não apenas simplificar a construção dessas máquinas virtuais, mas também facilitar a sua evolução com o intuito de atender à necessidades de mudança na sintaxe ou semântica das DSMLs por elas processadas.
+A Figura~\ref{fig:proposta-geral} ilustra essa idéia, onde uma máquina virtual para a execução de modelos em conformidade com uma DSML é construída a partir de um metamodelo da DSML e um modelo que define a semântica operacional da linguagem.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.5\textwidth]{./fig/proposta-geral}
+ \caption{Construção dirigida por modelos de uma máquina virtual para a execução de modelos descritos em uma DSML .}
+ \label{fig:proposta-geral}
+\end{figure}
+
 
 Neste trabalho, propomos o emprego de uma abordagem dirigida por modelos para a construção de uma categoria específica de máquinas virtuais capazes de executar modelos em tempo de execução.
 Essa categoria, que inclui a CVM \cite{cvm} e MGridVM \cite{microgrid}, contempla máquinas virtuais voltadas para execução DSMLs que descrevem um serviço de alto-nível a ser realizado a partir de um conjunto de heterogêneo de recursos. 
 A realização de serviços descritos por essas DSMLs comumente envolve diversas operações como transformação e negociação de modelos, avaliação de políticas, recuperação de falhas, seleção e configuração de recursos, etc.
 
 Para que máquinas virtuais que exibem essas características possam ser definidas por meio de modelos é preciso uma linguagem de modelagem especialmente projetada para isso.
-No entanto, para que seja vantajoso o emprego de uma linguagem de modelagem para a descrição de uma máquina virtual esta linguagem deve possuir uma abrangência suficiente para que possa ser utilizada em diferentes domínios de negócio. Ao mesmo tempo, tal linguagem não deve ser muito genérica, de forma que não torne a manipulação de modelos tão complexa quanto a codificação em uma linguagem de propósito geral.
+No entanto, para que seja vantajoso o emprego de uma linguagem de modelagem para a descrição de uma máquina virtual esta linguagem deve possuir uma abrangência suficiente para que possa ser utilizada em diferentes domínios de negócio. 
+Ao mesmo tempo, tal linguagem não deve ser muito genérica, de forma que não torne a manipulação de modelos tão complexa quanto a codificação em uma linguagem de propósito geral.
 
-Considerando isto, essa linguagem deve conter construções capazes de descrever as operações que independem do domínio de negócio e que estão envolvidas no fornecimento de serviços descritos por modelos a partir de um conjunto heterogêneo de recursos.
-Esses operações, que englobam  transformação e negociação de modelos, avaliação de políticas, recuperação de falhas, seleção e configuração de recursos, entre outros, podem ser tratados como um domínio técnico. Deste modo, tal linguagem pode ser considerada uma linguagem de modelagem específica de um domínio que abrange os aspectos técnicos envolvidos na realização de serviços transparentes de alto nível a partir de um conjunto heterogêneo de recursos.
+Assim sendo, essa linguagem deve conter construções relacionadas às operações necessárias para o fornecimento de serviços descritos por modelos que podem ser criados e modificados em tempo de execução, a partir de um conjunto heterogêneo de recursos.
+%Considerando isto, essa linguagem deve conter construções capazes de descrever as operações que independem do domínio de negócio e que estão envolvidas no fornecimento de serviços descritos por modelos a partir de um conjunto heterogêneo de recursos.
+Esses operações, que englobam  transformação e negociação de modelos, avaliação de políticas, recuperação de falhas, seleção e configuração de recursos, entre outros, podem ser tratados como um domínio técnico. 
+Deste modo, tal linguagem pode ser considerada uma linguagem de modelagem específica do domínio que abrange os aspectos técnicos envolvidos na realização de serviços transparentes de alto nível a partir de um conjunto heterogêneo de recursos. 
+%Uma vez concebida tal linguagem, ela pode ser empregada para construir máquinas 
+Essa linguagem pode então ser utilizada para construir modelos que descrevem máquinas virtuais específicas de domínio, voltadas para o processamento de uma DSML.
 
-Neste trabalho propomos que essa linguagem seja elaborada a partir das soluções empregadas no desenvolvimento da CVM e MGridVM. 
-Prevemos que tal linguagem incorpore uma arquitetura genérica para a categoria de máquinas virtuais identificada, que possa ser especializada para produzir máquinas virtuais específicas domínio.
+Neste trabalho propomos o uso das soluções empregadas no desenvolvimento da CVM e MGridVM para elaboração dessa linguagem para definição de máquinas virtuais na categoria identificada.
+%Neste trabalho propomos que essa linguagem seja elaborada a partir das soluções empregadas no desenvolvimento da CVM e MGridVM. 
+Assim, prevemos que essa linguagem incorpore uma arquitetura genérica para a categoria de máquinas virtuais identificada, que possa ser especializada para produzir máquinas virtuais específicas domínio.
 A arquitetura proposta é uma generalização da arquitetura de camadas empregada pela CVM e MGridVM e inclui as seguintes camadas:
 
 \begin{itemize}
@@ -60,9 +78,22 @@ A arquitetura proposta é uma generalização da arquitetura de camadas empregada p
 
 \end{itemize}
 
-Ao imitar a arquitetura da CVM, nos aproveitamos do conhecimento adquirido em relação à separação de responsabilidades necessárias para a realização de serviços no domínio técnico identificado. No entanto, apesar de apresentar a mesma estrutura, a arquitetura proposta se difere por ser independente do domínio de negócio.
+Ao nos basearmos na arquitetura da CVM e MGridVM, nos aproveitamos do conhecimento adquirido em relação à separação de responsabilidades necessárias para a realização de serviços no domínio técnico identificado. No entanto, apesar de apresentar a mesma estrutura, a arquitetura proposta se difere por ser independente do domínio de negócio.
 
-A construção de uma linguagem para modelagem máquinas virtuais, por sua vez, também envolve a construção de um metamodelo que forneça abstrações que possam ser utilizadas para descrever máquinas virtuais de acordo com a arquitetura proposta. Logo, um modelo elaborado a partir desse metamodelo representa uma especialização da arquitetura genérica proposta para um determinado domínio. A Figura~\ref{fig:} ilustra como o metamodelo de uma DSML e um modelo de uma máquina virtual são utilizados para definir uma especialização da arquitetura proposta.
+A construção de uma linguagem para modelagem máquinas virtuais, por sua vez, também envolve a construção de um metamodelo que forneça abstrações que possam ser utilizadas para descrever máquinas virtuais de acordo com a arquitetura proposta. 
+Logo, um modelo elaborado a partir desse metamodelo representa uma especialização da arquitetura genérica proposta para um determinado domínio. 
+A Figura~\ref{fig:proposta-arquitetura} ilustra a arquitetura genérica descrita e apresenta a CVM e MGridVM como especializações dessa arquitetura genérica.
+
+% metamodelo de uma DSML e um modelo de uma máquina virtual são utilizados para definir uma especialização da arquitetura proposta.
+
+
+\begin{figure}
+ \centering
+ \includegraphics[width=1\textwidth]{./fig/proposta-arquitetura}
+ \caption{Arquitetura em camadas proposta para construção de máquinas virtuais.}
+ \label{fig:proposta-arquitetura}
+\end{figure}
+
 
 
 Devido ao extenso trabalho envolvido na construção desse metamodelo, neste trabalho construímos um metamodelo que engloba os elementos associados à camada de intermediação de serviços da arquitetura proposta.
@@ -74,7 +105,39 @@ A seção seguinte descreve em mais detalhes a camada de intermediação de serviços
 
 % EM ALGUM LUGAR DESSA SEÇÃO: Definir o que é um recurso
 
-O intermediador de serviços é a camada da arquitetura proposta que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para realizar os serviços especificados por meio de modelos. Cabe à esta camada disponibilizar uma interface de serviços que abstraia a heterogeneidade dos recursos gerenciados para a camada superior. Além disso, o intermediador deve possuir capacidade de auto-gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
+O intermediador de serviços é a camada da arquitetura proposta que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para realizar os serviços especificados por meio de modelos. Cabe à esta camada disponibilizar uma interface de serviços que abstraia da camada superior a heterogeneidade dos recursos subjacentes. Além disso, o intermediador deve possuir capacidade de auto-gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
+
+An entity that 
+exists in the run-time environment 
+of an IT system and that can be 
+managed.
+
+The lowest layer contains the system components, or managed resources, that 
+make up the IT infrastructure. These managed resources can be any type 
+of resource (hardware or software) 
+
+A managed resource is a hardware or software component that can be 
+managed. A managed resource could be a server, storage unit, database, 
+application server, service, application or other entity. As shown in Figure 
+2, a managed resource might contain its own embedded self-management 
+control loop, in addition to other autonomic managers (described later in this 
+chapter) that might be packaged with a managed resource.
+
+componentes de software ou hardware que fornece algum serviço, e pode
+servidores de aplicação,
+bancos de dados,
+serviços distribuídos
+
+aplicações,
+componentes,
+
+
+Additionally, dynamic service lookup
+means that service consumers need not be concerned with where underlying software resources
+exist on distributed, heterogeneous systems.
+
+a service has a well-defined interface (with a set of messages that the service receives and sends and a set of named operations or verbs), an implementation of the interface, and, if deployed, a binding to a documented network address. Exam- ples of services falling within the scope of our definition include a message-driven application that processes WebSphere MQ messages, a set of CICS or IMS transaction programs, and a Java class.
+
 
 \begin{comment}
 Definir aqui mais claramente o que é um recurso sob a ótica deste trabalho.
