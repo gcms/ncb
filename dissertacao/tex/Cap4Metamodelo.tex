@@ -132,7 +132,7 @@ Chamadas e eventos que fazem parte da interface são conjuntamente denominados si
 \section{Tratamento de sinais}
 \label{sec:metamodelo-sinais}
 
-Como mencionado na seção~\ref{sec:metamodelo-visao-geral}, o comportamento de uma camada de intermediação de serviços é definido pela forma como esta reage às chamadas recebidas da camada superior e aos eventos sinalizados pelos recursos. O metamodelo proposto disponibiliza construções que permitem definir quais ações devem ser tomadas pela camada em resposta aos sinais recebidos.
+Como mencionado na Seção~\ref{sec:metamodelo-visao-geral}, o comportamento de uma camada de intermediação de serviços é definido pela forma como esta reage às chamadas recebidas da camada superior e aos eventos sinalizados pelos recursos. O metamodelo proposto disponibiliza construções que permitem definir quais ações devem ser tomadas pela camada em resposta aos sinais recebidos.
 
 O tratamento de sinais na camada de intermediação é definido por meio das classes \textsf{Signal}, \textsf{Handler} e \textsf{Action}. Enquanto os sinais a serem tratados por um gerenciador são descritos como parte da interface do gerenciador e dos recursos gerenciados, os demais elementos (tratadores e ações) são diretamente agrupados no gerenciador. A Figura~\ref{fig:metamodelo-sinais} ilustra como esses elementos estão organizados no metamodelo.
 
@@ -302,7 +302,7 @@ As condições agrupadas pela classe \textsf{Symptom} são descritas a partir de ex
 % TODO: separar symptons devem monitorar só os recursos e change request deve relacionar symptons com calls and state
 
 A classe \textsf{ChangeRequest} define uma requisição de mudança que deve ser gerada quando um determinado sintoma é identificado. Associado a uma requisição de mudança podemos ter um plano de mudança definido por instâncias da classe \textsf{ChangePlan}. Um plano de mudança pode assumir diversas formas, desde um complexo \emph{workflow} envolvendo várias atividades até um simples comando. % \cite{ibmac} 
-No metamodelo proposto, um plano de mudança define uma ação a ser executada. Uma ação, por sua vez, pode ser definida por meio dos tipos de ações disponíveis e suas combinações, conforme descrito na seção \ref{sec:metamodelo-sinais}.
+No metamodelo proposto, um plano de mudança define uma ação a ser executada. Uma ação, por sua vez, pode ser definida por meio dos tipos de ações disponíveis e suas combinações, conforme descrito na Seção \ref{sec:metamodelo-sinais}.
 
 % Enquanto a função de planejamento pode empregar algoritmos complexos que geram dinâmicamente planos  de mudança que podem envolver um workflow completo de execução, no trabalho em questão optamos por uma abordagem simples, onde um plano é diretamente associado a uma solicitação de mudança
 
