@@ -1,5 +1,5 @@
 
-\chapter{Construção de um Intermediador de Comunicação}
+\chapter{Construção de um Intermediador de Comunicação em Rede}
 \label{cap:instancia}
 
 Este capítulo demonstra como o metamodelo proposto e o ambiente de execução fornecido, podem ser utilizados para construir e executar uma camada de intermediação de serviços. Para isto, construímos um modelo, em conformidade com o metamodelo proposto, que descreve o comportamento presente na camada NCB da CVM. Iniciamos este capítulo com uma breve descrição do comportamento da camada NCB, seguido por sua modelagem utilizando as abstrações descritas no capítulo~\ref{cap:metamodelo}. Ao fim do capítulo, descrevemos como o modelo construído foi avaliado, e os resultados obtidos.
@@ -9,7 +9,7 @@ Este capítulo demonstra como o metamodelo proposto e o ambiente de execução forn
 
 Como mostrado na seção~\ref{sec:referencial-cvm}, a camada de Intermediação de Comunicação em Rede (\emph{Network Communication Broker}, NCB), é responsável por prover uma interface que abstrai da camada superior os detalhes envolvidos na utilização dos \emph{frameworks} de comunicação, como Skype, Smack, Asterisk, etc. 
 A partir da análise do domínio de comunicação e de \emph{frameworks} de comunicação existentes, foi identificado em trabalhos anteriores \cite{foda}, um conjunto de operações, independentes de tecnologia, capaz de prover o nível de abstração esperado dessa camada. Esse conjunto de operações, que compõe a interface da camada NCB,  representa o ponto de partida para a construção de um modelo que defina um comportamento equivalente ao da camada NCB.
-A tabela~\ref{tab:instancia-interface-ncb} lista as operações e eventos que integram a interface da camada NCB.
+A Tabela~\ref{tab:instancia-interface-ncb} lista as operações e eventos que integram a interface da camada NCB.
 
 \begin{table*}[h]
 \centering

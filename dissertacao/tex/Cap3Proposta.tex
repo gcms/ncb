@@ -107,41 +107,8 @@ A seção seguinte descreve em mais detalhes a camada de intermediação de serviços
 
 O intermediador de serviços é a camada da arquitetura proposta que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para realizar os serviços especificados por meio de modelos. Cabe à esta camada disponibilizar uma interface de serviços que abstraia da camada superior a heterogeneidade dos recursos subjacentes. Além disso, o intermediador deve possuir capacidade de auto-gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
 
-An entity that 
-exists in the run-time environment 
-of an IT system and that can be 
-managed.
-
-The lowest layer contains the system components, or managed resources, that 
-make up the IT infrastructure. These managed resources can be any type 
-of resource (hardware or software) 
-
-A managed resource is a hardware or software component that can be 
-managed. A managed resource could be a server, storage unit, database, 
-application server, service, application or other entity. As shown in Figure 
-2, a managed resource might contain its own embedded self-management 
-control loop, in addition to other autonomic managers (described later in this 
-chapter) that might be packaged with a managed resource.
-
-componentes de software ou hardware que fornece algum serviço, e pode
-servidores de aplicação,
-bancos de dados,
-serviços distribuídos
-
-aplicações,
-componentes,
-
-
-Additionally, dynamic service lookup
-means that service consumers need not be concerned with where underlying software resources
-exist on distributed, heterogeneous systems.
-
-a service has a well-defined interface (with a set of messages that the service receives and sends and a set of named operations or verbs), an implementation of the interface, and, if deployed, a binding to a documented network address. Exam- ples of services falling within the scope of our definition include a message-driven application that processes WebSphere MQ messages, a set of CICS or IMS transaction programs, and a Java class.
-
-
-\begin{comment}
-Definir aqui mais claramente o que é um recurso sob a ótica deste trabalho.
-\end{comment}
+Ao longo deste trabalho consideramos um recurso como um componente de software ou hardware que fornece algum serviço. De acordo com essa definição,  aplicações, bancos de dados, controladores de hardware, componentes de software, servidores de aplicação, ou até mesmo complexos sistemas podem ser tratados como recursos. 
+Para ser utilizado por uma camada de intermediação de serviços, um recurso deve expor uma interface que permita a utilização de seus serviços e o seu gerenciamento.
 
 Como uma interface de serviços, o intermediador se comunica com a camada de \emph{middleware} através de chamadas que podem ser invocadas e eventos que podem ser gerados sinalizando alguma situação. Assim sendo, ao definirmos o comportamento dessa camada, precisamos descrever como serão tratadas as chamadas realizadas pela camada superior, e em que situações serão gerados determinados eventos. Mas além disso, também precisamos descrever como outras tarefas serão realizadas, incluindo o monitoramento e seleção de recursos, manutenção de informações, adaptação da camada, entre outros.
 
@@ -157,14 +124,17 @@ Com isto em mente, neste trabalho construímos um metamodelo que possibilita a mo
 
 \item Gerenciamento de estado. A camada deve ser capaz de manter em tempo de execução dados associados aos serviços em provisão, e que podem influenciar o processamento de chamadas e eventos.
 
-\item Auto-gerenciamento. As tarefas de auto-gerenciamento da camada incluem o monitoramento dos recursos e dos dados mantidos pela camada, identificando situações que podem exigir uma mudança. Ao identificar uma mudança a camada deve determinar qual a ação deve ser tomada.
+\item Auto-gerenciamento. As tarefas de auto-gerenciamento da camada incluem o monitoramento dos recursos e dos dados mantidos pela camada, identificando situações que podem exigir uma mudança na organização interna da camada. Ao identificar a necessidade de uma mudança a camada deve determinar qual a ação deve ser tomada.
 
 \end{itemize}
 
-Além do metamodelo, também construímos um ambiente de execução para auxiliar na execução de modelos construídos a partir do metamodelo Assim sendo,  esse ambiente implementa a semântica operacional da linguagem para descrição da camada de intermediação de serviço. O ambiente de execução possibilita que um modelo definido a partir do metamodelo proposto seja executado. 
+Também construímos um ambiente de execução para auxiliar na execução de modelos construídos a partir do metamodelo Assim sendo,  esse ambiente implementa a semântica operacional da linguagem para descrição da camada de intermediação de serviço. O ambiente de execução possibilita que um modelo definido a partir do metamodelo proposto seja executado. 
 % mencionar também da semântica estática
 
-Desta forma, o metamodelo e o ambiente de execução construídos permitem que a camada de intermediação de serviço da arquitetura proposta seja definida através de um modelo baseado em construções relacionadas às suas responsabilidades, e possa ser executada e utilizada.
+%Desta forma, o metamodelo e o ambiente de execução construídos permitem que a camada de intermediação de serviço da arquitetura proposta seja definida através de um modelo baseado nas construções relacionadas às responsabilidades de  e possa ser executada e utilizada.
+
+Desta forma, o metamodelo e o ambiente de execução construídos posssibilitam que intermediadores de serviços possam ser descritos por meio de modelos e utilizados em tempo de execução pela camada de \emph{middleware}.
+Os capítulos seguintes apresentam na seguinte ordem o metamodelo elaborado para a definição de intermediadores de serviços; o ambiente de execução capaz de processar os modelos descritos por meio do metamodelo; e um modelo criado a partir desse metamodelo que descreve uma camada com comportamento equivalente à camada NCB que integra a CVM.
 
 %O Broker de serviços é responsável por ...
 %Assim sendo, ele recebe chamadas da camada de middleware, e executa em diferentes provedores ou retorna eventos. Também monitora os recursos, o que pode gerar adaptações, ou eventos, etc...
