@@ -157,28 +157,101 @@ Manager ncb {
     call: Call resource.Login
     target: Expression "Resource.all.findAll { it.available }"
   }
+  actions: CallAction LogoutAllAction {
+    call: Call resource.Logout
+    target: Expression "Resource.all.findAll { it.available }"
+  }
+  actions: MacroAction SendSchemaAction {
+    impl: "cvm.ncb.actions.SendSchemaActionImpl"
+    parameters: ActionParameter receivers
+    parameters: ActionParameter schema
+  }
+  actions: MacroAction CreateSessionAction {
+    impl: "cvm.ncb.actions.CreateSessionActionImpl"
+    parameters: ActionParameter session
+  }
+  actions: MacroAction DestroySessionAction {
+    impl: "cvm.ncb.actions.DestroySessionActionImpl"
+    parameters: ActionParameter session
+  }
+  actions: MacroAction AddPartyAction {
+    impl: "cvm.ncb.actions.AddPartyActionImpl"
+    parameters: ActionParameter session
+    parameters: ActionParameter participant
+  }
+  actions: MacroAction RemovePartyAction {
+    impl: "cvm.ncb.actions.RemovePartyActionImpl"
+    parameters: ActionParameter session
+    parameters: ActionParameter participant
+  }
+  actions: MacroAction MediumAction {
+    impl: "cvm.ncb.actions.MediumActionImpl"
+    parameters: ActionParameter session
+    parameters: ActionParameter medium
+    parameters: ActionParameter action
+  }
+  actions: EventAction GenerateLoginFailedEvent {
+    event: layer.LoginFailed
+    parameters: ActionParameter framework
+  }
+  actions: MacroAction DisableFramework {
+    impl: "cvm.ncb.actions.DisableFrameworkImpl"
+    parameters: ActionParameter framework
+  }
+  actions: CallAction EnqueueEnableMedium {
+    call: layer.EnableMedium
+    parameters: ActionParameter session
+    parameters: ActionParameter medium
+    bindings: ParameterBinding {
+      parameter: Parameter layer.EnableMedium.session
+      value: ParameterValue EnqueueEnableMedium.session
+    }
+    bindings: ParameterBinding {
+      parameter: Parameter layer.EnableMedium.medium
+      value: ParameterValue EnqueueEnableMedium.medium
+    }
+  }
+  actions: MacroAction UseFramework {
+    impl: "cvm.ncb.macros.UseFrameworkAction"
+    parameters: ActionParameter session 
+    parameters: ActionParameter framework
+  }
+
+  actions: SequenceAction ChangeFramework {
+    parameters: ActionParameter framework
+    parameters: ActionParameter session
+    parameters: ActionParameter medium
+  
+    actions: ActionExecution {
+      action: MacroAction DisableFramework
+      bindings: ParameterBinding {
+        parameter: ActionParameter DisableFramework.framework
+        value: ParameterValue ChangeFramework.framework
+      }
+    }
+    actions: ActionExecution {
+      action: CallAction EnqueueEnableMedium
+      bindings: ParameterBinding {
+        parameter: ActionParameter EnqueueEnableMedium.session
+        value: ParameterValue ChangeFramework.session
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter EnqueueEnableMedium.medium
+        value: ParameterValue ChangeFramework.medium
+      }
+    }
+  }
   handlers: Handler {
     signal: Call layer.LoginAll
     action: ActionExecution {
       action: CallAction LoginAllAction
     }
   }
-
-  actions: CallAction LogoutAllAction {
-    call: Call resource.Logout
-    target: Expression "Resource.all.findAll { it.available }"
-  }
   handlers: Handler {
     signal: Call layer.LogoutAll
     action: ActionExecution {
       action: CallAction LogoutAllAction
     }
-  }
-
-  actions: MacroAction SendSchemaAction {
-    impl: "cvm.ncb.actions.SendSchemaActionImpl"
-    parameters: ActionParameter receivers
-    parameters: ActionParameter schema
   }
   handlers: Handler {
     signal: Call layer.SendSchema
@@ -194,11 +267,6 @@ Manager ncb {
       }
     }
   }
-
-  actions: MacroAction CreateSessionAction {
-    impl: "cvm.ncb.actions.CreateSessionActionImpl"
-    parameters: ActionParameter session
-  }
   handlers: Handler {
     signal: Call layer.CreateSession
     action: ActionExecution {
@@ -209,11 +277,6 @@ Manager ncb {
       }
     }
   }
-
-  actions: MacroAction DestroySessionAction {
-    impl: "cvm.ncb.actions.DestroySessionActionImpl"
-    parameters: ActionParameter session
-  }
   handlers: Handler {
     signal: Call layer.DestroySession
     action: ActionExecution {
@@ -223,12 +286,6 @@ Manager ncb {
         value: ParameterValue layer.DestroySession.session
       }
     }
-  }
-
-  actions: MacroAction AddPartyAction {
-    impl: "cvm.ncb.actions.AddPartyActionImpl"
-    parameters: ActionParameter session
-    parameters: ActionParameter participant
   }
   handlers: Handler {
     signal: Call layer.AddParty
@@ -244,12 +301,6 @@ Manager ncb {
       }
     }
   }
-
-  actions: MacroAction RemovePartyAction {
-    impl: "cvm.ncb.actions.RemovePartyActionImpl"
-    parameters: ActionParameter session
-    parameters: ActionParameter participant
-  }
   handlers: Handler {
     signal: Call layer.RemoveParty
     action: ActionExecution {
@@ -263,13 +314,6 @@ Manager ncb {
         value: ParameterValue layer.RemoveParty.participant
       }
     }
-  }
-
-  actions: MacroAction MediumAction {
-    impl: "cvm.ncb.actions.MediumActionImpl"
-    parameters: ActionParameter session
-    parameters: ActionParameter medium
-    parameters: ActionParameter action
   }
   handlers: Handler {
     signal: Call layer.EnableMedium
@@ -325,12 +369,6 @@ Manager ncb {
       }
     }
   }
-
-
-  actions: EventAction GenerateLoginFailedEvent {
-    event: layer.LoginFailed
-    parameters: ActionParameter framework
-  }
   handlers: Handler {
     signal: Event resource.LoginFailed
     action: ActionExecution {
@@ -341,58 +379,6 @@ Manager ncb {
       }
     }
   }
-
-
-  actions: MacroAction DisableFramework {
-    impl: "cvm.ncb.actions.DisableFrameworkImpl"
-    parameters: ActionParameter framework
-  }
-  actions: CallAction EnqueueEnableMedium {
-    call: layer.EnableMedium
-    parameters: ActionParameter session
-    parameters: ActionParameter medium
-    bindings: ParameterBinding {
-      parameter: Parameter layer.EnableMedium.session
-      value: ParameterValue EnqueueEnableMedium.session
-    }
-    bindings: ParameterBinding {
-      parameter: Parameter layer.EnableMedium.medium
-      value: ParameterValue EnqueueEnableMedium.medium
-    }
-  }
-  actions: SequenceAction ChangeFramework {
-    parameters: ActionParameter framework
-    parameters: ActionParameter session
-    parameters: ActionParameter medium
-  
-    actions: ActionExecution {
-      action: MacroAction DisableFramework
-      bindings: ParameterBinding {
-        parameter: ActionParameter DisableFramework.framework
-        value: ParameterValue ChangeFramework.framework
-      }
-    }
-    actions: ActionExecution {
-      action: CallAction EnqueueEnableMedium
-      bindings: ParameterBinding {
-        parameter: ActionParameter EnqueueEnableMedium.session
-        value: ParameterValue ChangeFramework.session
-      }
-      bindings: ParameterBinding {
-        parameter: ActionParameter EnqueueEnableMedium.medium
-        value: ParameterValue ChangeFramework.medium
-      }
-    }
-  }
-
-
-  actions: MacroAction UseFramework {
-    impl: "cvm.ncb.macros.UseFrameworkAction"
-    parameters: ActionParameter session 
-    parameters: ActionParameter framework
-  }
-
-
   handlers: Handler {
     signal: Event resource.MediumFailed
     action: ActionExecution {

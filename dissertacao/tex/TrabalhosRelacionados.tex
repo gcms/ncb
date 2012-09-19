@@ -11,19 +11,62 @@ Apesar de permitirem definir formalmente a semântica de DSMLs, as linguagens par
 
 Outra abordagem utilizada para formalização da semântica dinâmica propõe a sua incorporação ao metamodelo. Conhecida como \emph{behavior weaving}, essa abordagem promove a extensão do meta-metamodelo para que os metamodelos possam incluir semântica. Nessas abordagens a semântica é geralmente definida por meio de meta-linguagens que se assemelham à linguagens de programação de propósito geral. Portanto, apesar de fornecer meios para integração da semântica operacional ao metamodelo, as construções empregadas para descrição dessa semântica não apresentam ganhos de abstração significativos em relação à abordagens tradicionais. Entre os trabalhos que propõem a integração de semântica ao metamodelo podemos destacar a ferramenta Kermeta \cite{Jezequel:2009:MDL:1949925.1949931} que dispõe de uma linguagem de ações orientada a objetos e o ambiente de metamodelagem XMF-Mosaic \cite{xmf} que utiliza a linguagem xOCL (\emph{Executable OCL}).
 
+% Talvez mencionar... Trabalhos que propõem uma separação entre <apresentação, estrutura, comportamento> para a definição de DSML, onde cada um desses aspectos é definido por meio de um meta-metamodelo ou então que o meta-metamodelo possua capacidades de especificar esses aspectos, mas sendo a estrutura o aspecto que unifica
+% Artigo: Speci?cation of Modelling Languages in a Flexible Meta-model Architecture
+% PS: Tem um outro artigo que trata o comportamento como "Interpreter model"
+
 
 %\cite{Mu:2010:SML:1842752.1842807}
 
 As abordagens para formalização de semântica se caracterizam por empregarem representações genéricas que podem ser utilizadas para descrição de semântica dinâmica para qualquer linguagem de modelagem. Assim, apesar de possibilitarem a formalização da semântica de DSMLs e subsequente geração de ferramentas, o nível de abstração oferecido por essas abordagens é similar ao encontrado em linguagens de programação.
 Enquanto isso, a abordagem proposta neste trabalho propõe o uso de modelos para descrever a semântica de um conjunto delimitado de DSMLs, aquelas voltadas para definição de serviços de alto-nível a serem realizados por meio de um conjunto heterogêneo de recursos.
 
+Outro grupo de trabalhos relacionados está associado ao uso de ferramentas tradicionalmente empregadas no desenvolvimento de software orientado a objetos como padrões de projeto \cite{DSLDesignPattern, Mernik:2005:DDL:1118890.1118892}, \emph{frameworks} \cite{vmFramework, Cazzola:2010:DET:1890683.1890689}, componentes \cite{Pfahler:2001:CCS:820738.820801, springerlink:10.1007/978-3-540-39815-8_15}, entre outras que provêem meios para reutilização de projeto e implementação.
+Apesar de fornecerem um grande auxílio na construção de interpretadores e outras ferramentas para o processamento de DSLs, essas abordagens se baseiam no uso de linguagens de programação de propósito geral e, assim sendo, suas construções são associadas à plataforma de implementação.
+A abordagem apresentada neste trabalho guarda semelhanças à essas por propor uma forma de reutilização dos aspectos comuns à implementação de interpretadores para uma determinada categoria de DSMLs. 
+No entanto, na abordagem proposta, a especialização desse \emph{framework} se dá por meio da modelagem utilizando construções que estão associadas à interpretação de uma família de DSMLs.
 
 
-\begin{comment}
-Outro grupo de trabalhos relacionados está associado ao uso de abordagens mais tradicionais como \emph{frameworks} para a construção de interpretadores de DSLs
-
+%========================
+A Methodology and Framework for Creating Domain-Specific Development Infrastructures
+\cite{mif}
 Ou ainda para a geração desses Model-Interpreter Frameworks a partir de um modelo que descreve um conjunto de características que podem ser reutilizadas entre várias DSLs
-\end{comment}
+
+
+
+%======================
+Improving Domain-speci?c Language Reuse through
+Software Product-line Con?guration Techniques
+\cite{10.1109/MS.2009.95}
+
+domain-specific language product line
+
+
+DSLs are often tightly aligned with a single narrow
+slice of system concerns. Multiple DSLs may therefore be
+needed to capture the important concerns relevant to a system?s requirements. When developing a multi-DSL development process, developers must ensure that they provide
+adequate coverage of concerns through the DSLs. For example, developers must ensure that the DSL composition
+properly captures the real-time scheduling, deployment, and
+performance concerns of the NAOMI traf?c light system
+outlined in Section 2. This system could potentially use a
+number of different DSLs to capture the information related
+to the capabilities of the system?s hardware nodes
+%======================
+Composing Domain-Specific Languages for Wide-scope  Software Engineering Applications:
+\cite{ComposingDSL}
+
+Our approach to domain composition and evolution follows the underlying trend in 
+DSL and MDE: perform as many activities as possible at the level of the domain 
+model, not at the implementation level. 
+Both DSL and MDE propose to perform not 
+only design, but also a part of the implementation in the problem area, since problem 
+concepts are directly available in the programming (modeling) language. 
+Our proposition pushes this idea a step further: not only the language, but also the run-time architecture is based on the conceptual model of the domain and consequently, domain composition can be performed at an abstract level, using high-level domain concepts. 
+Mélusine emphasizes two new requirements: (1) Reuse existing components and 
+tools and (2) Support different types of evolution.
+%======================
+
+
 
 %Nossa abordagem não pretende ser genérica, mas foca especificamente, facilitando a construção de máquinas virtuais com essas características, nos baseamos nos mesmos princípios pregados para o desenvolvimento de aplicações
 

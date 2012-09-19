@@ -1,0 +1,48 @@
+  policyManager: PolicyManager {
+    context: PolicyEvaluationContext General {
+      parameters: Parameter session
+      parameters: Parameter medium
+      parameters: Parameter numOfParticipants
+      policies: Policy Audio01 {
+        businessValue: 100
+        condition: Condition {
+          expression: "Audio.Enabled"
+        }
+      }
+      policies: Policy Audio02 {
+        businessValue: 96
+        condition: Condition {
+          expression: "numOfParticipants <= Audio.NumberOfUsers"
+        }
+      }
+    }
+    points: PolicyEvaluationPoint {
+      signal: Call layer.EnableMedium
+      bindings: ParameterBinding {
+        parameter: Parameter General.session
+        value: ParameterValue layer.EnableMedium.session
+      }
+      bindings: ParameterBinding {
+        parameter: Parameter General.medium
+        value: ParameterValue layer.EnableMedium.medium
+      }
+      bindings: ParameterBinding {
+        parameter: Parameter General.numOfParticipants
+        value: ExpressionValue "Connection[session].participants.size()"
+      }
+    }
+    handlers: PolicyEvaluationHandler {
+      action: ActionExecution {
+        action: MacroAction UseFramework
+        bindings: ParameterBinding {
+          parameter: ActionParameter UseFramework.session
+          value: ParameterValue General.session
+        }
+        bindings: ParameterBinding {
+          parameter: ActionParameter UseFramework.framework
+          value: ExpressionValue "resources.first()"
+        }
+      }
+    } 
+  }
+

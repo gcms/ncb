@@ -3,52 +3,32 @@
       impl: "cvm.ncb.adapters.SkypeAdapter"
       iface: Interface resource
       features: Feature Audio {
-        attributes: Attribute Enabled {
-          value: true
-        }
-        attributes: Attribute NumberOfUsers {
-          value: 2
-        }
+        attributes: Attribute Enabled { value: true }
+        attributes: Attribute NumberOfUsers { value: 2 }
       }
       features: Feature Video {
-        attributes: Attribute Enabled {
-          value: true
-        }
-        attributes: Attribute NumberOfUsers {
-          value: 2
-        }
+        attributes: Attribute Enabled { value: true }
+        attributes: Attribute NumberOfUsers { value: 2 }
       }
     }
     instances: Instance Smack {
       impl: "cvm.ncb.adapters.SmackAdapter"
       iface: Interface resource
       features: Feature Audio {
-        attributes: Attribute Enabled {
-          value: true
-        }
-        attributes: Attribute NumberOfUsers {
-          value: 2
-        }
+        attributes: Attribute Enabled { value: true }
+        attributes: Attribute NumberOfUsers { value: 2 }
       }
       features: Feature Video {
-        attributes: Attribute Enabled {
-          value: true
-        }
-        attributes: Attribute NumberOfUsers {
-          value: 4
-        }
+        attributes: Attribute Enabled { value: true }
+        attributes: Attribute NumberOfUsers { value: 4 }
       }
     }
     instances: Instance Asterisk {
       impl: "cvm.ncb.adapters.SIPAdapter"
       iface: Interface resource
       features: Feature Audio {
-        attributes: Attribute Enabled {
-          value: true
-        }
-        attributes: Attribute NumberOfUsers {
-          value: 8
-        }
+        attributes: Attribute Enabled { value: true }
+        attributes: Attribute NumberOfUsers { value: 8 }
       }
     }
 

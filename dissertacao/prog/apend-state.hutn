@@ -1,0 +1,10 @@
+  stateManager: StateManager {
+    stateTypes: State Connection {
+      properties: Property session
+      properties: Property medium
+      properties: Property participants
+      properties: Property framework
+      key: Property session
+    }
+  }
+
