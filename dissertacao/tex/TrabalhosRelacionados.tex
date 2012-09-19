@@ -7,7 +7,7 @@ Uma das formas empregadas para formalização da semântica de DSMLs e subsequente 
 Entre essas abordagens, o uso de ancoragem semântica \cite{Chen:2005:TSA:1086228.1086236, amma} propõe o mapeamento de elementos da DSML para unidades semânticas definidas por meio de modelos computacionais elementares como máquina de estados finitos, sistemas de eventos discretos, autômatos, entre outros. 
 %A ancoragem semântica pode ser tratada como um meio denotacional para definição de semântica, onde o domínio semântico é composto pelas unidades semânticas
 
-Apesar de permitirem definir formalmente a semântica de DSMLs, as linguagens para descrição de transformações empregadas são bastante genéricas e não guardam relação direta com a semântica específica relacionada ao processamento de modelos em tempo de execução. Não obstante, consideramos que transformações representam um dos elementos envolvidos na descrição da semântica para execução de modelos em tempo de execução, e assim sendo, integram a arquitetura geral proposta neste trabalho.
+Apesar de permitirem definir formalmente a semântica de DSMLs, as linguagens para descrição de transformações empregadas são bastante genéricas e não guardam relação direta com a semântica específica relacionada ao processamento de modelos em tempo de execução. Não obstante, consideramos que transformações representam um dos elementos envolvidos na descrição da semântica para execução de modelos em tempo de execução, e assim sendo, devem ser integradas à arquitetura geral proposta neste trabalho.
 
 Outra abordagem utilizada para formalização da semântica dinâmica propõe a sua incorporação ao metamodelo. Conhecida como \emph{behavior weaving}, essa abordagem promove a extensão do meta-metamodelo para que os metamodelos possam incluir semântica. Nessas abordagens a semântica é geralmente definida por meio de meta-linguagens que se assemelham à linguagens de programação de propósito geral. Portanto, apesar de fornecer meios para integração da semântica operacional ao metamodelo, as construções empregadas para descrição dessa semântica não apresentam ganhos de abstração significativos em relação à abordagens tradicionais. Entre os trabalhos que propõem a integração de semântica ao metamodelo podemos destacar a ferramenta Kermeta \cite{Jezequel:2009:MDL:1949925.1949931} que dispõe de uma linguagem de ações orientada a objetos e o ambiente de metamodelagem XMF-Mosaic \cite{xmf} que utiliza a linguagem xOCL (\emph{Executable OCL}).
 
@@ -16,6 +16,8 @@ Outra abordagem utilizada para formalização da semântica dinâmica propõe a sua i
 
 As abordagens para formalização de semântica se caracterizam por empregarem representações genéricas que podem ser utilizadas para descrição de semântica dinâmica para qualquer linguagem de modelagem. Assim, apesar de possibilitarem a formalização da semântica de DSMLs e subsequente geração de ferramentas, o nível de abstração oferecido por essas abordagens é similar ao encontrado em linguagens de programação.
 Enquanto isso, a abordagem proposta neste trabalho propõe o uso de modelos para descrever a semântica de um conjunto delimitado de DSMLs, aquelas voltadas para definição de serviços de alto-nível a serem realizados por meio de um conjunto heterogêneo de recursos.
+
+
 
 \begin{comment}
 Outro grupo de trabalhos relacionados está associado ao uso de abordagens mais tradicionais como \emph{frameworks} para a construção de interpretadores de DSLs

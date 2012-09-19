@@ -240,7 +240,7 @@ O Código~\ref{cod:instancia-politicas} demonstra parte do modelo que descreve es
 
 Uma vez construído um modelo que representa a camada NCB, sua execução junto ao ambiente fornecido foi avaliada. O objetivo da avaliação proposta é verificar a equivalência do modelo construído com a implementação existente da CVM, e comparar a performance das implementações.
 
-Para realizar essa avaliação, foi elaborado um conjunto de cenários de comunicação, que representam uma sequência de interações válidas advindas da camada superior ou dos \emph{frameworks} durante a realização de uma comunicação. A execução desses cenários em ambas as implementações foi então utilizada para estabelecer uma comparação entre a implementação original da NCB e a implementação baseada no modelo construído.
+Para realizar essa avaliação, foi elaborado um conjunto de cenários de comunicação, que representam uma sequência de interações válidas da NCB com a camada superior ou com os \emph{frameworks} durante a realização de uma comunicação. A execução desses cenários em ambas as implementações foi então utilizada para estabelecer uma comparação entre a implementação original da NCB e a implementação baseada no modelo construído.
 
 Os cenários elaborados para esta avaliação são brevemente descritos abaixo. 
 
@@ -272,13 +272,18 @@ Os cenários elaborados para esta avaliação são brevemente descritos abaixo.
 
 \end{itemize}
 
-Os cenários propostos foram inicialmente executados na implementação existente da NCB com o intuito de extrair o comportamento da camada. Para isso, foram configurados interceptadores de recursos capazes de registrar as interações entre a camada NCB e os \emph{frameworks} de comunicação. As informações obtidas na execução dos cenários propostos foram então utilizadas na construção de testes automatizados, capazes de executar os cenários elaborados em uma camada de intermediação de serviços, e validar se o seu comportamento foi o mesmo obtido na execução com a camada NCB original.
+Os cenários propostos foram inicialmente executados na implementação existente da NCB com o intuito de extrair o comportamento da camada. Para isso, foram configurados interceptadores capazes de registrar as interações entre a camada NCB e os \emph{frameworks} de comunicação.
+As informações obtidas na execução dos cenários propostos foram então utilizadas na construção de testes automatizados, capazes de executar os cenários elaborados em uma camada de intermediação de serviços, e automaticamente validar se o seu comportamento foi o mesmo obtido na execução com a camada NCB original.
 
 Para execução dos testes automatizados, foi configurado um conjunto de recursos \emph{mock} que simulam o comportamento esperado de um \emph{framework} de comunicação. Objetos \emph{mock} são comumente utilizados na elaboração de testes de software para simular um objeto que não é o alvo direto do teste. Neste caso, o uso de recursos \emph{mock} é particularmente vantajoso pois permite avaliar a camada de forma independente dos \emph{frameworks} de comunicação.
 
-Cada cenário descreve um conjunto de interações com a camada e verifica se esta se comportou de acordo com o esperado. A Tabela~\ref{tab:scenario} demonstra a interação realizada com a camada para o cenário 4, e como a camada deve interagir com os recursos simulados. A primeira coluna mostra a sequência de chamadas realizadas para a camada NCB, e as demais colunas mostram as chamadas realizadas pela NCB aos recursos \emph{mock}. Neste cenário, a comunicação é inicialmente estabelecida através do \emph{Framework} 1, que é substituído pelo \emph{Framework} 2 após a simulação de uma falha no \emph{Framework} 1. A camada NCB automaticamente finaliza a comunicação estabelecida utilizando o \emph{Framework} 1, e a reestabelece no \emph{Framework} 2.
+Cada cenário descreve um conjunto de interações com a camada e verifica se esta se comportou de acordo com o esperado. A Tabela~\ref{tab:scenario} demonstra a interação realizada com a camada para o Cenário 4, e como a camada deve interagir com os recursos simulados. A primeira coluna mostra a sequência de chamadas realizadas para a camada NCB, e as demais colunas mostram as chamadas realizadas pela NCB aos recursos \emph{mock}. 
+Neste cenário executamos chamadas ao intermediador para estabelecer uma comunicação de áudio entre dois participantes. A camada NCB escolhe o \emph{Framework 1} e envia para este as chamadas para estabelecer a comunicação. Em seguida, simulamos uma falha no \emph{Framework 1}, fazendo com que a camada NCB automaticamente finalize a comunicação estabelecida utilizando o \emph{Framework 1} e a restabeleça no \emph{Framework 2}.
 
-\begin{table}\scriptsize
+%Neste cenário, a comunicação é inicialmente estabelecida através do \emph{Framework} 1, que é substituído pelo \emph{Framework} 2 após a simulação de uma falha no \emph{Framework} 1. A camada NCB automaticamente finaliza a comunicação estabelecida utilizando o \emph{Framework} 1, e a reestabelece no \emph{Framework} 2.
+
+\begin{table}[ht]
+\scriptsize
 \centering
 \caption{Execução do cenário 4}
 \begin{tabular}{|l|l|l|} \hline
@@ -313,7 +318,7 @@ EnableMedium("101", "Audio") \\}
 \end{table}
 
 
-Os testes construídos a partir desses cenários foram utilizados durante toda a construção do modelo descrito na seção anterior, para validar sua  conformidade com a implementação existente da NCB. Após a construção do modelo e sua validação, esses cenários foram novamente executados em ambas as implementações com o intuito de mensurar, e comparar a performance de ambas implementações.
+Os testes construídos a partir desses cenários foram utilizados durante toda a construção do modelo descrito na seção anterior para validar sua  conformidade com a implementação existente da NCB. Após a construção do modelo e sua validação, esses cenários foram novamente executados em ambas as implementações com o intuito de mensurar, e comparar a performance de ambas implementações.
 
 \begin{comment}
 É preciso falar sobre máquina, OS, ... onde foram executados esses testes?
