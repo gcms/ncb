@@ -1,0 +1,10 @@
+Modelling the Operational Semantics of Domain-Specic Modelling Languages
+
+http://www2.informatik.hu-berlin.de/~sadilek/publications/2008/TR08grammarwareMeetsModelware.pdf
+http://metrik.informatik.hu-berlin.de/grk-wiki/images/8/8f/Modelling_the_Operational_Semantics_of_Domain-Specific_Modelling_Languages.pdf
+
+
+
+Generative Technologies for Model Animation in the TOPCASED Platform
+http://hal.inria.fr/docs/00/50/46/67/PDF/combemale10b.pdf
+http://hal.archives-ouvertes.fr/inria-00540648/
