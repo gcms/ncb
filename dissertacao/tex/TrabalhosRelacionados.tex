@@ -23,47 +23,86 @@ Enquanto isso, a abordagem proposta neste trabalho propõe o uso de modelos para 
 
 Outro grupo de trabalhos relacionados está associado ao uso de ferramentas tradicionalmente empregadas no desenvolvimento de software orientado a objetos como padrões de projeto \cite{DSLDesignPattern, Mernik:2005:DDL:1118890.1118892}, \emph{frameworks} \cite{vmFramework, Cazzola:2010:DET:1890683.1890689}, componentes \cite{Pfahler:2001:CCS:820738.820801, springerlink:10.1007/978-3-540-39815-8_15}, entre outras que provêem meios para reutilização de projeto e implementação.
 Apesar de fornecerem um grande auxílio na construção de interpretadores e outras ferramentas para o processamento de DSLs, essas abordagens se baseiam no uso de linguagens de programação de propósito geral e, assim sendo, suas construções são associadas à plataforma de implementação.
-A abordagem apresentada neste trabalho guarda semelhanças à essas por propor uma forma de reutilização dos aspectos comuns à implementação de interpretadores para uma determinada categoria de DSMLs. 
-No entanto, na abordagem proposta, a especialização desse \emph{framework} se dá por meio da modelagem utilizando construções que estão associadas à interpretação de uma família de DSMLs.
+A abordagem apresentada neste trabalho guarda semelhanças com essas técnicas por propor uma forma de reutilização dos aspectos comuns a implementação de interpretadores para uma determinada categoria de DSMLs. 
+%No entanto, na abordagem proposta, a especialização desse \emph{framework} se dá por meio da modelagem utilizando construções que estão associadas à interpretação de uma família de DSMLs.
+No entanto, na abordagem proposta, a especialização da arquitetura proposta se dá por meio da modelagem utilizando construções que estão associadas à interpretação de uma família de DSMLs.
+
+Em \cite{mif}, os autores propõem uma abordagem dirigida por modelos para criação de \emph{frameworks} de interpretação de modelos que podem ser então utilizados para construir interpretadores para diferentes DSMLs.
+Um \emph{framework} de interpretação de modelos é construído por meio de uma tecnologia de componentes abstratos, um metamodelo que define construções arquiteturais independentes de domínio, que podem então ser especializadas para construir um interpretador de uma DSML. 
+A abordagem proposta neste trabalho se assemelha à descrita na medida em que a arquitetura e metamodelos propostos podem ser considerados como um \emph{framework} de interpretação de modelos para a construção de DSMLs de uma determinada categoria.
 
 
 %========================
-A Methodology and Framework for Creating Domain-Specific Development Infrastructures
-\cite{mif}
-Ou ainda para a geração desses Model-Interpreter Frameworks a partir de um modelo que descreve um conjunto de características que podem ser reutilizadas entre várias DSLs
+%A Methodology and Framework for Creating Domain-Specific Development Infrastructures
+%\cite{mif}
+%Ou ainda para a geração desses Model-Interpreter Frameworks a partir de um modelo que descreve um conjunto de características que podem ser reutilizadas entre várias DSLs
+%
+%The designer of an ACT decides what modeling types to include in an
+%ACT and what semantics to associate with those types. A more fullydefined
+%ACT reduces the flexibility of ACT users to customize domainspecific
+%elements, but enables the construction of more powerful and
+%complete MIFs.
+%
+%metamodeling technique by employing an  abstract component
+%technology (ACT), a metamodeling language specialized
+%for software architectures that associates semantics with
+%metamodel constructs. Additionally, our approach leverages the ACT to construct model interpreter frameworks
+%(MIFs), reusable design structures for implementing
+%architectural analyses and system synthesis capabilities.
+%This methodology is accompanied by a metalevel framework, called the eXtensible Toolchain for Evaluation of
+%
+%It implements the logic necessary to convert ACT
+%types into analysis types or implementation constructs,
+%but leaves open extension mechanisms that permit an
+%architect to inject additional logic for handling domain
+%concepts. This allows architects to implement domainspecific analysis and synthesis
 
+%Developing model interpreters on top of an MIF involves implementing MIF extensions, but the model transformation logic
+%within the MIF core does not need to be reprogrammed. In contrast, standard model interpreter development requires
+%implementation of both MIF extensions and an MIF core. Comparing the complexity of MIF extensions to that of the
+%corresponding MIF core quantifies the advantage of using an MIF.
+
+O uso de linhas de produção de linguagens específicas de domínio \cite{10.1109/MS.2009.95} também buscam uma forma de reutilizar o projeto e implementação de aspectos comuns à diferentes DSLs. O uso de linhas de produção compartilha com a abordagem proposta a idéia de reutilização dos aspectos comuns entre DSMLs de diferentes domínios, no entanto o trabalho citado foca principalmente na composição de DSLs e não trata diretamente da construção de DSMLs.
+A composição também é proposta em \cite{ComposingDSL} como um meio para construção de DSLs. O trabalho citado compartilha com o nosso a idéia de também aplicar técnicas de MDE e DSLs à construção de máquinas virtuais específicas de domínio. No entanto, as máquinas virtuais são definidas por meio da composição de interpretadores de sub-domínios.
 
 
 %======================
-Improving Domain-speci?c Language Reuse through
-Software Product-line Con?guration Techniques
-\cite{10.1109/MS.2009.95}
-
-domain-specific language product line
-
-
-DSLs are often tightly aligned with a single narrow
-slice of system concerns. Multiple DSLs may therefore be
-needed to capture the important concerns relevant to a system?s requirements. When developing a multi-DSL development process, developers must ensure that they provide
-adequate coverage of concerns through the DSLs. For example, developers must ensure that the DSL composition
-properly captures the real-time scheduling, deployment, and
-performance concerns of the NAOMI traf?c light system
-outlined in Section 2. This system could potentially use a
-number of different DSLs to capture the information related
-to the capabilities of the system?s hardware nodes
+%Improving Domain-specific Language Reuse through
+%Software Product-line Configuration Techniques
+%\cite{10.1109/MS.2009.95}
+%
+%domain-specific language product line
+%
+%
+%DSLs are often tightly aligned with a single narrow
+%slice of system concerns. Multiple DSLs may therefore be
+%needed to capture the important concerns relevant to a system?s requirements. When developing a multi-DSL development process, developers must ensure that they provide
+%adequate coverage of concerns through the DSLs. For example, developers must ensure that the DSL composition
+%properly captures the real-time scheduling, deployment, and
+%performance concerns of the NAOMI traf?c light system
+%outlined in Section 2. This system could potentially use a
+%number of different DSLs to capture the information related
+%to the capabilities of the system?s hardware nodes
 %======================
-Composing Domain-Specific Languages for Wide-scope  Software Engineering Applications:
-\cite{ComposingDSL}
 
-Our approach to domain composition and evolution follows the underlying trend in 
-DSL and MDE: perform as many activities as possible at the level of the domain 
-model, not at the implementation level. 
-Both DSL and MDE propose to perform not 
-only design, but also a part of the implementation in the problem area, since problem 
-concepts are directly available in the programming (modeling) language. 
-Our proposition pushes this idea a step further: not only the language, but also the run-time architecture is based on the conceptual model of the domain and consequently, domain composition can be performed at an abstract level, using high-level domain concepts. 
-Mélusine emphasizes two new requirements: (1) Reuse existing components and 
-tools and (2) Support different types of evolution.
+
+
+%Composing Domain-Specific Languages for Wide-scope  Software Engineering Applications:
+%\cite{ComposingDSL}
+
+%The idea of extending or specializing a language by modifying its interpreter
+%Our approach is based on the idea of modularly defining  the metamodel and reusing the existing models and interpreters
+
+%Our approach to domain composition and evolution follows the underlying trend in 
+%DSL and MDE: perform as many activities as possible at the level of the domain 
+%model, not at the implementation level. 
+%Both DSL and MDE propose to perform not 
+%only design, but also a part of the implementation in the problem area, since problem 
+%concepts are directly available in the programming (modeling) language. 
+
+%Our proposition pushes this idea a step further: not only the language, but also the run-time architecture is based on the conceptual model of the domain and consequently, domain composition can be performed at an abstract level, using high-level domain concepts. 
+%Mélusine emphasizes two new requirements: (1) Reuse existing components and 
+%tools and (2) Support different types of evolution.
 %======================
 
 
