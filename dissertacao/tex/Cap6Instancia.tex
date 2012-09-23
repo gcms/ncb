@@ -352,3 +352,16 @@ TODO: Melhorar a discussão dos resultados.
 \multicolumn{1}{|l|}{Cenário 8} & $1297,95$ & $56,25$ & $2795,56$ & $128,46$ \\ \hline
 \end{tabular} 
 \end{table*}
+
+\section{Discussão}
+
+O uso do metamodelo proposto tornou a construção de uma camada de intermediação de comunicação em rede bem mais simples. Ao incorporar conceitos de auto-gerenciamento de recursos e construções para tratamento de eventos e chamadas, o metamodelo permite que essas funcionalidades sejam reutilizadas, dispensando que sejam codificadas durante a construção de um intermediador. Assim sendo, ao construir uma camada de intermediação, cabe ao desenvolvedor especificar o comportamento específico de domínio.
+
+A implementação já existente da camada NCB, que integra a CVM, possui 6777 linhas de código escritas na linguagem de programação Java. Enquanto isso, a camada equivalente, descrita em conformidade com o metamodelo, é composta por um modelo que possui x elementos e 854 linhas de código que implementam ações definidas por meio de \emph{macros}. 
+%Além de facilitar a construção da camada, o emprego de modelos também facilita a sua evolução, permitindo que uma camada
+
+
+Comparação NCB existente e nossa abordagem
+
+
+Discussão sobre o tempo, espaço para melhoria
