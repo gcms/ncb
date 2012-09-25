@@ -1,7 +1,7 @@
 \chapter{Referencial teórico}
 \label{cap:referencial}
 
-Neste capítulo revemos os conceitos sobre os quais o presente trabalho é desenvolvido. Na Seção~\ref{sec:mde} tratamos dos princípios de abordagens de engenharia de software dirigida por modelos, suas técnicas e fundamentos associados. A Seção~\ref{sec:referencial-cvm} fornece uma visão geral da máquina virtual de comunicação descrevendo seu comportamento e sua arquitetura. Por fim, a Seção~\ref{sec:referencial-selfman} descreve a arquitetura de computação autônoma e políticas como tecnologias para a construção de sistemas auto-gerenciáveis.
+Neste capítulo revemos os conceitos sobre os quais o presente trabalho foi desenvolvido. Na Seção~\ref{sec:mde} tratamos dos princípios de abordagens de engenharia de software dirigida por modelos e seus fundamentos associados. A Seção~\ref{sec:referencial-cvm} fornece uma visão geral da máquina virtual de comunicação (CVM), descrevendo seu comportamento e sua arquitetura. Por fim, a Seção~\ref{sec:referencial-selfman} descreve a arquitetura de computação autônoma e políticas, como tecnologias utilizadas para a construção de sistemas auto-gerenciáveis.
 
 \section{Engenharia dirigida por Modelos}
 \label{sec:mde}
@@ -20,7 +20,7 @@ O avanço nas tecnologias de rede e processamento observado nas últimas décadas p
 
 
 O desenvolvimento dessas aplicações utilizando abordagens tradicionais de desenvolvimento, baseadas na codificação em linguagens de programação, exige um grande esforço. 
-Apesar da notável evolução nas linguagens de programação,  suas construções continuam sendo em grande parte baseadas nas capacidades fornecidas pelo ambiente computacional, e assim não guardam relação direta com o problema a ser resolvido. A distância semântica entre o problema a ser resolvido e a plataforma utilizada na sua implementação é considerada como um dos principais fatores que dificultam o desenvolvimento das aplicações atuais \cite{mde, mddcs}. 
+Apesar da notável evolução nas linguagens de programação,  suas construções continuam sendo em grande parte baseadas nas capacidades fornecidas pelo ambiente computacional, e assim não guardam relação direta com o problema a ser resolvido. A distância semântica entre o problema a ser resolvido e a plataforma utilizada na sua implementação é considerada um dos principais fatores que dificultam o desenvolvimento das aplicações atuais \cite{mde, mddcs}. 
 
 %\begin{comment}
 %
@@ -54,21 +54,21 @@ Abordagens de MDE visam reduzir essa distância promovendo o uso de abstrações ma
 A abordagem de arquitetura dirigida por modelos (\emph{Model-Driven Architecture}, MDA) \cite{mda} surgiu com o objetivo de definir funcionalidades do sistema de forma independente da plataforma de implementação, buscando a interoperabilidade e portabilidade do sistema. A MDA pode ser considerada como a primeira iniciativa a propor um conjunto de princípios e padrões para o uso sistematizado de modelos. O termo \emph{Model-Driven Engineering}, cunhado mais recentemente, propõe o uso de modelos de forma mais abrangente, e engloba além de MDA outras iniciativas como \emph{Model-Driven Development} (MDD) \cite{pragMDE, mddesign}, e \emph{Model-Integrated Computing} (MIC) \cite{mic}, entre outras.
 % \cite{scopeMDE}
 
-A maior parte das abordagens de MDD propõem a construção de linguagens de modelagem e transformações capazes de transformar modelos descritos por meio dessas linguagens em artefatos da plataforma de implementação. A abordagem MIC pode ser considerada como uma aplicação de MDD, e propõe a construção de ambientes de desenvolvimento específicos de domínio que compreendem linguagens de modelagem específicas de domínio, transformadores e ferramentas que auxiliam na construção de aplicações naquele domínio. Além disso, várias outras abordagens propõem o uso de modelos para definição de diferentes aspectos como (citar aspectos e citação).
+A maior parte das abordagens de MDD propõe a construção de linguagens de modelagem e transformações capazes de transformar modelos descritos por meio dessas linguagens em artefatos da plataforma de implementação. A abordagem MIC pode ser considerada como uma aplicação de MDD, e propõe a construção de ambientes de desenvolvimento específicos de domínio que compreendem linguagens de modelagem específicas de domínio, transformadores e ferramentas que auxiliam na construção de aplicações naquele domínio. Além disso, várias outras abordagens propõem o uso de modelos para definição de diferentes aspectos como (citar aspectos e citação).
 % mencionar mrt
 
 %The MDE approach has not a unique goal. Among the objectives pursued, one may list the separation from business-neutral descriptions and platform dependent imple-mentations, the identification, precise expression, separation and combination of specific aspects of a system under development with domain-specific languages, the establishment of precise relations between these different languages in a global framework and in particular the possibility to express operational transformations between them 
 
 %More than five years after, the situation has much evolved. Separating platform dependent from platform independent aspects is no more seen as the unique goal. The major problem is now the separation and combination of concerns in the construction and maintenance of information systems. Among these concerns, platform dependent and independent aspects remains important in the agenda, but these are more and more considered as a special case of a general problem including for example separation of functional and non-functional requirements. MDA and DSL solutions are now more and more closely related. What MDA is bringing to DSLs is this idea of using a collection of metamodels to capture the various facets of a system under construction or under maintenance. What DSLs is bringing to MDA is that a unique general purpose language, even a very large one like UML 2.0, is not able and will never be able to capture all the needs of the designers, administrators, and users of a given system.
 
-Apesar de empregarem modelos com diferentes objetivos essas abordagens apresentam várias similaridades, sendo por vezes sobrepostas. 
+Apesar de empregarem modelos com diferentes objetivos, essas abordagens apresentam várias similaridades, sendo por vezes sobrepostas. 
 A engenharia dirigida por modelos busca sistematizar o uso de modelos, de forma que possam ser empregados com diversos objetivos em todos as atividades da engenharia de software. 
-Sob essa ótica, o princípio básico da engenharia de modelos propõe o uso de modelos como objetos de primeira classe, utilizados na construção de todos os artefatos de software \cite{searchPrinciple, Unifying}.
+Sob essa ótica, o princípio básico da engenharia dirigida por modelos propõe o uso de modelos como objetos de primeira classe, utilizados na construção de todos os artefatos de software \cite{searchPrinciple, Unifying}.
 
 %Considering everything as a model in a software  development approach  has  many consequences that we are progressively discovering. This paper has probably shown  only some of them. Besides the advantages of conceptual simplicity, this also leads to clear architecture, efficient implementation, high scalability  and  good  flexibility
 
-Apesar de ser considerada uma abordagem recente de engenharia de software, a engenharia dirigida por modelos se baseia em idéias de várias outras abordagens como linguagens específicas de domínio, programação orientada por linguagens, programação por geração, programação dirigida por domínio, entre outras \cite{Unifying}.
-Nesse contexto, a engenharia dirigida por modelos surge como uma tentativa de sistematizar o uso de modelos, se apoiando em técnicas e princípios já existentes.
+Apesar de ser considerada uma abordagem recente de engenharia de software, a engenharia dirigida por modelos se baseia em idéias de várias outras abordagens como linguagens específicas de domínio, programação orientada por linguagens, programação por geração e programação dirigida por domínio, entre outras \cite{Unifying}.
+Nesse contexto, a engenharia dirigida por modelos surge como uma tentativa de sistematizar o uso de modelos, apoiando-se em técnicas e princípios já existentes.
 % sistematizado de várias dessas abordagens, sendo consideradas compatíveis com o princípio \cite{ts,Towards a Basic Theory to Model Model Driven}.
 
 %On the Applicability Scope of Model Driven Engineering
@@ -102,14 +102,14 @@ Nesse contexto, a engenharia dirigida por modelos surge como uma tentativa de si
 Um modelo é geralmente utilizado como um meio de representar simplificadamente algum aspecto de um sistema.
 %, facilitando a compreensão de sistemas mais complexos
 %Em abordagens de MDE, um modelo é uma representação abstrata e formal de algum aspecto de um sistema.
-Um modelo descreve um sistema de acordo com uma perspectiva, ocultando informações que não estão relacionadas à sua natureza. Modelos podem ser empregados para capturar informações sobre um sistema existente, ou para descrever um sistema a ser construído.
-Um sistema complexo, por sua vez, é representado por meio de um conjunto de modelos, que capturam diferentes aspectos sob diversos níveis de abstração. 
+Um modelo descreve um sistema de acordo com uma perspectiva, ocultando informações que não estão relacionadas à natureza dessa perspectiva. Modelos podem ser empregados para capturar informações sobre um sistema existente, ou para descrever um sistema a ser construído.
+Um sistema complexo, por sua vez, é representado por meio de um conjunto de modelos, que capturam diferentes aspectos em diversos níveis de abstração. 
 
 Em abordagens de MDE, um modelo não é apenas um diagrama ou uma outra representação visual, mas sim uma definição formal dos conceitos a serem representados \cite{WhatModelsMean}. Nessas abordagens, o uso de modelos vai além da análise e projeto de um sistema, podendo ser utilizado em todas as atividades relacionadas à engenharia de software. 
-O emprego de modelos formalmente definidos possibilita que modelos representando visões abstratas de um sistema sejam processados de forma automatizada em artefatos de implementação.
+O emprego de modelos formalmente definidos possibilita que modelos representando visões abstratas de um sistema sejam processados de forma automatizada, resultando em artefatos de implementação.
 %Nessas abordagens, modelos são representações formais e sem ambiguidades, passíveis de serem processadas de forma automatizada.
 
-Modelos são formalizados por meio de linguagens de modelagem, cujas construções são definidas por um metamodelo. Um metamodelo, que também é um modelo, formaliza os conceitos fornecidos pela linguagem de modelagem, e como estes estão relacionados.
+Modelos são formalizados por meio de linguagens de modelagem, cujas construções são definidas por um metamodelo. Um metamodelo, que também é um modelo, formaliza os conceitos fornecidos pela linguagem de modelagem, e define como estes estão relacionados.
 
 %O emprego de abordagens dirigidas por modelos está geralmente associado ao denvolvimento de sistemas por meio de abstrações de nível mais elevado que o encontrado em linguagens de programação. Para isto, são construídos modelos que descrevem os requisitos, arquitetura,
 
@@ -125,7 +125,7 @@ Modelos são formalizados por meio de linguagens de modelagem, cujas construções 
 
 \subsection{Metamodelagem}
 Conforme mencionado na seção anterior, modelos são construídos em conformidade com uma linguagem de modelagem. Assim como outras linguagens formais, uma linguagem de modelagem é definida por sua sintaxe e semântica. 
-A sintaxe de uma linguagem de modelagem pode ainda ser divida em sintaxe concreta, que representa sua notação textual ou gráfica, e sintaxe abstrata que representa os conceitos disponíveis na linguagem e como estes se relacionam. A semântica, por sua vez, também é comumente tratada separadamente como semântica estática, que define critérios para que modelos sejam considerados válidos, e a semântica dinâmica que dá significado aos modelos.
+A sintaxe de uma linguagem de modelagem pode ainda ser divida em sintaxe concreta, que representa sua notação textual ou gráfica, e sintaxe abstrata que representa os conceitos disponíveis na linguagem e como eles se relacionam. A semântica, por sua vez, também é comumente tratada separadamente como semântica estática, que define critérios para que modelos sejam considerados válidos, e a semântica dinâmica que dá significado aos modelos.
 
 %A sintaxe de uma linguagem é tradicionalmente definida por meio de gramáticas na forma Backus-Naur (BNF), que descrevem regras para derivação de sequências válidas. Apesar de possibilitarem a definição formal de  linguagens, o uso de gramáticas BNF se limita a descrição de linguagens textuais e 
 A sintaxe abstrata e a semântica estática de uma linguagem de modelagem são comumente formalizadas por meio de um metamodelo. Um metamodelo é um modelo que descreve um conjunto de abstrações e como estas estão relacionadas. As abstrações descritas por um meta-modelo representam as construções que irão compor a linguagem por ele formalizada. Assim sendo, o meta-modelo deve incluir elementos relacionados ao aspecto e nível de abstração da linguagem por ele descrito.

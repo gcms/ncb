@@ -74,9 +74,12 @@ A CVM é considerada uma plataforma de comunicação centrada no usuário devido ao 
 %%	- Além de utilizar modelos a CVM implementa um conjunto de mecanismos de transformação, negociação, adaptação, etc (que é o que torna possível a transparência ao usuário)
 
 Para realizar um serviço de comunicação de forma automatizada e transparente ao usuário, a CVM precisa realizar diversas operações, desde transformações e negociação de modelos até a seleção e gerenciamento de provedores de comunicação. A CVM conta com uma arquitetura em camadas que possuem responsabilidades bem definidas e encapsulam os principais aspectos envolvidos na realização da comunicação.%  \cite{cvm}.
-Essa mesma estratégia também é empregada no domínio de \emph{micro-grids} \cite{microgrid} para possibilitar a construção de aplicações de gerenciamento dos elementos de uma rede elétrica inteligente local pelos usuários finais. 
-Para isso, foi criada Linguagem de Modelagem de Micro-grids (\emph{Microgrid Modeling Language}, MGridML) e construída uma Máquina Virtual de \emph{Microgrids} (\emph{Microgrid Virtual Machine}, MGridVM) para execução de modelos descritos nessa linguagem. Um modelo criado por meio da MGridML descreve ...
-Isto demonstra o potencial dessa estratégia para a construção de plataformas para provimento de serviços descritos por modelos a partir de um conjunto heterogêneo de recursos.
+ Essa mesma estratégia também é empregada no domínio de \emph{micro-grids} para possibilitar a construção de aplicações de gerenciamento dos elementos de uma rede elétrica inteligente local pelos usuários finais. 
+Com esse intuito, foi projetada a Linguagem de Modelagem de Redes Elétricas Locais (\emph{Microgrid Modeling Language}, MGridML) que possibilita ao usuário criar modelos que descrevem fontes e cargas de energia em uma \emph{micro-grid} e preferências para utilização desses recursos.
+A partir desses modelos a Máquina Virtual de Redes Elétricas Locais (\emph{Microgrid Virtual Machine}, MGridVM) é capaz de monitorar e gerenciar os elementos de uma \emph{micro-grid} para atender aos requisitos definidos pelo modelo em execução \cite{microgrid}.
+%Isto demonstra o potencial dessa estratégia para a construção de plataformas para provimento de serviços descritos por modelos a partir de um conjunto heterogêneo de recursos.
+O emprego dessa estratégia nesses domínios demonstra o seu potencial para a construção de plataformas destinadas ao provimento de serviços descritos por modelos a partir de um conjunto heterogêneo de recursos.
+
 
 Neste trabalho, nos apoiamos nas soluções empregadas pela CVM e MGridVM para propor uma abordagem dirigida por modelos para o desenvolvimento de máquinas de execução de modelos específicas de domínio, destinadas à construção e execução de aplicações que se enquadram na categoria descrita acima.
 Ao fazê-lo, buscamos uma forma sistematizada de capturar as soluções empregadas por essas máquinas de execução, de forma que possam ser reutilizadas em outros domínios de aplicação.
@@ -225,10 +228,10 @@ Essa contribuição, por sua vez, representa uma etapa em direção à realização da 
 
 \end{itemize}
 
-Este trabalho e suas contribuições foram aceitos para apresentação no 
+Este trabalho foi aceito para apresentação no 
 %\emph{7th International Workshop on Models@run.time}
 \emph{7$^{\underline{o}}$ Workshop Internacional sobre Modelos em Tempo de Execução}
-\cite{mrt12} e publicado na forma de artigo nos anais deste mesmo evento.
+\cite{mrt12} e publicado na forma de artigo nos anais desse mesmo evento.
 %7th International Workshop on Models@run.time 
 
 
