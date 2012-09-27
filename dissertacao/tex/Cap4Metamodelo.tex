@@ -12,11 +12,11 @@
 % Apresentar um certo grau de auto-gerenciamento (ver referencias dissertacao Andrew ou artigo Autonomic Framework...) (Isto talvez deve vir no capítulo anterior, assim como os comentários acima que definem claramente o que é um broker)
 
 
-A camada de intermediação de serviços é a responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para provisão de serviços. Um intermediador de serviços gerencia um conjunto heterogêneo de recursos, e provê à camada superior uma interface uniforme, capaz de abstrair as diferenças existentes entre os recursos gerenciados.
+A camada de intermediação de serviços é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para provisão de serviços. Um intermediador de serviços gerencia um conjunto heterogêneo de recursos, e provê à camada superior uma interface uniforme, capaz de abstrair as diferenças existentes entre os recursos gerenciados.
 
-Além de disponibilizar uma interface uniforme sobre os recursos, a camada de intermediação de serviços deve apresentar um certo grau de auto-gerenciamento. O auto-gerenciamento, permite que detalhes relacionados com a manutenção de recursos sejam abstraídos da camada superior. Uma camada auto-gerenciável é capaz de monitorar seus recursos e se adaptar automaticamente para atender aos serviços demandados.
+Além de disponibilizar uma interface uniforme para uso dos recursos, a camada de intermediação de serviços deve apresentar um certo grau de auto-gerenciamento. O auto-gerenciamento, permite que detalhes relacionados com a manutenção de recursos sejam abstraídos para a camada superior. Uma camada auto-gerenciável é capaz de monitorar seus recursos e se adaptar automaticamente para atender aos serviços demandados.
 
-Este capítulo apresenta o metamodelo proposto para definição da camada de intermediação de serviços para máquinas virtuais baseadas na arquitetura proposta. As construções presentes no metamodelo em questão estão diretamente relacionadas às responsabilidades identificadas para essa camada. O capítulo inicia com uma visão geral do metamodelo e prossegue abordando em detalhes os elemento que o compõem.
+Este capítulo apresenta o metamodelo proposto para definição da camada de intermediação de serviços para máquinas de execução de modelos baseadas na arquitetura proposta. As construções presentes no metamodelo em questão estão diretamente relacionadas às responsabilidades identificadas para essa camada. O capítulo inicia com uma visão geral do metamodelo e prossegue abordando em detalhes os elemento que o compõem.
 
 %\begin{comment}
 %
@@ -52,13 +52,18 @@ Este capítulo apresenta o metamodelo proposto para definição da camada de interm
 \section{Visão geral}
 \label{sec:metamodelo-visao-geral}
 
-Como observado anteriormente, a camada de intermediação de serviços provê uma interface uniforme para utilização de um conjunto heterogêneo de recursos subjacentes. Um intermediador de serviços atua interceptando as solicitações recebidas por meio de sua interface, e determinando quais operações devem ser efetuadas sobre os recursos. Além disso, um intermediador também intercepta eventos advindos dos recursos por ele monitorados e determina se devem ser sinalizados para a camada superior, se uma adaptação na camada é necessária, ou se alguma outra ação deve ser tomada.
+Como observado anteriormente, a camada de intermediação de serviços provê uma interface uniforme para utilização de um conjunto heterogêneo de recursos subjacentes. Um intermediador de serviços atua interceptando as solicitações recebidas por meio de sua interface e determinando quais operações devem ser efetuadas sobre os recursos. Além disso, um intermediador também intercepta eventos provenientes dos recursos por ele monitorados e determina se devem ser sinalizados para a camada superior, se uma adaptação na camada é necessária, ou se alguma outra ação deve ser tomada.
 
-No metamodelo proposto, a definição de um intermediador de serviços se dá pela descrição de como ele deve se comportar em resposta a cada uma das possíveis solicitações que podem advir da camada superior e dos eventos que podem ser gerados pelos recursos gerenciados. Esta abordagem se baseia em uma arquitetura dirigida por eventos \cite{eda}, onde o comportamento é determinado pela forma como os eventos são tratados. Neste trabalho, utilizamos o termo \emph{sinal} para designar de forma generalizada um evento. Assim, um sinal pode representar tanto uma solicitação recebida quanto um evento gerado.
+No metamodelo proposto, a definição de um intermediador de serviços se dá pela descrição de como ele deve se comportar em resposta a cada uma das possíveis solicitações que podem vir da camada superior e dos eventos que podem ser gerados pelos recursos gerenciados.
+Deste modo, o comportamento de um intermediador de serviços é determinado pela forma como eventos e solicitações recebidos são tratados.
+Neste trabalho, as solicitações recebidas da camada superior são denominadas \emph{chamadas} e utilizamos o termo \emph{sinal} para designar de forma generalizada um evento ou chamada.
+%Esta abordagem se baseia em uma arquitetura dirigida por eventos \cite{eda}, onde o comportamento é determinado pela forma como os eventos são tratados. 
+%Neste trabalho, utilizamos o termo \emph{sinal} para designar de forma generalizada um evento ou chamada.
+Assim, um sinal pode representar tanto uma solicitação recebida da camada superior quanto um evento gerado por um recurso gerenciado.
 
 Além disso, o metamodelo possui abstrações para descrição de outras características indispensáveis em uma camada de intermediação de serviços. Essas abstrações compreendem a definição de recursos, manutenção de estado, auto-gerenciamento e políticas para seleção de recursos.
 
-Para a construção do metamodelo proposto, foi empregado o metamodelo Ecore, que integra o Eclipse Modeling Framework (EMF) \cite{emf}. O emprego do Ecore, que nesse caso atua como um meta-metamodelo, permite o uso de várias ferramentas disponibilizadas pelo EMF, que auxiliam na construção, armazenamento e processamento de modelos.
+Para a construção do metamodelo, foi empregado o metamodelo Ecore, que integra o Eclipse Modeling Framework (EMF) \cite{emf}. O emprego do Ecore, que nesse caso atua como um meta-metamodelo, permite o uso de várias ferramentas disponibilizadas pelo EMF que auxiliam na construção, armazenamento e processamento de modelos.
 %Por empregar essa tecnologia, o metamodelo projetado não só usufrui de suas vantagens, mas também está sujeito às suas restrições. 
 
 O metamodelo projetado está estruturado em torno de uma classe principal, chamada \textsf{Manager}. Uma instância dessa classe representa um gerenciador de intermediação, que define um escopo para o gerenciamento de recursos e agrupa outros elementos que definem as atribuições específicas da camada de intermediação de serviços.
@@ -70,15 +75,15 @@ O metamodelo projetado está estruturado em torno de uma classe principal, chamad
  \label{fig:metamodelo-principal}
 \end{figure}
 
-A Figura~\ref{fig:metamodelo-principal} ilustra os principais elementos que compõem o metamodelo proposto. Nesta figura é possível identificar a classe \textsf{Manager} e os seguintes elementos associados:
+A Figura~\ref{fig:metamodelo-principal} ilustra os principais elementos que compõem o metamodelo. Nesta figura é possível identificar a classe \textsf{Manager} e os seguintes elementos associados:
 
 \begin{itemize}
 
-\item \textsf{Interface}: define as operações disponibilizadas por um gerenciador e quais eventos podem ser gerados por ele. 
+\item \textsf{Interface}: define as operações disponibilizadas por um gerenciador e os eventos que podem ser gerados por ele. 
 
 \item \textsf{Action}/\textsf{Handler}:  define como sinais serão tratados.
 
-\item \textsf{ResourceManager}: define os recursos que serão gerenciados por um determinado \textsf{Manager}, incluindo suas interfaces e eles como são obtidos.
+\item \textsf{ResourceManager}: define os recursos que serão gerenciados por um determinado \textsf{Manager}, incluindo suas interfaces e como eles são obtidos.
 
 \item \textsf{StateManager}: define os tipos de dados que precisam ser mantidos pela camada para prover seus serviços.
 
@@ -88,7 +93,8 @@ A Figura~\ref{fig:metamodelo-principal} ilustra os principais elementos que comp
 
 \end{itemize}
 
-Uma vez construída uma instância da classe \textsf{Manager}, esta pode ser utilizada como um recurso para outra instância de \textsf{Manager}. Isto possibilita a construção de uma hierarquia de gerenciadores, que podem ser empregados sucessivamente para prover serviços a partir de recursos e de outros gerenciadores de intermediação.
+Uma vez construída uma instância da classe \textsf{Manager}, esta pode ser utilizada como um recurso por outra instância de \textsf{Manager}.
+Isto possibilita a construção de uma hierarquia de gerenciadores, que podem ser empregados sucessivamente para prover serviços a partir de recursos e de outros gerenciadores de intermediação mais básicos.
 Além disso, essa característica possibilita a modularização da camada e a reutilização de gerenciadores de intermediação na construção de outros gerenciadores de mais alto nível.
 % Ref: Design concepts & considerations: http://en.wikipedia.org/wiki/Software_design
 
@@ -100,26 +106,26 @@ Além disso, essa característica possibilita a modularização da camada e a reutil
 
 A construção de uma camada de intermediação de serviços se dá a partir da indicação de qual será o seu gerenciador principal que por sua vez pode empregar outros gerenciadores como recursos subjacentes.
 
-As seções seguintes descrevem em detalhes as partes do metamodelo identificadas acima. Como observado anteriormente, a abordagem proposta se baseia nas soluções empregadas no desenvolvimento da CVM. Portanto, as abstrações existentes no metamodelo também guardam semelhanças com aquelas empregadas pela camada NCB na CVM \cite{Andrew}.
+%As seções seguintes descrevem em detalhes as partes do metamodelo identificadas acima. Como observado anteriormente, a abordagem proposta se baseia nas soluções empregadas no desenvolvimento da CVM. Portanto, as abstrações existentes no metamodelo também guardam semelhanças com aquelas empregadas pela camada NCB na CVM \cite{Andrew}.
 % com as empregadas pela camada de intermediação de serviços da CVM = com o trabalho existente na NCB
 
 %% Como resolver a sobrecarga de nomes? e.g. classe no metamodelo e classe da implementação do ambiente de execução?
 
-As seções seguintes descrevem em detalhes as partes do metamodelo identificadas acima. Como já observado, a abordagem proposta se baseia nas soluções empregadas no desenvolvimento da CVM. Devido a isso, o metamodelo proposto incorpora conceitos independentes de domínio presentes na CVM, e assim sua organização e abstrações guardam semelhanças com as da camada NCB \cite{Andrew}.
+As seções seguintes descrevem em detalhes as partes do metamodelo identificadas acima. Como já observado, a abordagem proposta se baseia nas soluções empregadas no desenvolvimento da CVM. Devido a isso, o metamodelo proposto incorpora conceitos independentes de domínio presentes na CVM, e assim sua organização e abstrações guardam semelhanças com aquelas da camada NCB \cite{Andrew}.
 
 
 %As seções seguintes descrevem em detalhes as partes do metamodelo identificadas acima. Como observado anteriormente, a abordagem proposta se baseia nas soluções empregadas no desenvolvimento da CVM. Portanto, as abstrações existentes no metamodelo também guardam semelhanças com aquelas empregadas pela camada NCB na CVM \cite{Andrew}.
 
 \section{Interface}
 
-No metamodelo proposto, a interface para utilização de um gerenciador de intermediação é definida por meio de \emph{chamadas} que podem ser realizadas ao gerenciador e \emph{eventos} que podem ser sinalizados pelo mesmo. 
+No metamodelo proposto, a interface para utilização de um gerenciador de intermediação é definida por meio de \emph{chamadas} que podem ser realizadas ao gerenciador e \emph{eventos} que podem ser sinalizados por ele.
 Este tipo de interface segue a mesma abordagem empregada pela CVM para comunicação entre camadas \cite{cvm}. Dessa forma, a utilização de um gerenciador se dá através da realização de chamadas e tratamento de eventos gerados.
 
-A interface de uma camada de intermediação de serviços é definida pela interface do gerenciador principal em uma hierarquia de gerenciadores. Assim sendo, a interação da camada de intermediação de serviços com as camadas superiores ocorre da mesma forma descrita acima. Além disso, as interfaces para utilização dos recursos gerenciados também é descrita da mesma forma, o que possibilita que um gerenciador de intermediação seja tratado como um recurso para outros gerenciadores.
+Como a interface de uma camada de intermediação de serviços é definida pela interface do gerenciador principal na hierarquia de gerenciadores, a interação com as camadas superiores ocorre da mesma forma descrita acima. Além disso, as interfaces para utilização dos recursos gerenciados também é descrita da mesma forma, o que possibilita que um gerenciador de intermediação seja tratado como um recurso por parte de outros gerenciadores.
 
-A Figura~\ref{fig:metamodelo-interface} ilustra as classes do metamodelo relacionadas à descrição de interfaces.
+A Figura~\ref{fig:metamodelo-interface} ilustra as classes do metamodelo relacionadas com a descrição de interfaces.
 A classe \textsf{Interface} é utilizada para descrever a interface de um gerenciador de intermediação ou recurso. %Essa classe agrupa um conjunto de chamadas disponibilizadas e eventos que podem ser sinalizados.
-Chamadas e eventos que fazem parte da interface são conjuntamente denominados sinais e são representados, respectivamente, pelas classes \textsf{Call} e \textsf{Event}. Ambas as classes apresentam como característica comum o fato de possuírem um nome e um conjunto de parâmetros, e por isso, herdam estes atributos da classe \textsf{Signal}. Os parâmetros de um sinal, por sua vez, são identificados por um nome, e são definidos por meio da classe \textsf{Parameter}.
+Chamadas e eventos que fazem parte da interface são conjuntamente denominados \emph{sinais} e são representados, respectivamente, pelas classes \textsf{Call} e \textsf{Event}. Ambas as classes apresentam como característica comum o fato de possuírem um nome e um conjunto de parâmetros e, por isso, herdam esses atributos da classe \textsf{Signal}. Os parâmetros de um sinal, por sua vez, são identificados por um nome, e são definidos por meio da classe \textsf{Parameter}.
 
 \begin{figure}
  \centering
@@ -134,7 +140,7 @@ Chamadas e eventos que fazem parte da interface são conjuntamente denominados si
 
 Como mencionado na Seção~\ref{sec:metamodelo-visao-geral}, o comportamento de uma camada de intermediação de serviços é definido pela forma como esta reage às chamadas recebidas da camada superior e aos eventos sinalizados pelos recursos. O metamodelo proposto disponibiliza construções que permitem definir quais ações devem ser tomadas pela camada em resposta aos sinais recebidos.
 
-O tratamento de sinais na camada de intermediação é definido por meio das classes \textsf{Signal}, \textsf{Handler} e \textsf{Action}. Enquanto os sinais a serem tratados por um gerenciador são descritos como parte da interface do gerenciador e dos recursos gerenciados, os demais elementos (tratadores e ações) são diretamente agrupados no gerenciador. A Figura~\ref{fig:metamodelo-sinais} ilustra como esses elementos estão organizados no metamodelo.
+O tratamento de sinais na camada de intermediação é definido por meio das classes \textsf{Signal}, \textsf{Handler} e \textsf{Action}. Enquanto os sinais a serem tratados por um gerenciador são descritos como parte da interface do gerenciador e dos recursos gerenciados, os demais elementos (tratadores e ações) são diretamente agrupados no gerenciador. A Figura~\ref{fig:metamodelo-sinais} mostra como esses elementos estão organizados no metamodelo.
 
 \begin{figure}
  \centering
@@ -153,19 +159,19 @@ Uma ação representa uma operação que pode ser executada por um gerenciador, e é 
 
 \item \textsf{EventAction}: define uma ação que especifica um evento a ser gerado pelo gerenciador.
 
-\item \textsf{SequenceAction}: combina uma lista de ações a ser executada em sequência.
+\item \textsf{SequenceAction}: combina uma lista de ações a serem executadas em sequência.
 
 \end{itemize}
 
 Uma ação também define um contexto necessário para a sua execução por meio de um conjunto de parâmetros. Os parâmetros de uma ação, descritos através da classe \textsf{ActionParameter}, representam as informações necessárias para a execução da operação definida pela ação. 
 
-Um tratador de sinais, representado pela classe \textsf{Handler}, é utilizado para indicar qual ação deve ser tomada quando um determinado sinal é identificado.
-Uma instancia de \textsf{Handler} descreve o sinal a ser tratado, se este tratador está habilitado, e a ação a ser tomada.
+Um tratador de sinais, representado pela classe \textsf{Handler}, é utilizado para indicar a ação que deve ser tomada quando um determinado sinal é identificado.
+Uma instância de \textsf{Handler} descreve o sinal a ser tratado, se este tratador está habilitado, e a ação a ser tomada.
 
-Além disso, ao definir um tratador, é necessário descrever como serão atribuídos valores aos parâmetros de uma ação. Esta ligação entre o contexto no qual um sinal é identificado e o contexto exigido por uma ação, é definida pela classe \textsf{ActionExecution}. A Figura~\ref{fig:metamodelo-binding} ilustra as classes do metamodelo que estão relacionadas à ligação de contexto.
+Além disso, ao definir um tratador, é necessário descrever como serão atribuídos valores aos parâmetros da ação associada. Esta ligação entre o contexto no qual um sinal é identificado e o contexto exigido por uma ação, é definida pela classe \textsf{ActionExecution}. A Figura~\ref{fig:metamodelo-binding} mostra as classes do metamodelo que estão relacionadas com a ligação de contexto.
 
 
-A classe \textsf{ActionExecution} intermedia a associação entre um tratador de sinal e uma ação, e define um conjunto de associações de parâmetros, descritas através classe \textsf{ParameterBinding}. Uma associação de parâmetro define como será atribuído um valor a um parâmetro de uma ação. Um parâmetro pode ser associado a diferentes fontes de valores, que são definidas por meio de subtipos do tipo \textsf{Value}.
+A classe \textsf{ActionExecution} intermedia a associação entre um tratador de sinal e uma ação, e define um conjunto de associações de parâmetros, descritas através classe \textsf{ParameterBinding}. Uma associação de parâmetro define como será atribuído valor a um parâmetro de uma ação. Um parâmetro pode ser associado a diferentes fontes de valores, que são definidas por meio de subtipos do tipo \textsf{Value}.
 
 %\begin{itemize}
 %
@@ -184,7 +190,7 @@ A classe \textsf{ActionExecution} intermedia a associação entre um tratador de s
 
 O metamodelo inclui as classes \textsf{FixedValue} e \textsf{ParameterValue} para definição de fontes com um valor fixo e fontes cujo valor é obtido a partir de um parâmetro do sinal tratado.
 A classe \textsf{ExpressionValue}, por sua vez, permite que o resultado da avaliação de uma expressão seja utilizado como fonte de valor.% O contexto para avaliação da expressão inclui os parâmetros e a origem do sinal a ser tratado.
-Por fim, um outro tipo de fonte de valor, representado pela classe \textsf{ActionExecution}, possibilita que o resultado da execução de uma ação seja atribuído à um parâmetro de uma outra ação. O uso desta fonte de valores permite a definição de tratadores complexos que utilizam uma combinação de ações para responder a um sinal.
+ Por fim, um outro tipo de fonte de valor, representado pela classe \textsf{ActionExecution}, possibilita que o resultado da execução de uma ação seja atribuído a um parâmetro de uma outra ação. O uso desta fonte de valores permite a definição de tratadores complexos, que utilizam uma combinação de ações para responder a um sinal.
 
 \begin{figure}
  \centering
@@ -195,21 +201,25 @@ Por fim, um outro tipo de fonte de valor, representado pela classe \textsf{Actio
 
 
 Além de possibilitarem a definição de ações e tratadores de sinal, as construções descritas nesta seção permitem que ações sejam reutilizadas na composição de ações mais complexas, favorecendo a modularização do tratamento de sinais.
-A utilização dessas construções do metamodelo é melhor ilustrada no Capítulo~\ref{cap:instancia}, onde são utilizadas para construir um modelo que representa a camada de intermediação de serviços presente na CVM.
+A utilização dessas construções do metamodelo é melhor ilustrada no Capítulo~\ref{cap:instancia}, onde são utilizadas para construir um modelo que representa a camada de intermediação de serviços presente na arquitetura da CVM.
 
 \section{Recursos}
 \label{sec:metamodelo-recursos}
 
-No metamodelo proposto, os recursos a serem gerenciados por uma camada de intermediação de serviços são descritos por meio de um gerenciador de recursos, definido pelo tipo \textsf{ResourceManager}. Um gerenciador de recursos define as interfaces dos recursos gerenciados e como estes podem ser obtidos. A Figura~\ref{fig:metamodelo-recursos} ilustra as classes do metamodelo envolvidas na descrição de recursos.
+No metamodelo proposto, os recursos a serem gerenciados por uma camada de intermediação de serviços são descritos por meio de um gerenciador de recursos, definido pelo tipo \textsf{ResourceManager}. Um gerenciador de recursos define as interfaces dos recursos gerenciados e como estes podem ser obtidos. A Figura~\ref{fig:metamodelo-recursos} apresenta as classes do metamodelo envolvidas na descrição de recursos.
 
 As interfaces dos recursos são descritas através da classe \textsf{Interface}, da mesma forma que a interface de um gerenciador da camada.
 A obtenção dos recursos, por sua vez, é definida, de acordo com a sua natureza, por meio de classes que são subtipos de \textsf{ResourceManager}. O metamodelo proposto conta com uma classe denominada \textsf{InstanceResourceManager}, que permite a descrição de um conjunto fixo de recursos e suas características. Outras classes que implementam a interface \textsf{ResourceManager} poderiam, por sua vez, possibilitar a obtenção de recursos de formas mais elaboradas como, por exemplo, através de repositórios de objetos distribuídos.
 % ??? Ponto de questionamento: que outras formas de se obter?
 
-Uma instância da classe \textsf{InstanceResourceManager} agrupa um conjunto de objetos do tipo \textsf{Instance}. A classe \textsf{Instance}, por sua vez, representa um recurso que pode ser obtido diretamente a partir da instanciação de uma implementação do recurso.
+Uma instância da classe \textsf{InstanceResourceManager} agrupa um conjunto de objetos do tipo \textsf{Instance}.
+A classe \textsf{Instance}, por sua vez, representa um recurso que pode ser obtido diretamente a partir da instanciação de uma implementação do recurso.
 
-A classe \textsf{Instance} define a implementação do recurso instanciada em tempo de execução.
-Além disso, uma instância de \textsf{Instance} também define qual das interfaces descritas pelo \textsf{ResourceManager} correspondente é a interface do recurso. Por fim, a classe \textsf{Instance} implementa a interface \textsf{Annotable}, o que permite que metadados sejam associados aos recursos. Esses metadados podem ser posteriormente utilizados para definição de políticas de seleção de recursos.
+%A classe \textsf{Instance} define a implementação do recurso instanciada em tempo de execução.
+%Além disso, uma instância de \textsf{Instance} também define qual das interfaces descritas pelo \textsf{ResourceManager} correspondente é a interface do recurso. 
+A classe \textsf{Instance} define qual a implementação do recurso que será instanciada em tempo de execução e qual das interfaces descritas pelo \textsf{ResourceManager} correspondente é a interface do recurso. 
+Por fim, a classe \textsf{Instance} implementa a interface \textsf{Annotable}, o que permite que metadados sejam associados aos recursos.
+Esses metadados podem ser posteriormente utilizados para definição de políticas de seleção de recursos.
 
 \begin{figure}
  \centering
@@ -229,11 +239,11 @@ Além disso, uma instância de \textsf{Instance} também define qual das interfaces
 Muitas vezes, o processamento de um determinado sinal pela camada de intermediação de serviços pode depender de fatores que não estão diretamente ligados àquele sinal.
 A ocorrência de um evento, parâmetros advindos de uma chamada recebida anteriormente, resultados do processamento de outros sinais, entre outros, são informações que podem determinar como um determinado sinal deve ser processado.
 
-Para possibilitar essa variabilidade no processamento de sinais, é preciso que a camada de intermediação de serviços seja capaz de manter dados entre sucessivas ocorrências de sinais. As construções relacionadas com a manutenção de estado, presentes no metamodelo proposto, têm como intuito possibilitar a definição de quais informações precisam ser mantidas pela camada.
+Para possibilitar essa variabilidade no processamento de sinais, é preciso que a camada de intermediação de serviços seja capaz de manter dados entre sucessivas ocorrências de sinais. As construções relacionadas com a manutenção de estado, presentes no metamodelo proposto, têm como intuito possibilitar a definição das informações que precisam ser mantidas pela camada.
 
 A classe \textsf{StateManager} tem como função definir os tipos de dados que podem ser mantidos pela camada. Os tipos de dados podem ser descritos através de uma estrutura simples, baseada em atributos e subtipos. Assim como no modelo relacional de dados, a descrição de um tipo de dados também exige a escolha de um atributo chave que identifique unicamente um registro desse tipo. 
 
-A Figura~\ref{fig:metamodelo-estado} ilustra as classes envolvidas na definição dos tipos de dados a serem mantidos pela camada durante sua execução. A classe \textsf{State} é utilizada para definir um tipo de dados, que agrupa atributos e subtipos. Cada atributo, por sua vez, é definido por meio da classe \textsf{Property}. Os subtipos são definidos a partir da mesma classe \textsf{State}, o que possibilita a definição de tipos de dados compostos.
+A Figura~\ref{fig:metamodelo-estado} mostra as classes envolvidas na definição dos tipos de dados a serem mantidos pela camada durante sua execução. A classe \textsf{State} é utilizada para definir um tipo de dados, que agrupa atributos e subtipos. Cada atributo, por sua vez, é definido por meio da classe \textsf{Property}. Os subtipos são definidos a partir da mesma classe \textsf{State}, o que possibilita a definição de tipos de dados compostos.
 
 \begin{figure}
  \centering
@@ -252,14 +262,15 @@ Além de abstrair as diferenças de capacidade entre os recursos existentes, a cam
 
 %- Para isto deve ser capaz de se auto gerenciar (require self-healing behavior to adapt to changes in user needs, business goals, and environmental conditions such that self-healing decisions are made dynamically and adaptively according to the system context.)
 
-Para atender a esta demanda, a camada de intermediação de serviços deve ser capaz de se auto-gerenciar, adaptando-se automaticamente para realizar o serviço solicitado dentro das restrições impostas pelo seu ambiente operacional. O auto-gerenciamento dessa camada envolve o constante monitoramento dos recursos e das solicitações dos usuários para identificar situações que exigem uma ação, e escolher a ação apropriada a ser tomada.
+Para atender a esta demanda, a camada de intermediação de serviços deve ser capaz de se auto-gerenciar, adaptando-se automaticamente para realizar o serviço solicitado dentro das restrições impostas pelo seu ambiente operacional.
+O auto-gerenciamento dessa camada envolve o constante monitoramento dos recursos e das solicitações dos usuários para identificar situações que exigem uma ação e escolher a ação apropriada a ser tomada para que a camada atenda aos serviços solicitados.
 
 
 %- O auto gerenciamento envolve a capacidade de  selecionar, preparar, monitorar, desativar e reativar recursos com o objetivo de prover o serviço solicitado pelo usuário.
 
 %- Através das construções de tratamento de eventos advindos dos recursos, e chamadas realizadas à camada unidos com a manutenção de estado, é possível monitorar os recursos e tomar ações de acordo com o estado destes.
 
-Através das abstrações presentes no metamodelo é possível definir o tratamento de eventos gerados pelos recursos e  daschamadas realizadas através da interface da camada. Estes mecanismos, associados à manutenção de estado, possibilitam definir como os recursos e solicitações serão monitorados para identificar variados cenários que exigem a execução de uma ação.
+Através das abstrações presentes no metamodelo é possível definir o tratamento de eventos gerados pelos recursos e  das chamadas realizadas através da interface da camada. Estes mecanismos, associados à manutenção de estado, possibilitam definir como os recursos e solicitações serão monitorados para identificar variados cenários que exigem a execução de uma ação.
 
 
 %- Apesar de isso ser possível, estas abstrações não são apropriadas para este tipo de tarefa.
@@ -271,7 +282,7 @@ Com o intuito de facilitar a definição de como se dará o auto-gerenciamento da c
 
 Como observado no Capítulo~\ref{cap:referencial}, o principal bloco de construção da arquitetura de computação autônoma é o gerenciador autônomo. O gerenciador autônomo implementa as funções MAPE, que permitem monitorar informações sobre recursos gerenciados, analisar essas informações e identificar se uma mudança é necessária. Em caso afirmativo, o gerenciador autônomo ainda cria um plano para realizar a mudança e, em seguida, o executa.
 %Ao serem executadas, essas funções podem fazer uso de um conhecimento compartilhado entre elas.
-A interação entre essas funções é dirigida pela troca de conhecimento, que representam sintomas, solicitações de mudança e planos de mudança.
+A interação entre essas funções é dirigida pela troca de conhecimento, que representa sintomas, solicitações de mudança e planos de mudança.
 
 %- Em tal arquitetura o gerenciamento se dá através de um control loop MAPE-K
 % Explicar MAPE e Knowledge, que inclui os sintomas, change requests, change plans
@@ -302,7 +313,7 @@ As condições agrupadas pela classe \textsf{Symptom} são descritas a partir de ex
 % TODO: separar symptons devem monitorar só os recursos e change request deve relacionar symptons com calls and state
 
 A classe \textsf{ChangeRequest} define uma requisição de mudança que deve ser gerada quando um determinado sintoma é identificado. Associado a uma requisição de mudança podemos ter um plano de mudança definido por instâncias da classe \textsf{ChangePlan}. Um plano de mudança pode assumir diversas formas, desde um complexo \emph{workflow} envolvendo várias atividades até um simples comando. % \cite{ibmac} 
-No metamodelo proposto, um plano de mudança define uma ação a ser executada. Uma ação, por sua vez, pode ser definida por meio dos tipos de ações disponíveis e suas combinações, conforme descrito na Seção \ref{sec:metamodelo-sinais}.
+No metamodelo proposto, um plano de mudança define uma ação a ser executada. Uma ação, por sua vez, pode ser definida por meio dos tipos de ação disponíveis e suas combinações, conforme descrito na Seção \ref{sec:metamodelo-sinais}.
 
 % Enquanto a função de planejamento pode empregar algoritmos complexos que geram dinâmicamente planos  de mudança que podem envolver um workflow completo de execução, no trabalho em questão optamos por uma abordagem simples, onde um plano é diretamente associado a uma solicitação de mudança
 
@@ -348,4 +359,4 @@ Além disso, um ponto de avaliação de políticas também é responsável por definir 
 
 Um tratador de avaliação de políticas, representado por meio da classe \textsf{PolicyEvaluationHandler}, define uma ação a ser executada após a avaliação de políticas. Esse tratador tem como função definir como o resultado da avaliação de políticas será utilizado. Um tratador de avaliação de políticas está relacionado a um contexto de avaliação e será acionado sempre que as políticas nesse contexto forem reavaliadas.
 
-O metamodelo descrito neste capítulo fornece um conjunto de abstrações para a construção de modelos que descrevem uma camada de intermediação de serviços que se enquadra na arquitetura proposta para construção de máquinas virtuais. No Capítulo~\ref{cap:ambiente}, apresentamos o ambiente de execução desenvolvido para possibilitar a execução de modelos construídos em conformidade com o metamodelo descrito neste capítulo. O Capítulo~\ref{cap:instancia}, por sua vez, demonstra como o metamodelo aqui descrito pode ser empregado na construção de um modelo que descreve uma camada de intermediação de serviços equivalente à camada NCB que integra a CVM.
+O metamodelo descrito neste capítulo fornece um conjunto de abstrações para a construção de modelos que descrevem uma camada de intermediação de serviços que se enquadra na arquitetura proposta para construção de máquinas de execução de modelos. No Capítulo~\ref{cap:ambiente}, apresentamos o ambiente de execução desenvolvido para possibilitar a execução de modelos construídos em conformidade com o metamodelo descrito neste capítulo. O Capítulo~\ref{cap:instancia}, por sua vez, demonstra como o metamodelo aqui descrito pode ser empregado na construção de um modelo que descreve uma camada de intermediação de serviços equivalente à camada NCB que integra a CVM.
