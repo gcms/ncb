@@ -238,7 +238,7 @@ Assim como na reflexão computacional, modelos em tempo de execução podem ser emp
 
 A Máquina Virtual de Comunicação (\emph{Communication Virtual Machine}, CVM) é uma plataforma para especificação e realização de serviços de comunicação \cite{cvm}. Sendo uma plataforma dirigida por modelos, a CVM funciona por meio do processamento de modelos descritos em uma linguagem de modelagem específica de domínio, denominada Linguagem de Modelagem de Comunicação (\emph{Communication Modeling Language}, CML) \cite{cml}. Diferente de muitas abordagens dirigidas por modelo que se apoiam na geração de código, os modelos CML são diretamente interpretados pela CVM.
 
-A CVM é considerada uma plataforma centrada no usuário devido ao alto-nível dos modelos descritos por meio da CML, que podem ser facilmente construídos por usuários especialistas de domínio, ou até mesmo por usuários finais. A CML é uma linguagem declarativa, por meio da qual são descritos os participantes, dados, e tipos de mídia envolvidos em uma comunicação a ser realizada. Informações associadas às tecnologias e dispositivos efetivamente utilizados na realização da comunicação, não são descritos em um modelo CML. A Figura~\ref{fig:referencial-cml} apresenta um exemplo de modelo descrito utilizando a representação gráfica da CML. O modelo em questão define uma sessão comunicação entre dois participantes por meio de áudio em tempo real.
+A CVM é considerada uma plataforma centrada no usuário devido ao alto nível dos modelos descritos por meio da CML, que podem ser facilmente construídos por usuários especialistas de domínio, ou até mesmo por usuários finais. A CML é uma linguagem declarativa, por meio da qual são descritos os participantes, dados, e tipos de mídia envolvidos em uma comunicação a ser realizada. Informações associadas às tecnologias e dispositivos efetivamente utilizados na realização da comunicação, não são descritos em um modelo CML. A Figura~\ref{fig:referencial-cml} apresenta um exemplo de modelo descrito utilizando a representação gráfica da CML. O modelo em questão define uma sessão comunicação entre dois participantes por meio de áudio em tempo real.
 
 \begin{figure}
  \centering
@@ -277,7 +277,8 @@ A partir desses modelos a MGridVM gerencia a utilização de fontes de energia, ca
 
 \subsection{Intermediador de Comunicação em Rede}
 
-Como introduzido no Capítulo~\ref{cap:introducao}, neste trabalho nos concentramos na camada de intermediação de serviços da arquitetura de máquinas de execução de modelos proposta. Assim sendo, nesta seção descrevemos em mais detalhes a camada de intermediação de serviços que integra a CVM, denominada NCB.
+Como introduzido no Capítulo~\ref{cap:intro}, neste trabalho nos concentramos na camada de intermediação de serviços da arquitetura de máquinas de execução de modelos. 
+Para melhor compreender a função da camada de intermediação de serviços, nesta seção descrevemos em mais detalhes o Intermediador de Comunicação em Rede (NCB) que integra a CVM.
 
 A camada NCB foi projetada com o intuito de fornecer uma interface de serviços de comunicação independente da tecnologia de comunicação empregada, capaz de abstrair para a camada superior a heterogeneidade e dinâmica envolvidas na utilização de diversos provedores alternativos de comunicação \cite{cvm}.  Para isso, o intermediador de comunicação deve ser capaz de se auto-gerenciar, adaptando-se a mudanças no ambiente de rede, nos provedores de comunicação, ou nas solicitações recebidas da camada de \emph{middleware}.
 
@@ -445,7 +446,7 @@ Na implementação da camada NCB da CVM, políticas são utilizadas para direcionar 
 %
 %We base our work in the NCB 
 
-Neste capítulo descrevemos a Máquina Virtual de Comunicação (CVM), destacando sua arquitetura e o funcionamento de sua camada de intermediação de serviços. Para isso, revemos os fundamentos de abordagens de engenharia de software dirigida por modelos, que são utilizados na CVM para possibilitar a construção de serviços de comunicação por meio de modelos de alto-nível.
+Neste capítulo descrevemos a Máquina Virtual de Comunicação (CVM), destacando sua arquitetura e o funcionamento de sua camada de intermediação de serviços. Para isso, revemos os fundamentos de abordagens de engenharia de software dirigida por modelos, que são utilizados na CVM para possibilitar a construção de serviços de comunicação por meio de modelos de alto nível.
 Além disso, também tratamos dos princípios relacionados à construção de sistemas auto-gerenciáveis, que são empregados na camada de intermediação de serviços da arquitetura da CVM.
 Os conceitos discutidos nesse capítulo tem como intuito fornecer um referencial para a compreensão do presente trabalho, que propõe uma abordagem dirigida por modelos para construção máquinas de execução de modelos, se concentrando na camada de intermediação de serviços.
 

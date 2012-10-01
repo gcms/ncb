@@ -131,16 +131,16 @@ Baseado no metamodelo proposto, e com o intuito de validá-lo, construímos um mod
 % -By doing that we look forward raising the abstraction level used to build these VMs from low-level general programing language constructs to constructs related to the features commonly present in this category of VMs. That would allow us to use models to design both the user intended services and the platform where these services are to be run.
 
 
-%%    - Para tornar possível a construção de máquinas virtuais desse tipo e seguindo a abordagem proposta, precisamos de uma linguagem para tal apropriada, que pode ser descrita através de um meta-modelo (nunca é demais lembrar que é necessário haver um domínio, mesmo que técnico ou bem genérico [genérico, por sua vez não é muito útil])
+%%    - Para tornar possível a construção de máquinas virtuais desse tipo e seguindo a abordagem proposta, precisamos de uma linguagem para tal apropriada, que pode ser descrita através de um metamodelo (nunca é demais lembrar que é necessário haver um domínio, mesmo que técnico ou bem genérico [genérico, por sua vez não é muito útil])
 
 
 \section{Objetivos}
 
-%    - Objetivo geral da abordagem do trabalho: projetar e construir um meta-modelo para modelagem de máquinas virtuais preparadas para prover serviços descritos em modelos de alto nível (user-centric)
+%    - Objetivo geral da abordagem do trabalho: projetar e construir um metamodelo para modelagem de máquinas virtuais preparadas para prover serviços descritos em modelos de alto nível (user-centric)
 
 %    - Objetivo geral do trabalho: propor uma abordagem para a construção dirigida por modelos de máquinas virtuais customizadas para prover serviços descritos em modelos de alto nível (user-centric)
     
-O objetivo geral deste trabalho é propor uma abordagem para a construção dirigida por modelos de máquinas virtuais capazes de prover serviços  a partir de um conjunto heterogêneo de recursos. As máquinas virtuais construídas a partir desta abordagem são projetadas para processarem modelos de alto-nível descritos em uma linguagem de modelagem específica de domínio, e que podem ser criados e modificados em tempo de execução.
+O objetivo geral deste trabalho é propor uma abordagem para a construção dirigida por modelos de máquinas virtuais capazes de prover serviços  a partir de um conjunto heterogêneo de recursos. As máquinas virtuais construídas a partir desta abordagem são projetadas para processarem modelos de alto nível descritos em uma linguagem de modelagem específica de domínio, e que podem ser criados e modificados em tempo de execução.
 
 %Tendo em vista os benefícios da aplicação de MDE identificados na seção anterior, o objetivo geral deste trabalho é propor uma abordagem para a construção dirigida por modelos de máquinas virtuais capazes de prover,  a partir de um conjunto heterogêneo de recursos, serviços descritos por meio de modelos de alto nível.
 
@@ -163,7 +163,7 @@ Além disso, com o intuito de demonstrar a viabilidade da proposta, este trabalho
 
 % Metamodeling - http://megaplanet.org/atem2007/ATEM2007-18.pdf
 
-%    - Objetivo específico do projeto: projetar um meta-modelo para modelagem de um dos aspectos necessários (atribuições da NCB i.e. gerenciamento autônomo dos recursos e provedores de serviço) envolvidos na realização de um serviço descrito em uma linguagem de alto nível.
+%    - Objetivo específico do projeto: projetar um metamodelo para modelagem de um dos aspectos necessários (atribuições da NCB i.e. gerenciamento autônomo dos recursos e provedores de serviço) envolvidos na realização de um serviço descrito em uma linguagem de alto nível.
 
 
 %Demonstrar a viabilidade desta proposta, por sua vez, envolve a identificação das características que definem essa categoria de máquinas virtuais, bem como o projeto de uma linguagem que permita descrevê-las.
@@ -171,7 +171,7 @@ Além disso, com o intuito de demonstrar a viabilidade da proposta, este trabalho
 
 %-Além disso, outro desafio é a combinação de um modelo que representa uma máquina virtual e a linguagem que esta interpreta.
 
-%Atingir este objetivo, por sua vez, envolve o projeto de um meta-modelo que permita descrever as características dessa camada. Além disso, para exemplificar a aplicação da abordagem proposta, temos como meta a construção de um modelo (em conformidade com o meta-modelo projetado) para descrever o mesmo comportamento exibido pela camada NCB da CVM. Este modelo, por sua vez, poderá substituir a implementação tradicional da NCB.
+%Atingir este objetivo, por sua vez, envolve o projeto de um metamodelo que permita descrever as características dessa camada. Além disso, para exemplificar a aplicação da abordagem proposta, temos como meta a construção de um modelo (em conformidade com o metamodelo projetado) para descrever o mesmo comportamento exibido pela camada NCB da CVM. Este modelo, por sua vez, poderá substituir a implementação tradicional da NCB.
 
 
 \section{Metodologia}
@@ -196,11 +196,11 @@ Com o intuito de atingir os objetivos estabelecidos, a seguinte metodologia de p
 
 %\item Proposta de uma abordagem para modelagem comportamental de um serviço cuja a estrutura é descrita através de modelos de alto nível. (ainda não encontrei como explicar isso)
 
-%\item Projeto de um meta-modelo para a camada de gerenciamento de recursos
+%\item Projeto de um metamodelo para a camada de gerenciamento de recursos
 
-%\item Construção de uma instância do meta-modelo que representa o comportamento da camada NCB.
+%\item Construção de uma instância do metamodelo que representa o comportamento da camada NCB.
 
-%\item Implementação de um ambiente de execução para apoiar a execução de instâncias do meta-modelo
+%\item Implementação de um ambiente de execução para apoiar a execução de instâncias do metamodelo
 
 \end{itemize}
 
@@ -210,8 +210,8 @@ Com o intuito de atingir os objetivos estabelecidos, a seguinte metodologia de p
 %    - Revisão de abordagens utilizadas para descrição de aspectos comportamentais
 %    - Revisão de computação autônoma e sua modelagem
 %    - Investigação da plataforma da CVM e sua relação com outros domínios de aplicações com características similares.
-%    - Proposta de um meta-modelo que permita descrever o tipo de comportamento presente na camada NCB (gerenciamento autônomo dos recursos provedores de serviço)
-%    - Implementação de um ambiente de execução para o meta-modelo e instanciação do meta-modelo em um modelo com o mesmo comportamento da implementação existente da NCB
+%    - Proposta de um metamodelo que permita descrever o tipo de comportamento presente na camada NCB (gerenciamento autônomo dos recursos provedores de serviço)
+%    - Implementação de um ambiente de execução para o metamodelo e instanciação do metamodelo em um modelo com o mesmo comportamento da implementação existente da NCB
 
 
 \section{Contribuições}
@@ -220,7 +220,7 @@ As contribuições desse trabalho incluem:
 
 \begin{itemize}
 
-\item A proposta de uma abordagem dirigida por modelos para a construção de máquinas de execução específicas de domínio destinadas à execução de modelos de alto-nível que podem ser criados e modificados em tempo de execução. Tal proposta visa trazer os mesmos benefícios obtidos na construção de aplicações para a construção de suas plataformas de execução, reconhecendo que mesmo sendo específicas de domínio, ainda existem várias similaridades entre essas plataformas.
+\item A proposta de uma abordagem dirigida por modelos para a construção de máquinas de execução específicas de domínio destinadas à execução de modelos de alto nível que podem ser criados e modificados em tempo de execução. Tal proposta visa trazer os mesmos benefícios obtidos na construção de aplicações para a construção de suas plataformas de execução, reconhecendo que mesmo sendo específicas de domínio, ainda existem várias similaridades entre essas plataformas.
 
 \item A construção de um metamodelo e um ambiente de execução que, associados, permitem construir camadas de intermediação de serviços para máquinas de execução como as propostas. 
 %Essa contribuição inclui a identificação de funcionalidades associadas ao auto-gerenciamento de recursos, que .

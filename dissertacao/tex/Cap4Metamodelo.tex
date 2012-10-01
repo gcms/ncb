@@ -56,10 +56,14 @@ Como observado anteriormente, a camada de intermediação de serviços provê uma in
 
 No metamodelo proposto, a definição de um intermediador de serviços se dá pela descrição de como ele deve se comportar em resposta a cada uma das possíveis solicitações que podem vir da camada superior e dos eventos que podem ser gerados pelos recursos gerenciados.
 Deste modo, o comportamento de um intermediador de serviços é determinado pela forma como eventos e solicitações recebidos são tratados.
-Neste trabalho, as solicitações recebidas da camada superior são denominadas \emph{chamadas} e utilizamos o termo \emph{sinal} para designar de forma generalizada um evento ou chamada.
+Neste trabalho, as solicitações recebidas da camada superior são denominadas chamadas e utilizamos o termo \emph{sinal} para designar de forma generalizada um \emph{evento} ou \emph{chamada}.
 %Esta abordagem se baseia em uma arquitetura dirigida por eventos \cite{eda}, onde o comportamento é determinado pela forma como os eventos são tratados. 
 %Neste trabalho, utilizamos o termo \emph{sinal} para designar de forma generalizada um evento ou chamada.
 Assim, um sinal pode representar tanto uma solicitação recebida da camada superior quanto um evento gerado por um recurso gerenciado.
+
+%Esta abordagem se baseia em uma arquitetura dirigida por eventos \cite{eda}, onde o comportamento é determinado pela forma como os eventos são tratados. 
+%Neste trabalho, utilizamos o termo \emph{sinal} para designar de forma generalizada um evento. 
+%Assim, um sinal pode representar tanto uma solicitação recebida quanto um evento gerado.
 
 Além disso, o metamodelo possui abstrações para descrição de outras características indispensáveis em uma camada de intermediação de serviços. Essas abstrações compreendem a definição de recursos, manutenção de estado, auto-gerenciamento e políticas para seleção de recursos.
 
@@ -70,7 +74,7 @@ O metamodelo projetado está estruturado em torno de uma classe principal, chamad
 
 \begin{figure}
  \centering
- \includegraphics[width=0.8\textwidth]{./fig/manager}
+ \includegraphics[width=0.8\textwidth]{./fig/manager2}
  \caption{Principais elementos do metamodelo do intermediador de serviços.}
  \label{fig:metamodelo-principal}
 \end{figure}
@@ -98,11 +102,11 @@ Isto possibilita a construção de uma hierarquia de gerenciadores, que podem ser 
 Além disso, essa característica possibilita a modularização da camada e a reutilização de gerenciadores de intermediação na construção de outros gerenciadores de mais alto nível.
 % Ref: Design concepts & considerations: http://en.wikipedia.org/wiki/Software_design
 
-\begin{comment}
-- Colocar exemplos de utilização dessa hierarquia de gerenciadores.
-
-- Também deixar mais claro que a camada e a interface da camada é definida pelo se gerenciador principal
-\end{comment}
+%\begin{comment}
+%- Colocar exemplos de utilização dessa hierarquia de gerenciadores.
+%
+%- Também deixar mais claro que a camada e a interface da camada é definida pelo se gerenciador principal
+%\end{comment}
 
 A construção de uma camada de intermediação de serviços se dá a partir da indicação de qual será o seu gerenciador principal que por sua vez pode empregar outros gerenciadores como recursos subjacentes.
 
@@ -129,7 +133,7 @@ Chamadas e eventos que fazem parte da interface são conjuntamente denominados \e
 
 \begin{figure}
  \centering
- \includegraphics[width=0.48\textwidth]{./fig/interface}
+ \includegraphics[width=0.48\textwidth]{./fig/iface}
  \caption{Elementos do metamodelo para descrição de interfaces.}
  \label{fig:metamodelo-interface}
 \end{figure}
@@ -153,11 +157,11 @@ Uma ação representa uma operação que pode ser executada por um gerenciador, e é 
 
 \begin{itemize}
 
-\item  \textsf{MacroAction}: permite ao usuário definir uma classe Java que implementa a ação desejada.
-
 \item \textsf{CallAction}: define uma ação que especifica uma chamada a ser realizada aos recursos gerenciados ou ao próprio gerenciador.
 
 \item \textsf{EventAction}: define uma ação que especifica um evento a ser gerado pelo gerenciador.
+
+\item  \textsf{MacroAction}: permite ao usuário definir uma classe Java que implementa a ação desejada. Por meio de ações desse tipo, é possível definir ações que implementam uma lógica arbitrária, e executam operações que vão além da intermediação direta de chamadas e eventos.
 
 \item \textsf{SequenceAction}: combina uma lista de ações a serem executadas em sequência.
 
@@ -209,7 +213,8 @@ A utilização dessas construções do metamodelo é melhor ilustrada no Capítulo~\re
 No metamodelo proposto, os recursos a serem gerenciados por uma camada de intermediação de serviços são descritos por meio de um gerenciador de recursos, definido pelo tipo \textsf{ResourceManager}. Um gerenciador de recursos define as interfaces dos recursos gerenciados e como estes podem ser obtidos. A Figura~\ref{fig:metamodelo-recursos} apresenta as classes do metamodelo envolvidas na descrição de recursos.
 
 As interfaces dos recursos são descritas através da classe \textsf{Interface}, da mesma forma que a interface de um gerenciador da camada.
-A obtenção dos recursos, por sua vez, é definida, de acordo com a sua natureza, por meio de classes que são subtipos de \textsf{ResourceManager}. O metamodelo proposto conta com uma classe denominada \textsf{InstanceResourceManager}, que permite a descrição de um conjunto fixo de recursos e suas características. Outras classes que implementam a interface \textsf{ResourceManager} poderiam, por sua vez, possibilitar a obtenção de recursos de formas mais elaboradas como, por exemplo, através de repositórios de objetos distribuídos.
+A obtenção dos recursos, por sua vez, é definida, de acordo com a sua natureza, por meio de classes que são subtipos de \textsf{ResourceManager}. O metamodelo proposto conta com uma classe denominada \textsf{InstanceResourceManager}, que permite a descrição de um conjunto fixo de recursos e suas características.
+Outras classes que implementam a interface \textsf{ResourceManager} poderiam ser incluídas ao metamodelo para possibilitar a obtenção de recursos de formas mais elaboradas como, por exemplo, através de repositórios de objetos distribuídos.
 % ??? Ponto de questionamento: que outras formas de se obter?
 
 Uma instância da classe \textsf{InstanceResourceManager} agrupa um conjunto de objetos do tipo \textsf{Instance}.
@@ -270,8 +275,8 @@ O auto-gerenciamento dessa camada envolve o constante monitoramento dos recursos
 
 %- Através das construções de tratamento de eventos advindos dos recursos, e chamadas realizadas à camada unidos com a manutenção de estado, é possível monitorar os recursos e tomar ações de acordo com o estado destes.
 
-Através das abstrações presentes no metamodelo é possível definir o tratamento de eventos gerados pelos recursos e  das chamadas realizadas através da interface da camada. Estes mecanismos, associados à manutenção de estado, possibilitam definir como os recursos e solicitações serão monitorados para identificar variados cenários que exigem a execução de uma ação.
-
+Através das abstrações presentes no metamodelo é possível definir o tratamento de eventos gerados pelos recursos e  das chamadas realizadas através da interface da camada. 
+Estes mecanismos, associados à manutenção de estado, possibilitam definir como os recursos e solicitações serão monitorados para identificar variados cenários que exigem a execução de uma ação.
 
 %- Apesar de isso ser possível, estas abstrações não são apropriadas para este tipo de tarefa.
 
@@ -291,14 +296,14 @@ A interação entre essas funções é dirigida pela troca de conhecimento, que repre
 %The autonomic manager is a component that implements the control loop ... For a system component to be self-managing, it must have an automated method to collect the details it needs from the system; to analyze those details to determine if something needs to change; to create a plan, or sequence of actions, that specifies the necessary changes; and to perform those actions. When these functions can be automated, an intelligent control loop is formed.
 
 
-%- No meta-modelo proposto, as funções tem seu comportamento descrito a partir dos elementos que elas devem gerar.
+%- No metamodelo proposto, as funções tem seu comportamento descrito a partir dos elementos que elas devem gerar.
 
 As abstrações presentes no metamodelo proposto permitem descrever regras que determinam a geração e propagação de conhecimento entre as funções MAPE. Desta forma, ao construir uma camada de intermediação de serviços, devem ser descritas regras para identificação de sintomas, solicitações de mudanças e planos de mudança. Em tempo de execução, o monitor utiliza essas regras para identificar a ocorrência de um sintoma. De forma semelhante o analisador e planejador se baseiam nos sintomas identificados e nas solicitações de mudança geradas para realizarem sua tarefa.
 A Figura~\ref{fig:metamodelo-autonomo} ilustra as construções associadas à definição do mecanismo autônomo em um intermediador de serviços.
 
 \begin{figure}
  \centering
- \includegraphics[width=0.7\textwidth]{./fig/autonomo}
+ \includegraphics[width=0.85\textwidth]{./fig/autonomo}
  \caption{Elementos do metamodelo para descrição do comportamento autônomo.}
  \label{fig:metamodelo-autonomo}
 \end{figure}
@@ -343,7 +348,7 @@ Os principais elementos da definição de políticas são representados por meio das
 
 \begin{figure}
  \centering
- \includegraphics[width=0.8\textwidth]{./fig/policy}
+ \includegraphics[width=0.95\textwidth]{./fig/policy}
  \caption{Elementos do metamodelo para descrição de políticas.}
  \label{fig:metamodelo-politicas}
 \end{figure}
