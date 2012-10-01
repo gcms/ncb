@@ -1,0 +1,14 @@
+  actions: EventAction GenerateLoginFailedEvent {
+    event: layer.LoginFailed
+    parameters: ActionParameter framework
+  }
+  handlers: Handler {
+    signal: Event resource.LoginFailed
+    action: ActionExecution {
+      action: EventAction GenerateLoginFailedEvent
+      bindings: ParameterBinding {
+        parameter: ActionParameter GenerateLoginFailedEvent.framework
+        value: SourceValue
+      }
+    }
+  }

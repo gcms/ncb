@@ -1,0 +1,18 @@
+  handlers: Handler {
+    signal: Call layer.DisableMedium
+    action: ActionExecution {
+      action: MacroAction MediumAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.session
+        value: ParameterValue layer.DisableMedium.session
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.medium
+        value: ParameterValue layer.DisableMedium.medium
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.action
+        value: FixedValue "disable"
+      }
+    }
+  }

@@ -1,0 +1,13 @@
+  actions: CallAction EnqueueEnableMedium {
+    call: layer.EnableMedium
+    parameters: ActionParameter session
+    parameters: ActionParameter medium
+    bindings: ParameterBinding {
+      parameter: Parameter layer.EnableMedium.session
+      value: ParameterValue EnqueueEnableMedium.session
+    }
+    bindings: ParameterBinding {
+      parameter: Parameter layer.EnableMedium.medium
+      value: ParameterValue EnqueueEnableMedium.medium
+    }
+  }

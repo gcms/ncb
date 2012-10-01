@@ -1,0 +1,24 @@
+  actions: MacroAction MediumAction {
+    impl: "cvm.ncb.actions.MediumActionImpl"
+    parameters: ActionParameter session
+    parameters: ActionParameter medium
+    parameters: ActionParameter action
+  }
+  handlers: Handler {
+    signal: Call layer.EnableMedium
+    action: ActionExecution {
+      action: MacroAction MediumAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.session
+        value: ParameterValue layer.EnableMedium.session
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.medium
+        value: ParameterValue layer.EnableMedium.medium
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter MediumAction.action
+        value: FixedValue "enable"
+      }
+    }
+  }

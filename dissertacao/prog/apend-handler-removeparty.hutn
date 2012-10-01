@@ -1,0 +1,19 @@
+  actions: MacroAction RemovePartyAction {
+    impl: "cvm.ncb.actions.RemovePartyActionImpl"
+    parameters: ActionParameter session
+    parameters: ActionParameter participant
+  }
+  handlers: Handler {
+    signal: Call layer.RemoveParty
+    action: ActionExecution {
+      action: MacroAction RemovePartyAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter RemovePartyAction.session
+        value: ParameterValue layer.RemoveParty.session
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter RemovePartyAction.participant
+        value: ParameterValue layer.RemoveParty.participant
+      }
+    }
+  }

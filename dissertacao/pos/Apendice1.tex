@@ -1,45 +1,152 @@
 \chapter{Modelo do Intermediador de Comunicação em Rede}
-\label{apend:ncb}
 
-  \begin{codigo}[h]
+Neste apêndice são mostrados todos os elementos que compõem o modelo que define o intermediador de serviços descrito no Capítulo~\ref{cap:instancia}. 
+Os elementos do modelo em questão são instâncias dos elementos que integram o metamodelo descrito no Capítulo~\ref{cap:metamodelo} e são descritos utilizando \emph{Human Usable Textual Notation} (HUTN) \cite{hutn}.
+
+\vspace{10 mm}
+
+  \begin{codigo}[H]
    \small
-   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-iface.hutn}
-   \caption{Interface da camada.} 
-   \label{cod:apend-iface}
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-iface-event.hutn}
+   \caption{Eventos da interface da camada.} 
   \end{codigo}
+
+  \begin{codigo}[H]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-iface-call.hutn}
+   \caption{Chamadas da interface da camada.} 
+  \end{codigo}
+
+
   
-  \begin{codigo}[h]
+  \begin{codigo}[H]
    \small
    \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-recursos.hutn}
    \caption{Recursos da camada.} 
-   \label{cod:apend-iface}
   \end{codigo}
-  
- \begin{codigo}[h]
+
+ \begin{codigo}[H]
    \small
-   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-iface-recursos.hutn}
-   \caption{Interface dos recursos.} 
-   \label{cod:apend-iface}
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-iface-recursos-event.hutn}
+   \caption{Eventos da interface dos recursos.} 
   \end{codigo}
+
+  
+ \begin{codigo}[H]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-iface-recursos-call.hutn}
+   \caption{Chamadas da interface dos recursos.} 
+  \end{codigo}
+
+
  
- \begin{codigo}[h]
+ \begin{codigo}[htbp]
    \small
    \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-state.hutn}
    \caption{Tipos de dados mantidos pela camada.} 
-   \label{cod:apend-state}
   \end{codigo}
    
   
-   \begin{codigo}[h]
+   \begin{codigo}[htbp]
    \small
    \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-autonomic.hutn}
    \caption{Definição do gerenciamento autônomo.} 
-   \label{cod:apend-autonomic}
   \end{codigo}
-  
-   \begin{codigo}[h]
+
+   \begin{codigo}[htbp]
    \small
    \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-policy.hutn}
    \caption{Definição de políticas e sua avaliação.} 
-   \label{cod:apend-policy}
   \end{codigo}
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-handler-loginall.hutn}
+   \caption{Tratador e ação da chamada \textsf{LoginAll}.} 
+  \end{codigo}
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-handler-logoutall.hutn}
+   \caption{Tratador e ação da chamada \textsf{LogoutAll}.} 
+  \end{codigo}
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-handler-sendschema.hutn}
+   \caption{Tratador e ação da chamada \textsf{SendSchema}.} 
+  \end{codigo}
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-handler-createsession.hutn}
+   \caption{Tratador e ação da chamada \textsf{CreateSession}.} 
+  \end{codigo}
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-handler-destroysession.hutn}
+   \caption{Tratador e ação da chamada \textsf{DestroySession}.} 
+  \end{codigo}
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-handler-addparty.hutn}
+   \caption{Tratador e ação da chamada \textsf{AddParty}.} 
+  \end{codigo}
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-handler-removeparty.hutn}
+   \caption{Tratador e ação da chamada \textsf{RemoveParty}.} 
+  \end{codigo}
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-handler-medium.hutn}
+   \caption{Tratador e ação da chamada \textsf{EnableMedium}.} 
+  \end{codigo}
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-handler-enablemediumreceiver.hutn}
+   \caption{Tratador da chamada \textsf{EnableMediumReceiver}.} 
+  \end{codigo}
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-handler-disablemedium.hutn}
+   \caption{Tratador da chamada \textsf{DisableMedium}.} 
+  \end{codigo}
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-handler-loginfailed.hutn}
+   \caption{Tratador e ação do evento \textsf{LoginFailed}.} 
+  \end{codigo}
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-handler-mediumfailed.hutn}
+   \caption{Tratador do evento \textsf{MediumFailed}.} 
+  \end{codigo}
+
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-action-disableframework.hutn}
+   \caption{Ação \textsf{DisableFramework}.} 
+  \end{codigo}
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-action-enqueueenablemedium.hutn}
+   \caption{Ação \textsf{EnqueueEnableMedium}.} 
+  \end{codigo}
+
+ \begin{codigo}[htbp]
+   \small
+   \VerbatimInput[xleftmargin=5mm,numbers=left,obeytabs=true]{./prog/apend-action-sequence.hutn}
+   \caption{Ação \textsf{ChangeFramework}.} 
+  \end{codigo}
+  

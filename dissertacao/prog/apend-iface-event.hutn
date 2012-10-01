@@ -1,0 +1,13 @@
+  iface: Interface layer {
+    signals: Event LoginFailed {
+      parameters: Parameter framework
+    }
+    signals: Event SchemaReceived {
+      parameters: Parameter sender
+      parameters: Parameter schema
+    }
+    signals: Event SchemaFailed {
+      parameters: Parameter receiver
+      parameters: Parameter schema
+    }
+  }

@@ -1,0 +1,14 @@
+  actions: MacroAction DestroySessionAction {
+    impl: "cvm.ncb.actions.DestroySessionActionImpl"
+    parameters: ActionParameter session
+  }
+  handlers: Handler {
+    signal: Call layer.DestroySession
+    action: ActionExecution {
+      action: MacroAction DestroySessionAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter DestroySessionAction.session
+        value: ParameterValue layer.DestroySession.session
+      }
+    }
+  }

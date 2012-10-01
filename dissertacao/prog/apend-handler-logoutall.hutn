@@ -1,0 +1,10 @@
+  actions: CallAction LogoutAllAction {
+    call: Call resource.Logout
+    target: Expression "Resource.all.findAll { it.available }"
+  }
+  handlers: Handler {
+    signal: Call layer.LogoutAll
+    action: ActionExecution {
+      action: CallAction LogoutAllAction
+    }
+  }

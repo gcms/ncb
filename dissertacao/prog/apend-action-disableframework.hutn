@@ -1,0 +1,5 @@
+  actions: MacroAction DisableFramework {
+    impl: "cvm.ncb.actions.DisableFrameworkImpl"
+    parameters: ActionParameter framework
+  }
+

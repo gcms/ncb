@@ -25,7 +25,7 @@ A Seção~\ref{sec:sb}, por sua vez, detalha o subconjunto da abordagem proposta q
 \section{Visão geral}
 \label{sec:visao-geral-2}
 
-A construção de um metamodelo e uma máquina de execução projetados para uma DSML permite definir completamente a sintaxe e semântica da linguagem. Enquanto o metamodelo descreve a sintaxe e semântica estática da linguagem, sua semântica dinâmica é capturada de forma operacional pela máquina virtual.
+A construção de um metamodelo e uma máquina de execução projetados para uma DSML permite definir completamente a sintaxe e semântica da linguagem. Enquanto o metamodelo descreve a sintaxe e semântica estática da linguagem, sua semântica dinâmica é capturada de forma operacional pela máquina de execução.
 
 A criação de DSMLs de alto nível, baseadas em construções próximas do domínio do problema, possibilita que usuários sejam capazes de construir aplicações complexas. 
 Para tornar isso possível, é preciso que o metamodelo da DSML, assim como a máquina de execução capaz de processá-la, incorporem grande parte do conhecimento específico de seu domínio.
@@ -77,7 +77,7 @@ A arquitetura proposta é uma generalização da arquitetura em camadas empregada p
 
 \item Mecanismo de Síntese (\emph{Synthesis Engine} - SE), que possui como principal responsabilidade a transformação de um modelo declarativo fornecido pela UI em uma representação algorítmica a ser executada pela camada inferior;
 
-\item \emph{Middleware}, que além de executar as requisições geradas pelo Mecanismo de Síntese,  também gerencia os serviços providos pela máquina virtual e as tarefas em execução. Essa também é a camada responsável pela aplicação de restrições de segurança, qualidade de serviço, entre outras específicas do domínio de negócio. 
+\item \emph{Middleware}, que além de executar as requisições geradas pelo Mecanismo de Síntese,  também gerencia os serviços providos pela máquina de execução e as tarefas em execução. Essa também é a camada responsável pela aplicação de restrições de segurança, qualidade de serviço, entre outras específicas do domínio de negócio. 
 
 \item Intermediador de Serviços (\emph{Service Broker} - SB), que é a camada responsável pelo gerenciamento dos recursos. Assim sendo, essa camada tem como objetivo prover uma interface de acesso aos recursos de forma independente da tecnologia empregada por estes, provendo um serviço transparente à camada de \emph{middleware}.
 
@@ -95,7 +95,7 @@ A Figura~\ref{fig:proposta-arquitetura} ilustra a arquitetura genérica descrita 
 \begin{figure}[ht]
  \centering
  \includegraphics[width=1\textwidth]{./fig/proposta-arquitetura}
- \caption{Arquitetura em camadas proposta para construção de máquinas virtuais.}
+ \caption{Arquitetura em camadas proposta para construção de máquinas de execução de modelos.}
  \label{fig:proposta-arquitetura}
 \end{figure}
 

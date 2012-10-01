@@ -1,0 +1,14 @@
+  actions: MacroAction CreateSessionAction {
+    impl: "cvm.ncb.actions.CreateSessionActionImpl"
+    parameters: ActionParameter session
+  }
+  handlers: Handler {
+    signal: Call layer.CreateSession
+    action: ActionExecution {
+      action: MacroAction CreateSessionAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter CreateSessionAction.session
+        value: ParameterValue layer.CreateSession.session
+      }
+    }
+  

@@ -1,0 +1,19 @@
+  actions: MacroAction SendSchemaAction {
+    impl: "cvm.ncb.actions.SendSchemaActionImpl"
+    parameters: ActionParameter receivers
+    parameters: ActionParameter schema
+  }
+  handlers: Handler {
+    signal: Call layer.SendSchema
+    action: ActionExecution {
+      action: MacroAction SendSchemaAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter SendSchemaAction.receivers
+        value: ParameterValue layer.SendSchema.receivers
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter SendSchemaAction.schema
+        value: ParameterValue layer.SendSchema.schema
+      }
+    }
+  }

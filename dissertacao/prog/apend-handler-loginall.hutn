@@ -1,0 +1,10 @@
+  actions: CallAction LoginAllAction {
+    call: Call resource.Login
+    target: Expression "Resource.all.findAll { it.available }"
+  }
+  handlers: Handler {
+    signal: Call layer.LoginAll
+    action: ActionExecution {
+      action: CallAction LoginAllAction
+    }
+  }

@@ -1,0 +1,19 @@
+  actions: MacroAction AddPartyAction {
+    impl: "cvm.ncb.actions.AddPartyActionImpl"
+    parameters: ActionParameter session
+    parameters: ActionParameter participant
+  }
+  handlers: Handler {
+    signal: Call layer.AddParty
+    action: ActionExecution {
+      action: MacroAction AddPartyAction
+      bindings: ParameterBinding {
+        parameter: ActionParameter AddPartyAction.session
+        value: ParameterValue layer.AddParty.session
+      }
+      bindings: ParameterBinding {
+        parameter: ActionParameter AddPartyAction.participant
+        value: ParameterValue layer.AddParty.participant
+      }
+    }
+  }

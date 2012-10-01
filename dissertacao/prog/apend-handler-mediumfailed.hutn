@@ -1,0 +1,6 @@
+  handlers: Handler {
+    signal: Event resource.MediumFailed
+    action: ActionExecution {
+      action: NoAction /* handled by autonomic manager, stops propagation */
+    }
+  }
