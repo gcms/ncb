@@ -1,0 +1,15 @@
+  resourceManager: InstanceResourceManager {
+      signals: Event LoginFailed
+      signals: Event SchemaReceived {
+        parameters: sender
+        parameters: schema
+      }
+      signals: Event SchemaFailed {
+        parameters: receiver
+        parameters: schema
+      }
+      signals: Event MediumFailed {
+        parameters: medium
+      }
+    }
+  }

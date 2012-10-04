@@ -1,0 +1,36 @@
+  resourceManager: InstanceResourceManager {
+    ifaces: Interface resource {
+      provides: Call Login
+      provides: Call Logout
+      provides: Call SendSchema {
+        parameters: receiver
+        parameters: schema
+      }
+      provides: Call CreateSession {
+        parameters: session
+      }
+      provides: Call DestroySession {
+        parameters: session
+      }
+      provides: Call AddParty {
+        parameters: session
+        parameters: participant
+      }
+      provides: Call RemoveParty {
+        parameters: session
+        parameters: participant
+      }
+      provides: Call EnableMedium {
+        parameters: session
+        parameters: medium
+      }
+      provides: Call EnableMediumReceiver {
+        parameters: session
+        parameters: medium
+      }
+      provides: Call DisableMedium {
+        parameters: session
+        parameters: medium
+      }
+    }
+  }
