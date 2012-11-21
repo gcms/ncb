@@ -22,7 +22,7 @@ Apesar do metamodelo prover abstrações que possibilitam descrever um intermediad
 
 %The provided execution environment was developed in the Java platform and comprises components for executing a broker layer model and a library for interfacing with the resources to be managed by the layer. It loads a model described in EMF XMI 2.0 and initializes a broker layer for a DSML execution engine.
 
-O ambiente de execução, desenvolvido na plataforma Java, inclui componentes para a execução de modelos que representam intermediadores de serviços, e uma biblioteca de classes para integração da camada com os recursos a serem gerenciados. Através desses componentes é possível carregar um modelo representado no formato EMF XMI 2.0 e inicializar uma camada de intermediação de serviços de uma máquina de execução de modelosl.
+O ambiente de execução, desenvolvido na plataforma Java, inclui componentes para a execução de modelos que representam intermediadores de serviços, e uma biblioteca de classes para integração da camada com os recursos a serem gerenciados. Através desses componentes é possível carregar um modelo representado no formato EMF XMI 2.0 e inicializar uma camada de intermediação de serviços de uma máquina de execução de modelos.
 
 % Introduction to understand the following paragraphs
 %in this section we deal with the actual implementation that actually process the requests driven by a given Broker model
@@ -68,7 +68,7 @@ O \emph{gerenciador de tratadores de sinais} mantém um registro de \emph{tratado
 
 Uma vez identificado o \emph{tratador de sinais} apropriado, a \emph{ação} correspondente é executada. Como ilustrado na Figura~\ref{fig:ambiente-fluxo}, uma \emph{ação} pode interagir com os recursos por meio do \emph{gerenciador de recursos}, manipular o estado da camada por meio do \emph{gerenciador de estado}, ou gerar eventos para a camada superior por meio do \emph{gerenciador de intermediação}.
 
-Além desses, outros tratadores especializados também são registrados com o objetivo identificar sinais que podem ser de interesse para as funções de auto-gerenciamento da camada. Esses tratadores interceptam os sinais recebidos e os direcionam para o \emph{gerenciador autônomo} e o \emph{gerenciador de avaliação de políticas}, respectivamente.
+Além desses, outros tratadores especializados também são registrados com o objetivo de identificar sinais que podem ser de interesse para as funções de auto-gerenciamento da camada. Esses tratadores interceptam os sinais recebidos e os direcionam para o \emph{gerenciador autônomo} e o \emph{gerenciador de avaliação de políticas}, respectivamente.
 
 O \emph{gerenciador de recursos} mantém referências para os recursos disponíveis para uso da camada, e disponibiliza uma interface para obtenção desses recursos. Além disso, esse gerenciador notifica o \emph{gerenciador de intermediação} sobre eventos gerados pelos recursos.
 O \emph{gerenciador de estado} disponibiliza uma interface para manipulação de dados, e notifica o \emph{gerenciador autônomo} sobre alterações, que podem disparar o mecanismo de auto gerenciamento da camada.
@@ -118,7 +118,7 @@ Instâncias dessa classe são registradas durante a inicialização da camada, a par
 
 %\subsection{Acionamento de ações}
 
-Associado a um \textsf{ActionSignalHandler}, há um acionador de ação, implementado pela classe \textsf{ActionCaller}. O acionador é inicializado junto ao tratador, e tem como objetivo realizar o mapeamento do contexto do sinal recebido para o contexto da ação a ser executada. Uma ação, por sua vez, é representada em tempo de execução por um objeto do tipo \textsf{ActionInstance}. A Figura~\ref{fig:ambiente-acao} também mostra as classes e interfaces que estão relacionadas com o tratamento de sinais por meio da execução de uma ação. 
+Associado a um \textsf{ActionSignalHandler}, há um acionador de ação, implementado pela classe \textsf{ActionCaller}. O acionador é inicializado junto ao tratador, e tem como objetivo realizar o mapeamento do contexto do sinal recebido para o contexto da ação a ser executada. Uma ação, por sua vez, é representada em tempo de execução por um objeto do tipo \textsf{ActionInstance}. A Figura~\ref{fig:ambiente-acao} também mostra as classes e interfaces relacionadas ao tratamento de sinais por meio da execução de uma ação. 
 
 Como já observado, uma ação executa uma determinada operação na camada, que pode envolver a utilização de recursos ou manipulação do estado da camada.  Além disso, a execução de uma ação exige um contexto, definido por um conjunto de parâmetros. 
 Essas características podem ser notadas na interface \textsf{ActionInstance}, cujo método \textsf{execute} exige um contexto de gerenciamento, e um conjunto de parâmetros. Por meio do contexto de gerenciamento, a ação pode ter acesso aos gerenciadores de intermediação, recursos e estado. Os parâmetros de uma ação são representados em tempo de execução por um dicionário de nomes e valores.
@@ -127,7 +127,10 @@ O acionador de ação, por sua vez, recebe um provedor de contexto, e o utiliza pa
 
 %\subsection{Associação de contexto}
 
-Quando uma ação é utilizada para tratar um sinal, o contexto utilizado para a execução da ação é provido pelo próprio sinal. Um sinal é representado em tempo de execução por meio da classe \textsf{SignalInstance}, que implementa a interface \textsf{ContextProvider}. Um sinal provê, como variáveis, além dos parâmetros passados juntamente com o sinal, o objeto que gerou esse sinal, identificado pela variável \textsf{source}.
+Quando uma ação é utilizada para tratar um sinal, o contexto utilizado para a execução da ação é provido pelo próprio sinal.
+Um sinal é representado em tempo de execução por meio da classe \textsf{SignalInstance}, que implementa a interface \textsf{ContextProvider}.
+O contexto de um sinal inclui os parâmetros passados juntamente com o sinal e o objeto que gerou esse sinal, identificado pela variável \textsf{source}.
+%Um sinal provê, como variáveis, além dos parâmetros passados juntamente com o sinal, o objeto que gerou esse sinal, identificado pela variável \textsf{source}.
 
 O mapeamento do contexto provido por um sinal para os parâmetros da ação depende do tipo de fonte de valor empregado, conforme descrito na Seção~\ref{sec:metamodelo-sinais}. Uma fonte de valor define como um valor será obtido do contexto para, em seguida, ser atribuído a um parâmetro da ação que será executada. 
 
@@ -145,7 +148,7 @@ A origem de um sinal é obtida por meio de uma consulta ao valor da variável \tex
 Enquanto os tipos de fonte de valor citados acima têm o seu comportamento implementado de forma relativamente simples e direta, a implementação de fontes de valor baseadas em expressões, assim como em chamadas a outras ações, é um pouco mais complexa.
 Os tipos de fontes de valores discutidos acima envolvem, no máximo, uma variável do contexto, enquanto o uso de expressões permite que várias variáveis do contexto provido sejam empregadas para se obter um valor único, que será então passado como um argumento a uma ação.
 
-Na implementação existente, as expressões podem ser descritas na linguagem Groovy \cite{groovyExpr}. Groovy é uma linguagem dinâmica para a plataforma Java que apresenta várias construções que facilitam seu emprego para a descrição de expressões. A linguagem permite o emprego de uma sintaxe simplificada para o acesso a propriedades, utilização de estruturas de dados, e definição de expressões \emph{lambda}. Além disso, essa linguagem pode ser considerada um superconjunto da linguagem Java, pois as construções Java também são construções válidas em Groovy.
+Na implementação atual do ambiente de execução, as expressões podem ser descritas na linguagem Groovy \cite{groovyExpr}. Groovy é uma linguagem dinâmica para a plataforma Java que apresenta várias construções que facilitam seu emprego para a descrição de expressões. A linguagem permite o emprego de uma sintaxe simplificada para o acesso a propriedades, utilização de estruturas de dados, e definição de expressões \emph{lambda}. Além disso, essa linguagem pode ser considerada um superconjunto da linguagem Java, pois as construções Java também são construções válidas em Groovy.
 %  lambda \cite{proglang}
 
 Ao definir uma expressão como fonte de valor, é possível empregar todas as variáveis providas pelo contexto provido. Como já observado, quando um sinal é tratado, o contexto consiste dos parâmetros e da origem do sinal.
@@ -161,7 +164,7 @@ A avaliação de uma fonte de valor desse tipo é realizada da mesma forma que a ex
 
 %\subsection{Ações}
 
-Em tempo de execução, uma ação é representada por um objeto do tipo \textsf{ActionInstance}, uma interface que é implementada pelas classes \textsf{CallActionInstance}, \textsf{EventActionInstance}, e \textsf{SequenceActionInstance}. Além disso, uma subinterface, chamada \textsf{MacroActionInstance} representa uma ação implementada por uma \emph{macro}. A Figura~\ref{fig:ambiente-acao} mostra a hierarquia do tipo \textsf{ActionInstance}, que são os objetos que efetivamente são executados pelo acionador de ação após o mapeamento de parâmetros. Além disso, esses elementos estão diretamente associados aos tipos de ação existentes no metamodelo, descritos na Seção~\ref{sec:metamodelo-sinais}.
+Em tempo de execução, uma ação é representada por um objeto do tipo \textsf{ActionInstance}, uma interface que é implementada pelas classes \textsf{CallActionInstance}, \textsf{EventActionInstance}, e \textsf{SequenceActionInstance}. Além disso, uma subinterface, chamada \textsf{MacroActionInstance} representa uma ação implementada por uma \emph{macro}. A Figura~\ref{fig:ambiente-acao} mostra a hierarquia do tipo \textsf{ActionInstance}, que são os objetos efetivamente executados pelo acionador de ação após o mapeamento de parâmetros. Além disso, esses elementos estão diretamente associados aos tipos de ação existentes no metamodelo, descritos na Seção~\ref{sec:metamodelo-sinais}.
 
 A lógica implementada pela classe \textsf{CallActionInstance} é direta, e consiste em enviar uma chamada a um recurso ou ao gerenciador de intermediação, conforme definido no modelo. A classe \textsf{EventActionInstance} atua de forma similar e tem como intuito permitir que a camada gere um evento para as camadas superiores. Em ambos os casos, os parâmetros recebidos pela ação são diretamente utilizados como parâmetros para a chamada ou evento.
 
@@ -188,7 +191,7 @@ Além disso, a utilização de recursos em tempo de execução, é mediada por compone
 
 A classe \textsf{ResourceManager} representa o ponto inicial de acesso aos recursos gerenciados por uma camada de intermediação de serviços. Essa classe mantém um registro de recursos, criado a partir das definições presentes no modelo da camada. A partir dessa classe, é possível obter os recursos registrados, que são representados em tempo de execução pelo tipo \textsf{Resource}. 
 
-A interface \textsf{Resource} possui duas implementações concretas: \textsf{ManagedResource}, que media o acesso a um recurso ordinário; e \textsf{BrokerManager}, que representa um outro intermediador de serviços que está sendo utilizado como um recurso. A Figura~\ref{fig:ambiente-recursos-classes} apresenta as principais classes relacionadas com o gerenciamento de recursos em tempo de execução.
+A interface \textsf{Resource} possui duas implementações concretas: \textsf{ManagedResource}, que media o acesso a um recurso ordinário; e \textsf{BrokerManager}, que representa um outro intermediador de serviços que está sendo utilizado como um recurso. A Figura~\ref{fig:ambiente-recursos-classes} apresenta as principais classes relacionadas ao gerenciamento de recursos em tempo de execução.
 
 \begin{figure}
  \centering
@@ -270,7 +273,7 @@ Esta classe também é responsável por interceptar a manipulação de um registro co
 \section{Gerenciamento autônomo}
 \label{sec:ambiente-autonomic}
 
-A implementação do auto-gerenciamento da camada se baseia na arquitetura de computação autonôma introduziada na Seção~\ref{sec:referencial-autonomic}. O ambiente de execução inclui um conjunto de classes que implementam as funções de monitoramento (\textsf{Monitor}), análise (\textsf{Analyzer}), planejamento (\textsf{Planner}) e execução (\textsf{Executor}), presentes em um gerenciador autônomo. Além dessas funções, um outro conjunto de classes é utilizado para representar o conhecimento trocado entre essas funções em tempo de execução, incluindo ocorrências de sintomas (\textsf{SymptomOcurrence}), requisições de mudança (\textsf{ChangeRequestInstance}), e planos de mudança  (\textsf{ChangePlanInstance}). A Figura~\ref{fig:ambiente-autonomo} ilustra as classes que compõem a implementação do mecanismo autônomo.
+A implementação do auto-gerenciamento da camada se baseia na arquitetura de computação autonôma introduzida na Seção~\ref{sec:referencial-autonomic}. O ambiente de execução inclui um conjunto de classes que implementam as funções de monitoramento (\textsf{Monitor}), análise (\textsf{Analyzer}), planejamento (\textsf{Planner}) e execução (\textsf{Executor}), presentes em um gerenciador autônomo. Além dessas funções, um outro conjunto de classes é utilizado para representar o conhecimento trocado entre essas funções em tempo de execução, incluindo ocorrências de sintomas (\textsf{SymptomOcurrence}), requisições de mudança (\textsf{ChangeRequestInstance}), e planos de mudança  (\textsf{ChangePlanInstance}). A Figura~\ref{fig:ambiente-autonomo} ilustra as classes que compõem a implementação do mecanismo autônomo.
 
 \begin{figure}
  \centering

@@ -53,7 +53,7 @@ Abordagens de MDE visam reduzir essa distância promovendo o uso de abstrações ma
 
 %Além de abstratos, os modelos empregados em abordagens de MDE são formais, o que possibilita que sejam processados de forma automatizada. 
 
-A abordagem de arquitetura dirigida por modelos (\emph{Model-Driven Architecture}, MDA) \cite{mda} surgiu com o objetivo de definir funcionalidades do sistema de forma independente da plataforma de implementação, buscando a interoperabilidade e portabilidade do sistema. A MDA pode ser considerada como a primeira iniciativa a propor um conjunto de princípios e padrões para o uso sistematizado de modelos. O termo \emph{Model-Driven Engineering}, cunhado mais recentemente, propõe o uso de modelos de forma mais abrangente, e engloba além de MDA outras iniciativas como \emph{Model-Driven Development} (MDD) \cite{pragMDE, mddesign}, e \emph{Model-Integrated Computing} (MIC) \cite{mic}, entre outras.
+A abordagem de arquitetura dirigida por modelos (\emph{Model-Driven Architecture}, MDA) \cite{mda} surgiu com o objetivo de definir funcionalidades do sistema de forma independente da plataforma de implementação, buscando a interoperabilidade e portabilidade do sistema. A MDA pode ser considerada como a primeira iniciativa a propor um conjunto de princípios e padrões para o uso sistematizado de modelos. O termo \emph{Model-Driven Engineering}, usado mais recentemente, propõe o uso de modelos de forma mais abrangente, e engloba além de MDA outras iniciativas como \emph{Model-Driven Development} (MDD) \cite{pragMDE, mddesign}, e \emph{Model-Integrated Computing} (MIC) \cite{mic}, entre outras.
 % \cite{scopeMDE}
 
 A maior parte das abordagens de MDD propõe a construção de linguagens de modelagem e transformações capazes de transformar modelos descritos por meio dessas linguagens em artefatos da plataforma de implementação. A abordagem MIC pode ser considerada como uma aplicação de MDD, e propõe a construção de ambientes de desenvolvimento específicos de domínio que compreendem linguagens de modelagem específicas de domínio, transformadores e ferramentas que auxiliam na construção de aplicações naquele domínio. %Além disso, várias outras abordagens propõem o uso de modelos para definição de diferentes aspectos como (citar aspectos e citação).
@@ -64,12 +64,12 @@ A maior parte das abordagens de MDD propõe a construção de linguagens de modelag
 %More than five years after, the situation has much evolved. Separating platform dependent from platform independent aspects is no more seen as the unique goal. The major problem is now the separation and combination of concerns in the construction and maintenance of information systems. Among these concerns, platform dependent and independent aspects remains important in the agenda, but these are more and more considered as a special case of a general problem including for example separation of functional and non-functional requirements. MDA and DSL solutions are now more and more closely related. What MDA is bringing to DSLs is this idea of using a collection of metamodels to capture the various facets of a system under construction or under maintenance. What DSLs is bringing to MDA is that a unique general purpose language, even a very large one like UML 2.0, is not able and will never be able to capture all the needs of the designers, administrators, and users of a given system.
 
 Apesar de empregarem modelos com diferentes objetivos, essas abordagens apresentam várias similaridades, sendo por vezes sobrepostas. 
-A engenharia dirigida por modelos busca sistematizar o uso de modelos, de forma que possam ser empregados com diversos objetivos em todos as atividades da engenharia de software. 
-Sob essa ótica, o princípio básico da engenharia dirigida por modelos propõe o uso de modelos como objetos de primeira classe, utilizados na construção de todos os artefatos de software \cite{searchPrinciple, Unifying}.
+A engenharia dirigida por modelos busca sistematizar o uso de modelos, de forma que possam ser empregados com diversos objetivos em todas as atividades da engenharia de software. 
+Dessa forma, o princípio básico da engenharia dirigida por modelos propõe o uso de modelos como objetos de primeira classe, utilizados na construção de todos os artefatos de software \cite{searchPrinciple, Unifying}.
 
 %Considering everything as a model in a software  development approach  has  many consequences that we are progressively discovering. This paper has probably shown  only some of them. Besides the advantages of conceptual simplicity, this also leads to clear architecture, efficient implementation, high scalability  and  good  flexibility
 
-Apesar de ser considerada uma abordagem recente de engenharia de software, a engenharia dirigida por modelos se baseia em idéias de várias outras abordagens como linguagens específicas de domínio, programação orientada por linguagens, programação por geração e programação dirigida por domínio, entre outras \cite{Unifying}.
+Apesar de ser considerada uma abordagem recente de engenharia de software, a engenharia dirigida por modelos se baseia em idéias de várias outras abordagens como linguagens específicas de domínio, programação orientada por linguagens, programação generativa e programação dirigida por domínio, entre outras \cite{Unifying}.
 Nesse contexto, a engenharia dirigida por modelos surge como uma tentativa de sistematizar o uso de modelos, apoiando-se em técnicas e princípios já existentes.
 % sistematizado de várias dessas abordagens, sendo consideradas compatíveis com o princípio \cite{ts,Towards a Basic Theory to Model Model Driven}.
 
@@ -127,13 +127,14 @@ Modelos são formalizados por meio de linguagens de modelagem, cujas construções 
 
 \subsection{Metamodelagem}
 Conforme mencionado na seção anterior, modelos são construídos em conformidade com uma linguagem de modelagem. Assim como outras linguagens formais, uma linguagem de modelagem é definida por sua sintaxe e semântica. 
-A sintaxe de uma linguagem de modelagem pode ainda ser divida em sintaxe concreta, que representa sua notação textual ou gráfica, e sintaxe abstrata que representa os conceitos disponíveis na linguagem e como eles se relacionam. A semântica, por sua vez, também é comumente tratada separadamente como semântica estática, que define critérios para que modelos sejam considerados válidos, e a semântica dinâmica que dá significado aos modelos.
+A sintaxe de uma linguagem de modelagem pode ainda ser divida em sintaxe concreta, que representa sua notação textual ou gráfica, e sintaxe abstrata que representa os conceitos disponíveis na linguagem e como eles se relacionam. A semântica, por sua vez, também é  tratada separadamente como semântica estática, que define critérios para que modelos sejam considerados válidos, e a semântica dinâmica que define o significado dos modelos ao serem executados.
 
 %A sintaxe de uma linguagem é tradicionalmente definida por meio de gramáticas na forma Backus-Naur (BNF), que descrevem regras para derivação de sequências válidas. Apesar de possibilitarem a definição formal de  linguagens, o uso de gramáticas BNF se limita a descrição de linguagens textuais e 
-A sintaxe abstrata e a semântica estática de uma linguagem de modelagem são comumente formalizadas por meio de um metamodelo. Um metamodelo é um modelo que descreve um conjunto de abstrações e como estas se relacionam. 
+A sintaxe abstrata e a semântica estática de uma linguagem de modelagem são comumente formalizadas por meio de um metamodelo.
+Um metamodelo é um modelo que descreve um conjunto de abstrações e como estas se relacionam. 
 As abstrações descritas por um metamodelo representam as construções que irão compor a linguagem por ele formalizada.
 %Assim sendo, o metamodelo deve incluir elementos relacionados ao aspecto e nível de abstração da linguagem por ele descrito.
-Assim sendo, os elementos do metamodelo devem estar relacionadas ao nível de abstração da linguagem por ele descrita e também ao aspecto do sistema a ser descrito por meio dessa linguagem.
+Assim sendo, os elementos do metamodelo devem estar relacionados ao nível de abstração da linguagem por ele descrita e também ao aspecto do sistema a ser descrito por meio dessa linguagem.
 
 
 Por se tratar de um modelo, um metamodelo também é construído por meio de uma linguagem de modelagem. Esta meta-linguagem, por sua vez, também é definida através de um metamodelo, que neste caso é chamado de meta-metamodelo. 
@@ -152,9 +153,11 @@ O modelo da camada M3, também denominado de modelo MOF, é formalizado por meio d
 
 A partir do modelo da camada M3, é possível construir metamodelos que descrevem a sintaxe abstrata e semântica estática de linguagens de modelagem para diversos fins. 
 Exemplos de linguagens de modelagem definidas a partir do modelo MOF incluem a \emph{Unified Modeling Language} (UML) e \emph{Common Warehouse Metamodel} (CWM), também padronizadas pelo OMG.
-Essas linguagens integram a camada M2 da arquitetura da MOF, e são utilizadas para construir os modelos que integram o nível M1. Os modelos da camada M1, por sua vez, são representações de objetos existentes no nível M0. O significado da camada M0 é controverso, e pode ser considerado como um objeto do mundo real, ou um fenômeno da execução de software, de acordo com a natureza do modelo na camada M1. Além disso, a especificação da MOF ainda define um padrão para representação de modelos no formato XMI (\emph{XML Metadata Interchange}).
+Essas linguagens integram a camada M2 da arquitetura da MOF, e são utilizadas para construir os modelos que integram o nível M1.
+Os modelos da camada M1, por sua vez, são representações de objetos existentes no nível M0, que podem ser considerados como objetos do mundo real. 
+Além disso, a especificação da MOF ainda define um padrão para representação de modelos no formato XMI (\emph{XML Metadata Interchange}).
 
-O \emph{Eclipse Modeling Framework} (EMF) é um \emph{framework} de modelagem que fornece um conjunto de ferramentas para construção e processamento de modelos. O EMF inclui um metamodelo denominado Ecore, que representa um subconjunto do modelo MOF correspondente às abstrações existentes em linguagens de programação orientadas a objetos.
+O \emph{Eclipse Modeling Framework} (EMF) \cite{emf} é um \emph{framework} de modelagem que fornece um conjunto de ferramentas para construção e processamento de modelos. O EMF inclui um metamodelo denominado Ecore, que representa um subconjunto do modelo MOF correspondente às abstrações existentes em linguagens de programação orientadas a objetos.
 O Ecore pode ser utilizado para construir modelos que representam o metamodelo de uma linguagem. Utilizado dessa forma, o Ecore assume a mesma função do nível M3 da arquitetura da MOF. O desenvolvimento do EMF e do Ecore influenciou a padronização da MOF 2.0, que passou a contar com um metamodelo equivalente ao Ecore, denominado \emph{Essential MOF} (EMOF) \cite{mof241}.
 
 %EMF Relation to OMG MOF
@@ -185,7 +188,7 @@ Um domínio pode ser considerado como uma área de interesse delimitada. Podemos c
 A abordagem de engenharia dirigida por modelos fornece um conjunto de princípios e ferramentas para construção de linguagens de modelagem, que se adequam perfeitamente à construção de DSLs \cite{Kurtev:2006:MDF:1176617.1176632, mdetechnical}.
 Através do uso de técnicas de metamodelagem  é possível especificar as construções dessas linguagens, que nesse caso são geralmente denominadas linguagens de modelagem específicas de domínio (\emph{Domain-Specific Modeling Languages}, DSMLs).
 
-Ao mesmo tempo, grande parte do sucesso no emprego de abordagens dirigidas por modelos está associada ao emprego de DSMLs, sendo consideradas tecnologias que apresentam grande sinergia \cite{ChallengesSemantics, DSM, Kurtev:2006:MDF:1176617.1176632}. O emprego de abordagens dirigidas por modelos em um domínio específico permite atingir um alto grau de automatização no processamento de modelos.
+Ao mesmo tempo, grande parte do sucesso no emprego de abordagens dirigidas por modelos está associada ao emprego de DSMLs, sendo consideradas tecnologias que apresentam grande sinergia \cite{ChallengesSemantics, DSM, Kurtev:2006:MDF:1176617.1176632}. O de técnicas de abordagens dirigidas por modelos em um domínio específico permite atingir um alto grau de automatização no processamento de modelos.
 %Ao focar em um determinado domínio, é possível construir mecanismos para o processamento de modelos capazes de atingir um alto grau de automatização.
 
 % something that is difficult - if not impossible - to achieve with general purpose languages. For isntance, UML was developed to be able to model all kinds of application domains, but it has not proven to be successfull in truly model-driven development \cite{DSM}
@@ -224,12 +227,12 @@ Modelos também têm sido empregados com sucesso como um meio para lidar com a com
 O gerenciamento de sistemas que precisam ser monitorados, adaptados e evoluídos durante sua execução é realizado por meio da inspeção e manipulação de estruturas que representam o sistema em tempo de execução.
 %No entanto, a representação de um sistema em execução se baseia nas construções da sua plataforma de execução, e não guarda qualquer ligação com as questões que são relevantes ao sistema em execução.
 
-Nesse cenário, o uso de modelos em tempo de execução tem como intuito prover representações mais apropriadas dos elementos de um sistema em execução, ocultando a complexidade de sua plataforma de execução. Assim, os modelos atuam como interfaces que podem ser utilizadas por agentes para monitorar e manipular sistemas em execução.
-De acordo com essa visão, os modelos são o meio pelo qual desenvolvedores ou outros agentes podem compreender, configurar, modificar e interagir com o comportamento e estrutura de um sistema em execução  \cite{mddcs}.
+Nesse cenário, o uso de modelos em tempo de execução tem como intuito prover representações mais apropriadas dos elementos de um sistema em execução, ocultando a complexidade de sua plataforma de execução. Assim, os modelos representam interfaces que podem ser utilizadas por agentes para monitorar e manipular sistemas em execução.
+De acordo com essa visão, os modelos são o meio pelo qual desenvolvedores ou outros agentes podem compreender, configurar e modificar o comportamento e estrutura de um sistema em execução  \cite{mddcs}.
 
 
 Modelos de tempo de execução estão diretamente relacionados à reflexão computacional, visto que ambos buscam definir representações que refletem um sistema em execução e que possuem uma relação de causalidade com o mesmo.
-No entanto, diferente da reflexão cujas representações estão associadas à plataforma de execução do sistema, modelos em tempo de execução empregam representações mais próximas ao problema \cite{mrt}. 
+No entanto, diferente da reflexão cujas representações estão associadas à plataforma de execução do sistema, modelos em tempo de execução empregam representações mais próximas ao domínio do problema \cite{mrt}. 
 Assim como na reflexão computacional, modelos em tempo de execução podem ser empregados para capturar a estrutura ou comportamento de um sistema em execução, ou ainda, podem capturar outras facetas do sistema relacionadas ao domínio do problema.
 
 
@@ -238,12 +241,12 @@ Assim como na reflexão computacional, modelos em tempo de execução podem ser emp
 
 A Máquina Virtual de Comunicação (\emph{Communication Virtual Machine}, CVM) é uma plataforma para especificação e realização de serviços de comunicação \cite{cvm}. Sendo uma plataforma dirigida por modelos, a CVM funciona por meio do processamento de modelos descritos em uma linguagem de modelagem específica de domínio, denominada Linguagem de Modelagem de Comunicação (\emph{Communication Modeling Language}, CML) \cite{cml}. Diferente de muitas abordagens dirigidas por modelo que se apoiam na geração de código, os modelos CML são diretamente interpretados pela CVM.
 
-A CVM é considerada uma plataforma centrada no usuário devido ao alto nível dos modelos descritos por meio da CML, que podem ser facilmente construídos por usuários especialistas de domínio, ou até mesmo por usuários finais. A CML é uma linguagem declarativa, por meio da qual são descritos os participantes, dados, e tipos de mídia envolvidos em uma comunicação a ser realizada. Informações associadas às tecnologias e dispositivos efetivamente utilizados na realização da comunicação, não são descritos em um modelo CML. A Figura~\ref{fig:referencial-cml} apresenta um exemplo de modelo descrito utilizando a representação gráfica da CML. O modelo em questão define uma sessão comunicação entre dois participantes por meio de áudio em tempo real.
+A CVM é considerada uma plataforma centrada no usuário devido ao alto nível dos modelos descritos por meio da CML, que podem ser facilmente construídos por usuários especialistas de domínio, ou até mesmo por usuários finais. A CML é uma linguagem declarativa, por meio da qual são descritos os participantes, dados, e tipos de mídia envolvidos em uma comunicação a ser realizada. Informações associadas às tecnologias e dispositivos efetivamente utilizados na realização da comunicação, não são descritos em um modelo CML. A Figura~\ref{fig:referencial-cml} apresenta um exemplo de modelo descrito utilizando a representação gráfica da CML. O modelo em questão define uma sessão de comunicação entre dois participantes por meio de áudio em tempo real.
 
 \begin{figure}
  \centering
  \includegraphics[width=1\textwidth]{./fig/cml}
- \caption{Exemplo de modelo CML.}
+ \caption{Exemplo de modelo CML \cite{cvm}.}
  \label{fig:referencial-cml}
 \end{figure}
 
@@ -255,7 +258,7 @@ A CVM se baseia em uma arquitetura de camadas que encapsulam as tarefas necessár
 \begin{figure}
  \centering
  \includegraphics[width=0.75\textwidth]{./fig/cvm}
- \caption{Arquitetura em camadas da CVM.}
+ \caption{Arquitetura em camadas da CVM \cite{cvm}.}
  \label{fig:referencial-cvm}
 \end{figure}
 
@@ -289,12 +292,13 @@ Apesar de prever o uso de diversos provedores de comunicação, a versão inicialme
 \section{Sistemas auto-gerenciáveis}
 \label{sec:referencial-selfman}
 
-Um sistema auto-gerenciável é aquele capaz de se adaptar de forma automática, com o intuito de atingir seus objetivos. O objetivo do auto-gerenciamento é reduzir a necessidade do uso de controles manuais para manter um sistema de acordo com os seus objetivos quando da ocorrência de mudanças em seu ambiente operacional ou requisitos \cite{selfManSystems}.
+Um sistema auto-gerenciável é aquele capaz de se adaptar de forma automática às mudanças nos seus requisitos e ambiente operacional.
+O objetivo do auto-gerenciamento é reduzir a necessidade do uso de controles manuais para manter um sistema de acordo com os seus objetivos quando da ocorrência de mudanças em seu ambiente operacional ou requisitos \cite{selfManSystems}.
 
-A construção de sistemas auto-gerenciáveis apresenta vários desafios cujas soluções envolvem diversas áreas de pesquisa, incluindo computação sensível ao contexto, inteligência artificial, adaptação dinâmica etc.
+A construção de sistemas auto-gerenciáveis apresenta vários desafios cujas soluções envolvem diversas áreas de pesquisa, incluindo computação sensível ao contexto, inteligência artificial, adaptação dinâmica, entre outras.
 Nesse contexto, arquiteturas de auto-gerenciamento surgem como uma abordagem para integração de soluções para os desafios envolvidos na realização da visão de sistemas auto-gerenciáveis \cite{archSelfMan, selfManSystems}.
 
-Esta seção apresenta um resumo da arquitetura de computação autônoma proposta pela IBM para construção de sistemas auto-gerenciáveis e do uso de políticas para guiar o gerenciamento de sistemas. Essas tecnologias são empregadas pela CVM e pela abordagem proposta neste trabalho para prover capacidades de auto-gerenciamento.
+Esta seção apresenta um resumo da arquitetura de computação autônoma proposta pela IBM para construção de sistemas auto-gerenciáveis e do uso de políticas para guiar o gerenciamento de sistemas. Ambos conceitos são empregados pela CVM e neste trabalho para prover capacidades de auto-gerenciamento.
 
 \subsection{Computação autônoma}
 \label{sec:referencial-autonomic}
@@ -304,7 +308,7 @@ A crescente complexidade dos sistemas baseados em software modernos tem dificult
 Esses recursos, geralmente heterogêneos, podem incluir, além de componentes de software, bancos de dados, servidores de aplicações, aplicações legadas e,  até mesmo, subsistemas completos. Além disso, com a expansão das tecnologias de rede e Internet, esses recursos podem estar distribuídos em inúmeros dispositivos.
 Nessa situação, até mesmo a implantação e gerenciamento de aplicações pode tornar-se uma atividade intratável, mesmo para especialistas em tecnologia da informação.
 
-As dificuldades relacionadas a integração e gerenciamento desses sistemas complexos levaram ao surgimento de iniciativas \cite{visionAC, HPAdaptiveEnterprise, MicrosoftDynamicSystems} que propõem uma abordagem sistematizada para a construção de sistemas capazes de se auto-gerenciar. O emprego de mecanismos de computação autônoma, proposto pela IBM \cite{visionAC}, visa dotar os sistemas de software de capacidades similares àquelas presentes no sistema nervoso autônomo humano, que controla as funções vitais do organismo de forma inconsciente ao ser humano. De forma análoga, um sistema de computação autônoma é capaz de ajustar sua operação de acordo com mudanças no seu ambiente e nas demandas de usuários.
+As dificuldades relacionadas à integração e gerenciamento desses sistemas complexos levaram ao surgimento de iniciativas \cite{visionAC, HPAdaptiveEnterprise, MicrosoftDynamicSystems} que propõem uma abordagem sistematizada para a construção de sistemas capazes de se auto-gerenciar. O emprego de mecanismos de computação autônoma, proposto pela IBM \cite{visionAC}, visa dotar os sistemas de software de capacidades similares àquelas presentes no sistema nervoso autônomo humano, que controla as funções vitais do organismo de forma inconsciente ao ser humano. De forma análoga, um sistema de computação autônoma é capaz de ajustar sua operação de acordo com mudanças no seu ambiente e nas demandas de usuários.
 
 Conforme essa visão, um sistema autônomo deve possuir as seguintes capacidades de auto-gerenciamento:
 
@@ -352,7 +356,7 @@ A Figura~\ref{fig:referencial-ac-am} mostra uma visão conceitual do gerenciador 
 \subfigure[] {
 \includegraphics[width=0.5\textwidth]{./fig/am}
 \label{fig:referencial-ac-am} }
-\caption{{\subref{fig:referencial-ac}} Arquitetura de computação autônoma \\ {\subref{fig:referencial-ac-am}} Gerenciador autônomo.}
+\caption{{\subref{fig:referencial-ac}} Arquitetura de computação autônoma \\ {\subref{fig:referencial-ac-am}} Gerenciador autônomo \cite{ibmac}.}
 \label{fig:subfiguras} \end{figure}
 
 
@@ -381,17 +385,17 @@ Modelos podem ser empregados na representação de políticas, sintomas, solicitaçõ
 \subsection{Políticas de gerenciamento}
 
 O uso de políticas no gerenciamento de sistemas tem como intuito isolar as regras que controlam o gerenciamento de um sistema de sua funcionalidade \cite{pbm}. Essa separação visa reduzir o esforço exigido na manutenção de sistemas e aumentar a sua flexibilidade e adaptabilidade.
-Nesse contexto, políticas são utilizadas como um meio de definir objetivos de alto nível, que direcionam o compormtamento do sistema. 
+Nesse contexto, políticas são utilizadas como um meio de definir objetivos de alto nível, que direcionam o comportamento do sistema. 
 Devido a isto, o uso de políticas está incorporado a várias arquiteturas e abordagens de auto-gerenciamento de sistemas, incluindo a de computação autônoma.
 
-Políticas podem ser utilizadas para definir regras para se atingir diversos objetivos de gerenciamento, como escalabilidade, performance, otimização do uso de recursos, flexibilidade etc. Políticas são definidas por linguagens de definição de políticas, que oferecem meios para especificar regras que podem ser mapeadas para ações de gerenciamento de um sistema.
+Políticas podem ser utilizadas para definir regras para se atingir diversos objetivos de gerenciamento, como escalabilidade, desempenho, otimização do uso de recursos, flexibilidade etc. Políticas são definidas por linguagens de definição de políticas, que oferecem meios para especificar regras que podem ser mapeadas para ações de gerenciamento de um sistema.
 O uso de políticas para auto-gerenciamento de sistemas guarda semelhanças com técnicas de MDE, pois se baseia na construção de representações formais de políticas por meio de linguagens, e na sua aplicação de forma automatizada.
 
 Há uma grande diversidade entre as linguagens para definição de políticas, que variam de acordo com os aspectos a serem gerenciados ou o domínio aplicado. Apesar disso, algumas linguagens de políticas buscam oferecer construções mais genéricas que podem ser utilizadas para uma gama maior de sistemas. 
 
-A PDL (\emph{Policy Definition Language})  \cite{pdl} considera uma política como um conjunto de regras que determinam o comportamento esperado de um sistema e propõe a definição de políticas por meio de regras do tipo Evento-Condição-Ação (ECA). Ponder \cite{ponder} é uma linguagem orientada a objetos declarativa para especificação de políticas de segurança baseada em papeis e políticas de gerenciamento de propósito geral. A linguagem Ponder estende a abordagem baseada em regras do tipo ECA, que passam a ser utilizadas na composição de outros tipos mais elaborados de políticas, que incluem obrigações, restrições, delegações, papeis, relacionamentos etc. \emph{Policy Management for Autonomic Computing} (PMAC) \cite{pmac} é uma plataforma de políticas para o gerenciamento de vários aspectos de sistemas distribuídos de larga escala. Na PMAC, uma política é uma regra que contempla condições, ações, prioridade e papel. A plataforma proposta pela PMAC se integra com a arquitetura de computação autônoma proposta pela IBM, sendo o gerenciador autônomo considerado um gerenciador baseado em políticas e, assim, suas funções MAPE operam de acordo com um conjunto de políticas.
+A PDL (\emph{Policy Definition Language})  \cite{pdl} considera uma política como um conjunto de regras que determinam o comportamento esperado de um sistema e propõe a definição de políticas por meio de regras do tipo Evento-Condição-Ação (ECA). Ponder \cite{ponder} é uma linguagem orientada a objetos declarativa para especificação de políticas de segurança baseada em papéis e políticas de gerenciamento de propósito geral. A linguagem Ponder estende a abordagem baseada em regras do tipo ECA, que passam a ser utilizadas na composição de outros tipos mais elaborados de políticas, que incluem obrigações, restrições, delegações, papeis, relacionamentos etc. \emph{Policy Management for Autonomic Computing} (PMAC) \cite{pmac} é uma plataforma de políticas para o gerenciamento de vários aspectos de sistemas distribuídos de larga escala. Na PMAC, uma política é uma regra que contempla condições, ações, prioridade e papel. A plataforma proposta pela PMAC se integra com a arquitetura de computação autônoma proposta pela IBM, sendo o gerenciador autônomo considerado um gerenciador baseado em políticas e, assim, suas funções MAPE operam de acordo com um conjunto de políticas.
 
-O uso de linguagens de políticas mais específicas ou genéricas é uma questão sujeita a debates, assim como no campo de linguagens de programação. Entretanto, sob uma ótica mais abrangente de abordagens de MDE, linguagens de política são necessariamente de propósito específico e podem ser consideradas como uma linguagem específica de domínio.
+O uso de linguagens de políticas mais específicas ou genéricas é uma questão sujeita a debates, assim como na área de linguagens de programação. Entretanto, sob uma ótica mais abrangente de abordagens de MDE, linguagens de política são necessariamente de propósito específico e podem ser consideradas como uma linguagem específica de domínio.
 Na implementação da camada NCB da CVM, políticas são utilizadas para direcionar a seleção de \emph{frameworks} de comunicação \cite{foda, UCCAF}.
 
 %The approach to policies in this dissertation is in the vein of domain specific specialization, focused more on providing a semantic rich language for specifying domain specific policies. The systematic approach to understand and define policies detailed later in this dissertation can be applied to other domains of interest. The author notes that while an explicit policy specification is described in this dissertation, other policy languages could be used to specify the artifacts of systematic domain analysis.
@@ -448,5 +452,6 @@ Na implementação da camada NCB da CVM, políticas são utilizadas para direcionar 
 
 Neste capítulo descrevemos a Máquina Virtual de Comunicação (CVM), destacando sua arquitetura e o funcionamento de sua camada de intermediação de serviços. Para isso, revemos os fundamentos de abordagens de engenharia de software dirigida por modelos, que são utilizados na CVM para possibilitar a construção de serviços de comunicação por meio de modelos de alto nível.
 Além disso, também tratamos dos princípios relacionados à construção de sistemas auto-gerenciáveis, que são empregados na camada de intermediação de serviços da arquitetura da CVM.
-Os conceitos discutidos nesse capítulo tem como intuito fornecer um referencial para a compreensão do presente trabalho, que propõe uma abordagem dirigida por modelos para construção máquinas de execução de modelos, se concentrando na camada de intermediação de serviços.
+Os conceitos discutidos nesse capítulo tem como intuito fornecer um referencial para a compreensão do presente trabalho.
+%, que propõe uma abordagem dirigida por modelos para construção máquinas de execução de modelos, se concentrando na camada de intermediação de serviços.
 

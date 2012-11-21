@@ -4,18 +4,18 @@
 
 
 O emprego de abordagens de MDE, associadas a DSMLs claramente traz vários benefícios para a construção e manutenção de aplicações complexas.
-Ao fornecer abstrações mais próximas do domínio do problema a ser resolvido, essas abordagens permitem que aplicações complexas sejam construídas ou ajustadas diretamente por usuários.
+Ao fornecer abstrações mais próximas do domínio do problema a ser resolvido, essas abordagens podem possibilitar que aplicações complexas sejam construídas ou ajustadas diretamente por usuários.
 Apesar disso, a construção de DSMLs e mecanismos capazes de processá-las ainda exige um grande esforço de desenvolvimento. Estes mecanismos são geralmente construídos por especialistas em desenvolvimento de software por meio de codificação em linguagens de programação de propósito geral.
 
-Nesta dissertação, foi apresentada uma abordagem que propõe o uso de modelos para definição de máquinas de execução de modelos associadas a DSMLs destinadas à descrição de serviços de alto nível a serem realizados por um conjunto heterogêneo de recursos.
-A abordagem em questão propõe uma arquitetura genérica projetada para atender aos requisitos envolvidos na execução de modelos descritos por meio dessas DSMLs e que podem ser criados e modificados em tempo de execução.
+Nesta dissertação, foi apresentada uma abordagem que propõe o uso de modelos para definição de máquinas de execução para DSMLs destinadas à descrição de serviços de alto nível a serem realizados por um conjunto heterogêneo de recursos.
+A abordagem em questão propõe o uso de uma arquitetura genérica projetada para atender aos requisitos envolvidos na execução de modelos descritos por meio dessas DSMLs e que podem ser criados e modificados em tempo de execução.
 
 
 
 %Uma vez definida essa arquitetura genérica, propusemos o uso de técnicas de MDE como um meio de especializá-la em máquinas  de execução de modelos específicas de domínio.
-Uma vez definida essa arquitetura genérica, propusemos a criação de um metamodelo capaz de capturar os aspectos de cada uma das camadas que integram a arquitetura, e o uso de modelos, em conformidade com o metamodelo, como meio de especialização dessa arquitetura.
+A partir dessa arquitetura genérica, propusemos a criação de um metamodelo capaz de capturar os aspectos de cada uma das camadas que a integram  e o uso de modelos, em conformidade com o metamodelo, como meio de especialização dessa arquitetura.
 %Para isto, foi construído um metamodelo que captura os aspectos independentes de domínio da camada de intermediação de serviços e um ambiente de execução que dá semântica à este metamodelo.
-Neste trabalho, nos limitamos foi construído um metamodelo que captura apenas os aspectos independentes de domínio da camada de intermediação de serviços e um ambiente de execução que dá semântica à este metamodelo.
+Neste trabalho, foi construído um metamodelo que captura apenas os aspectos independentes de domínio da camada de intermediação de serviços e um ambiente de execução que dá semântica à este metamodelo.
 Demonstramos então a especialização desse metamodelo para o domínio de comunicação por meio da construção de um modelo para uma camada de intermediação de comunicação em rede equivalente à camada NCB presente na CVM. Por fim,  a camada modelada foi comparada à implementação equivalente que integra a CVM, obtendo resultados compatíveis com o esperado.
 
 Entre as contribuições deste trabalho, podemos citar a aplicação de abordagens de MDE e DSMLs para construção da infraestrutura necessária para sua própria realização. 
@@ -60,7 +60,7 @@ Por fim, a abordagem proposta se limita à construção de máquinas de execução de 
 Apesar das contribuições deste trabalho, existem várias áreas que não foram cobertas e necessitam de investigação.
 Como trabalho futuro, planejamos avançar na extensão do metamodelo para descrição das outras camadas da arquitetura proposta. Esta tarefa, por sua vez, requer a identificação dos aspectos independentes de domínio relacionadas a cada camada e a elaboração de abstrações apropriadas para descrever os aspectos dependentes de domínio na forma de modelos.
 
-Além disso, é preciso avaliar a aplicação da abordagem proposta em outros domínios de aplicação com o intuito de alcançar uma melhor compreensão de sua aplicabilidade e generalidade. Em particular, pretendemos utilizar o metamodelo proposto neste trabalho para a construção de camadas de intermediação de serviços para os domínios de redes elétricas inteligentes locais e computação úbiqua.
+Além disso, é preciso avaliar a aplicação da abordagem proposta em outros domínios de aplicação com o intuito de alcançar uma melhor compreensão de sua aplicabilidade e generalidade. Em particular, pretendemos utilizar o metamodelo proposto neste trabalho para a construção de camadas de intermediação de serviços para os domínios de redes elétricas inteligentes locais e computação ubíqua.
 
 Ademais, mais pesquisas precisam ser conduzidas em direção à integração entre modelos que representam uma máquina de execução e metamodelos que representam as respectivas DSMLs, o que envolve mais estudos na área de combinação de modelos.
 A possibilidade de adaptação de máquinas de execução de modelos em tempo de execução é uma outra direção de pesquisa que pode apontar para novas possibilidades ainda não exploradas.

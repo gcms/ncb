@@ -1,8 +1,8 @@
 
-\chapter{Estudo de caso: Intermediador de Comunicação em Rede}
+\chapter{Exemplo: Intermediador de Comunicação em Rede}
 \label{cap:instancia}
 
-Este capítulo demonstra como o metamodelo proposto e o ambiente de execução fornecido, podem ser utilizados para construir e executar uma camada de intermediação de serviços. Para isto, construímos um modelo, em conformidade com o metamodelo proposto, que descreve o comportamento presente na camada NCB da CVM. Iniciamos este capítulo com uma breve descrição do comportamento da camada NCB, seguido por sua modelagem utilizando as abstrações descritas no Capítulo~\ref{cap:metamodelo}. Ao fim do capítulo, descrevemos como o modelo construído foi avaliado, e os resultados obtidos.
+Este capítulo demonstra como o metamodelo proposto e o ambiente de execução fornecido, podem ser utilizados para construir e executar uma camada de intermediação de serviços. Para isto, construímos um modelo, em conformidade com o metamodelo proposto, que descreve o comportamento presente na camada NCB da CVM. Iniciamos este capítulo com uma breve descrição do comportamento da camada NCB, seguido por sua modelagem utilizando as abstrações descritas no Capítulo~\ref{cap:metamodelo}. Ao final do capítulo, descrevemos como o modelo construído foi avaliado, e os resultados obtidos.
 
 \section{Visão geral}
 \label{sec:instancia-visao-geral}
@@ -57,7 +57,7 @@ O processamento de algumas operações, como \textsf{LoginAll} e \textsf{SendSchem
 As operações \textsf{CreateSession}, e \textsf{AddParty}, por sua vez, apenas mantêm informações sobre a sessão na camada, até que seja solicitado o estabelecimento da conexão por meio da chamada \textsf{EnableMedium}. A partir desse momento, de acordo com a quantidade de participantes e o tipo de mídia solicitado, a camada seleciona o \emph{framework} mais apropriado. Só então as operações necessárias para estabelecer a comunicação, são efetivamente executadas no \emph{framework} selecionado. 
 
 Além de executar as operações solicitadas por meio de sua interface, a camada NCB também interage com os \emph{frameworks} de comunicação gerenciados. Por meio da interface empregada para a interação com os \emph{frameworks} de comunicação, a NCB identifica eventos gerados por esses recursos e efetua chamadas às suas operações.
-A Tabela~\ref{tab:instancia-interface-framework}, demonstra a interface empregada para a interação dos recursos gerenciados com a camada NCB. 
+A Tabela~\ref{tab:instancia-interface-framework}, apresenta a interface empregada para a interação dos recursos gerenciados com a camada NCB. 
 A camada NCB monitora constantemente os eventos gerados pelos \emph{frameworks} de comunicação, podendo esses eventos serem tratados pela camada, ou encaminhados às camadas superiores.
 Eventos como \textsf{SchemaFailed}, e \textsf{LoginFailed} são diretamente repassados à camada superior, pois a camada NCB não têm conhecimento suficiente para tratá-los. O evento \textsf{MediumFailed}, por sua vez, inicia o processo de seleção e configuração de um outro \emph{framework} de comunicação que possa ser usado para reestabelecer a comunicação interrompida.
 
@@ -88,7 +88,7 @@ Eventos como \textsf{SchemaFailed}, e \textsf{LoginFailed} são diretamente repas
 
 Como é possível observar, a interface da camada NCB e dos recursos por ela utilizada é bastante similar. Isto se deve ao fato de a NCB ter sido projetada para abstrair principalmente os detalhes da seleção, preparação e substituição dos \emph{frameworks} de comunicação.
 
-As seções seguintes demonstram como o comportamento descrito acima pode ser modelado em conformidade com o metamodelo proposto. A modelagem em questão se baseia na análise da implementação existente da camada NCB \cite{Andrew}.
+As seções seguintes descrevem como o comportamento descrito acima pode ser modelado em conformidade com o metamodelo proposto. A modelagem em questão se baseia na análise da implementação existente da camada NCB \cite{Andrew}.
 
 \section{Modelo do Intermediador de Comunicação em Rede}
 
@@ -96,7 +96,7 @@ As seções seguintes demonstram como o comportamento descrito acima pode ser mode
 Conforme descrito no Capítulo~\ref{cap:metamodelo}, a definição de uma camada de intermediação de serviços, utilizando o metamodelo proposto, é estruturada em torno de um gerenciador de intermediação da camada, representado no metamodelo pela classe \textsf{Manager}.
 Ao modelar a camada NCB, foi utilizado apenas um gerenciador de intermediação e, assim sendo, a interface desse gerenciador define a interface da camada NCB, que contém as operações e eventos mencionados na seção anterior.
 
-Ao longo das subseções seguintes, as partes que integram o modelo da camada NCB são descritas por meio de diagramas UML e, quando necessário, por uma notação para descrição de modelos de forma textual e compreensível.
+Ao longo das subseções seguintes, as partes que integram o modelo da camada NCB são descritas por meio de diagramas UML e, quando necessário, por uma notação para descrição de modelos de forma textual.
 Essa notação, denominada \emph{Human Usable Textual Notation} (HUTN) \cite{hutn} também é padronizada pelo OMG e apresenta vantagens na descrição de modelos mais detalhados, cuja representação gráfica pode exigir muito espaço.
 
 \subsection{Recursos}
@@ -140,7 +140,7 @@ Na modelagem da camada NCB, foi descrito apenas um tipo de dados, que é utilizad
 \subsection{Tratadores e ações}
 
 Para especificar o comportamento da camada em reação aos sinais por ela identificados, foram definidos tratadores para todas as chamadas recebidas da camada superior e dois dos eventos gerados pelos recursos.
-Os eventos para os quais não foram definidos tratadores são automaticamente encaminhados para a camada superior, e representam eventos que a camada NCB não é capaz de tratar.
+Os eventos para os quais não foram definidos tratadores são automaticamente encaminhados à camada superior, e representam eventos que a camada NCB não é capaz de tratar.
 A Tabela~\ref{tab:instancia-tratadores} lista os tratadores definidos, estabelecendo a relação entre sinal e a ação utilizada para tratá-lo.
 
 \begin{table*}[ht]
@@ -335,7 +335,7 @@ EnableMedium("101", "Audio") \\}
 \end{table}
 
 
-Os testes construídos a partir desses cenários foram utilizados durante toda a construção do modelo descrito na seção anterior para validar sua  conformidade com a implementação existente da NCB. Após a construção do modelo e sua validação, esses cenários foram novamente executados em ambas as implementações com o intuito de mensurar e comparar a performance de ambas implementações.
+Os testes construídos a partir desses cenários foram utilizados durante toda a construção do modelo descrito na seção anterior para validar sua  conformidade com a implementação existente da NCB. Após a construção do modelo e sua validação, esses cenários foram novamente executados em ambas as implementações com o intuito de mensurar e comparar a desempenho de ambas implementações.
 
 Para isso, foram realizadas 100 (cem) execuções de cada cenário e em seguida calculado o tempo médio de execução e o desvio padrão.
 As execuções foram realizadas em um sistema com as seguintes especificações: Intel Core 2 Duo 2.4 GHz, 4GB 1067 MHz DDR3 RAM, Sistema Operacional Mac OS X 10.6.8 e Oracle JDK 1.6.0\_33.
@@ -364,8 +364,33 @@ As execuções foram realizadas em um sistema com as seguintes especificações: Int
 \end{tabular} 
 \end{table*}
 
-Os resultados, expostos na Tabela~\ref{tab:instancia-tempo}, demonstram que o tempo de execução médio da versão da NCB descrita por meio de um modelo é bem superior ao obtido na versão original. Como esperado, isso se deve em parte ao \emph{overhead} envolvido na carga de um modelo durante a inicialização da camada. Mas além disso, outras operações necessárias para o funcionamento da camada modelada, como a avaliação de expressões, mapeamento de parâmetros, e interação com os recursos por meio de reflexão exigem mais do processamento que a versão original, onde essas operações são desnecessárias.
-Mesmo assim, melhorias significativas no desempenho poderiam ser alcançadas otimizando a implementação do mecanismo de avaliação de expressões e mapeamento de parâmetros.
+Os resultados expostos na Tabela~\ref{tab:instancia-tempo} demonstram que o tempo de execução médio da versão da NCB descrita por meio de um modelo é bem superior ao obtido na versão original. Como esperado, isso se deve em parte ao \emph{overhead} envolvido na carga de um modelo durante a inicialização da camada. 
+Para avaliar a influência da carga inicial do modelo na execução dos cenários em questão, também foi calculado o tempo médio de execução excluindo o tempo de carga do modelo. Os resultados dessa mensuração, que se encontram na Tabela~\ref{tab:instancia-tempo-fair}, demonstram que excluindo-se o tempo de carga do modelo, a versão modelada da camada superior apresenta um tempo médio de execução ligeiramente superior ao obtido com o uso da camada NCB original.
+
+\begin{table*}[ht]
+\centering
+\caption{Tempo de execução dos cenários excluindo-se o tempo de carga do modelo da camada NCB (em ms).}
+\label{tab:instancia-tempo-fair} 
+\begin{tabular}{p{2cm}|r|r|}
+% \hline
+ \cline{2-3}
+% \multicolumn{1}{|l|}{Cenárioo} & Média & Desvio Padrão & Média & Desvio Padrão \\
+ & \multicolumn{1}{|p{2cm}|}{\centering Tempo médio (ms)} & \multicolumn{1}{|p{2cm}|}{\centering Desvio Padrão} \\
+ \hline
+\multicolumn{1}{|l|}{Cenário 1} & $1504,86$ & $77,24$ \\ \hline
+\multicolumn{1}{|l|}{Cenário 2} & $1580,08$ & $68,10$ \\ \hline
+\multicolumn{1}{|l|}{Cenário 3} & $1630,58$ & $99,83$ \\ \hline
+\multicolumn{1}{|l|}{Cenário 4} & $1911,54$ & $33,33$ \\ \hline
+\multicolumn{1}{|l|}{Cenário 5} & $2422,66$ & $31,22$ \\ \hline
+\multicolumn{1}{|l|}{Cenário 6} & $1407,88$ & $36,51$ \\ \hline
+\multicolumn{1}{|l|}{Cenário 7} & $1450,68$ & $37,25$ \\ \hline
+\multicolumn{1}{|l|}{Cenário 8} & $1528,10$ & $92,29$ \\ \hline
+\end{tabular} 
+\end{table*}
+
+No entanto, mesmo excluindo-se o \emph{overhead} devido ao tempo de carga do modelo, a camada modelada demonstra um tempo médio de execução superior em todos os cenários.
+Isso se deve em grande parte às operações necessárias para o funcionamento da camada modelada, como a avaliação de expressões, mapeamento de parâmetros, e interação com os recursos por meio de reflexão exigem mais do processamento que a versão original, onde essas operações são desnecessárias.
+Assim, melhorias significativas no desempenho poderiam ser alcançadas otimizando a implementação do mecanismo de avaliação de expressões e mapeamento de parâmetros.
 
 %\begin{comment}
 %TODO: Melhorar a discussão dos resultados.
@@ -374,7 +399,11 @@ Mesmo assim, melhorias significativas no desempenho poderiam ser alcançadas otim
 
 \section{Discussão}
 
-O uso do metamodelo proposto tornou a construção de uma camada de intermediação de comunicação em rede bem mais simples. Ao incorporar conceitos de auto-gerenciamento de recursos e construções para tratamento de eventos e chamadas, o metamodelo permite que essas funcionalidades sejam reutilizadas, dispensando que sejam codificadas durante a construção de um intermediador. Assim sendo, ao construir uma camada de intermediação, cabe ao desenvolvedor especificar apenas o comportamento específico de domínio.
+%O uso do metamodelo proposto tornou a construção de uma camada de intermediação de comunicação em rede bem mais simples. 
+O uso do metamodelo proposto para a construção de uma camada de intermediação de comunicação em rede reduziu significativamente a quantidade de código a ser escrito.
+Além disso, o modelo construído para representar a camada também é bem reduzido, o que sugere uma maior produtividade de desenvolvimento.
+Isso só é possível pois ao incorporar conceitos de auto-gerenciamento de recursos e construções para tratamento de eventos e chamadas, o metamodelo permite que essas funcionalidades sejam reutilizadas, dispensando que sejam codificadas durante a construção de um intermediador. 
+Assim sendo, ao construir uma camada de intermediação, cabe ao desenvolvedor especificar apenas o comportamento específico de domínio em uma linguagem que contém construções relacionadas aos problemas a serem tratados por um intermediador de serviços.
 
 A implementação já existente da camada NCB, que integra a CVM, possui 6777 linhas de código escritas na linguagem de programação Java. Enquanto isso, a camada equivalente, descrita em conformidade com o metamodelo, é composta por um modelo que possui 264 objetos, além de 854 linhas de código que implementam ações definidas por meio de \emph{macros}. Apesar disso, ainda é preciso explorar a construção de camadas de intermediação de serviços para outros domínios para se obter uma compreensão mais ampla dos benefícios que podem ser obtidos pelo uso da abordagem proposta.
 %Além de facilitar a construção da camada, o emprego de modelos também facilita a sua evolução, permitindo que uma camada

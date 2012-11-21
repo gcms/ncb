@@ -12,8 +12,8 @@ Assim, metamodelos associados a máquinas de execução podem ser utilizados como u
 % \end{comment}
 
 A Seção~\ref{sec:visao-geral-2} descreve de forma geral uma abordagem para a construção dirigida por modelos de máquinas de execução capazes de realizar serviços descritos na forma de modelos de alto nível.
-A Seção~\ref{sec:arquitetura} descreve uma arquitetura genérica para máquinas de execução de modelos que se enquadram na categoria identificada.
-A Seção~\ref{sec:sb}, por sua vez, detalha o subconjunto da abordagem proposta que foi desenvolvido neste trabalho.
+A Seção~\ref{sec:arquitetura} descreve uma arquitetura genérica para máquinas de execução de modelos que se enquadram na categoria descrita na seção anterior.
+A Seção~\ref{sec:sb}, por sua vez, detalha a camada de intermediação de serviços da arquitetura descrita.
 
 %Retomar a motivação introduzida no primeiro capítulo com mais detalhes (i.e. voltar nos precedentes e descrever melhor o cenário onde o problema a ser tratado se localiza)
 
@@ -32,9 +32,9 @@ Para tornar isso possível, é preciso que o metamodelo da DSML, assim como a máqu
 Isto, por sua vez, permite que os modelos descritos usando uma DSML possam se limitar aos requisitos específicos das aplicações por eles descritas, pois as informações relacionadas ao domínio já estão integradas à DSML.
 Dessa forma, para se obter proveito das técnicas de MDE e DSMLs é preciso que sejam projetados metamodelos e máquinas de execução específicos para os domínios de aplicação a serem utilizados.
 
-Enquanto existem várias técnicas de modelagem padronizadas para a descrição de metamodelos, a construção de máquinas de execução de DSMLs é usualmente realizada por meio da codificação em linguagens de programação de propósito geral. Nesse contexto, o uso de linguagens de programação apresenta as mesmas limitações encontradas na construção de aplicações complexas, pois oferecem construções muito primitivas que não estão relacionadas com os problemas encontrados na construção de máquinas de execução para processamento de modelos.
+Enquanto existem várias técnicas de modelagem padronizadas para a descrição de metamodelos, a construção de máquinas de execução de DSMLs é usualmente realizada por meio da codificação em linguagens de programação de propósito geral. Nesse contexto, o uso de linguagens de programação apresenta as mesmas limitações encontradas na construção de aplicações complexas, pois oferecem construções muito primitivas que não estão relacionadas  aos problemas encontrados na construção de máquinas de execução para processamento de modelos.
 
-A construção de máquinas de execução para modelos que podem ser criados e modificados em tempo de execução exibe vários problemas comuns, mesmo que essas máquinas sejam projetadas para diferentes DSMLs. Análise e transformação de modelos, negociação de modelos, transferência de estado, adaptação dinâmica, entre outros são alguns dos problemas que esse tipo de máquina de execução necessita lidar. A solução desses problemas por meio da codificação em linguagens de programação não só exige bastante esforço, mas também reduz a flexibilidade das máquinas de execução construídas.
+A construção de máquinas de execução para modelos que podem ser criados e modificados em tempo de execução exibe vários problemas comuns, mesmo que essas máquinas sejam projetadas para diferentes DSMLs. Comparação e transformação de modelos, avaliação de políticas, adaptação em tempo de execução, entre outros são alguns dos problemas que esse tipo de máquina de execução necessita lidar. A solução desses problemas por meio da codificação em linguagens de programação não só exige bastante esforço, mas também reduz a flexibilidade das máquinas de execução construídas.
 
 Esse contexto sugere a aplicação de técnicas de MDE como forma de amenizar a complexidade da construção de máquinas de execução de modelos. Assim sendo, a mesma abordagem utilizada para construção de aplicações é utilizada na construção das plataformas para execução dessas aplicações. O uso de modelos nesse contexto visa não apenas a simplificar a construção dessas máquinas de execução, mas também facilitar a sua evolução com o intuito de atender a necessidades de mudança na sintaxe ou semântica das DSMLs por elas processadas.
 
@@ -49,16 +49,16 @@ Esse contexto sugere a aplicação de técnicas de MDE como forma de amenizar a com
 
 
 Neste trabalho, propomos o emprego de uma abordagem dirigida por modelos para a construção de uma categoria específica de máquinas capazes de executar modelos que podem ser criados e modificados em tempo de execução.
-Essa categoria, que inclui a CVM \cite{cvm} e MGridVM \cite{microgrid}, contempla máquinas virtuais para execução de DSMLs que descrevem um serviço de alto nível a ser realizado a partir de um conjunto heterogêneo de recursos. 
+Essa categoria, que inclui a CVM \cite{cvm} e MGridVM \cite{microgrid}, contempla máquinas virtuais para execução de DSMLs que descrevem serviços de alto nível realizados a partir de um conjunto heterogêneo de recursos. 
 A realização de serviços descritos por essas DSMLs comumente envolve diversas operações, como transformação e negociação de modelos, avaliação de políticas, recuperação de falhas, seleção e configuração de recursos etc.
 
 Para que máquinas de execução que exibem essas características possam ser definidas por meio de modelos é preciso uma linguagem de modelagem especialmente projetada para isso.
-No entanto, para que seja vantajoso o emprego de uma linguagem de modelagem para a descrição de uma máquina de execução, esta linguagem deve possuir uma abrangência suficiente para que possa ser utilizada em diferentes domínios de negócio. 
+No entanto, para que seja vantajoso o emprego de uma linguagem de modelagem para a descrição de uma máquina de execução, esta linguagem deve possuir uma abrangência suficiente para que possa ser utilizada em diferentes domínios de aplicação. 
 Ao mesmo tempo, tal linguagem não deve ser muito genérica, de forma que não torne a manipulação de modelos tão complexa quanto a codificação em uma linguagem de propósito geral.
 
 Assim sendo, essa linguagem deve conter construções que implementam as operações necessárias para fornecer a partir de um conjunto heterogêneo de recursos, serviços descritos por modelos que podem ser criados e modificados em tempo de execução.
 %Considerando isto, essa linguagem deve conter construções capazes de descrever as operações que independem do domínio de negócio e que estão envolvidas no fornecimento de serviços descritos por modelos a partir de um conjunto heterogêneo de recursos.
-Esses operações, que englobam  transformação e negociação de modelos, avaliação de políticas, recuperação de falhas, seleção e configuração de recursos, entre outras, podem ser tratados como um domínio técnico. 
+Essas operações, que englobam  transformação e negociação de modelos, avaliação de políticas, recuperação de falhas, seleção e configuração de recursos, entre outras, podem ser tratados como um domínio técnico. 
 Deste modo, essa linguagem pode ser considerada uma linguagem de modelagem específica do domínio que abrange os aspectos técnicos envolvidos na realização de serviços transparentes de alto nível a partir de um conjunto heterogêneo de recursos. 
 %Uma vez concebida tal linguagem, ela pode ser empregada para construir máquinas 
 Essa linguagem pode então ser utilizada para construir modelos que descrevem máquinas de execução específicas de domínio, voltadas para o processamento de modelos descritos em conformidade com uma DSML.
@@ -68,8 +68,8 @@ Essa linguagem pode então ser utilizada para construir modelos que descrevem máq
 
 Neste trabalho propomos o uso das soluções empregadas no desenvolvimento da CVM e MGridVM para elaboração dessa linguagem para definição de máquinas de execução que se enquadram na categoria identificada.
 %Neste trabalho propomos que essa linguagem seja elaborada a partir das soluções empregadas no desenvolvimento da CVM e MGridVM. 
-Assim,  essa linguagem incorpora uma arquitetura genérica que pode ser especializada para produzir máquinas de execução específicas domínio.
-A arquitetura proposta é uma generalização da arquitetura em camadas empregada pela CVM e MGridVM e inclui as seguintes camadas:
+Assim,  essa linguagem incorpora uma arquitetura genérica \cite{ClarkeEtAl} que pode ser especializada para produzir máquinas de execução específicas de domínio.
+A arquitetura utilizada é uma generalização da arquitetura em camadas empregada pela CVM e MGridVM e inclui as seguintes camadas:
 
 \begin{itemize}
 
@@ -83,9 +83,10 @@ A arquitetura proposta é uma generalização da arquitetura em camadas empregada p
 
 \end{itemize}
 
-Ao nos basearmos na arquitetura da CVM e MGridVM, aproveitamos o conhecimento adquirido em relação à separação de responsabilidades necessárias para a realização de serviços no domínio técnico ao qual ambas pertencem, conforme descrito acima. No entanto, apesar de apresentar a mesma estrutura, a arquitetura proposta difere por ser independente do domínio de negócio.
+Ao nos basearmos na arquitetura da CVM e MGridVM, aproveitamos o conhecimento adquirido em relação à separação de responsabilidades necessárias para a realização de serviços no domínio técnico ao qual ambas pertencem, conforme descrito acima.
+%No entanto, apesar de apresentar a mesma estrutura, a arquitetura proposta difere por ser independente do domínio de aplicação.
 
-A construção de uma linguagem para modelagem máquinas de execução de modelos, por sua vez, também requer a construção de um metamodelo que forneça abstrações que possam ser utilizadas para descrever máquinas de execução de acordo com a arquitetura proposta. 
+A construção de uma linguagem para modelagem de máquinas de execução de modelos, por sua vez, também requer a construção de um metamodelo que forneça abstrações que possam ser utilizadas para descrever máquinas de execução de acordo com a arquitetura descrita. 
 Logo, um modelo elaborado a partir desse metamodelo representa uma especialização da arquitetura genérica proposta visando seu uso em um determinado domínio. 
 A Figura~\ref{fig:proposta-arquitetura} ilustra a arquitetura genérica descrita e apresenta a CVM e MGridVM como especializações dessa arquitetura genérica.
 
@@ -101,24 +102,25 @@ A Figura~\ref{fig:proposta-arquitetura} ilustra a arquitetura genérica descrita 
 
 
 
-Devido ao extenso trabalho envolvido na construção desse metamodelo, neste trabalho construímos um metamodelo que engloba apenas os elementos associados à camada de intermediação de serviços da arquitetura proposta.
-A construção do metamodelo representa uma etapa em direção à realização da visão proposta pela abordagem, e tem como objetivo investigar sua viabilidade. 
+Devido ao extenso trabalho envolvido na construção desse metamodelo, neste trabalho construímos um metamodelo que engloba apenas os elementos associados à camada de intermediação de serviços da arquitetura genérica de máquinas de execução de modelos.
+A construção do metamodelo representa uma etapa em direção à realização da visão proposta neste trabalho, e tem como objetivo investigar sua viabilidade. 
 Para isso, além do metamodelo também construímos um ambiente de execução que define a semântica operacional da linguagem.
-A seção seguinte descreve em mais detalhes a camada de intermediação de serviços, incluindo suas responsabilidades e como estas são exercidas dentro da arquitetura proposta. 
+A seção seguinte descreve em mais detalhes a camada de intermediação de serviços, incluindo suas responsabilidades e como estas são exercidas dentro da arquitetura empregada. 
 
 \section{A camada de intermediação de serviços}
 \label{sec:sb}
 
 % EM ALGUM LUGAR DESSA SEÇÃO: Definir o que é um recurso
 
-O intermediador de serviços é a camada da arquitetura proposta que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para realizar os serviços especificados por meio de modelos. Cabe a esta camada disponibilizar uma interface de serviços que abstraia da camada superior a heterogeneidade dos recursos subjacentes. Além disso, o intermediador deve possuir capacidade de auto-gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
+O intermediador de serviços é a camada da arquitetura que é responsável pelo gerenciamento dos recursos que serão efetivamente utilizados para realizar os serviços especificados por meio de modelos. Cabe a esta camada disponibilizar uma interface de serviços que abstraia da camada superior a heterogeneidade dos recursos subjacentes. Além disso, o intermediador deve possuir capacidade de auto-gerenciamento, ocultando os detalhes envolvidos na seleção, monitoramento e preparação dos recursos sob sua gerência.
 
 Ao longo deste trabalho consideramos um recurso como um componente de software ou hardware que fornece algum serviço. De acordo com essa definição,  aplicações, bancos de dados, controladores de hardware, componentes de software, servidores de aplicação, ou até mesmo complexos sistemas podem ser tratados como recursos. 
 Para ser utilizado por uma camada de intermediação de serviços, um recurso deve expor uma interface que permita a utilização de seus serviços e o seu gerenciamento.
+Um serviço, por sua vez, é uma funcionalidade bem definida fornecida por meio de um ou mais recursos. Assim sendo, serviços podem ser diretamente fornecidos por um recurso, ou combinados em serviços capazes de fornecer funcionalidades que envolvem o uso de vários recursos.
 
-Como uma interface de serviços, o intermediador se comunica com a camada de \emph{middleware} através de chamadas que podem ser feitas por esta e eventos que podem ser gerados sinalizando para ela alguma situação. Assim, ao definirmos o comportamento dessa camada, precisamos descrever como serão tratadas as chamadas realizadas pela camada superior, e em que situações serão gerados determinados eventos. Mas além disso, também precisamos descrever como outras tarefas serão realizadas, incluindo o monitoramento e seleção de recursos, manutenção de informações, adaptação da camada, entre outros.
+Como uma interface de serviços, o intermediador se comunica com a camada de \emph{middleware} através de chamadas que podem ser feitas por esta e eventos que podem ser gerados sinalizando para ela alguma situação. Assim, ao definirmos o comportamento dessa camada, precisamos descrever como serão tratadas as chamadas realizadas pela camada superior, e em que situações serão gerados determinados eventos. Mas, além disso, também precisamos descrever como outras tarefas serão realizadas, incluindo o monitoramento e seleção de recursos, manutenção de informações, adaptação da camada, entre outros.
 
-Com isto em mente, neste trabalho construímos um metamodelo que possibilita a modelagem do comportamento necessário para atender as responsabilidades definidas para a camada de intermediação de serviços da arquitetura proposta. O metamodelo em questão contempla a descrição das seguintes tarefas envolvidas no cumprimento destas responsabilidades:
+Com isto em mente, neste trabalho construímos um metamodelo que possibilita a modelagem do comportamento necessário para atender as responsabilidades definidas para a camada de intermediação de serviços. O metamodelo em questão contempla a descrição das seguintes tarefas envolvidas no cumprimento destas responsabilidades:
 
 %\begin{comment}
 %A idéia é que cada uma destas responsabilidades seja brevemente explicada nestes tópicos abaixo. No capítulo seguinte que descreve o metamodelo eles serão detalhados.
@@ -134,12 +136,12 @@ Com isto em mente, neste trabalho construímos um metamodelo que possibilita a mo
 
 \end{itemize}
 
-Também construímos um ambiente de execução para auxiliar na execução de modelos construídos a partir do metamodelo Assim sendo,  esse ambiente implementa a semântica operacional da linguagem para descrição da camada de intermediação de serviços. O ambiente de execução possibilita que um modelo definido a partir do metamodelo proposto seja executado. 
+Também construímos um ambiente de execução para auxiliar na execução de modelos construídos a partir do metamodelo. Assim sendo,  esse ambiente implementa a semântica operacional da linguagem para descrição da camada de intermediação de serviços. O ambiente de execução possibilita que um modelo definido a partir do metamodelo proposto seja executado. 
 % mencionar também da semântica estática
 
 %Desta forma, o metamodelo e o ambiente de execução construídos permitem que a camada de intermediação de serviço da arquitetura proposta seja definida através de um modelo baseado nas construções relacionadas às responsabilidades de  e possa ser executada e utilizada.
 
-Desta forma, o metamodelo e o ambiente de execução construídos posssibilitam que intermediadores de serviços sejam descritos por meio de modelos e utilizados em tempo de execução pela camada de \emph{middleware}.
+Desta forma, o metamodelo e o ambiente de execução construídos possibilitam que intermediadores de serviços sejam descritos por meio de modelos e utilizados em tempo de execução pela camada de \emph{middleware}.
 Os próximos capítulos apresentam, na seguinte ordem: o metamodelo elaborado para a definição de intermediadores de serviços; o ambiente de execução capaz de processar os modelos descritos por meio do metamodelo; e um modelo criado a partir desse metamodelo para descrever uma camada com comportamento equivalente à camada NCB que integra a plataforma CVM.
 
 %O Broker de serviços é responsável por ...
