@@ -213,7 +213,7 @@
 
 %% algorithms
 %% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-\RequirePackage[ruled, algo2e, vlined, portuguese, algochapter]{algorithm2e}
+\RequirePackage[ruled, algo2e, vlined, algochapter]{algorithm2e}
 \renewcommand{\listofalgorithmes}{\begingroup
  \tocfile{\listalgorithmcfname}{loa}
  \endgroup}
